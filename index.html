@@ -1,33 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ABS Exam Center</title>
-<style>
-:root{--bg:#f6f8fc;--surface:#fff;--text:#14213d;--muted:#667085;--brand:#2563eb;--brand2:#7c3aed;--line:#e5e7eb;--good:#16a34a;--shadow:0 12px 30px rgba(20,33,61,.08)}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Noto Sans Bengali,sans-serif;background:var(--bg);color:var(--text)}button{font:inherit;cursor:pointer;border:0}.app{min-height:100vh;background:var(--bg)}
-nav{height:70px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:5}.logo{display:flex;gap:10px;align-items:center;font-weight:900;font-size:21px}.logoMark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;display:grid;place-items:center}.navlinks{display:flex;gap:24px;color:var(--muted);font-weight:600}.navlinks a{cursor:pointer}.login{background:#eef4ff;color:var(--brand);padding:10px 18px;border-radius:12px;font-weight:800}
-.hero{padding:70px 6% 50px;background:radial-gradient(circle at 85% 15%,#dfe8ff,transparent 32%),linear-gradient(135deg,#fff,#f4f7ff)}.heroGrid{max-width:1180px;margin:auto;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}.badge{display:inline-block;background:#eaf1ff;color:var(--brand);padding:8px 12px;border-radius:999px;font-weight:800;font-size:13px}.hero h1{font-size:clamp(40px,6vw,66px);line-height:1.03;margin:18px 0}.hero h1 span{color:var(--brand)}.hero p{font-size:18px;color:var(--muted);max-width:620px;line-height:1.7}.actions{display:flex;gap:12px;margin-top:25px;flex-wrap:wrap}.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;padding:14px 22px;border-radius:13px;font-weight:800;box-shadow:0 10px 20px #2563eb30}.secondary{background:#fff;color:var(--text);padding:14px 22px;border-radius:13px;font-weight:800;border:1px solid var(--line)}
-.mock{background:#fff;border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:var(--shadow)}.mockTop{height:120px;border-radius:18px;background:linear-gradient(135deg,#172554,#4f46e5);padding:20px;color:#fff}.mockTop small{opacity:.75}.mockTop h3{margin:8px 0}.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.stat{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:14px}.stat b{font-size:20px}.stat span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
-section{padding:60px 6%}.wrap{max-width:1180px;margin:auto}.sectionHead{display:flex;justify-content:space-between;align-items:end;margin-bottom:24px}.sectionHead h2{font-size:30px;margin:0}.sectionHead p{color:var(--muted);margin:5px 0}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 7px 20px #14213d08}.icon{width:46px;height:46px;border-radius:14px;background:#eef4ff;display:grid;place-items:center;font-size:22px}.card h3{margin:14px 0 7px}.card p{color:var(--muted);line-height:1.55}.exam{display:flex;justify-content:space-between;gap:10px;align-items:center}.tag{font-size:12px;font-weight:800;background:#ecfdf3;color:var(--good);padding:6px 9px;border-radius:999px}.exam button{background:#eef4ff;color:var(--brand);padding:9px 12px;border-radius:10px;font-weight:800}
-.leader{display:grid;grid-template-columns:1fr 1fr;gap:18px}.rank{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.rank:last-child{border-bottom:0}.num{width:30px;height:30px;border-radius:50%;background:#f1f5f9;display:grid;place-items:center;font-weight:900}.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#60a5fa,#a78bfa);display:grid;place-items:center;color:#fff;font-weight:900}.score{margin-left:auto;font-weight:900;color:var(--brand)}
-footer{padding:35px 6%;background:#111827;color:#cbd5e1}.foot{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.foot b{color:#fff}
-.modal{position:fixed;inset:0;background:#0b102080;display:none;place-items:center;padding:20px;z-index:10}.modal.show{display:grid}.modalBox{width:min(560px,100%);background:#fff;border-radius:22px;padding:24px;box-shadow:0 25px 70px #0004}.modalHead{display:flex;justify-content:space-between}.close{background:#f1f5f9;border-radius:10px;width:38px;height:38px}.q{font-weight:800;font-size:19px;margin:22px 0}.opt{display:block;width:100%;text-align:left;padding:13px;border:1px solid var(--line);background:#fff;border-radius:12px;margin:9px 0}.opt:hover{border-color:var(--brand);background:#f8fbff}.result{padding:18px;background:#f0fdf4;border-radius:14px;margin-top:15px;display:none}
-@media(max-width:800px){.navlinks{display:none}.heroGrid,.leader{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.hero{padding-top:45px}.hero h1{font-size:45px}}
-</style></head>
-<body><div class="app">
-<nav><div class="logo"><div class="logoMark">ABS</div><span>EXAM CENTER</span></div><div class="navlinks"><a onclick="go('courses')">Courses</a><a onclick="go('exams')">Exams</a><a onclick="go('leaderboard')">Leaderboard</a><a onclick="go('about')">About</a></div><button class="login" onclick="openLogin()">Login</button></nav>
-<header class="hero"><div class="heroGrid"><div><span class="badge">HSC 2027 • Smart Learning</span><h1>পড়ো। পরীক্ষা দাও।<br><span>নিজেকে ছাড়িয়ে যাও।</span></h1><p>ABS Exam Center হলো শিক্ষার্থীদের জন্য একটি সহজ, দ্রুত ও exam-focused learning platform—MCQ, model test, result ও leaderboard এক জায়গায়।</p><div class="actions"><button class="primary" onclick="openExam()">📝 Start Free Exam</button><button class="secondary" onclick="go('courses')">📚 Explore Courses</button></div></div><div class="mock"><div class="mockTop"><small>YOUR PROGRESS</small><h3>HSC 2027 Dashboard</h3><div>Overall Progress — 72%</div></div><div class="statrow"><div class="stat"><b>12</b><span>Exams</span></div><div class="stat"><b>86%</b><span>Average</span></div><div class="stat"><b>#08</b><span>Rank</span></div></div></div></div></header>
-<section id="courses"><div class="wrap"><div class="sectionHead"><div><h2>Popular Courses</h2><p>পরীক্ষার জন্য গুরুত্বপূর্ণ বিষয়গুলো এক জায়গায়।</p></div></div><div class="cards"><div class="card"><div class="icon">⚛️</div><h3>Physics</h3><p>Chapter-wise MCQ, CQ practice ও model test.</p><button class="secondary" onclick="openExam()">Start Practice →</button></div><div class="card"><div class="icon">🧪</div><h3>Chemistry</h3><p>Concept + question bank দিয়ে নিয়মিত practice.</p><button class="secondary" onclick="openExam()">Start Practice →</button></div><div class="card"><div class="icon">🧬</div><h3>Biology</h3><p>Important MCQ ও exam-focused revision.</p><button class="secondary" onclick="openExam()">Start Practice →</button></div></div></div></section>
-<section id="exams"><div class="wrap"><div class="sectionHead"><div><h2>Free Mock Exams</h2><p>এখনই practice শুরু করো।</p></div></div><div class="cards"><div class="card exam"><div><span class="tag">FREE</span><h3>HSC ICT • Mixed MCQ</h3><p>20 Questions • 10 Minutes</p></div><button onclick="openExam()">Start</button></div><div class="card exam"><div><span class="tag">FREE</span><h3>Physics • Chapter Test</h3><p>20 Questions • 15 Minutes</p></div><button onclick="openExam()">Start</button></div><div class="card exam"><div><span class="tag">FREE</span><h3>Chemistry • Quick Test</h3><p>20 Questions • 10 Minutes</p></div><button onclick="openExam()">Start</button></div></div></div></section>
-<section id="leaderboard"><div class="wrap"><div class="sectionHead"><div><h2>Top Students</h2><p>সুস্থ প্রতিযোগিতা, নিয়মিত উন্নতি।</p></div></div><div class="leader"><div class="card"><div class="rank"><span class="num">1</span><span class="avatar">A</span><b>Student A</b><span class="score">98%</span></div><div class="rank"><span class="num">2</span><span class="avatar">R</span><b>Student R</b><span class="score">96%</span></div><div class="rank"><span class="num">3</span><span class="avatar">S</span><b>Student S</b><span class="score">94%</span></div></div><div class="card"><h3>Why ABS Exam Center?</h3><p>✓ Chapter-wise practice</p><p>✓ Instant result</p><p>✓ Progress tracking</p><p>✓ Leaderboard</p><p>✓ HSC-focused content</p></div></div></div></section>
-<section id="about"><div class="wrap"><div class="card"><h2>About ABS Exam Center</h2><p>একটি student-first EdTech platform যেখানে HSC শিক্ষার্থীরা নিয়মিত practice, mock test এবং নিজের progress দেখতে পারবে। শুরুটা free—ধীরে ধীরে আরও powerful features যোগ হবে।</p></div></div></section>
-<footer><div class="foot"><div><b>ABS EXAM CENTER</b><div>Smart preparation for a better result.</div></div><div>© 2026 ABS Exam Center</div></div></footer>
-<div class="modal" id="modal"><div class="modalBox"><div class="modalHead"><div><small>FREE MOCK EXAM</small><h2 id="mtitle">ICT Mixed MCQ</h2></div><button class="close" onclick="closeModal()">×</button></div><div id="quiz"><div class="q">1. C programming-এ remainder বের করতে কোন operator ব্যবহার হয়?</div><button class="opt" onclick="answer(this,true)">A) %</button><button class="opt" onclick="answer(this,false)">B) //</button><button class="opt" onclick="answer(this,false)">C) &amp;</button><button class="opt" onclick="answer(this,false)">D) /</button></div><div class="result" id="result"></div></div></div>
-<script>
-function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
-function openExam(){document.getElementById('modal').classList.add('show');document.getElementById('result').style.display='none';document.getElementById('quiz').style.display='block'}
-function closeModal(){document.getElementById('modal').classList.remove('show')}
-function answer(el,ok){document.querySelectorAll('.opt').forEach(b=>b.disabled=true);const r=document.getElementById('result');r.style.display='block';r.innerHTML=ok?'✅ Correct! <b>Score: 1/1</b>':'❌ Wrong. Correct answer: <b>%</b>'}
-function openLogin(){alert('Student Login module will connect to Firebase in the next version.');}
-</script></div></body></html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abs Exam Center</title>
+    <!-- style.css লিংক করা হলো -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="exam-container">
+        <div class="exam-header">
+            <h1 class="exam-title">HSC Model Test</h1>
+            <div class="timer-box">⏱️ 01:00</div>
+        </div>
+
+        <div class="question-section">
+            <p class="question-text">প্রশ্ন লোড হচ্ছে...</p>
+            <ul class="options-list">
+                <!-- script.js থেকে অপশন আসবে -->
+            </ul>
+        </div>
+
+        <div class="exam-footer">
+            <button class="btn">পরবর্তী প্রশ্ন</button>
+        </div>
+    </div>
+
+    <!-- script.js লিংক করা হলো -->
+    <script src="script.js"></script>
+</body>
+</html>
