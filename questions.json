@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "question": "বাংলাদেশের রাজধানী কোনটি?",
+    "options": ["চট্টগ্রাম", "ঢাকা", "রাজশাহী", "সিলেট"],
+    "answer": 1
+  },
+  {
+    "id": 2,
+    "question": "HSC পরীক্ষার পূর্ণরূপ কী?",
+    "options": [
+      "High Secondary Certificate",
+      "Higher Secondary Certificate",
+      "Higher School Certificate",
+      "Higher Secondary Course"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 3,
+    "question": "আইসিটি (ICT) এর পূর্ণরূপ কী?",
+    "options": [
+      "Information and Communication Technology",
+      "Information and Computer Technology",
+      "International Communication Technology",
+      "Interconnected Communication Technology"
+    ],
+    "answer": 0
+  }
+]
