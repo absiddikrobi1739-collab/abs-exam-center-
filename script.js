@@ -1,26 +1,31 @@
 const SUPABASE_URL = "https://cpgomltdjpbvbtflccby.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNwZ29tbHRkanBidmJ0ZmxjY2J5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1NDU0NTcsImV4cCI6MjEwNzEyMTQ1N30.Mpl6NT3ViunmN3_WH4GxA61QNBF_WaRsqj0Yt51Qmss";
 
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const { createClient } = supabase;
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: true }
+});
 
-// আপনার ইমেইলটি অ্যাডমিন হিসেবে সেট করা হলো
-const ADMIN_EMAIL = "absiddikrobi1739@gmail.com"; 
+const ADMIN_EMAIL = "absiddikrobi1739@gmail.com";
 
 let isSignUp = false;
 let questions = [];
 let currentQuestionIndex = 0;
-let userAnswers = {};
 
 async function checkUserSession() {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if (session) {
-        if (session.user.email === ADMIN_EMAIL) {
-            showSection('admin-section');
+    try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session && session.user) {
+            if (session.user.email === ADMIN_EMAIL) {
+                showSection('admin-section');
+            } else {
+                showSection('exam-section');
+                loadQuestions();
+            }
         } else {
-            showSection('exam-section');
-            loadQuestions();
+            showSection('auth-section');
         }
-    } else {
+    } catch (err) {
         showSection('auth-section');
     }
 }
@@ -41,19 +46,26 @@ function toggleAuthMode(e) {
 }
 
 async function handleAuth() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-    if (!email || !password) return alert("ইমেইল ও পাসওয়ার্ড দিন!");
+    if (!email || !password) return alert("ইমেইল ও পাসওয়ার্ড প্রদান করুন!");
 
     if (isSignUp) {
         const { error } = await supabaseClient.auth.signUp({ email, password });
-        if (error) alert("ত্রুটি: " + error.message);
-        else alert("রেজিস্ট্রেশন সফল হয়েছে! এখন লগইন করুন।");
+        if (error) {
+            alert("রেজিস্ট্রেশন ত্রুটি: " + error.message);
+        } else {
+            alert("রেজিস্ট্রেশন সফল হয়েছে! এখন লগইন করুন।");
+            toggleAuthMode(new Event('click'));
+        }
     } else {
-        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-        if (error) alert("লগইন ব্যর্থ: " + error.message);
-        else checkUserSession();
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) {
+            alert("লগইন ব্যর্থ: " + error.message);
+        } else {
+            checkUserSession();
+        }
     }
 }
 
@@ -65,7 +77,7 @@ async function logout() {
 async function loadQuestions() {
     const { data, error } = await supabaseClient.from('questions').select('*');
     if (error || !data || data.length === 0) {
-        document.getElementById('question-text').innerText = "কোনো প্রশ্ন পাওয়া যায়নি!";
+        document.getElementById('question-text').innerText = "কোনো প্রশ্ন পাওয়া যায়নি বা ডেটাবেস কানেকশন সমস্যা।";
         return;
     }
     questions = data;
@@ -107,7 +119,7 @@ async function addQuestionByAdmin() {
     const d = document.getElementById('admin-d').value;
     const correct = document.getElementById('admin-correct').value;
 
-    if (!q || !a || !b || !c || !d || !correct) return alert("সব তথ্য পূরণ করুন!");
+    if (!q || !a || !b || !c || !d || !correct) return alert("সব ঘর পূরণ করুন!");
 
     const { error } = await supabaseClient.from('questions').insert([
         { question_text: q, option_a: a, option_b: b, option_c: c, option_d: d, correct_option: correct, subject: 'Physics', chapter: 'Thermodynamics' }
@@ -115,7 +127,7 @@ async function addQuestionByAdmin() {
 
     if (error) alert("ত্রুটি: " + error.message);
     else {
-        alert("প্রশ্ন সফলভাবে যোগ করা হয়েছে!");
+        alert("প্রশ্ন সফলভাবে যুক্ত করা হয়েছে!");
         location.reload();
     }
 }
