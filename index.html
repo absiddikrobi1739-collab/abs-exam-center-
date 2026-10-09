@@ -7,37 +7,37 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #0f172a; color: white; margin: 0; padding: 20px; }
-        .container { max-width: 600px; margin: 30px auto; background: #1e293b; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        input, select, textarea { width: 100%; padding: 10px; margin: 8px 0; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 5px; }
-        button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: white; margin: 0; padding: 20px; }
+        .container { max-width: 500px; margin: 40px auto; background: #1e293b; padding: 25px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 6px; font-size: 15px; }
+        button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         button:hover { background: #1d4ed8; }
-        .danger-btn { background: #ef4444; }
-        .hidden { display: none; }
-        .nav-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 15px; }
+        .hidden { display: none !important; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 20px; }
+        .logout-btn { background: #ef4444; width: auto; padding: 6px 14px; margin-top: 0; }
         .options-list { list-style: none; padding: 0; }
-        .options-list li { background: #334155; margin: 8px 0; padding: 10px; border-radius: 5px; }
+        .options-list li { background: #334155; margin: 10px 0; padding: 12px; border-radius: 6px; }
     </style>
 </head>
 <body>
 
-    <!-- ১. লগইন / সাইনআপ সেকশন -->
+    <!-- ১. লগইন / রেজিস্ট্রেশন -->
     <div id="auth-section" class="container">
-        <h2 id="auth-title" style="text-align: center;">লগইন করুন</h2>
+        <h2 id="auth-title" style="text-align: center; margin-top:0;">লগইন করুন</h2>
         <input type="email" id="email" placeholder="আপনার ইমেইল">
         <input type="password" id="password" placeholder="পাসওয়ার্ড">
         <button onclick="handleAuth()" id="auth-btn">লগইন</button>
-        <p style="text-align: center; margin-top: 15px;">
+        <p style="text-align: center; margin-top: 15px; font-size: 14px;">
             <span id="toggle-text">অ্যাকাউন্ট নেই?</span> 
             <a href="#" onclick="toggleAuthMode(event)" style="color:#38bdf8;">রেজিস্ট্রেশন করুন</a>
         </p>
     </div>
 
-    <!-- ২. স্টুডেন্ট এক্সাম সেকশন -->
+    <!-- ২. স্টুডেন্ট প্যানেল -->
     <div id="exam-section" class="container hidden">
-        <div class="nav-header">
-            <h3>HSC Exam Portal</h3>
-            <button onclick="logout()" class="danger-btn" style="width: auto; padding: 6px 12px;">লগআউট</button>
+        <div class="header">
+            <h3 style="margin:0;">HSC Physics - তাপগতিবিদ্যা</h3>
+            <button onclick="logout()" class="logout-btn">লগআউট</button>
         </div>
         <div id="question-box">
             <h4 id="question-text">প্রশ্ন লোড হচ্ছে...</h4>
@@ -47,11 +47,11 @@
         </div>
     </div>
 
-    <!-- ৩. অ্যাডমিন প্যানেল সেকশন -->
+    <!-- ৩. অ্যাডমিন প্যানেল -->
     <div id="admin-section" class="container hidden">
-        <div class="nav-header">
-            <h3>Admin Panel - প্রশ্ন যুক্ত করুন</h3>
-            <button onclick="logout()" class="danger-btn" style="width: auto; padding: 6px 12px;">লগআউট</button>
+        <div class="header">
+            <h3 style="margin:0;">Admin Panel (প্রশ্ন সংযোজন)</h3>
+            <button onclick="logout()" class="logout-btn">লগআউট</button>
         </div>
         <input type="text" id="admin-q" placeholder="প্রশ্ন লিখুন">
         <input type="text" id="admin-a" placeholder="অপশন A">
@@ -59,7 +59,7 @@
         <input type="text" id="admin-c" placeholder="অপশন C">
         <input type="text" id="admin-d" placeholder="অপশন D">
         <select id="admin-correct">
-            <option value="">সঠিক উত্তর সিলেক্ট করুন</option>
+            <option value="">সঠিক উত্তর নির্বাচন করুন</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
