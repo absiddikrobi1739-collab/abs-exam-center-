@@ -2,19 +2,33 @@ const SUPABASE_URL = "https://cpgomltdjpbvbtflccby.supabase.co";
 const SUPABASE_KEY = "Sb_publishable_BhK59A0qfRZ7-PBD1dYy7g_rZVE9M1c";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// আপনার ইমেইলটি অ্যাডমিন হিসেবে সেট করা হলো
+const ADMIN_EMAIL = "absiddikrobi1739@gmail.com"; 
+
 let isSignUp = false;
 let questions = [];
 let currentQuestionIndex = 0;
 let userAnswers = {};
 
-// সেশন চেক করা
 async function checkUserSession() {
     const { data: { session } } = await supabaseClient.auth.getSession();
     if (session) {
-        showExamSection();
+        if (session.user.email === ADMIN_EMAIL) {
+            showSection('admin-section');
+        } else {
+            showSection('exam-section');
+            loadQuestions();
+        }
     } else {
-        showAuthSection();
+        showSection('auth-section');
     }
+}
+
+function showSection(id) {
+    document.getElementById('auth-section').classList.add('hidden');
+    document.getElementById('exam-section').classList.add('hidden');
+    document.getElementById('admin-section').classList.add('hidden');
+    document.getElementById(id).classList.remove('hidden');
 }
 
 function toggleAuthMode(e) {
@@ -23,28 +37,22 @@ function toggleAuthMode(e) {
     document.getElementById('auth-title').innerText = isSignUp ? "রেজিস্ট্রেশন করুন" : "লগইন করুন";
     document.getElementById('auth-btn').innerText = isSignUp ? "সাইনআপ" : "লগইন";
     document.getElementById('toggle-text').innerText = isSignUp ? "আগে থেকেই অ্যাকাউন্ট আছে?" : "অ্যাকাউন্ট নেই?";
-    document.getElementById('toggle-link').innerText = isSignUp ? "লগইন করুন" : "রেজিস্ট্রেশন করুন";
 }
 
 async function handleAuth() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    if (!email || !password) {
-        alert("ইমেইল এবং পাসওয়ার্ড দিন!");
-        return;
-    }
+    if (!email || !password) return alert("ইমেইল ও পাসওয়ার্ড দিন!");
 
     if (isSignUp) {
         const { error } = await supabaseClient.auth.signUp({ email, password });
         if (error) alert("ত্রুটি: " + error.message);
-        else alert("রেজিস্ট্রেশন সফল হয়েছে! এখন লগইন করুন।");
+        else alert("রেজিস্ট্রেশন সফল হয়েছে! এখন লগইন করুন।");
     } else {
         const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
         if (error) alert("লগইন ব্যর্থ: " + error.message);
-        else {
-            showExamSection();
-        }
+        else checkUserSession();
     }
 }
 
@@ -53,26 +61,12 @@ async function logout() {
     location.reload();
 }
 
-function showAuthSection() {
-    document.getElementById('auth-section').classList.remove('hidden');
-    document.getElementById('exam-section').classList.add('hidden');
-}
-
-function showExamSection() {
-    document.getElementById('auth-section').classList.add('hidden');
-    document.getElementById('exam-section').classList.remove('hidden');
-    loadQuestions();
-}
-
-// Supabase থেকে প্রশ্ন লোড করা
 async function loadQuestions() {
     const { data, error } = await supabaseClient.from('questions').select('*');
-
-    if (error || !data || data.length === 0) {
-        document.getElementById('question-text').innerText = "কোনো প্রশ্ন পাওয়া যায়নি! ডেটাবেস চেক করুন।";
+    if (error || !data.length) {
+        document.getElementById('question-text').innerText = "কোনো প্রশ্ন পাওয়া যায়নি!";
         return;
     }
-
     questions = data;
     showQuestion(0);
 }
@@ -80,29 +74,16 @@ async function loadQuestions() {
 function showQuestion(index) {
     const q = questions[index];
     document.getElementById('question-text').innerText = `${index + 1}. ${q.question_text}`;
-
     const optionsList = document.getElementById('options-list');
     optionsList.innerHTML = `
-        <li><label><input type="radio" name="option" value="A" ${userAnswers[index] === 'A' ? 'checked' : ''}> A) ${q.option_a}</label></li>
-        <li><label><input type="radio" name="option" value="B" ${userAnswers[index] === 'B' ? 'checked' : ''}> B) ${q.option_b}</label></li>
-        <li><label><input type="radio" name="option" value="C" ${userAnswers[index] === 'C' ? 'checked' : ''}> C) ${q.option_c}</label></li>
-        <li><label><input type="radio" name="option" value="D" ${userAnswers[index] === 'D' ? 'checked' : ''}> D) ${q.option_d}</label></li>
+        <li><label><input type="radio" name="opt" value="A"> A) ${q.option_a}</label></li>
+        <li><label><input type="radio" name="opt" value="B"> B) ${q.option_b}</label></li>
+        <li><label><input type="radio" name="opt" value="C"> C) ${q.option_c}</label></li>
+        <li><label><input type="radio" name="opt" value="D"> D) ${q.option_d}</label></li>
     `;
-
-    const inputs = optionsList.querySelectorAll('input');
-    inputs.forEach(input => {
-        input.addEventListener('change', (e) => {
-            userAnswers[index] = e.target.value;
-        });
-    });
-
-    if (index === questions.length - 1) {
-        document.getElementById('next-btn').style.display = 'none';
-        document.getElementById('submit-btn').style.display = 'inline-block';
-    } else {
-        document.getElementById('next-btn').style.display = 'inline-block';
-        document.getElementById('submit-btn').style.display = 'none';
-    }
+    
+    document.getElementById('next-btn').classList.toggle('hidden', index === questions.length - 1);
+    document.getElementById('submit-btn').classList.toggle('hidden', index !== questions.length - 1);
 }
 
 function nextQuestion() {
@@ -113,21 +94,30 @@ function nextQuestion() {
 }
 
 async function submitExam() {
-    let score = 0;
-    questions.forEach((q, idx) => {
-        if (userAnswers[idx] === q.correct_option) {
-            score++;
-        }
-    });
+    alert("পরীক্ষা সম্পন্ন হয়েছে!");
+    location.reload();
+}
 
-    const { data: { user } } = await supabaseClient.auth.getUser();
+// Admin Panel function
+async function addQuestionByAdmin() {
+    const q = document.getElementById('admin-q').value;
+    const a = document.getElementById('admin-a').value;
+    const b = document.getElementById('admin-b').value;
+    const c = document.getElementById('admin-c').value;
+    const d = document.getElementById('admin-d').value;
+    const correct = document.getElementById('admin-correct').value;
 
-    await supabaseClient.from('exam_results').insert([
-        { student_name: user ? user.email : "Student", score: score, total_questions: questions.length }
+    if (!q || !a || !b || !c || !d || !correct) return alert("সব তথ্য পূরণ করুন!");
+
+    const { error } = await supabaseClient.from('questions').insert([
+        { question_text: q, option_a: a, option_b: b, option_c: c, option_d: d, correct_option: correct, subject: 'Physics', chapter: 'Thermodynamics' }
     ]);
 
-    alert(`পরীক্ষা সম্পন্ন হয়েছে! আপনার স্কোর: ${score} / ${questions.length}`);
-    location.reload();
+    if (error) alert("ত্রুটি: " + error.message);
+    else {
+        alert("প্রশ্ন সফলভাবে যোগ করা হয়েছে!");
+        location.reload();
+    }
 }
 
 window.onload = checkUserSession;
