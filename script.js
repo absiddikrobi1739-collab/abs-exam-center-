@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://cpgomltdjpbvbtflccby.supabase.co";
-const SUPABASE_KEY = "EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNwZ29tbHRkanBidmJ0ZmxjY2J5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1NDU0NTcsImV4cCI6MjEwNzEyMTQ1N30.Mpl6NT3ViunmN3_WH4GxA61QNBF_WaRsqj0Yt51Qmss";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNwZ29tbHRkanBidmJ0ZmxjY2J5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1NDU0NTcsImV4cCI6MjEwNzEyMTQ1N30.Mpl6NT3ViunmN3_WH4GxA61QNBF_WaRsqj0Yt51Qmss";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
