@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abs Exam Center</title>
-    <!-- style.css লিংক করা হলো -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,22 +12,20 @@
     <div class="exam-container">
         <div class="exam-header">
             <h1 class="exam-title">HSC Model Test</h1>
-            <div class="timer-box">⏱️ 01:00</div>
+            <div class="timer-box">⏱️ <span id="timer">20:00</span></div>
         </div>
 
         <div class="question-section">
-            <p class="question-text">প্রশ্ন লোড হচ্ছে...</p>
-            <ul class="options-list">
-                <!-- script.js থেকে অপশন আসবে -->
-            </ul>
+            <p class="question-text" id="question-text">প্রশ্ন লোড হচ্ছে...</p>
+            <ul class="options-list" id="options-list"></ul>
         </div>
 
         <div class="exam-footer">
-            <button class="btn">পরবর্তী প্রশ্ন</button>
+            <button class="btn" id="next-btn" onclick="nextQuestion()">পরবর্তী প্রশ্ন</button>
+            <button class="btn" id="submit-btn" style="display:none;" onclick="submitExam()">পরীক্ষা শেষ করুন</button>
         </div>
     </div>
 
-    <!-- script.js লিংক করা হলো -->
     <script src="script.js"></script>
 </body>
 </html>
