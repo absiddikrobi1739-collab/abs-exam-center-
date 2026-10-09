@@ -1,18 +1,75 @@
-// Supabase কানেকশন
 const SUPABASE_URL = "https://cpgomltdjpbvbtflccby.supabase.co";
 const SUPABASE_KEY = "Sb_publishable_BhK59A0qfRZ7-PBD1dYy7g_rZVE9M1c";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+let isSignUp = false;
 let questions = [];
 let currentQuestionIndex = 0;
 let userAnswers = {};
 
-// প্রশ্ন লোড করা
+// সেশন চেক করা
+async function checkUserSession() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+        showExamSection();
+    } else {
+        showAuthSection();
+    }
+}
+
+function toggleAuthMode(e) {
+    e.preventDefault();
+    isSignUp = !isSignUp;
+    document.getElementById('auth-title').innerText = isSignUp ? "রেজিস্ট্রেশন করুন" : "লগইন করুন";
+    document.getElementById('auth-btn').innerText = isSignUp ? "সাইনআপ" : "লগইন";
+    document.getElementById('toggle-text').innerText = isSignUp ? "আগে থেকেই অ্যাকাউন্ট আছে?" : "অ্যাকাউন্ট নেই?";
+    document.getElementById('toggle-link').innerText = isSignUp ? "লগইন করুন" : "রেজিস্ট্রেশন করুন";
+}
+
+async function handleAuth() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (!email || !password) {
+        alert("ইমেইল এবং পাসওয়ার্ড দিন!");
+        return;
+    }
+
+    if (isSignUp) {
+        const { error } = await supabaseClient.auth.signUp({ email, password });
+        if (error) alert("ত্রুটি: " + error.message);
+        else alert("রেজিস্ট্রেশন সফল হয়েছে! এখন লগইন করুন।");
+    } else {
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) alert("লগইন ব্যর্থ: " + error.message);
+        else {
+            showExamSection();
+        }
+    }
+}
+
+async function logout() {
+    await supabaseClient.auth.signOut();
+    location.reload();
+}
+
+function showAuthSection() {
+    document.getElementById('auth-section').classList.remove('hidden');
+    document.getElementById('exam-section').classList.add('hidden');
+}
+
+function showExamSection() {
+    document.getElementById('auth-section').classList.add('hidden');
+    document.getElementById('exam-section').classList.remove('hidden');
+    loadQuestions();
+}
+
+// Supabase থেকে প্রশ্ন লোড করা
 async function loadQuestions() {
     const { data, error } = await supabaseClient.from('questions').select('*');
 
     if (error || !data || data.length === 0) {
-        document.getElementById('question-text').innerText = "কোনো প্রশ্ন পাওয়া যায়নি! Supabase ডেটাবেসে প্রশ্ন যুক্ত করুন।";
+        document.getElementById('question-text').innerText = "কোনো প্রশ্ন পাওয়া যায়নি! ডেটাবেস চেক করুন।";
         return;
     }
 
@@ -32,7 +89,6 @@ function showQuestion(index) {
         <li><label><input type="radio" name="option" value="D" ${userAnswers[index] === 'D' ? 'checked' : ''}> D) ${q.option_d}</label></li>
     `;
 
-    // অপশন সিলেক্ট সেভ করা
     const inputs = optionsList.querySelectorAll('input');
     inputs.forEach(input => {
         input.addEventListener('change', (e) => {
@@ -64,14 +120,14 @@ async function submitExam() {
         }
     });
 
-    // রেজাল্ট সেভ
+    const { data: { user } } = await supabaseClient.auth.getUser();
+
     await supabaseClient.from('exam_results').insert([
-        { student_name: "Student", score: score, total_questions: questions.length }
+        { student_name: user ? user.email : "Student", score: score, total_questions: questions.length }
     ]);
 
     alert(`পরীক্ষা সম্পন্ন হয়েছে! আপনার স্কোর: ${score} / ${questions.length}`);
     location.reload();
 }
 
-// পেজ লোড হলে প্রশ্ন লোড হবে
-window.onload = loadQuestions;
+window.onload = checkUserSession;
