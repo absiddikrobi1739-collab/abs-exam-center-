@@ -1,5 +1,6 @@
 const SUPABASE_URL = "https://cpgomltdjpbvbtflccby.supabase.co";
 const SUPABASE_KEY = "Sb_publishable_BhK59A0qfRZ7-PBD1dYy7g_rZVE9M1c";
+
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // আপনার ইমেইলটি অ্যাডমিন হিসেবে সেট করা হলো
@@ -63,7 +64,7 @@ async function logout() {
 
 async function loadQuestions() {
     const { data, error } = await supabaseClient.from('questions').select('*');
-    if (error || !data.length) {
+    if (error || !data || data.length === 0) {
         document.getElementById('question-text').innerText = "কোনো প্রশ্ন পাওয়া যায়নি!";
         return;
     }
@@ -98,7 +99,6 @@ async function submitExam() {
     location.reload();
 }
 
-// Admin Panel function
 async function addQuestionByAdmin() {
     const q = document.getElementById('admin-q').value;
     const a = document.getElementById('admin-a').value;
