@@ -5,105 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abs Exam Center</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #0f172a;
-            color: white;
-            margin: 0;
-            padding: 20px;
-        }
-        .auth-box, .exam-container {
-            max-width: 500px;
-            margin: 40px auto;
-            padding: 25px;
-            border-radius: 12px;
-            background: #1e293b;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .auth-box input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            border: 1px solid #334155;
-            background: #0f172a;
-            color: white;
-            box-sizing: border-box;
-        }
-        .auth-box button, .btn {
-            width: 100%;
-            padding: 12px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        .auth-box button:hover, .btn:hover {
-            background: #1d4ed8;
-        }
-        .options-list {
-            list-style: none;
-            padding: 0;
-        }
-        .options-list li {
-            margin: 10px 0;
-            background: #334155;
-            padding: 10px;
-            border-radius: 6px;
-        }
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #0f172a; color: white; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: 30px auto; background: #1e293b; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        input, select, textarea { width: 100%; padding: 10px; margin: 8px 0; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 5px; }
+        button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #1d4ed8; }
+        .danger-btn { background: #ef4444; }
         .hidden { display: none; }
-        .header-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logout-btn {
-            background: #ef4444;
-            color: white;
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+        .nav-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 15px; }
+        .options-list { list-style: none; padding: 0; }
+        .options-list li { background: #334155; margin: 8px 0; padding: 10px; border-radius: 5px; }
     </style>
 </head>
 <body>
 
-    <!-- লগইন বা রেজিস্ট্রেশন ফর্ম (লগইন না থাকলে এটিই শুধু দেখাবে) -->
-    <div id="auth-section" class="auth-box">
-        <h2 id="auth-title" style="text-align:center;">লগইন করুন</h2>
-        <p style="text-align:center; color:#94a3b8; font-size:14px;">পরীক্ষা দিতে প্রথমে একাউন্টে প্রবেশ করুন</p>
-        <input type="email" id="email" placeholder="আপনার ইমেইল দিন">
-        <input type="password" id="password" placeholder="পাসওয়ার্ড দিন">
-        <button id="auth-btn" onclick="handleAuth()">লগইন</button>
-        <p style="text-align:center; margin-top:15px; font-size:14px;">
+    <!-- ১. লগইন / সাইনআপ সেকশন -->
+    <div id="auth-section" class="container">
+        <h2 id="auth-title" style="text-align: center;">লগইন করুন</h2>
+        <input type="email" id="email" placeholder="আপনার ইমেইল">
+        <input type="password" id="password" placeholder="পাসওয়ার্ড">
+        <button onclick="handleAuth()" id="auth-btn">লগইন</button>
+        <p style="text-align: center; margin-top: 15px;">
             <span id="toggle-text">অ্যাকাউন্ট নেই?</span> 
-            <a href="#" id="toggle-link" onclick="toggleAuthMode(event)" style="color:#38bdf8;">রেজিস্ট্রেশন করুন</a>
+            <a href="#" onclick="toggleAuthMode(event)" style="color:#38bdf8;">রেজিস্ট্রেশন করুন</a>
         </p>
     </div>
 
-    <!-- পরীক্ষা অংশ (লগইন করার পরই কেবল এটি আসবে) -->
-    <div id="exam-section" class="exam-container hidden">
-        <div class="header-flex">
-            <h2>HSC Physics - তাপগতিবিদ্যা</h2>
-            <button class="logout-btn" onclick="logout()">লগআউট</button>
+    <!-- ২. স্টুডেন্ট এক্সাম সেকশন -->
+    <div id="exam-section" class="container hidden">
+        <div class="nav-header">
+            <h3>HSC Exam Portal</h3>
+            <button onclick="logout()" class="danger-btn" style="width: auto; padding: 6px 12px;">লগআউট</button>
         </div>
-        <hr style="border-color:#334155;">
-
-        <div class="question-section">
-            <h3 id="question-text">প্রশ্ন লোড হচ্ছে...</h3>
+        <div id="question-box">
+            <h4 id="question-text">প্রশ্ন লোড হচ্ছে...</h4>
             <ul class="options-list" id="options-list"></ul>
+            <button id="next-btn" onclick="nextQuestion()">পরবর্তী প্রশ্ন</button>
+            <button id="submit-btn" class="hidden" style="background:#22c55e;" onclick="submitExam()">পরীক্ষা শেষ করুন</button>
         </div>
+    </div>
 
-        <div style="margin-top:20px;">
-            <button class="btn" id="next-btn" onclick="nextQuestion()">পরবর্তী প্রশ্ন</button>
-            <button class="btn" id="submit-btn" style="display:none; background:#22c55e;" onclick="submitExam()">পরীক্ষা শেষ করুন</button>
+    <!-- ৩. অ্যাডমিন প্যানেল সেকশন -->
+    <div id="admin-section" class="container hidden">
+        <div class="nav-header">
+            <h3>Admin Panel - প্রশ্ন যুক্ত করুন</h3>
+            <button onclick="logout()" class="danger-btn" style="width: auto; padding: 6px 12px;">লগআউট</button>
         </div>
+        <input type="text" id="admin-q" placeholder="প্রশ্ন লিখুন">
+        <input type="text" id="admin-a" placeholder="অপশন A">
+        <input type="text" id="admin-b" placeholder="অপশন B">
+        <input type="text" id="admin-c" placeholder="অপশন C">
+        <input type="text" id="admin-d" placeholder="অপশন D">
+        <select id="admin-correct">
+            <option value="">সঠিক উত্তর সিলেক্ট করুন</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+        </select>
+        <button onclick="addQuestionByAdmin()" style="background:#10b981;">প্রশ্ন সাবমিট করুন</button>
     </div>
 
     <script src="script.js"></script>
