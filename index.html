@@ -6,23 +6,103 @@
     <title>Abs Exam Center</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .auth-box, .exam-container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 12px;
+            background: #1e293b;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .auth-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+            box-sizing: border-box;
+        }
+        .auth-box button, .btn {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .auth-box button:hover, .btn:hover {
+            background: #1d4ed8;
+        }
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+        .options-list li {
+            margin: 10px 0;
+            background: #334155;
+            padding: 10px;
+            border-radius: 6px;
+        }
+        .hidden { display: none; }
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="exam-container">
-        <div class="exam-header">
-            <h1 class="exam-title">HSC Model Test</h1>
-            <div class="timer-box">⏱️ <span id="timer">20:00</span></div>
+    <!-- লগইন বা রেজিস্ট্রেশন ফর্ম (লগইন না থাকলে এটিই শুধু দেখাবে) -->
+    <div id="auth-section" class="auth-box">
+        <h2 id="auth-title" style="text-align:center;">লগইন করুন</h2>
+        <p style="text-align:center; color:#94a3b8; font-size:14px;">পরীক্ষা দিতে প্রথমে একাউন্টে প্রবেশ করুন</p>
+        <input type="email" id="email" placeholder="আপনার ইমেইল দিন">
+        <input type="password" id="password" placeholder="পাসওয়ার্ড দিন">
+        <button id="auth-btn" onclick="handleAuth()">লগইন</button>
+        <p style="text-align:center; margin-top:15px; font-size:14px;">
+            <span id="toggle-text">অ্যাকাউন্ট নেই?</span> 
+            <a href="#" id="toggle-link" onclick="toggleAuthMode(event)" style="color:#38bdf8;">রেজিস্ট্রেশন করুন</a>
+        </p>
+    </div>
+
+    <!-- পরীক্ষা অংশ (লগইন করার পরই কেবল এটি আসবে) -->
+    <div id="exam-section" class="exam-container hidden">
+        <div class="header-flex">
+            <h2>HSC Physics - তাপগতিবিদ্যা</h2>
+            <button class="logout-btn" onclick="logout()">লগআউট</button>
         </div>
+        <hr style="border-color:#334155;">
 
         <div class="question-section">
-            <p class="question-text" id="question-text">প্রশ্ন লোড হচ্ছে...</p>
+            <h3 id="question-text">প্রশ্ন লোড হচ্ছে...</h3>
             <ul class="options-list" id="options-list"></ul>
         </div>
 
-        <div class="exam-footer">
+        <div style="margin-top:20px;">
             <button class="btn" id="next-btn" onclick="nextQuestion()">পরবর্তী প্রশ্ন</button>
-            <button class="btn" id="submit-btn" style="display:none;" onclick="submitExam()">পরীক্ষা শেষ করুন</button>
+            <button class="btn" id="submit-btn" style="display:none; background:#22c55e;" onclick="submitExam()">পরীক্ষা শেষ করুন</button>
         </div>
     </div>
 
