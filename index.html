@@ -23,7 +23,6 @@
             padding-bottom: 75px;
         }
 
-        /* Top Bar */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -58,14 +57,12 @@
             font-size: 18px;
         }
 
-        /* Container */
         .container {
             padding: 10px 15px;
             max-width: 500px;
             margin: 0 auto;
         }
 
-        /* Sections Toggle */
         .page-section {
             display: none;
         }
@@ -74,7 +71,6 @@
             display: block;
         }
 
-        /* Banner Card */
         .banner-card {
             background: #ffffff;
             border-radius: 16px;
@@ -157,7 +153,6 @@
             font-weight: 500;
         }
 
-        /* Features Grid */
         .grid-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -213,7 +208,6 @@
             line-height: 1.2;
         }
 
-        /* Generic Inner Page Design */
         .inner-page-card {
             background: white;
             border-radius: 16px;
@@ -260,15 +254,39 @@
             background: #e2e8f0;
             color: #334155;
             border: none;
-            padding: 8px 14px;
+            padding: 10px 14px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 13px;
             margin-top: 10px;
+            width: 100%;
         }
 
-        /* Bottom Nav */
+        /* Live Score Corner Badge */
+        .live-score-badge {
+            background: #f1f5f9;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            display: flex;
+            gap: 10px;
+        }
+
+        .option-btn {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #f8fafc;
+            cursor: pointer;
+            text-align: left;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
         .bottom-bar {
             position: fixed;
             bottom: 0;
@@ -305,7 +323,6 @@
 </head>
 <body>
 
-    <!-- Top Navigation -->
     <div class="top-bar">
         <div class="profile-area">
             <div class="avatar-circle">A</div>
@@ -319,7 +336,7 @@
 
     <div class="container">
         
-        <!-- ১. হোম সেকশন -->
+        <!-- ১. হোম পেজ -->
         <div id="home-section" class="page-section active">
             <div class="banner-card">
                 <div class="status-badge">● অ্যাকাউন্ট তৈরি হয়েছে</div>
@@ -416,29 +433,17 @@
             </div>
         </div>
 
-        <!-- ২. মডেল টেস্ট সেটআপ পেজ (অধ্যায়, MCQ সংখ্যা ও সময় নির্বাচন) -->
+        <!-- ২. মডেল টেস্ট সেটআপ -->
         <div id="model-test-setup" class="page-section">
             <div class="inner-page-card">
                 <h2>⚙️ পরীক্ষার কাস্টমাইজেশন</h2>
-                <p>পরীক্ষা শুরু করার আগে আপনার পছন্দমতো অধ্যায়, প্রশ্ন ও সময় সিলেক্ট করুন।</p>
+                <p>পরীক্ষা শুরু করার আগে আপনার পছন্দমতো অধ্যায় ও সময় সিলেক্ট করুন।</p>
                 
                 <div class="form-group">
-                    <label>विषয় ও অধ্যায় নির্বাচন করুন:</label>
+                    <label>অধ্যায় নির্বাচন করুন:</label>
                     <select id="chapter-select">
-                        <option value="ict-1">আইসিটি - প্রথম অধ্যায় (তথ্য ও যোগাযোগ প্রযুক্তি)</option>
-                        <option value="ict-2">আইসিটি - দ্বিতীয় অধ্যায় (কমিউনিকেশন সিস্টেম ও নেটওয়ার্ক)</option>
-                        <option value="physics-1">পদার্থবিজ্ঞান - প্রথম অধ্যায় (ভৌত জগত ও পরিমাপ)</option>
-                        <option value="chemistry-1">রসায়ন - প্রথম অধ্যায় (ল্যাবরেটরির নিরাপদ ব্যবহার)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>MCQ প্রশ্নের সংখ্যা:</label>
-                    <select id="mcq-count">
-                        <option value="5">৫ টি প্রশ্ন</option>
-                        <option value="10">১০ টি প্রশ্ন</option>
-                        <option value="20">২০ টি প্রশ্ন</option>
-                        <option value="25">২৫ টি প্রশ্ন</option>
+                        <option value="ict-1">আইসিটি - প্রথম ও দ্বিতীয় অধ্যায়</option>
+                        <option value="physics-1">পদার্থবিজ্ঞান - প্রথম অধ্যায়</option>
                     </select>
                 </div>
 
@@ -448,103 +453,124 @@
                         <option value="1">১ মিনিট</option>
                         <option value="2">২ মিনিট</option>
                         <option value="5">৫ মিনিট</option>
-                        <option value="10">১০ মিনিট</option>
                     </select>
                 </div>
 
                 <button class="action-btn" onclick="startExam()">পরীক্ষা শুরু করুন <i class="fa-solid fa-play"></i></button>
-                <br>
-                <button class="back-btn" onclick="switchSection('home-section')"><i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান</button>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
-        <!-- ৩. মূল এক্সাম পেজ (প্রশ্ন ও টাইমার) -->
+        <!-- ৩. মূল পরীক্ষা পেজ -->
         <div id="model-test-section" class="page-section">
             <div class="inner-page-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <h2 style="margin:0;">✍️ মডেল টেস্ট চলছে</h2>
-                    <span id="timer-display" style="background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 13px;">⏱️ 00:00</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span id="timer-display" style="background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">⏱️ 00:00</span>
+                    <div class="live-score-badge">
+                        <span style="color: #16a34a;">সঠিক: <span id="live-correct">0</span></span>
+                        <span style="color: #dc2626;">ভুল: <span id="live-wrong">0</span></span>
+                    </div>
                 </div>
+
                 <div id="quiz-box">
-                    <p id="question-text" style="font-weight: 600; color: #1e293b; margin-bottom: 15px;">প্রশ্ন লোড হচ্ছে...</p>
+                    <p id="question-text" style="font-weight: 600; color: #1e293b; margin-bottom: 15px; font-size: 15px;">প্রশ্ন লোড হচ্ছে...</p>
                     <div id="options-container" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
-                    <button id="next-btn" class="action-btn" onclick="nextQuestion()">পরবর্তী প্রশ্ন</button>
+                    <button id="next-btn" class="action-btn" onclick="nextQuestion()" style="display:none;">পরবর্তী প্রশ্ন</button>
                 </div>
-                <br>
-                <button class="back-btn" onclick="switchSection('home-section')"><i class="fa-solid fa-arrow-left"></i> পরীক্ষা বাতিল করুন</button>
             </div>
         </div>
 
-        <!-- অন্যান্য পেজগুলো -->
+        <!-- ৪. ফলাফল ও অ্যানালাইসিস পেজ -->
+        <div id="result-section" class="page-section">
+            <div class="inner-page-card" style="text-align: center;">
+                <h2>🎉 পরীক্ষা সম্পন্ন হয়েছে!</h2>
+                
+                <!-- ডায়গ্রাম ও পারসেন্টেজ কার্ড -->
+                <div style="background: #f8fafc; padding: 15px; border-radius: 12px; margin: 15px 0; border: 1px solid #e2e8f0;">
+                    <h3 id="percentage-text" style="font-size: 24px; color: #4f46e5; margin-bottom: 5px;">0%</h3>
+                    <p style="font-size: 13px; color: #64748b;">সঠিক উত্তর: <strong id="res-correct" style="color: #16a34a;">0</strong> | ভুল উত্তর: <strong id="res-wrong" style="color: #dc2626;">0</strong></p>
+                </div>
+
+                <h3 style="text-align: left; font-size: 15px; margin-bottom: 10px; color: #1e293b;">ভুল হওয়া প্রশ্নসমূহের সঠিক উত্তর:</h3>
+                <div id="wrong-answers-review" style="text-align: left; max-height: 200px; overflow-y: auto; margin-bottom: 15px; display: flex; flex-direction: column; gap: 8px;">
+                    <!-- ভুল প্রশ্ন এখানে ডায়নামিক আসবে -->
+                </div>
+
+                <button class="action-btn" onclick="switchSection('model-test-setup')" style="margin-bottom: 8px;">পুনরায় পরীক্ষা শুরু করুন</button>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- অন্যান্য সাধারণ পেজগুলো -->
         <div id="question-bank-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📚 প্রশ্নব্যাংক</h2>
-                <p>এখানে আপনার বিষয় ও অধ্যায়ভিত্তিক হাজার হাজার প্রশ্ন এবং তার ব্যাখ্যা পাওয়া যাবে।</p>
-                <button class="back-btn" onclick="switchSection('home-section')"><i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান</button>
+                <p>এখানে আপনার বিষয় ও অধ্যায়ভিত্তিক হাজার হাজার প্রশ্ন পাওয়া যাবে।</p>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
         <div id="zone-analysis-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📊 জোন এনালাইসিস</h2>
-                <p>আপনার কোন অধ্যায়গুলো দুর্বল এবং কোনগুলোতে ফোকাস করা দরকার তা এখানে এনালাইসিস করা হবে।</p>
-                <button class="back-btn" onclick="switchSection('home-section')"><i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান</button>
+                <p>আপনার কোন অধ্যায়গুলো দুর্বল তা এখানে এনালাইসিস করা হবে।</p>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
         <div id="ai-helper-section" class="page-section">
             <div class="inner-page-card">
                 <h2>🤖 সহায়ক AI</h2>
-                <p>যেকোনো কঠিন প্রশ্নের তাৎক্ষণিক সমাধান পেতে AI এর সাহায্য নিন।</p>
-                <button class="back-btn" onclick="switchSection('home-section')"><i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান</button>
+                <p>যেকোনো কঠিন প্রশ্নের তাৎক্ষণিক সমাধান পেতে সাহায্য নিন।</p>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
         <div id="live-exam-section" class="page-section">
             <div class="inner-page-card">
                 <h2>🔴 লাইভ এক্সাম</h2>
-                <p>বর্তমানে কোনো লাইভ পরীক্ষা চলছে না। আগামীকালের পরীক্ষার রুটিন এখানে দেখতে পাবেন।</p>
-                <button class="back-btn" onclick="switchSection('home-section')"><i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান</button>
+                <p>বর্তমানে কোনো লাইভ পরীক্ষা চলছে না।</p>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
         <div id="performance-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📈 পারফরম্যান্স রিপোর্ট</h2>
-                <p>আপনার আগের দেওয়া পরীক্ষাগুলোর সঠিক উত্তর, ভুল উত্তর ও সার্বিক অগ্রগতি দেখুন।</p>
-                <button class="back-btn" onclick="switchSection('home-section')"><i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান</button>
+                <p>আপনার আগের দেওয়া পরীক্ষাগুলোর অগ্রগতি দেখুন।</p>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
         <div id="flashcard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>⚡ ফ্ল্যাশকার্ড</h2>
-                <p>গুরুত্বপূর্ণ সূত্র ও তথ্য সহজে মনে রাখার জন্য ফ্ল্যাশকার্ড প্র্যাকটিস করুন।</p>
-                <button class="back-btn" onclick="switchSection('home-section')"><i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান</button>
+                <p>গুরুত্বপূর্ণ সূত্র ও তথ্য সহজে মনে রাখুন।</p>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
         <div id="suggestion-section" class="page-section">
             <div class="inner-page-card">
                 <h2>💡 এইচএসসি সাজেশন</h2>
-                <p>পরীক্ষায় ভালো ফলাফল করার জন্য এক্সপার্টদের তৈরি শর্ট সাজেশন ও টিপস।</p>
-                <button class="back-btn" onclick="switchSection('home-section')"><i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান</button>
+                <p>পরীক্ষায় ভালো ফলাফল করার শর্ট সাজেশন।</p>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
         <div id="archive-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📦 আর্কাইভ</h2>
-                <p>পূর্বের সকল বিগত বছরের প্রশ্ন ও উত্তর এখানে সংরক্ষিত আছে।</p>
-                <button class="back-btn" onclick="switchSection('home-section')"><i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান</button>
+                <p>পূর্বের সকল বিগত বছরের প্রশ্ন সংরক্ষিত আছে।</p>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
         <div id="profile-section" class="page-section">
             <div class="inner-page-card">
                 <h2>👤 ছাত্র প্রোফাইল</h2>
-                <p>নাম: Abs Siddik<br>লক্ষ্য: HSC Science<br>স্ট্যাটাস: একটিভ মেম্বার</p>
-                <button class="back-btn" onclick="switchSection('home-section')"><i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান</button>
+                <p>নাম: Abs Siddik<br>লক্ষ্য: HSC Science</p>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
@@ -587,23 +613,32 @@
             }
         }
 
-        let questions = [
+        const questions = [
             { q: "বাংলাদেশের রাজধানী কোনটি?", options: ["চট্টগ্রাম", "ঢাকা", "রাজশাহী", "সিলেট"], ans: 1 },
             { q: "HSC পরীক্ষার পূর্ণরূপ কী?", options: ["High School Certificate", "Higher Secondary Certificate", "Higher School Course", "Higher Secondary Class"], ans: 1 },
             { q: "HTML মূলত কী ধরণের ভাষা?", options: ["Programming Language", "Markup Language", "Database Language", "Scripting Language"], ans: 1 }
         ];
 
         let currentQ = 0;
-        let selectedChoice = null;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let userAnswersLog = [];
         let timerInterval;
         let timeLeftSeconds = 60;
+        let isAnswered = false;
 
         function startExam() {
-            // Get selected values from setup
             const selectedTimeMin = parseInt(document.getElementById('exam-time').value);
             timeLeftSeconds = selectedTimeMin * 60;
             
             currentQ = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            userAnswersLog = [];
+            
+            document.getElementById('live-correct').innerText = "0";
+            document.getElementById('live-wrong').innerText = "0";
+
             switchSection('model-test-section');
             startTimer();
             loadQuiz();
@@ -614,8 +649,7 @@
             timerInterval = setInterval(() => {
                 if (timeLeftSeconds <= 0) {
                     clearInterval(timerInterval);
-                    alert("সময় শেষ!");
-                    switchSection('home-section');
+                    finishExam();
                     return;
                 }
                 timeLeftSeconds--;
@@ -626,6 +660,9 @@
         }
 
         function loadQuiz() {
+            isAnswered = false;
+            document.getElementById('next-btn').style.display = 'none';
+
             if (currentQ < questions.length) {
                 document.getElementById('question-text').innerText = (currentQ + 1) + ". " + questions[currentQ].q;
                 const optContainer = document.getElementById('options-container');
@@ -633,34 +670,87 @@
                 
                 questions[currentQ].options.forEach((opt, index) => {
                     const btn = document.createElement('button');
+                    btn.className = 'option-btn';
                     btn.innerText = opt;
-                    btn.style.padding = '10px';
-                    btn.style.border = '1px solid #cbd5e1';
-                    btn.style.borderRadius = '8px';
-                    btn.style.background = '#f8fafc';
-                    btn.style.cursor = 'pointer';
-                    btn.style.textAlign = 'left';
-                    btn.onclick = () => {
-                        document.querySelectorAll('#options-container button').forEach(b => b.style.background = '#f8fafc');
-                        btn.style.background = '#e0e7ff';
-                        selectedChoice = index;
-                    };
+                    btn.onclick = () => selectOption(index, btn);
                     optContainer.appendChild(btn);
                 });
             } else {
-                clearInterval(timerInterval);
-                document.getElementById('quiz-box').innerHTML = `<h3>🎉 মডেল টেস্ট সফলভাবে সম্পন্ন হয়েছে!</h3><p style="margin-top:10px;">আপনার প্রস্তুতি যাচাই সম্পন্ন হয়েছে।</p>`;
+                finishExam();
             }
         }
 
-        function nextQuestion() {
-            if (selectedChoice === null) {
-                alert("দয়া করে একটি উত্তর সিলেক্ট করুন!");
-                return;
+        function selectOption(selectedIndex, clickedBtn) {
+            if (isAnswered) return; // একবার সিলেক্ট করলে দ্বিতীয়বার চেঞ্জ করা যাবে না
+            isAnswered = true;
+
+            const currentObj = questions[currentQ];
+            const allButtons = document.querySelectorAll('.option-btn');
+
+            if (selectedIndex === currentObj.ans) {
+                clickedBtn.style.background = '#dcfce7'; // সবুজ
+                clickedBtn.style.borderColor = '#16a34a';
+                correctCount++;
+                document.getElementById('live-correct').innerText = correctCount;
+            } else {
+                clickedBtn.style.background = '#fee2e2'; // লাল
+                clickedBtn.style.borderColor = '#dc2626';
+                // সঠিক উত্তরটি সবুজ করে দেওয়া
+                allButtons[currentObj.ans].style.background = '#dcfce7';
+                allButtons[currentObj.ans].style.borderColor = '#16a34a';
+
+                wrongCount++;
+                document.getElementById('live-wrong').innerText = wrongCount;
+
+                // ভুল প্রশ্নের লগ সেভ রাখা
+                userAnswersLog.push({
+                    question: currentObj.q,
+                    selected: currentObj.options[selectedIndex],
+                    correct: currentObj.options[currentObj.ans]
+                });
             }
-            selectedChoice = null;
+
+            // পরবর্তী প্রশ্ন দেখানোর বাটন ওপেন করা
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
             currentQ++;
             loadQuiz();
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            switchSection('result-section');
+
+            const totalQ = questions.length;
+            const percentage = Math.round((correctCount / totalQ) * 100);
+
+            document.getElementById('percentage-text').innerText = percentage + "% ঠিক হয়েছে";
+            document.getElementById('res-correct').innerText = correctCount;
+            document.getElementById('res-wrong').innerText = wrongCount;
+
+            // ভুল হওয়া প্রশ্নগুলোর লিস্ট তৈরি করা
+            const reviewContainer = document.getElementById('wrong-answers-review');
+            reviewContainer.innerHTML = '';
+
+            if (userAnswersLog.length === 0) {
+                reviewContainer.innerHTML = `<p style="font-size: 13px; color: #16a34a; text-align: center;">বাহ! আপনার কোনো ভুল হয়নি!</p>`;
+            } else {
+                userAnswersLog.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.style.background = '#fef2f2';
+                    div.style.padding = '10px';
+                    div.style.borderRadius = '8px';
+                    div.style.border = '1px solid #fecaca';
+                    div.innerHTML = `
+                        <p style="font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 3px;">${idx + 1}. ${item.question}</p>
+                        <p style="font-size: 11px; color: #dc2626;">আপনার উত্তর: ${item.selected}</p>
+                        <p style="font-size: 11px; color: #16a34a; font-weight: 600;">সঠিক উত্তর: ${item.correct}</p>
+                    `;
+                    reviewContainer.appendChild(div);
+                });
+            }
         }
     </script>
 </body>
