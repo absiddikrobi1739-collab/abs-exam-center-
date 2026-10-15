@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abs Exam Center - HSC Platform</title>
+    <title>Abs Exam Center - Courses & Platform</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font -->
@@ -76,7 +76,7 @@
             border-radius: 16px;
             padding: 18px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .status-badge {
@@ -96,38 +96,6 @@
             color: #1e293b;
             margin-bottom: 15px;
             line-height: 1.4;
-        }
-
-        .steps-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-            padding: 0 10px;
-        }
-
-        .step-item {
-            text-align: center;
-            font-size: 11px;
-            color: #64748b;
-        }
-
-        .step-number {
-            width: 22px;
-            height: 22px;
-            background: #f1f5f9;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 5px auto;
-            font-weight: bold;
-            color: #334155;
-        }
-
-        .step-arrow {
-            color: #cbd5e1;
-            font-size: 12px;
         }
 
         .action-btn {
@@ -211,7 +179,7 @@
         .inner-page-card {
             background: white;
             border-radius: 16px;
-            padding: 20px;
+            padding: 18px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             margin-bottom: 15px;
         }
@@ -226,6 +194,126 @@
             color: #64748b;
             font-size: 13px;
             margin-bottom: 15px;
+        }
+
+        /* Course Selling Card Style */
+        .course-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .course-badge {
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .course-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .course-desc {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .course-price-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 10px;
+        }
+
+        .price-tag {
+            font-size: 18px;
+            font-weight: 800;
+            color: #4f46e5;
+        }
+
+        .price-tag del {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-right: 5px;
+        }
+
+        .enroll-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 12px;
+        }
+
+        .stat-card h5 {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .stat-card h3 {
+            font-size: 18px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .progress-bar-bg {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 8px;
+            width: 100%;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .leaderboard-rank {
+            font-weight: bold;
+            width: 25px;
+            color: #4f46e5;
         }
 
         .form-group {
@@ -261,30 +349,6 @@
             font-size: 13px;
             margin-top: 10px;
             width: 100%;
-        }
-
-        /* Live Score Corner Badge */
-        .live-score-badge {
-            background: #f1f5f9;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #334155;
-            display: flex;
-            gap: 10px;
-        }
-
-        .option-btn {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            background: #f8fafc;
-            cursor: pointer;
-            text-align: left;
-            font-size: 14px;
-            transition: all 0.2s;
         }
 
         .bottom-bar {
@@ -341,53 +405,36 @@
             <div class="banner-card">
                 <div class="status-badge">● অ্যাকাউন্ট তৈরি হয়েছে</div>
                 <div class="banner-title">Abs Siddik, ৫ মিনিটে জেনে নাও তোমার কোন অধ্যায়গুলো দুর্বল</div>
-                
-                <div class="steps-container">
-                    <div class="step-item">
-                        <div class="step-number">১</div>
-                        <span>প্রশ্নের উত্তর দাও</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right step-arrow"></i>
-                    <div class="step-item">
-                        <div class="step-number">২</div>
-                        <span>দুর্বল জোন বানাও</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right step-arrow"></i>
-                    <div class="step-item">
-                        <div class="step-number">৩</div>
-                        <span>স্ট্রং প্রস্তুতি</span>
-                    </div>
-                </div>
-
-                <button class="action-btn" onclick="switchSection('model-test-setup')">
-                    Zone Analysis শুরু করো <i class="fa-solid fa-chevron-right"></i>
+                <button class="action-btn" onclick="switchSection('dashboard-section')">
+                    ড্যাশবোর্ড ও অ্যানালিটিক্স দেখুন <i class="fa-solid fa-chart-line"></i>
                 </button>
             </div>
 
             <p class="target-title">তোমার লক্ষ্য: HSC বিজ্ঞানে ভালো ফলাফল করা</p>
 
             <div class="grid-container">
-                <div class="grid-card" onclick="switchSection('question-bank-section')">
-                    <div class="icon-box c1"><i class="fa-solid fa-book"></i></div>
+                <!-- আমাদের কোর্স অপশন -->
+                <div class="grid-card" onclick="switchSection('courses-section')">
+                    <div class="icon-box c5"><i class="fa-solid fa-graduation-cap"></i></div>
                     <div class="card-info">
-                        <h4>প্রশ্নব্যাংক</h4>
-                        <p>হাজারো প্রশ্নে অধ্যায় অনুশীলন</p>
+                        <h4>আমাদের কোর্স</h4>
+                        <p>প্রিমিয়াম এইচএসসি কোর্স সমূহ</p>
                     </div>
                 </div>
 
-                <div class="grid-card" onclick="switchSection('zone-analysis-section')">
-                    <div class="icon-box c2"><i class="fa-solid fa-chart-pie"></i></div>
+                <div class="grid-card" onclick="switchSection('dashboard-section')">
+                    <div class="icon-box c6"><i class="fa-solid fa-chart-line"></i></div>
                     <div class="card-info">
-                        <h4>জোন এনালাইসিস</h4>
-                        <p>কোথায় দুর্বল, আজই বের করো</p>
+                        <h4>ড্যাশবোর্ড</h4>
+                        <p>পারফরম্যান্স ও দুর্বল বিষয়সমূহ</p>
                     </div>
                 </div>
 
-                <div class="grid-card" onclick="switchSection('ai-helper-section')">
-                    <div class="icon-box c3"><i class="fa-solid fa-robot"></i></div>
+                <div class="grid-card" onclick="switchSection('leaderboard-section')">
+                    <div class="icon-box c2"><i class="fa-solid fa-trophy"></i></div>
                     <div class="card-info">
-                        <h4>সহায়ক AI</h4>
-                        <p>২৪ ঘণ্টা স্মার্ট সহায়ক</p>
+                        <h4>লিডারবোর্ড</h4>
+                        <p>সেরা ১০ শিক্ষার্থীর তালিকা</p>
                     </div>
                 </div>
 
@@ -399,19 +446,19 @@
                     </div>
                 </div>
 
-                <div class="grid-card" onclick="switchSection('live-exam-section')">
-                    <div class="icon-box c5"><i class="fa-solid fa-tower-broadcast"></i></div>
+                <div class="grid-card" onclick="switchSection('question-bank-section')">
+                    <div class="icon-box c1"><i class="fa-solid fa-book"></i></div>
                     <div class="card-info">
-                        <h4>Live Exam</h4>
-                        <p>পরীক্ষার মতো পরিবেশে পরীক্ষা দিন</p>
+                        <h4>প্রশ্নব্যাংক</h4>
+                        <p>হাজারো প্রশ্নে অধ্যায় অনুশীলন</p>
                     </div>
                 </div>
 
-                <div class="grid-card" onclick="switchSection('performance-section')">
-                    <div class="icon-box c6"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="grid-card" onclick="switchSection('ai-helper-section')">
+                    <div class="icon-box c3"><i class="fa-solid fa-robot"></i></div>
                     <div class="card-info">
-                        <h4>পারফরম্যান্স</h4>
-                        <p>কোথায় এগিয়ে, কোথায় পিছিয়ে</p>
+                        <h4>সহায়ক AI</h4>
+                        <p>২৪ ঘণ্টা স্মার্ট সহায়ক</p>
                     </div>
                 </div>
 
@@ -433,7 +480,106 @@
             </div>
         </div>
 
-        <!-- ২. মডেল টেস্ট সেটআপ -->
+        <!-- ২. আমাদের কোর্স (Course Selling Page) -->
+        <div id="courses-section" class="page-section">
+            <div class="inner-page-card">
+                <h2>🎓 প্রিমিয়াম কোর্সসমূহ</h2>
+                <p>এইচএসসি পরীক্ষায় এ+ পাওয়ার জন্য আমাদের বিশেষ কোর্সগুলোতে এনরোল করুন।</p>
+
+                <!-- Course 1 -->
+                <div class="course-card">
+                    <span class="course-badge">🔥 জনপ্রিয় কোর্স</span>
+                    <div class="course-title">HSC ICT ১০০ দিনে ফাইনাল প্রিপারেশন</div>
+                    <div class="course-desc">সম্পূর্ণ আইসিটি সিলেবাসের ওপর লাইভ ক্লাস, অধ্যায়ভিত্তিক মডেল টেস্ট এবং সিক্রেট সাজেশন।</div>
+                    <div class="course-price-area">
+                        <div class="price-tag"><del>৳১৫০০</del> ৳৪৯৯</div>
+                        <button class="enroll-btn" onclick="buyCourse('HSC ICT ১০০ দিনে ফাইনাল প্রিপারেশন')">এনরোল করুন</button>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="course-card">
+                    <span class="course-badge">⚡ ক্র্যাশ কোর্স</span>
+                    <div class="course-title">পদার্থবিজ্ঞান ১ম ও ২য় পত্র রিভিশন ব্যাচ</div>
+                    <div class="course-desc">কঠিন গাণিতিক সমস্যার সহজ সমাধান এবং বোর্ড প্রশ্ন এনালাইসিস ক্লাস।</div>
+                    <div class="course-price-area">
+                        <div class="price-tag"><del>৳২০০০</del> ৳৯৯৯</div>
+                        <button class="enroll-btn" onclick="buyCourse('পদার্থবিজ্ঞান ১ম ও ২য় পত্র রিভিশন ব্যাচ')">এনরোল করুন</button>
+                    </div>
+                </div>
+
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- ৩. স্টুডেন্ট ড্যাশবোর্ড -->
+        <div id="dashboard-section" class="page-section">
+            <div class="inner-page-card">
+                <h2>📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
+                <p style="margin-bottom: 12px;">স্বাগতম Abs Siddik! আপনার পড়াশোনার হালনাগাদ তথ্য।</p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <h5>চলমান বিষয়</h5>
+                        <h3>৩ টি</h3>
+                    </div>
+                    <div class="stat-card">
+                        <h5>গড় স্কোর</h5>
+                        <h3 style="color: #2563eb;">৬৫%</h3>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <h4 style="font-size: 14px; margin-bottom: 8px; color: #1e293b;">দুর্বল বিষয়সমূহ (Score &lt; 50%)</h4>
+                    
+                    <div style="margin-bottom: 8px;">
+                        <div style="display:flex; justify-content:space-between; font-size:12px;">
+                            <span>পদার্থবিজ্ঞান</span>
+                            <span style="color:#dc2626; font-weight:bold;">৩০%</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 30%; background: #dc2626;"></div></div>
+                    </div>
+
+                    <div style="margin-bottom: 8px;">
+                        <div style="display:flex; justify-content:space-between; font-size:12px;">
+                            <span>রসায়ন</span>
+                            <span style="color:#ea580c; font-weight:bold;">৪৫%</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 45%; background: #ea580c;"></div></div>
+                    </div>
+                </div>
+
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- ৪. লিডারবোর্ড -->
+        <div id="leaderboard-section" class="page-section">
+            <div class="inner-page-card">
+                <h2>🏆 সাপ্তাহিক লিডারবোর্ড</h2>
+                <p>সর্বোচ্চ স্কোর অর্জনকারী সেরা ১০ পরীক্ষার্থী:</p>
+
+                <div class="leaderboard-item">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span class="leaderboard-rank">#১</span>
+                        <span style="font-weight:600; font-size:13px;">মাসফাকুর রহমান</span>
+                    </div>
+                    <span style="font-weight:bold; color:#16a34a;">৯৮%</span>
+                </div>
+
+                <div class="leaderboard-item">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span class="leaderboard-rank">#২</span>
+                        <span style="font-weight:600; font-size:13px;">Abs Siddik (আপনি)</span>
+                    </div>
+                    <span style="font-weight:bold; color:#2563eb;">৯৫%</span>
+                </div>
+
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- ৫. মডেল টেস্ট সেটআপ -->
         <div id="model-test-setup" class="page-section">
             <div class="inner-page-card">
                 <h2>⚙️ পরীক্ষার কাস্টমাইজেশন</h2>
@@ -461,13 +607,13 @@
             </div>
         </div>
 
-        <!-- ৩. মূল পরীক্ষা পেজ -->
+        <!-- ৬. মূল পরীক্ষা পেজ -->
         <div id="model-test-section" class="page-section">
             <div class="inner-page-card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <span id="timer-display" style="background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">⏱️ 00:00</span>
-                    <div class="live-score-badge">
-                        <span style="color: #16a34a;">সঠিক: <span id="live-correct">0</span></span>
+                    <div style="background: #f1f5f9; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                        <span style="color: #16a34a;">সঠিক: <span id="live-correct">0</span></span> |
                         <span style="color: #dc2626;">ভুল: <span id="live-wrong">0</span></span>
                     </div>
                 </div>
@@ -480,28 +626,7 @@
             </div>
         </div>
 
-        <!-- ৪. ফলাফল ও অ্যানালাইসিস পেজ -->
-        <div id="result-section" class="page-section">
-            <div class="inner-page-card" style="text-align: center;">
-                <h2>🎉 পরীক্ষা সম্পন্ন হয়েছে!</h2>
-                
-                <!-- ডায়গ্রাম ও পারসেন্টেজ কার্ড -->
-                <div style="background: #f8fafc; padding: 15px; border-radius: 12px; margin: 15px 0; border: 1px solid #e2e8f0;">
-                    <h3 id="percentage-text" style="font-size: 24px; color: #4f46e5; margin-bottom: 5px;">0%</h3>
-                    <p style="font-size: 13px; color: #64748b;">সঠিক উত্তর: <strong id="res-correct" style="color: #16a34a;">0</strong> | ভুল উত্তর: <strong id="res-wrong" style="color: #dc2626;">0</strong></p>
-                </div>
-
-                <h3 style="text-align: left; font-size: 15px; margin-bottom: 10px; color: #1e293b;">ভুল হওয়া প্রশ্নসমূহের সঠিক উত্তর:</h3>
-                <div id="wrong-answers-review" style="text-align: left; max-height: 200px; overflow-y: auto; margin-bottom: 15px; display: flex; flex-direction: column; gap: 8px;">
-                    <!-- ভুল প্রশ্ন এখানে ডায়নামিক আসবে -->
-                </div>
-
-                <button class="action-btn" onclick="switchSection('model-test-setup')" style="margin-bottom: 8px;">পুনরায় পরীক্ষা শুরু করুন</button>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <!-- অন্যান্য সাধারণ পেজগুলো -->
+        <!-- অন্যান্য সেকশনসমূহ -->
         <div id="question-bank-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📚 প্রশ্নব্যাংক</h2>
@@ -510,34 +635,10 @@
             </div>
         </div>
 
-        <div id="zone-analysis-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>📊 জোন এনালাইসিস</h2>
-                <p>আপনার কোন অধ্যায়গুলো দুর্বল তা এখানে এনালাইসিস করা হবে।</p>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
         <div id="ai-helper-section" class="page-section">
             <div class="inner-page-card">
                 <h2>🤖 সহায়ক AI</h2>
                 <p>যেকোনো কঠিন প্রশ্নের তাৎক্ষণিক সমাধান পেতে সাহায্য নিন।</p>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <div id="live-exam-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>🔴 লাইভ এক্সাম</h2>
-                <p>বর্তমানে কোনো লাইভ পরীক্ষা চলছে না।</p>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <div id="performance-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>📈 পারফরম্যান্স রিপোর্ট</h2>
-                <p>আপনার আগের দেওয়া পরীক্ষাগুলোর অগ্রগতি দেখুন।</p>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
@@ -558,14 +659,6 @@
             </div>
         </div>
 
-        <div id="archive-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>📦 আর্কাইভ</h2>
-                <p>পূর্বের সকল বিগত বছরের প্রশ্ন সংরক্ষিত আছে।</p>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
         <div id="profile-section" class="page-section">
             <div class="inner-page-card">
                 <h2>👤 ছাত্র প্রোফাইল</h2>
@@ -582,17 +675,17 @@
             <i class="fa-solid fa-house"></i>
             <span>হোম</span>
         </a>
-        <a class="nav-link" onclick="switchSection('question-bank-section')">
-            <i class="fa-solid fa-book-open"></i>
-            <span>প্রশ্নব্যাংক</span>
+        <a class="nav-link" onclick="switchSection('courses-section')">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>কোর্স</span>
         </a>
-        <a class="nav-link" onclick="switchSection('zone-analysis-section')">
-            <i class="fa-solid fa-chart-simple"></i>
-            <span>এনালাইসিস</span>
+        <a class="nav-link" onclick="switchSection('dashboard-section')">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>ড্যাশবোর্ড</span>
         </a>
-        <a class="nav-link" onclick="switchSection('archive-section')">
-            <i class="fa-solid fa-box-archive"></i>
-            <span>আর্কাইভ</span>
+        <a class="nav-link" onclick="switchSection('leaderboard-section')">
+            <i class="fa-solid fa-trophy"></i>
+            <span>লিডারবোর্ড</span>
         </a>
         <a class="nav-link" onclick="switchSection('profile-section')">
             <i class="fa-solid fa-user"></i>
@@ -613,6 +706,10 @@
             }
         }
 
+        function buyCourse(courseName) {
+            alert(`"${courseName}" কোর্সে এনরোল করার জন্য বিকাশ/নগদ পেমেন্ট সম্পন্ন করুন। বিস্তারিত তথ্য আপনার ইমেইলে পাঠিয়ে দেওয়া হবে।`);
+        }
+
         const questions = [
             { q: "বাংলাদেশের রাজধানী কোনটি?", options: ["চট্টগ্রাম", "ঢাকা", "রাজশাহী", "সিলেট"], ans: 1 },
             { q: "HSC পরীক্ষার পূর্ণরূপ কী?", options: ["High School Certificate", "Higher Secondary Certificate", "Higher School Course", "Higher Secondary Class"], ans: 1 },
@@ -622,7 +719,6 @@
         let currentQ = 0;
         let correctCount = 0;
         let wrongCount = 0;
-        let userAnswersLog = [];
         let timerInterval;
         let timeLeftSeconds = 60;
         let isAnswered = false;
@@ -634,7 +730,6 @@
             currentQ = 0;
             correctCount = 0;
             wrongCount = 0;
-            userAnswersLog = [];
             
             document.getElementById('live-correct').innerText = "0";
             document.getElementById('live-wrong').innerText = "0";
@@ -649,7 +744,8 @@
             timerInterval = setInterval(() => {
                 if (timeLeftSeconds <= 0) {
                     clearInterval(timerInterval);
-                    finishExam();
+                    alert("সময় শেষ!");
+                    switchSection('dashboard-section');
                     return;
                 }
                 timeLeftSeconds--;
@@ -670,87 +766,42 @@
                 
                 questions[currentQ].options.forEach((opt, index) => {
                     const btn = document.createElement('button');
-                    btn.className = 'option-btn';
+                    btn.className = 'back-btn';
+                    btn.style.textAlign = 'left';
+                    btn.style.background = '#f8fafc';
                     btn.innerText = opt;
                     btn.onclick = () => selectOption(index, btn);
                     optContainer.appendChild(btn);
                 });
             } else {
-                finishExam();
+                clearInterval(timerInterval);
+                alert("পরীক্ষা সম্পন্ন হয়েছে!");
+                switchSection('dashboard-section');
             }
         }
 
         function selectOption(selectedIndex, clickedBtn) {
-            if (isAnswered) return; // একবার সিলেক্ট করলে দ্বিতীয়বার চেঞ্জ করা যাবে না
+            if (isAnswered) return;
             isAnswered = true;
 
             const currentObj = questions[currentQ];
-            const allButtons = document.querySelectorAll('.option-btn');
 
             if (selectedIndex === currentObj.ans) {
-                clickedBtn.style.background = '#dcfce7'; // সবুজ
-                clickedBtn.style.borderColor = '#16a34a';
+                clickedBtn.style.background = '#dcfce7';
                 correctCount++;
                 document.getElementById('live-correct').innerText = correctCount;
             } else {
-                clickedBtn.style.background = '#fee2e2'; // লাল
-                clickedBtn.style.borderColor = '#dc2626';
-                // সঠিক উত্তরটি সবুজ করে দেওয়া
-                allButtons[currentObj.ans].style.background = '#dcfce7';
-                allButtons[currentObj.ans].style.borderColor = '#16a34a';
-
+                clickedBtn.style.background = '#fee2e2';
                 wrongCount++;
                 document.getElementById('live-wrong').innerText = wrongCount;
-
-                // ভুল প্রশ্নের লগ সেভ রাখা
-                userAnswersLog.push({
-                    question: currentObj.q,
-                    selected: currentObj.options[selectedIndex],
-                    correct: currentObj.options[currentObj.ans]
-                });
             }
 
-            // পরবর্তী প্রশ্ন দেখানোর বাটন ওপেন করা
             document.getElementById('next-btn').style.display = 'block';
         }
 
         function nextQuestion() {
             currentQ++;
             loadQuiz();
-        }
-
-        function finishExam() {
-            clearInterval(timerInterval);
-            switchSection('result-section');
-
-            const totalQ = questions.length;
-            const percentage = Math.round((correctCount / totalQ) * 100);
-
-            document.getElementById('percentage-text').innerText = percentage + "% ঠিক হয়েছে";
-            document.getElementById('res-correct').innerText = correctCount;
-            document.getElementById('res-wrong').innerText = wrongCount;
-
-            // ভুল হওয়া প্রশ্নগুলোর লিস্ট তৈরি করা
-            const reviewContainer = document.getElementById('wrong-answers-review');
-            reviewContainer.innerHTML = '';
-
-            if (userAnswersLog.length === 0) {
-                reviewContainer.innerHTML = `<p style="font-size: 13px; color: #16a34a; text-align: center;">বাহ! আপনার কোনো ভুল হয়নি!</p>`;
-            } else {
-                userAnswersLog.forEach((item, idx) => {
-                    const div = document.createElement('div');
-                    div.style.background = '#fef2f2';
-                    div.style.padding = '10px';
-                    div.style.borderRadius = '8px';
-                    div.style.border = '1px solid #fecaca';
-                    div.innerHTML = `
-                        <p style="font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 3px;">${idx + 1}. ${item.question}</p>
-                        <p style="font-size: 11px; color: #dc2626;">আপনার উত্তর: ${item.selected}</p>
-                        <p style="font-size: 11px; color: #16a34a; font-weight: 600;">সঠিক উত্তর: ${item.correct}</p>
-                    `;
-                    reviewContainer.appendChild(div);
-                });
-            }
         }
     </script>
 </body>
