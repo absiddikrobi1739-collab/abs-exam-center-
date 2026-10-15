@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abs Exam Center - Courses & Analytics</title>
+    <title>Abs Exam Center - Platform</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font -->
@@ -198,7 +198,53 @@
             margin-bottom: 15px;
         }
 
-        /* Subscription Lock & Premium Box Styles */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 5px;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f8fafc;
+        }
+
+        .option-btn {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #f8fafc;
+            cursor: pointer;
+            text-align: left;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .back-btn {
+            background: #e2e8f0;
+            color: #334155;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
         .premium-card {
             background: linear-gradient(135deg, #1e1b4b, #312e81);
             color: white;
@@ -289,41 +335,6 @@
             border-radius: 10px;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #334155;
-            margin-bottom: 5px;
-        }
-
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 14px;
-            background: #f8fafc;
-        }
-
-        .back-btn {
-            background: #e2e8f0;
-            color: #334155;
-            border: none;
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 13px;
-            margin-top: 10px;
-            width: 100%;
-        }
-
         .bottom-bar {
             position: fixed;
             bottom: 0;
@@ -406,7 +417,7 @@
                     <div class="icon-box c2"><i class="fa-solid fa-trophy"></i></div>
                     <div class="card-info">
                         <h4>লিডারবোর্ড</h4>
-                        <p>সেরা ১০ শিক্ষার্থীর তালিকা</p>
+                        <p>সেরা ১০ শিক্ষার তালিকা</p>
                     </div>
                 </div>
 
@@ -452,7 +463,55 @@
             </div>
         </div>
 
-        <!-- ২. স্টুডেন্ট ড্যাশবোর্ড -->
+        <!-- ২. মডেল টেস্ট সেটআপ -->
+        <div id="model-test-setup" class="page-section">
+            <div class="inner-page-card">
+                <h2>⚙️ পরীক্ষার কাস্টমাইজেশন</h2>
+                <p>পরীক্ষা শুরু করার আগে আপনার পছন্দমতো অধ্যায় ও সময় সিলেক্ট করুন।</p>
+                
+                <div class="form-group">
+                    <label>অধ্যায় নির্বাচন করুন:</label>
+                    <select id="chapter-select">
+                        <option value="ict-1">আইসিটি - প্রথম ও দ্বিতীয় অধ্যায়</option>
+                        <option value="physics-1">পদার্থবিজ্ঞান - প্রথম অধ্যায়</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>সময়সীমা:</label>
+                    <select id="exam-time">
+                        <option value="1">১ মিনিট</option>
+                        <option value="2">২ মিনিট</option>
+                        <option value="5">৫ মিনিট</option>
+                    </select>
+                </div>
+
+                <button class="action-btn" onclick="startExam()">পরীক্ষা শুরু করুন <i class="fa-solid fa-play"></i></button>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- ৩. মূল পরীক্ষা পেজ (সম্পূর্ণ কাজ করবে) -->
+        <div id="model-test-section" class="page-section">
+            <div class="inner-page-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span id="timer-display" style="background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">⏱️ 00:00</span>
+                    <div style="background: #f1f5f9; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                        <span style="color: #16a34a;">সঠিক: <span id="live-correct">0</span></span> | 
+                        <span style="color: #dc2626;">ভুল: <span id="live-wrong">0</span></span>
+                    </div>
+                </div>
+
+                <div id="quiz-box">
+                    <p id="question-text" style="font-weight: 600; color: #1e293b; margin-bottom: 15px; font-size: 15px;">প্রশ্ন লোড হচ্ছে...</p>
+                    <div id="options-container" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
+                    <button id="next-btn" class="action-btn" onclick="nextQuestion()" style="display:none;">পরবর্তী প্রশ্ন</button>
+                </div>
+                <button class="back-btn" onclick="cancelExam()">পরীক্ষা বাতিল করুন</button>
+            </div>
+        </div>
+
+        <!-- ৪. স্টুডেন্ট ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
@@ -497,10 +556,8 @@
                     </div>
                 </div>
 
-                <!-- 🔒 সাবস্ক্রিপশন চেক করার জায়গা -->
-                <div id="subscription-area">
-                    <!-- এই অংশটি জাভাস্ক্রিপ্ট দিয়ে নিয়ন্ত্রণ করা হবে -->
-                </div>
+                <!-- 🔒 সাবস্ক্রিপশন ডায়নামিক এলাকা -->
+                <div id="subscription-area"></div>
 
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
@@ -520,40 +577,6 @@
                 <h2>🏆 সাপ্তাহিক লিডারবোর্ড</h2>
                 <p>সর্বোচ্চ স্কোর অর্জনকারী সেরা ১০ পরীক্ষার্থী:</p>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <div id="model-test-setup" class="page-section">
-            <div class="inner-page-card">
-                <h2>⚙️ পরীক্ষার কাস্টমাইজেশন</h2>
-                <p>পরীক্ষা শুরু করার আগে আপনার পছন্দমতো অধ্যায় ও সময় সিলেক্ট করুন।</p>
-                
-                <div class="form-group">
-                    <label>অধ্যায় নির্বাচন করুন:</label>
-                    <select id="chapter-select">
-                        <option value="ict-1">আইসিটি - প্রথম ও দ্বিতীয় অধ্যায়</option>
-                        <option value="physics-1">পদার্থবিজ্ঞান - প্রথম অধ্যায়</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>সময়সীমা:</label>
-                    <select id="exam-time">
-                        <option value="1">১ মিনিট</option>
-                        <option value="2">২ মিনিট</option>
-                        <option value="5">৫ মিনিট</option>
-                    </select>
-                </div>
-
-                <button class="action-btn" onclick="switchSection('model-test-section')">পরীক্ষা শুরু করুন <i class="fa-solid fa-play"></i></button>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <div id="model-test-section" class="page-section">
-            <div class="inner-page-card">
-                <p>পরীক্ষা চলছে...</p>
-                <button class="back-btn" onclick="switchSection('home-section')">পরীক্ষা বাতিল করুন</button>
             </div>
         </div>
 
@@ -623,14 +646,23 @@
         </a>
     </div>
 
-    <!-- JavaScript Logic & Subscription System -->
+    <!-- JavaScript Logic -->
     <script>
-        // ==========================================
-        // সাবস্ক্রিপশন স্ট্যাটাস কন্ট্রোল:
-        // false = সাবস্ক্রিপশন কেনা নেই (লক দেখাবে)
-        // true  = সাবস্ক্রিপশন কেনা আছে (ভুল উত্তরের ইতিহাস দেখাবে)
-        // ==========================================
+        // সাবস্ক্রিপশন কন্ট্রোল (false = লক, true = ভুল প্রশ্ন দেখাবে)
         const hasActiveSubscription = false; 
+
+        const questions = [
+            { q: "বাংলাদেশের রাজধানী কোনটি?", options: ["চট্টগ্রাম", "ঢাকা", "রাজশাহী", "সিলেট"], ans: 1 },
+            { q: "HSC পরীক্ষার পূর্ণরূপ কী?", options: ["High School Certificate", "Higher Secondary Certificate", "Higher School Course", "Higher Secondary Class"], ans: 1 },
+            { q: "HTML মূলত কী ধরণের ভাষা?", options: ["Programming Language", "Markup Language", "Database Language", "Scripting Language"], ans: 1 }
+        ];
+
+        let currentQ = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let timerInterval;
+        let timeLeftSeconds = 60;
+        let isAnswered = false;
 
         function switchSection(sectionId) {
             const sections = document.querySelectorAll('.page-section');
@@ -648,42 +680,121 @@
             }
         }
 
+        function startExam() {
+            const selectedTimeMin = parseInt(document.getElementById('exam-time').value);
+            timeLeftSeconds = selectedTimeMin * 60;
+            
+            currentQ = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            
+            document.getElementById('live-correct').innerText = "0";
+            document.getElementById('live-wrong').innerText = "0";
+
+            switchSection('model-test-section');
+            startTimer();
+            loadQuiz();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (timeLeftSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("সময় শেষ!");
+                    switchSection('dashboard-section');
+                    return;
+                }
+                timeLeftSeconds--;
+                const m = Math.floor(timeLeftSeconds / 60);
+                const s = timeLeftSeconds % 60;
+                document.getElementById('timer-display').innerText = `⏱️ ${m}:${s < 10 ? '0' : ''}${s}`;
+            }, 1000);
+        }
+
+        function loadQuiz() {
+            isAnswered = false;
+            document.getElementById('next-btn').style.display = 'none';
+
+            if (currentQ < questions.length) {
+                document.getElementById('question-text').innerText = (currentQ + 1) + ". " + questions[currentQ].q;
+                const optContainer = document.getElementById('options-container');
+                optContainer.innerHTML = '';
+                
+                questions[currentQ].options.forEach((opt, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerText = opt;
+                    btn.onclick = () => selectOption(index, btn);
+                    optContainer.appendChild(btn);
+                });
+            } else {
+                clearInterval(timerInterval);
+                alert("পরীক্ষা সফলভাবে সম্পন্ন হয়েছে!");
+                switchSection('dashboard-section');
+            }
+        }
+
+        function selectOption(selectedIndex, clickedBtn) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const currentObj = questions[currentQ];
+            const allButtons = document.querySelectorAll('.option-btn');
+
+            if (selectedIndex === currentObj.ans) {
+                clickedBtn.style.background = '#dcfce7';
+                clickedBtn.style.borderColor = '#16a34a';
+                correctCount++;
+                document.getElementById('live-correct').innerText = correctCount;
+            } else {
+                clickedBtn.style.background = '#fee2e2';
+                clickedBtn.style.borderColor = '#dc2626';
+                allButtons[currentObj.ans].style.background = '#dcfce7';
+                allButtons[currentObj.ans].style.borderColor = '#16a34a';
+
+                wrongCount++;
+                document.getElementById('live-wrong').innerText = wrongCount;
+            }
+
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            loadQuiz();
+        }
+
+        function cancelExam() {
+            clearInterval(timerInterval);
+            switchSection('home-section');
+        }
+
         function loadSubscriptionView() {
             const subArea = document.getElementById('subscription-area');
-            
             if (hasActiveSubscription) {
-                // সাবস্ক্রিপশন কেনা থাকলে এই প্রিমিয়াম বক্স দেখাবে
                 subArea.innerHTML = `
                     <div class="premium-card">
                         <h4><i class="fa-solid fa-crown"></i> প্রিমিয়াম মেম্বারশিপ এরিয়া</h4>
                         <p>পূর্বে যেসব প্রশ্নে ভুল হয়েছিল সেগুলোর তালিকা ও সঠিক সমাধান:</p>
-                        
                         <div class="wrong-item-box">
                             <strong>১. HTML মূলত কী ধরণের ভাষা?</strong><br>
                             ❌ আপনার ভুল উত্তর: Programming Language<br>
                             ✅ সঠিক উত্তর: Markup Language
                         </div>
-
-                        <div class="wrong-item-box">
-                            <strong>২. ভেক্টর রাশির মান প্রকাশের দিক কয়টি?</strong><br>
-                            ❌ আপনার ভুল উত্তর: ১টি<br>
-                            ✅ সঠিক উত্তর: দিক ও মান উভয়ই লাগে
-                        </div>
                     </div>
                 `;
             } else {
-                // সাবস্ক্রিপশন না থাকলে এই লক করা মেসেজ দেখাবে
                 subArea.innerHTML = `
                     <div class="locked-card">
                         <h4>🔒 প্রিমিয়াম ফিচার লক করা আছে</h4>
                         <p>পূর্বে কোথায় ভুল হয়েছিল তা দেখতে এবং ডিটেইলড অ্যানালিসিস পেতে সাবস্ক্রিপশন কিনুন।</p>
-                        <button class="upgrade-btn" onclick="alert('সাবস্ক্রিপশন পেমেন্ট পেজে রিডাইরেক্ট করা হচ্ছে...')">সাবস্ক্রিপশন কিনুন</button>
+                        <button class="upgrade-btn" onclick="alert('কোর্স সেকশন থেকে সাবস্ক্রিপশন কিনুন!')">সাবস্ক্রিপশন কিনুন</button>
                     </div>
                 `;
             }
         }
 
-        // Render Performance Diagram (Line Chart)
         let chartRendered = false;
         function renderChart() {
             if(chartRendered) return;
