@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abs Exam Center - Courses & Platform</title>
+    <title>Abs Exam Center - Courses & Analytics</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for Diagram -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         * {
@@ -196,70 +198,37 @@
             margin-bottom: 15px;
         }
 
-        /* Course Selling Card Style */
-        .course-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-
-        .course-badge {
-            background: #dcfce7;
-            color: #15803d;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 6px;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-
-        .course-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 6px;
-        }
-
-        .course-desc {
-            font-size: 12px;
-            color: #64748b;
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .course-price-area {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 10px;
-        }
-
-        .price-tag {
-            font-size: 18px;
-            font-weight: 800;
-            color: #4f46e5;
-        }
-
-        .price-tag del {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-right: 5px;
-        }
-
-        .enroll-btn {
-            background: #4f46e5;
+        /* Premium Subscription Card */
+        .premium-card {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
             color: white;
-            border: none;
-            padding: 8px 16px;
+            padding: 15px;
+            border-radius: 14px;
+            margin-top: 15px;
+            border: 1px solid #6366f1;
+        }
+
+        .premium-card h4 {
+            color: #fbbf24;
+            font-size: 15px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .premium-card p {
+            color: #cbd5e1;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .wrong-item-box {
+            background: #ffffff1a;
+            padding: 8px;
             border-radius: 8px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
+            margin-bottom: 6px;
+            font-size: 11px;
         }
 
         .stat-grid {
@@ -300,20 +269,6 @@
         .progress-fill {
             height: 100%;
             border-radius: 10px;
-        }
-
-        .leaderboard-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .leaderboard-rank {
-            font-weight: bold;
-            width: 25px;
-            color: #4f46e5;
         }
 
         .form-group {
@@ -405,28 +360,29 @@
             <div class="banner-card">
                 <div class="status-badge">● অ্যাকাউন্ট তৈরি হয়েছে</div>
                 <div class="banner-title">Abs Siddik, ৫ মিনিটে জেনে নাও তোমার কোন অধ্যায়গুলো দুর্বল</div>
-                <button class="action-btn" onclick="switchSection('dashboard-section')">
-                    ড্যাশবোর্ড ও অ্যানালিটিক্স দেখুন <i class="fa-solid fa-chart-line"></i>
+                
+                <!-- বাটনটি "পরীক্ষা দিন" এ পরিবর্তন করা হয়েছে -->
+                <button class="action-btn" onclick="switchSection('model-test-setup')">
+                    পরীক্ষা দিন <i class="fa-solid fa-pen-to-square"></i>
                 </button>
             </div>
 
             <p class="target-title">তোমার লক্ষ্য: HSC বিজ্ঞানে ভালো ফলাফল করা</p>
 
             <div class="grid-container">
-                <!-- আমাদের কোর্স অপশন -->
-                <div class="grid-card" onclick="switchSection('courses-section')">
-                    <div class="icon-box c5"><i class="fa-solid fa-graduation-cap"></i></div>
-                    <div class="card-info">
-                        <h4>আমাদের কোর্স</h4>
-                        <p>প্রিমিয়াম এইচএসসি কোর্স সমূহ</p>
-                    </div>
-                </div>
-
                 <div class="grid-card" onclick="switchSection('dashboard-section')">
                     <div class="icon-box c6"><i class="fa-solid fa-chart-line"></i></div>
                     <div class="card-info">
                         <h4>ড্যাশবোর্ড</h4>
                         <p>পারফরম্যান্স ও দুর্বল বিষয়সমূহ</p>
+                    </div>
+                </div>
+
+                <div class="grid-card" onclick="switchSection('courses-section')">
+                    <div class="icon-box c5"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="card-info">
+                        <h4>আমাদের কোর্স</h4>
+                        <p>প্রিমিয়াম এইচএসসি কোর্স সমূহ</p>
                     </div>
                 </div>
 
@@ -480,39 +436,7 @@
             </div>
         </div>
 
-        <!-- ২. আমাদের কোর্স (Course Selling Page) -->
-        <div id="courses-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>🎓 প্রিমিয়াম কোর্সসমূহ</h2>
-                <p>এইচএসসি পরীক্ষায় এ+ পাওয়ার জন্য আমাদের বিশেষ কোর্সগুলোতে এনরোল করুন।</p>
-
-                <!-- Course 1 -->
-                <div class="course-card">
-                    <span class="course-badge">🔥 জনপ্রিয় কোর্স</span>
-                    <div class="course-title">HSC ICT ১০০ দিনে ফাইনাল প্রিপারেশন</div>
-                    <div class="course-desc">সম্পূর্ণ আইসিটি সিলেবাসের ওপর লাইভ ক্লাস, অধ্যায়ভিত্তিক মডেল টেস্ট এবং সিক্রেট সাজেশন।</div>
-                    <div class="course-price-area">
-                        <div class="price-tag"><del>৳১৫০০</del> ৳৪৯৯</div>
-                        <button class="enroll-btn" onclick="buyCourse('HSC ICT ১০০ দিনে ফাইনাল প্রিপারেশন')">এনরোল করুন</button>
-                    </div>
-                </div>
-
-                <!-- Course 2 -->
-                <div class="course-card">
-                    <span class="course-badge">⚡ ক্র্যাশ কোর্স</span>
-                    <div class="course-title">পদার্থবিজ্ঞান ১ম ও ২য় পত্র রিভিশন ব্যাচ</div>
-                    <div class="course-desc">কঠিন গাণিতিক সমস্যার সহজ সমাধান এবং বোর্ড প্রশ্ন এনালাইসিস ক্লাস।</div>
-                    <div class="course-price-area">
-                        <div class="price-tag"><del>৳২০০০</del> ৳৯৯৯</div>
-                        <button class="enroll-btn" onclick="buyCourse('পদার্থবিজ্ঞান ১ম ও ২য় পত্র রিভিশন ব্যাচ')">এনরোল করুন</button>
-                    </div>
-                </div>
-
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <!-- ৩. স্টুডেন্ট ড্যাশবোর্ড -->
+        <!-- ২. স্টুডেন্ট ড্যাশবোর্ড (ডায়গ্রাম ও প্রিমিয়াম সেকশন সহ) -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
@@ -526,6 +450,14 @@
                     <div class="stat-card">
                         <h5>গড় স্কোর</h5>
                         <h3 style="color: #2563eb;">৬৫%</h3>
+                    </div>
+                </div>
+
+                <!-- পারফরম্যান্স গ্রাফ/ডায়গ্রাম -->
+                <div style="margin-bottom: 20px;">
+                    <h4 style="font-size: 13px; color: #1e293b; margin-bottom: 8px;">📊 বিগত পরীক্ষাগুলোর স্কোর ডায়াগ্রাম:</h4>
+                    <div style="background: #f8fafc; padding: 10px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                        <canvas id="performanceChart"></canvas>
                     </div>
                 </div>
 
@@ -549,37 +481,45 @@
                     </div>
                 </div>
 
+                <!-- 🔒 প্রিমিয়াম সাবস্ক্রিপশন মেম্বারদের জন্য এক্সট্রা সেকশন -->
+                <div class="premium-card">
+                    <h4><i class="fa-solid fa-crown"></i> প্রিমিয়াম মেম্বারশিপ এরিয়া</h4>
+                    <p>পূর্বে যেসব প্রশ্নে ভুল হয়েছিল সেগুলোর তালিকা ও সঠিক সমাধান:</p>
+                    
+                    <div class="wrong-item-box">
+                        <strong>১. HTML মূলত কী ধরণের ভাষা?</strong><br>
+                        ❌ আপনার ভুল উত্তর: Programming Language<br>
+                        ✅ সঠিক উত্তর: Markup Language
+                    </div>
+
+                    <div class="wrong-item-box">
+                        <strong>২. ভেক্টর রাশির মান প্রকাশের দিক কয়টি?</strong><br>
+                        ❌ আপনার ভুল উত্তর: ১টি<br>
+                        ✅ সঠিক উত্তর: দিক ও মান উভয়ই লাগে
+                    </div>
+                </div>
+
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
-        <!-- ৪. লিডারবোর্ড -->
+        <!-- অন্যান্য সেকশনসমূহ -->
+        <div id="courses-section" class="page-section">
+            <div class="inner-page-card">
+                <h2>🎓 প্রিমিয়াম কোর্সসমূহ</h2>
+                <p>এইচএসসি পরীক্ষায় এ+ পাওয়ার জন্য আমাদের বিশেষ কোর্সগুলোতে এনরোল করুন।</p>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
         <div id="leaderboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>🏆 সাপ্তাহিক লিডারবোর্ড</h2>
                 <p>সর্বোচ্চ স্কোর অর্জনকারী সেরা ১০ পরীক্ষার্থী:</p>
-
-                <div class="leaderboard-item">
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span class="leaderboard-rank">#১</span>
-                        <span style="font-weight:600; font-size:13px;">মাসফাকুর রহমান</span>
-                    </div>
-                    <span style="font-weight:bold; color:#16a34a;">৯৮%</span>
-                </div>
-
-                <div class="leaderboard-item">
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span class="leaderboard-rank">#২</span>
-                        <span style="font-weight:600; font-size:13px;">Abs Siddik (আপনি)</span>
-                    </div>
-                    <span style="font-weight:bold; color:#2563eb;">৯৫%</span>
-                </div>
-
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
-        <!-- ৫. মডেল টেস্ট সেটআপ -->
         <div id="model-test-setup" class="page-section">
             <div class="inner-page-card">
                 <h2>⚙️ পরীক্ষার কাস্টমাইজেশন</h2>
@@ -607,26 +547,13 @@
             </div>
         </div>
 
-        <!-- ৬. মূল পরীক্ষা পেজ -->
         <div id="model-test-section" class="page-section">
             <div class="inner-page-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span id="timer-display" style="background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">⏱️ 00:00</span>
-                    <div style="background: #f1f5f9; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">
-                        <span style="color: #16a34a;">সঠিক: <span id="live-correct">0</span></span> |
-                        <span style="color: #dc2626;">ভুল: <span id="live-wrong">0</span></span>
-                    </div>
-                </div>
-
-                <div id="quiz-box">
-                    <p id="question-text" style="font-weight: 600; color: #1e293b; margin-bottom: 15px; font-size: 15px;">প্রশ্ন লোড হচ্ছে...</p>
-                    <div id="options-container" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
-                    <button id="next-btn" class="action-btn" onclick="nextQuestion()" style="display:none;">পরবর্তী প্রশ্ন</button>
-                </div>
+                <p>পরীক্ষা চলছে...</p>
+                <button class="back-btn" onclick="switchSection('home-section')">পরীক্ষা বাতিল করুন</button>
             </div>
         </div>
 
-        <!-- অন্যান্য সেকশনসমূহ -->
         <div id="question-bank-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📚 প্রশ্নব্যাংক</h2>
@@ -693,7 +620,7 @@
         </a>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Logic & Chart.js -->
     <script>
         function switchSection(sectionId) {
             const sections = document.querySelectorAll('.page-section');
@@ -704,104 +631,38 @@
                 target.classList.add('active');
                 window.scrollTo(0, 0);
             }
+
+            if(sectionId === 'dashboard-section') {
+                renderChart();
+            }
         }
 
-        function buyCourse(courseName) {
-            alert(`"${courseName}" কোর্সে এনরোল করার জন্য বিকাশ/নগদ পেমেন্ট সম্পন্ন করুন। বিস্তারিত তথ্য আপনার ইমেইলে পাঠিয়ে দেওয়া হবে।`);
-        }
-
-        const questions = [
-            { q: "বাংলাদেশের রাজধানী কোনটি?", options: ["চট্টগ্রাম", "ঢাকা", "রাজশাহী", "সিলেট"], ans: 1 },
-            { q: "HSC পরীক্ষার পূর্ণরূপ কী?", options: ["High School Certificate", "Higher Secondary Certificate", "Higher School Course", "Higher Secondary Class"], ans: 1 },
-            { q: "HTML মূলত কী ধরণের ভাষা?", options: ["Programming Language", "Markup Language", "Database Language", "Scripting Language"], ans: 1 }
-        ];
-
-        let currentQ = 0;
-        let correctCount = 0;
-        let wrongCount = 0;
-        let timerInterval;
-        let timeLeftSeconds = 60;
-        let isAnswered = false;
-
-        function startExam() {
-            const selectedTimeMin = parseInt(document.getElementById('exam-time').value);
-            timeLeftSeconds = selectedTimeMin * 60;
-            
-            currentQ = 0;
-            correctCount = 0;
-            wrongCount = 0;
-            
-            document.getElementById('live-correct').innerText = "0";
-            document.getElementById('live-wrong').innerText = "0";
-
-            switchSection('model-test-section');
-            startTimer();
-            loadQuiz();
-        }
-
-        function startTimer() {
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                if (timeLeftSeconds <= 0) {
-                    clearInterval(timerInterval);
-                    alert("সময় শেষ!");
-                    switchSection('dashboard-section');
-                    return;
+        // Render Performance Diagram (Line Chart)
+        let chartRendered = false;
+        function renderChart() {
+            if(chartRendered) return;
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['পরীক্ষা ১', 'পরীক্ষা ২', 'পরীক্ষা ৩', 'পরীক্ষা ৪', 'পরীক্ষা ৫'],
+                    datasets: [{
+                        label: 'প্রাপ্ত নম্বর (%)',
+                        data: [40, 55, 45, 70, 85],
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, max: 100 }
+                    }
                 }
-                timeLeftSeconds--;
-                const m = Math.floor(timeLeftSeconds / 60);
-                const s = timeLeftSeconds % 60;
-                document.getElementById('timer-display').innerText = `⏱️ ${m}:${s < 10 ? '0' : ''}${s}`;
-            }, 1000);
-        }
-
-        function loadQuiz() {
-            isAnswered = false;
-            document.getElementById('next-btn').style.display = 'none';
-
-            if (currentQ < questions.length) {
-                document.getElementById('question-text').innerText = (currentQ + 1) + ". " + questions[currentQ].q;
-                const optContainer = document.getElementById('options-container');
-                optContainer.innerHTML = '';
-                
-                questions[currentQ].options.forEach((opt, index) => {
-                    const btn = document.createElement('button');
-                    btn.className = 'back-btn';
-                    btn.style.textAlign = 'left';
-                    btn.style.background = '#f8fafc';
-                    btn.innerText = opt;
-                    btn.onclick = () => selectOption(index, btn);
-                    optContainer.appendChild(btn);
-                });
-            } else {
-                clearInterval(timerInterval);
-                alert("পরীক্ষা সম্পন্ন হয়েছে!");
-                switchSection('dashboard-section');
-            }
-        }
-
-        function selectOption(selectedIndex, clickedBtn) {
-            if (isAnswered) return;
-            isAnswered = true;
-
-            const currentObj = questions[currentQ];
-
-            if (selectedIndex === currentObj.ans) {
-                clickedBtn.style.background = '#dcfce7';
-                correctCount++;
-                document.getElementById('live-correct').innerText = correctCount;
-            } else {
-                clickedBtn.style.background = '#fee2e2';
-                wrongCount++;
-                document.getElementById('live-wrong').innerText = wrongCount;
-            }
-
-            document.getElementById('next-btn').style.display = 'block';
-        }
-
-        function nextQuestion() {
-            currentQ++;
-            loadQuiz();
+            });
+            chartRendered = true;
         }
     </script>
 </body>
