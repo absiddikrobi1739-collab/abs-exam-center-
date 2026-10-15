@@ -198,7 +198,7 @@
             margin-bottom: 15px;
         }
 
-        /* Premium Subscription Card */
+        /* Subscription Lock & Premium Box Styles */
         .premium-card {
             background: linear-gradient(135deg, #1e1b4b, #312e81);
             color: white;
@@ -208,19 +208,37 @@
             border: 1px solid #6366f1;
         }
 
-        .premium-card h4 {
-            color: #fbbf24;
-            font-size: 15px;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .locked-card {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 15px;
+            border-radius: 14px;
+            margin-top: 15px;
+            border: 1px dashed #cbd5e1;
+            text-align: center;
         }
 
-        .premium-card p {
-            color: #cbd5e1;
+        .locked-card h4 {
+            color: #b91c1c;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .locked-card p {
             font-size: 12px;
             margin-bottom: 10px;
+            color: #64748b;
+        }
+
+        .upgrade-btn {
+            background: #e11d48;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
         }
 
         .wrong-item-box {
@@ -360,8 +378,6 @@
             <div class="banner-card">
                 <div class="status-badge">● অ্যাকাউন্ট তৈরি হয়েছে</div>
                 <div class="banner-title">Abs Siddik, ৫ মিনিটে জেনে নাও তোমার কোন অধ্যায়গুলো দুর্বল</div>
-                
-                <!-- বাটনটি "পরীক্ষা দিন" এ পরিবর্তন করা হয়েছে -->
                 <button class="action-btn" onclick="switchSection('model-test-setup')">
                     পরীক্ষা দিন <i class="fa-solid fa-pen-to-square"></i>
                 </button>
@@ -436,7 +452,7 @@
             </div>
         </div>
 
-        <!-- ২. স্টুডেন্ট ড্যাশবোর্ড (ডায়গ্রাম ও প্রিমিয়াম সেকশন সহ) -->
+        <!-- ২. স্টুডেন্ট ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
@@ -481,22 +497,9 @@
                     </div>
                 </div>
 
-                <!-- 🔒 প্রিমিয়াম সাবস্ক্রিপশন মেম্বারদের জন্য এক্সট্রা সেকশন -->
-                <div class="premium-card">
-                    <h4><i class="fa-solid fa-crown"></i> প্রিমিয়াম মেম্বারশিপ এরিয়া</h4>
-                    <p>পূর্বে যেসব প্রশ্নে ভুল হয়েছিল সেগুলোর তালিকা ও সঠিক সমাধান:</p>
-                    
-                    <div class="wrong-item-box">
-                        <strong>১. HTML মূলত কী ধরণের ভাষা?</strong><br>
-                        ❌ আপনার ভুল উত্তর: Programming Language<br>
-                        ✅ সঠিক উত্তর: Markup Language
-                    </div>
-
-                    <div class="wrong-item-box">
-                        <strong>২. ভেক্টর রাশির মান প্রকাশের দিক কয়টি?</strong><br>
-                        ❌ আপনার ভুল উত্তর: ১টি<br>
-                        ✅ সঠিক উত্তর: দিক ও মান উভয়ই লাগে
-                    </div>
+                <!-- 🔒 সাবস্ক্রিপশন চেক করার জায়গা -->
+                <div id="subscription-area">
+                    <!-- এই অংশটি জাভাস্ক্রিপ্ট দিয়ে নিয়ন্ত্রণ করা হবে -->
                 </div>
 
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
@@ -542,7 +545,7 @@
                     </select>
                 </div>
 
-                <button class="action-btn" onclick="startExam()">পরীক্ষা শুরু করুন <i class="fa-solid fa-play"></i></button>
+                <button class="action-btn" onclick="switchSection('model-test-section')">পরীক্ষা শুরু করুন <i class="fa-solid fa-play"></i></button>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
@@ -620,8 +623,15 @@
         </a>
     </div>
 
-    <!-- JavaScript Logic & Chart.js -->
+    <!-- JavaScript Logic & Subscription System -->
     <script>
+        // ==========================================
+        // সাবস্ক্রিপশন স্ট্যাটাস কন্ট্রোল:
+        // false = সাবস্ক্রিপশন কেনা নেই (লক দেখাবে)
+        // true  = সাবস্ক্রিপশন কেনা আছে (ভুল উত্তরের ইতিহাস দেখাবে)
+        // ==========================================
+        const hasActiveSubscription = false; 
+
         function switchSection(sectionId) {
             const sections = document.querySelectorAll('.page-section');
             sections.forEach(sec => sec.classList.remove('active'));
@@ -634,6 +644,42 @@
 
             if(sectionId === 'dashboard-section') {
                 renderChart();
+                loadSubscriptionView();
+            }
+        }
+
+        function loadSubscriptionView() {
+            const subArea = document.getElementById('subscription-area');
+            
+            if (hasActiveSubscription) {
+                // সাবস্ক্রিপশন কেনা থাকলে এই প্রিমিয়াম বক্স দেখাবে
+                subArea.innerHTML = `
+                    <div class="premium-card">
+                        <h4><i class="fa-solid fa-crown"></i> প্রিমিয়াম মেম্বারশিপ এরিয়া</h4>
+                        <p>পূর্বে যেসব প্রশ্নে ভুল হয়েছিল সেগুলোর তালিকা ও সঠিক সমাধান:</p>
+                        
+                        <div class="wrong-item-box">
+                            <strong>১. HTML মূলত কী ধরণের ভাষা?</strong><br>
+                            ❌ আপনার ভুল উত্তর: Programming Language<br>
+                            ✅ সঠিক উত্তর: Markup Language
+                        </div>
+
+                        <div class="wrong-item-box">
+                            <strong>২. ভেক্টর রাশির মান প্রকাশের দিক কয়টি?</strong><br>
+                            ❌ আপনার ভুল উত্তর: ১টি<br>
+                            ✅ সঠিক উত্তর: দিক ও মান উভয়ই লাগে
+                        </div>
+                    </div>
+                `;
+            } else {
+                // সাবস্ক্রিপশন না থাকলে এই লক করা মেসেজ দেখাবে
+                subArea.innerHTML = `
+                    <div class="locked-card">
+                        <h4>🔒 প্রিমিয়াম ফিচার লক করা আছে</h4>
+                        <p>পূর্বে কোথায় ভুল হয়েছিল তা দেখতে এবং ডিটেইলড অ্যানালিসিস পেতে সাবস্ক্রিপশন কিনুন।</p>
+                        <button class="upgrade-btn" onclick="alert('সাবস্ক্রিপশন পেমেন্ট পেজে রিডাইরেক্ট করা হচ্ছে...')">সাবস্ক্রিপশন কিনুন</button>
+                    </div>
+                `;
             }
         }
 
