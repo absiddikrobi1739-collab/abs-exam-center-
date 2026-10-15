@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abs Exam Center - Platform</title>
+    <title>Abs Exam Center - Live Result & Analytics</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font -->
@@ -254,39 +254,6 @@
             border: 1px solid #6366f1;
         }
 
-        .locked-card {
-            background: #f1f5f9;
-            color: #475569;
-            padding: 15px;
-            border-radius: 14px;
-            margin-top: 15px;
-            border: 1px dashed #cbd5e1;
-            text-align: center;
-        }
-
-        .locked-card h4 {
-            color: #b91c1c;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
-        .locked-card p {
-            font-size: 12px;
-            margin-bottom: 10px;
-            color: #64748b;
-        }
-
-        .upgrade-btn {
-            background: #e11d48;
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
         .wrong-item-box {
             background: #ffffff1a;
             padding: 8px;
@@ -491,7 +458,7 @@
             </div>
         </div>
 
-        <!-- ৩. মূল পরীক্ষা পেজ (সম্পূর্ণ কাজ করবে) -->
+        <!-- ৩. মূল পরীক্ষা পেজ -->
         <div id="model-test-section" class="page-section">
             <div class="inner-page-card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -511,53 +478,60 @@
             </div>
         </div>
 
-        <!-- ৪. স্টুডেন্ট ড্যাশবোর্ড -->
+        <!-- ৪. সদ্য শেষ হওয়া পরীক্ষার তাৎক্ষণিক রেজাল্ট পেজ (রিসেন্ট পারফরম্যান্স) -->
+        <div id="recent-result-section" class="page-section">
+            <div class="inner-page-card" style="text-align: center;">
+                <h2 style="color: #16a34a;">🎉 পরীক্ষা সম্পন্ন হয়েছে!</h2>
+                <p style="font-size: 12px; color: #64748b;">আপনার সদ্য দেওয়া পরীক্ষার ফলাফল ডায়াগ্রাম:</p>
+
+                <!-- ডায়াগ্রাম কার্ড -->
+                <div style="background: #f8fafc; padding: 15px; border-radius: 14px; margin: 15px 0; border: 1px solid #e2e8f0;">
+                    <h3 id="recent-percentage" style="font-size: 28px; color: #4f46e5; font-weight: 800;">0%</h3>
+                    <p style="font-size: 13px; color: #475569; margin-top: 5px;">
+                        সঠিক উত্তর: <strong id="recent-correct-val" style="color: #16a34a;">0</strong> | 
+                        ভুল উত্তর: <strong id="recent-wrong-val" style="color: #dc2626;">0</strong>
+                    </p>
+                    <div class="progress-bar-bg" style="height: 10px; margin-top: 10px;">
+                        <div id="recent-progress-bar" class="progress-fill" style="width: 0%; background: #4f46e5;"></div>
+                    </div>
+                </div>
+
+                <!-- ভুল উত্তর সমূহের তালিকা -->
+                <div id="recent-wrong-list-container" style="text-align: left; margin-bottom: 15px;">
+                    <!-- ভুল প্রশ্ন রিভিউ ডাইনামিক আসবে -->
+                </div>
+
+                <button class="action-btn" onclick="switchSection('dashboard-section')" style="margin-bottom: 8px;">
+                    ড্যাশবোর্ডে গিয়ে গ্রাফ দেখুন <i class="fa-solid fa-chart-line"></i>
+                </button>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- ৫. স্টুডেন্ট ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
-                <p style="margin-bottom: 12px;">স্বাগতম Abs Siddik! আপনার পড়াশোনার হালনাগাদ তথ্য।</p>
+                <p style="margin-bottom: 12px;">স্বাগতম Abs Siddik! আপনার পড়াশোনার ওভারঅল ডায়াগ্রাম।</p>
 
                 <div class="stat-grid">
                     <div class="stat-card">
-                        <h5>চলমান বিষয়</h5>
-                        <h3>৩ টি</h3>
+                        <h5>মোট পরীক্ষা</h5>
+                        <h3 id="total-exams-count">৫ টি</h3>
                     </div>
                     <div class="stat-card">
-                        <h5>গড় স্কোর</h5>
-                        <h3 style="color: #2563eb;">৬৫%</h3>
+                        <h5>গড় নম্বর</h5>
+                        <h3 id="avg-score-val" style="color: #2563eb;">৬৫%</h3>
                     </div>
                 </div>
 
                 <!-- পারফরম্যান্স গ্রাফ/ডায়গ্রাম -->
                 <div style="margin-bottom: 20px;">
-                    <h4 style="font-size: 13px; color: #1e293b; margin-bottom: 8px;">📊 বিগত পরীক্ষাগুলোর স্কোর ডায়াগ্রাম:</h4>
+                    <h4 style="font-size: 13px; color: #1e293b; margin-bottom: 8px;">📊 বিগত পরীক্ষাগুলোর ওভারঅল স্কোর ডায়াগ্রাম:</h4>
                     <div style="background: #f8fafc; padding: 10px; border-radius: 12px; border: 1px solid #e2e8f0;">
                         <canvas id="performanceChart"></canvas>
                     </div>
                 </div>
-
-                <div style="margin-bottom: 15px;">
-                    <h4 style="font-size: 14px; margin-bottom: 8px; color: #1e293b;">দুর্বল বিষয়সমূহ (Score &lt; 50%)</h4>
-                    
-                    <div style="margin-bottom: 8px;">
-                        <div style="display:flex; justify-content:space-between; font-size:12px;">
-                            <span>পদার্থবিজ্ঞান</span>
-                            <span style="color:#dc2626; font-weight:bold;">৩০%</span>
-                        </div>
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 30%; background: #dc2626;"></div></div>
-                    </div>
-
-                    <div style="margin-bottom: 8px;">
-                        <div style="display:flex; justify-content:space-between; font-size:12px;">
-                            <span>রসায়ন</span>
-                            <span style="color:#ea580c; font-weight:bold;">৪৫%</span>
-                        </div>
-                        <div class="progress-bar-bg"><div class="progress-fill" style="width: 45%; background: #ea580c;"></div></div>
-                    </div>
-                </div>
-
-                <!-- 🔒 সাবস্ক্রিপশন ডায়নামিক এলাকা -->
-                <div id="subscription-area"></div>
 
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
@@ -575,7 +549,7 @@
         <div id="leaderboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>🏆 সাপ্তাহিক লিডারবোর্ড</h2>
-                <p>সর্বোচ্চ স্কোর অর্জনকারী সেরা ১০ পরীক্ষার্থী:</p>
+                <p>সর্বোচ্চ স্কোর অর্জনকারী সেরা ১০ শিক্ষার তালিকা:</p>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
@@ -648,9 +622,6 @@
 
     <!-- JavaScript Logic -->
     <script>
-        // সাবস্ক্রিপশন কন্ট্রোল (false = লক, true = ভুল প্রশ্ন দেখাবে)
-        const hasActiveSubscription = false; 
-
         const questions = [
             { q: "বাংলাদেশের রাজধানী কোনটি?", options: ["চট্টগ্রাম", "ঢাকা", "রাজশাহী", "সিলেট"], ans: 1 },
             { q: "HSC পরীক্ষার পূর্ণরূপ কী?", options: ["High School Certificate", "Higher Secondary Certificate", "Higher School Course", "Higher Secondary Class"], ans: 1 },
@@ -663,6 +634,12 @@
         let timerInterval;
         let timeLeftSeconds = 60;
         let isAnswered = false;
+        let wrongAnswersLog = [];
+
+        // ড্যাশবোর্ডের ডাটাবেজ/হিস্ট্রি
+        let chartDataScores = [40, 55, 45, 70, 85];
+        let chartLabels = ['পরীক্ষা ১', 'পরীক্ষা ২', 'পরীক্ষা ৩', 'পরীক্ষা ৪', 'পরীক্ষা ৫'];
+        let myChartInstance = null;
 
         function switchSection(sectionId) {
             const sections = document.querySelectorAll('.page-section');
@@ -676,7 +653,6 @@
 
             if(sectionId === 'dashboard-section') {
                 renderChart();
-                loadSubscriptionView();
             }
         }
 
@@ -687,6 +663,7 @@
             currentQ = 0;
             correctCount = 0;
             wrongCount = 0;
+            wrongAnswersLog = [];
             
             document.getElementById('live-correct').innerText = "0";
             document.getElementById('live-wrong').innerText = "0";
@@ -701,8 +678,7 @@
             timerInterval = setInterval(() => {
                 if (timeLeftSeconds <= 0) {
                     clearInterval(timerInterval);
-                    alert("সময় শেষ!");
-                    switchSection('dashboard-section');
+                    finishExam();
                     return;
                 }
                 timeLeftSeconds--;
@@ -729,9 +705,7 @@
                     optContainer.appendChild(btn);
                 });
             } else {
-                clearInterval(timerInterval);
-                alert("পরীক্ষা সফলভাবে সম্পন্ন হয়েছে!");
-                switchSection('dashboard-section');
+                finishExam();
             }
         }
 
@@ -755,6 +729,12 @@
 
                 wrongCount++;
                 document.getElementById('live-wrong').innerText = wrongCount;
+
+                wrongAnswersLog.push({
+                    q: currentObj.q,
+                    userAns: currentObj.options[selectedIndex],
+                    correctAns: currentObj.options[currentObj.ans]
+                });
             }
 
             document.getElementById('next-btn').style.display = 'block';
@@ -770,42 +750,70 @@
             switchSection('home-section');
         }
 
-        function loadSubscriptionView() {
-            const subArea = document.getElementById('subscription-area');
-            if (hasActiveSubscription) {
-                subArea.innerHTML = `
-                    <div class="premium-card">
-                        <h4><i class="fa-solid fa-crown"></i> প্রিমিয়াম মেম্বারশিপ এরিয়া</h4>
-                        <p>পূর্বে যেসব প্রশ্নে ভুল হয়েছিল সেগুলোর তালিকা ও সঠিক সমাধান:</p>
-                        <div class="wrong-item-box">
-                            <strong>১. HTML মূলত কী ধরণের ভাষা?</strong><br>
-                            ❌ আপনার ভুল উত্তর: Programming Language<br>
-                            ✅ সঠিক উত্তর: Markup Language
-                        </div>
-                    </div>
-                `;
-            } else {
-                subArea.innerHTML = `
-                    <div class="locked-card">
-                        <h4>🔒 প্রিমিয়াম ফিচার লক করা আছে</h4>
-                        <p>পূর্বে কোথায় ভুল হয়েছিল তা দেখতে এবং ডিটেইলড অ্যানালিসিস পেতে সাবস্ক্রিপশন কিনুন।</p>
-                        <button class="upgrade-btn" onclick="alert('কোর্স সেকশন থেকে সাবস্ক্রিপশন কিনুন!')">সাবস্ক্রিপশন কিনুন</button>
-                    </div>
-                `;
+        // পরীক্ষা শেষ হলে রিসেন্ট পারফরম্যান্স পেজে নিয়ে যাবে
+        function finishExam() {
+            clearInterval(timerInterval);
+            
+            const totalQ = questions.length;
+            const percentage = Math.round((correctCount / totalQ) * 100);
+
+            // রিসেন্ট পারফরম্যান্স পেজের ডাটা বসানো
+            document.getElementById('recent-percentage').innerText = percentage + "%";
+            document.getElementById('recent-correct-val').innerText = correctCount;
+            document.getElementById('recent-wrong-val').innerText = wrongCount;
+            document.getElementById('recent-progress-bar').style.width = percentage + "%";
+
+            // ভুল হওয়া প্রশ্নগুলোর ডায়নামিক রিভিউ
+            const wrongContainer = document.getElementById('recent-wrong-list-container');
+            wrongContainer.innerHTML = '';
+            
+            if(wrongAnswersLog.length > 0) {
+                wrongContainer.innerHTML = `<h4 style="font-size:13px; color:#1e293b; margin-bottom:8px;">ভুল হওয়া প্রশ্নের রিভিউ:</h4>`;
+                wrongAnswersLog.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.style.background = '#fef2f2';
+                    div.style.padding = '8px';
+                    div.style.borderRadius = '8px';
+                    div.style.marginBottom = '6px';
+                    div.style.border = '1px solid #fecaca';
+                    div.innerHTML = `
+                        <p style="font-size:12px; font-weight:bold; color:#1e293b;">${idx+1}. ${item.q}</p>
+                        <p style="font-size:11px; color:#dc2626;">❌ আপনার উত্তর: ${item.userAns}</p>
+                        <p style="font-size:11px; color:#16a34a; font-weight:bold;">✅ সঠিক উত্তর: ${item.correctAns}</p>
+                    `;
+                    wrongContainer.appendChild(div);
+                });
             }
+
+            // ড্যাশবোর্ডে নতুন ডাটা অ্যাড করা
+            chartDataScores.push(percentage);
+            chartLabels.push(`পরীক্ষা ${chartDataScores.length}`);
+
+            // রিসেন্ট রেজাল্ট পেজে রিডাইরেক্ট
+            switchSection('recent-result-section');
         }
 
-        let chartRendered = false;
+        // ড্যাশবোর্ডের ওভারঅল গ্রাফ আপডেট
         function renderChart() {
-            if(chartRendered) return;
+            const totalExams = chartDataScores.length;
+            const avgScore = Math.round(chartDataScores.reduce((a, b) => a + b, 0) / totalExams);
+
+            document.getElementById('total-exams-count').innerText = totalExams + " টি";
+            document.getElementById('avg-score-val').innerText = avgScore + "%";
+
             const ctx = document.getElementById('performanceChart').getContext('2d');
-            new Chart(ctx, {
+            
+            if (myChartInstance) {
+                myChartInstance.destroy();
+            }
+
+            myChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['পরীক্ষা ১', 'পরীক্ষা ২', 'পরীক্ষা ৩', 'পরীক্ষা ৪', 'পরীক্ষা ৫'],
+                    labels: chartLabels,
                     datasets: [{
-                        label: 'প্রাপ্ত নম্বর (%)',
-                        data: [40, 55, 45, 70, 85],
+                        label: 'স্কোর (%)',
+                        data: chartDataScores,
                         borderColor: '#4f46e5',
                         backgroundColor: 'rgba(79, 70, 229, 0.1)',
                         fill: true,
@@ -819,7 +827,6 @@
                     }
                 }
             });
-            chartRendered = true;
         }
     </script>
 </body>
