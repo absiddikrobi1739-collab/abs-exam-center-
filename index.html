@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abs Exam Center - Complete HSC Platform</title>
+    <title>Abs Exam Center - Practice Platform</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Chart.js for Diagram -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -20,7 +20,7 @@
         }
 
         body {
-            background-color: #1e1b4b;
+            background-color: #f8fafc;
             color: #333;
             padding-bottom: 85px;
             min-height: 100vh;
@@ -45,6 +45,7 @@
             gap: 10px;
             font-weight: 600;
             font-size: 14px;
+            cursor: pointer;
         }
 
         .brand-title {
@@ -84,11 +85,159 @@
             display: block;
         }
 
+        /* 🌟 1st Page Login/Register Screen Styling */
+        .auth-screen-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .lang-switch {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .lang-btn-group {
+            background: #f1f5f9;
+            padding: 3px;
+            border-radius: 20px;
+            display: inline-flex;
+        }
+
+        .lang-btn {
+            border: none;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            background: transparent;
+            color: #64748b;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #0f172a;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .brand-logo-box {
+            margin: 15px 0 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-badge {
+            background: #181443;
+            color: #fbbf24;
+            width: 80px;
+            height: 80px;
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            box-shadow: 0 8px 20px rgba(24, 20, 67, 0.2);
+        }
+
+        .auth-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            background: #f8fafc;
+            margin-bottom: 15px;
+            transition: 0.2s;
+        }
+
+        .auth-input:focus {
+            border-color: #047857;
+            background: white;
+        }
+
+        .btn-green {
+            background: #047857;
+            color: white;
+            width: 100%;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.25);
+            transition: 0.2s;
+        }
+
+        .btn-green:active {
+            transform: scale(0.98);
+        }
+
+        .social-divider {
+            margin: 20px 0 15px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .social-btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            border: 1px solid #e2e8f0;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e293b;
+            cursor: pointer;
+        }
+
+        .support-link {
+            color: #0284c7;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* 🌟 Main App Section Styling */
         .banner-card {
             background: #ffffff;
             border-radius: 16px;
             padding: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
             margin-bottom: 15px;
         }
 
@@ -128,13 +277,12 @@
         }
 
         .trial-tracker-card {
-            background: linear-gradient(135deg, #312e81, #4338ca);
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
             color: white;
             border-radius: 16px;
             padding: 14px 16px;
             margin-bottom: 15px;
-            border: 1px solid #6366f1;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         .trial-tracker-header {
@@ -144,17 +292,8 @@
             margin-bottom: 8px;
         }
 
-        .trial-tracker-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: #cbd5e1;
-        }
-
-        .trial-tracker-count {
-            font-size: 13px;
-            font-weight: 800;
-            color: #fbbf24;
-        }
+        .trial-tracker-title { font-size: 12px; font-weight: 600; color: #cbd5e1; }
+        .trial-tracker-count { font-size: 13px; font-weight: 800; color: #fbbf24; }
 
         .trial-progress-bg {
             background: rgba(255, 255, 255, 0.15);
@@ -173,23 +312,6 @@
             transition: width 0.3s ease;
         }
 
-        .trial-btn-link {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 11px;
-            color: #38bdf8;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .target-title {
-            color: #e2e8f0;
-            font-size: 13px;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-
         .grid-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -203,13 +325,8 @@
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        .grid-card:active {
-            transform: scale(0.97);
         }
 
         .icon-box {
@@ -229,353 +346,70 @@
         .c4 { background: #e0f2fe; color: #0284c7; }
         .c5 { background: #ffe4e6; color: #e11d48; }
         .c6 { background: #fef9c3; color: #ca8a04; }
-        .c7 { background: #fae8ff; color: #a21caf; }
-        .c8 { background: #e0e7ff; color: #4f46e5; }
 
-        .card-info h4 {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 2px;
-        }
-
-        .card-info p {
-            font-size: 10px;
-            color: #64748b;
-            line-height: 1.2;
-        }
+        .card-info h4 { font-size: 14px; font-weight: 700; color: #1e293b; }
+        .card-info p { font-size: 10px; color: #64748b; line-height: 1.2; }
 
         .inner-page-card {
             background: white;
             border-radius: 16px;
             padding: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
             margin-bottom: 15px;
         }
 
-        .inner-page-card h2 {
-            color: #1e293b;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .inner-page-card p {
-            color: #64748b;
-            font-size: 13px;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            color: #334155;
-            margin-bottom: 4px;
-        }
-
-        .form-group select, .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 13px;
+        .course-card-item {
             background: #f8fafc;
-            color: #0f172a;
-        }
-
-        .option-btn {
-            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
             padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            background: #f8fafc;
-            cursor: pointer;
-            text-align: left;
-            font-size: 14px;
-            transition: all 0.2s;
+            margin-bottom: 12px;
+        }
+
+        .form-group { margin-bottom: 12px; text-align: left; }
+        .form-group label { display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px; }
+        .form-group select, .form-group input, .form-group textarea {
+            width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px; background: #f8fafc;
         }
 
         .back-btn {
-            background: #e2e8f0;
-            color: #334155;
-            border: none;
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 13px;
-            margin-top: 10px;
-            width: 100%;
+            background: #e2e8f0; color: #334155; border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; width: 100%; margin-top: 10px;
         }
 
         /* PREMIUM ADMIN PANEL STYLING */
         .admin-wrapper {
             background: linear-gradient(145deg, #0f172a, #1e1b4b);
-            border: 1px solid #38357a;
-            border-radius: 18px;
-            padding: 18px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            color: white;
+            border-radius: 18px; padding: 18px; color: white;
         }
 
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 12px;
-            margin-bottom: 15px;
-        }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 12px; margin-bottom: 15px; }
+        .admin-stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 18px; }
+        .admin-stat-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px 6px; border-radius: 12px; text-align: center; }
 
-        .admin-title-badge {
-            background: linear-gradient(90deg, #f59e0b, #d97706);
-            color: #0f172a;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-        }
+        .admin-tab-bar { display: flex; gap: 4px; background: #020617; padding: 4px; border-radius: 10px; margin-bottom: 15px; overflow-x: auto; }
+        .admin-tab { flex: 1; padding: 8px 4px; font-size: 10px; font-weight: 700; border: none; background: transparent; color: #94a3b8; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+        .admin-tab.active { background: #4f46e5; color: white; }
 
-        .admin-stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 18px;
-        }
+        .admin-content-box { display: none; }
+        .admin-content-box.active { display: block; }
 
-        .admin-stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 6px;
-            border-radius: 12px;
-            text-align: center;
-        }
+        .premium-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 10px; }
+        .premium-table th, .premium-table td { border: 1px solid #334155; padding: 6px; text-align: left; }
+        .premium-table th { background: #1e293b; color: #fbbf24; }
 
-        .admin-stat-card h6 {
-            font-size: 10px;
-            color: #94a3b8;
-            margin-bottom: 3px;
-        }
-
-        .admin-stat-card h3 {
-            font-size: 16px;
-            font-weight: 800;
-        }
-
-        .admin-tab-bar {
-            display: flex;
-            gap: 4px;
-            background: #020617;
-            padding: 4px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            overflow-x: auto;
-        }
-
-        .admin-tab {
-            flex: 1;
-            padding: 8px 4px;
-            font-size: 10px;
-            font-weight: 700;
-            border: none;
-            background: transparent;
-            color: #94a3b8;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-            white-space: nowrap;
-        }
-
-        .admin-tab.active {
-            background: #4f46e5;
-            color: white;
-            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
-        }
-
-        .admin-content-box {
-            display: none;
-        }
-
-        .admin-content-box.active {
-            display: block;
-        }
-
-        .premium-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 10px;
-            margin-top: 10px;
-        }
-
-        .premium-table th, .premium-table td {
-            border: 1px solid #334155;
-            padding: 6px;
-            text-align: left;
-        }
-
-        .premium-table th {
-            background: #1e293b;
-            color: #fbbf24;
-        }
-
-        .badge-free {
-            background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-weight: bold;
-            border: 1px solid #ef4444;
-        }
-
-        .badge-paid {
-            background: rgba(34, 197, 94, 0.2);
-            color: #4ade80;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-weight: bold;
-            border: 1px solid #22c55e;
-        }
-
-        .btn-approve {
-            background: #22c55e;
-            color: #020617;
-            border: none;
-            padding: 4px 6px;
-            border-radius: 4px;
-            font-weight: 800;
-            font-size: 9px;
-            cursor: pointer;
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 4px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 9px;
-            cursor: pointer;
-        }
-
-        .plan-card {
-            border: 2px solid #e2e8f0;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .plan-card.selected {
-            border-color: #4f46e5;
-            background: #f0fdf4;
-        }
+        .badge-free { background: rgba(239, 68, 68, 0.2); color: #f87171; padding: 2px 4px; border-radius: 4px; border: 1px solid #ef4444; }
+        .badge-paid { background: rgba(34, 197, 94, 0.2); color: #4ade80; padding: 2px 4px; border-radius: 4px; border: 1px solid #22c55e; }
 
         .bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #ffffff;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -3px 12px rgba(0,0,0,0.15);
-            z-index: 1000;
+            position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -3px 12px rgba(0,0,0,0.1); z-index: 1000;
         }
 
-        .nav-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #64748b;
-            font-size: 11px;
-            gap: 3px;
-            cursor: pointer;
-        }
+        .nav-link { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #64748b; font-size: 11px; gap: 3px; cursor: pointer; }
+        .nav-link i { font-size: 18px; }
+        .nav-link.active { color: #047857; font-weight: 700; }
 
-        .nav-link i {
-            font-size: 18px;
-        }
-
-        .nav-link.active {
-            color: #4f46e5;
-            font-weight: 700;
-        }
-
-        .limit-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .limit-box {
-            background: white;
-            padding: 20px;
-            border-radius: 16px;
-            text-align: center;
-            max-width: 380px;
-            width: 100%;
-        }
-
-        .flashcard-box {
-            background: linear-gradient(135deg, #4f46e5, #3730a3);
-            color: white;
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .suggestion-box {
-            background: #f8fafc;
-            border-left: 4px solid #f59e0b;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .subject-chip-container {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-        }
-
-        .subject-chip {
-            background: #f1f5f9;
-            color: #475569;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            white-space: nowrap;
-            border: 1px solid #cbd5e1;
-            cursor: pointer;
-        }
-
-        .subject-chip.active {
-            background: #4f46e5;
-            color: white;
-            border-color: #4f46e5;
+        .logout-btn {
+            background: #ef4444; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; width: 100%; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 6px;
         }
     </style>
 </head>
@@ -586,20 +420,64 @@
         <div class="brand-title">
             <i class="fa-solid fa-graduation-cap"></i> Abs Exam Center
         </div>
-        <div class="profile-area">
-            <div class="avatar-circle" id="top-avatar">A</div>
-            <span id="top-user-name">Abs Siddik</span>
+        <div class="profile-area" onclick="switchSection('profile-section')">
+            <div class="avatar-circle" id="top-avatar">G</div>
+            <span id="top-user-name">গেস্ট ইউজার</span>
         </div>
     </div>
 
     <div class="container">
         
-        <!-- ১. হোম পেজ -->
-        <div id="home-section" class="page-section active">
+        <!-- 🌟 ১ম পেজ: লগইন ও রেজিস্ট্রেশন পেজ -->
+        <div id="login-screen-section" class="page-section active">
+            <div class="auth-screen-card">
+                <div class="lang-switch">
+                    <div class="lang-btn-group">
+                        <button class="lang-btn active">বাং</button>
+                        <button class="lang-btn">Eng</button>
+                    </div>
+                </div>
+
+                <div class="brand-logo-box">
+                    <div class="logo-badge">
+                        <i class="fa-solid fa-pen-nib" style="font-size:28px;"></i>
+                        <span>চর্চা</span>
+                    </div>
+                </div>
+
+                <h2 class="auth-title">লগইন/রেজিস্টার</h2>
+
+                <div style="text-align:left;">
+                    <label class="input-label">মোবাইল নম্বর / ইমেইল</label>
+                    <input type="text" id="auth-input-field" class="auth-input" placeholder="01XXXXXXXXX অথবা ইমেইল">
+
+                    <label class="input-label">পাসওয়ার্ড (এডমিন হলে লিখুন)</label>
+                    <input type="password" id="auth-pass-field" class="auth-input" placeholder="পাসওয়ার্ড দিন">
+                </div>
+
+                <button class="btn-green" onclick="handleCustomAuth()">এগিয়ে যাও</button>
+
+                <div class="social-divider">Login / Registration with</div>
+
+                <div class="social-btn-grid">
+                    <button class="social-btn" onclick="quickGuestLogin('Facebook')">
+                        <i class="fa-brands fa-facebook" style="color:#1877f2; font-size:18px;"></i> Facebook
+                    </button>
+                    <button class="social-btn" onclick="quickGuestLogin('Google')">
+                        <i class="fa-brands fa-google" style="color:#ea4335; font-size:18px;"></i> Google
+                    </button>
+                </div>
+
+                <p class="support-link" onclick="alert('সহায়তার জন্য ইমেইল করুন: support@absexam.com')">সাহায্য দরকার? সাপোর্টে জানাও</p>
+            </div>
+        </div>
+
+        <!-- ২. মূল হোম পেজ -->
+        <div id="home-section" class="page-section">
             <div class="banner-card">
-                <div class="status-badge">● অ্যাকাউন্ট তৈরি হয়েছে</div>
-                <div class="banner-title"><span id="banner-user-name">Abs Siddik</span>, ৫ মিনিটে জেনে নাও তোমার কোন অধ্যায়গুলো দুর্বল</div>
-                <button class="action-btn" onclick="checkExamLimitAndStart()">
+                <div class="status-badge">● অ্যাকাউন্ট সক্রিয় আছে</div>
+                <div class="banner-title"><span id="banner-user-name">শিক্ষার্থী</span>, ৫ মিনিটে জেনে নাও তোমার কোন অধ্যায়গুলো দুর্বল</div>
+                <button class="action-btn" onclick="switchSection('model-test-setup')">
                     পরীক্ষা দিন <i class="fa-solid fa-pen-to-square"></i>
                 </button>
             </div>
@@ -613,13 +491,13 @@
                 <div class="trial-progress-bg">
                     <div class="trial-progress-fill" id="home-trial-bar"></div>
                 </div>
-                <div class="trial-btn-link" onclick="switchSection('courses-section')">
-                    <span>আনলিমিটেড পরীক্ষা দিতে প্রিমিয়াম নিন</span>
-                    <span>সাবস্ক্রিপশন <i class="fa-solid fa-chevron-right"></i></span>
+                <div style="display:flex; justify-content:space-between; font-size:11px; color:#38bdf8; font-weight:700; cursor:pointer;" onclick="switchSection('courses-section')">
+                    <span>কোর্স এবং প্যাকেজ দেখতে ক্লিক করুন</span>
+                    <span>কোর্সেস <i class="fa-solid fa-chevron-right"></i></span>
                 </div>
             </div>
 
-            <p class="target-title">তোমার লক্ষ্য: HSC বিজ্ঞানে ভালো ফলাফল করা</p>
+            <p style="color:#e2e8f0; font-size:13px; margin-bottom:12px;">তোমার লক্ষ্য: HSC বিজ্ঞানে ভালো ফলাফল করা</p>
 
             <div class="grid-container">
                 <div class="grid-card" onclick="switchSection('dashboard-section')">
@@ -639,528 +517,153 @@
                 </div>
 
                 <div class="grid-card" onclick="switchSection('courses-section')">
-                    <div class="icon-box c5"><i class="fa-solid fa-crown"></i></div>
+                    <div class="icon-box c5"><i class="fa-solid fa-graduation-cap"></i></div>
                     <div class="card-info">
-                        <h4>সাবস্ক্রিপশন</h4>
-                        <p>প্রিমিয়াম প্যাক কিনুন</p>
+                        <h4>কোর্সেস</h4>
+                        <p>নতুন কোর্স ও প্রিমিয়াম প্যাক</p>
                     </div>
                 </div>
 
-                <div class="grid-card" onclick="checkExamLimitAndStart()">
+                <div class="grid-card" onclick="switchSection('model-test-setup')">
                     <div class="icon-box c4"><i class="fa-solid fa-pen-to-square"></i></div>
                     <div class="card-info">
                         <h4>মডেল টেস্ট</h4>
                         <p>আসলে পরীক্ষার প্রস্তুতি</p>
                     </div>
                 </div>
-
-                <div class="grid-card" onclick="switchSection('question-bank-section')">
-                    <div class="icon-box c1"><i class="fa-solid fa-book"></i></div>
-                    <div class="card-info">
-                        <h4>প্রশ্নব্যাংক</h4>
-                        <p>হাজারো প্রশ্নে অধ্যায় অনুশীলন</p>
-                    </div>
-                </div>
-
-                <div class="grid-card" onclick="switchSection('live-exam-section')">
-                    <div class="icon-box c3"><i class="fa-solid fa-tower-broadcast"></i></div>
-                    <div class="card-info">
-                        <h4>লাইভ একজাম</h4>
-                        <p>সবার সাথে সরাসরি প্রতিযোগিতা</p>
-                    </div>
-                </div>
-
-                <div class="grid-card" onclick="switchSection('flashcard-section')">
-                    <div class="icon-box c7"><i class="fa-solid fa-bolt"></i></div>
-                    <div class="card-info">
-                        <h4>ফ্ল্যাশকার্ড</h4>
-                        <p>পড়া ভুলে যাওয়া বন্ধ</p>
-                    </div>
-                </div>
-
-                <div class="grid-card" onclick="switchSection('suggestion-section')">
-                    <div class="icon-box c8"><i class="fa-solid fa-lightbulb"></i></div>
-                    <div class="card-info">
-                        <h4>সাজেশন</h4>
-                        <p>কম পড়ে ভালো ফল</p>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <!-- ২. মডেল টেস্ট সেটআপ -->
+        <!-- ৩. মডেল টেস্ট সেটআপ -->
         <div id="model-test-setup" class="page-section">
             <div class="inner-page-card">
-                <h2>⚙️ পরীক্ষার কাস্টমাইজেশন</h2>
-                <p>পরীক্ষা শুরু করার আগে আপনার বিষয় ও সময় সিলেক্ট করুন।</p>
-
-                <div style="background:#e0f2fe; color:#0369a1; padding:8px 12px; border-radius:8px; font-size:12px; font-weight:600; margin-bottom:12px;">
-                    📊 আপনার ব্যবহৃত ফ্রি পরীক্ষা: <span id="used-exam-count">0</span> / 40
-                </div>
-                
+                <h2 style="font-size:18px; margin-bottom:10px;">⚙️ পরীক্ষার কাস্টমাইজেশন</h2>
                 <div class="form-group">
                     <label>বিষয় নির্বাচন করুন:</label>
                     <select id="chapter-select">
                         <option value="bangla-1">বাংলা ১ম পত্র</option>
-                        <option value="bangla-2">বাংলা ২য় পত্র</option>
-                        <option value="english-1">ইংরেজি ১ম পত্র</option>
-                        <option value="english-2">ইংরেজি ২য় পত্র</option>
                         <option value="ict">আইসিটি (ICT)</option>
                         <option value="physics-1">পদার্থবিজ্ঞান ১ম পত্র</option>
-                        <option value="physics-2">পদার্থবিজ্ঞান ২য় পত্র</option>
-                        <option value="chemistry-1">রসায়ন ১ম পত্র</option>
-                        <option value="chemistry-2">রসায়ন ২য় পত্র</option>
-                        <option value="biology-1">জীববিজ্ঞান ১ম পত্র</option>
-                        <option value="biology-2">জীববিজ্ঞান ২য় পত্র</option>
-                        <option value="math-1">উচ্চতর গণিত ১ম পত্র</option>
-                        <option value="math-2">উচ্চতর গণিত ২য় পত্র</option>
                     </select>
                 </div>
-
-                <div class="form-group">
-                    <label>সময়সীমা:</label>
-                    <select id="exam-time">
-                        <option value="1">১ মিনিট</option>
-                        <option value="2">২ মিনিট</option>
-                        <option value="5">৫ মিনিট</option>
-                    </select>
-                </div>
-
-                <button class="action-btn" onclick="startExam()">পরীক্ষা শুরু করুন <i class="fa-solid fa-play"></i></button>
+                <button class="action-btn" onclick="alert('পরীক্ষা লোড হচ্ছে...')">পরীক্ষা শুরু করুন <i class="fa-solid fa-play"></i></button>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
-        <!-- ৩. মূল পরীক্ষা পেজ -->
-        <div id="model-test-section" class="page-section">
-            <div class="inner-page-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span id="timer-display" style="background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">⏱️ 00:00</span>
-                    <div style="background: #f1f5f9; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">
-                        <span style="color: #16a34a;">সঠিক: <span id="live-correct">0</span></span> | 
-                        <span style="color: #dc2626;">ভুল: <span id="live-wrong">0</span></span>
-                    </div>
-                </div>
-
-                <div id="quiz-box">
-                    <p id="question-text" style="font-weight: 600; color: #1e293b; margin-bottom: 15px; font-size: 15px;">প্রশ্ন লোড হচ্ছে...</p>
-                    <div id="options-container" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
-                    <button id="next-btn" class="action-btn" onclick="nextQuestion()" style="display:none;">পরবর্তী প্রশ্ন</button>
-                </div>
-                <button class="back-btn" onclick="cancelExam()">পরীক্ষা বাতিল করুন</button>
-            </div>
-        </div>
-
-        <!-- ৪. রিসেন্ট রেজাল্ট পেজ -->
-        <div id="recent-result-section" class="page-section">
-            <div class="inner-page-card" style="text-align: center;">
-                <h2 style="color: #16a34a;">🎉 পরীক্ষা সম্পন্ন হয়েছে!</h2>
-                <p style="font-size: 12px; color: #64748b;">আপনার সদ্য দেওয়া পরীক্ষার ফলাফল:</p>
-
-                <div style="background: #f8fafc; padding: 15px; border-radius: 14px; margin: 15px 0; border: 1px solid #e2e8f0;">
-                    <h3 id="recent-percentage" style="font-size: 28px; color: #4f46e5; font-weight: 800;">0%</h3>
-                    <p style="font-size: 13px; color: #475569; margin-top: 5px;">
-                        প্রাপ্ত নম্বর: <strong id="recent-score-val" style="color: #4f46e5;">0</strong> | 
-                        সঠিক: <strong id="recent-correct-val" style="color: #16a34a;">0</strong> | 
-                        ভুল: <strong id="recent-wrong-val" style="color: #dc2626;">0</strong>
-                    </p>
-                </div>
-
-                <div id="recent-wrong-list-container" style="text-align: left; margin-bottom: 15px;"></div>
-
-                <button class="action-btn" onclick="switchSection('leaderboard-section')" style="margin-bottom: 8px;">
-                    লিডারবোর্ডে নিজের অবস্থান দেখুন <i class="fa-solid fa-trophy"></i>
-                </button>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <!-- ৫. লাইভ একজাম পেজ -->
-        <div id="live-exam-section" class="page-section">
-            <div class="inner-page-card" style="text-align:center;">
-                <h2 style="color:#dc2626;"><i class="fa-solid fa-tower-broadcast"></i> লাইভ একজাম রুম</h2>
-                <p>সব শিক্ষার্থী একসাথে নির্ধারিত সময়ে লাইভ পরীক্ষায় অংশগ্রহণ করুন।</p>
-                <div style="background:#fee2e2; padding:15px; border-radius:12px; border:1px solid #fca5a5; margin-bottom:15px;">
-                    <h4 style="color:#991b1b; font-size:14px;">🔴 পরবর্তী লাইভ পরীক্ষা শীঘ্রই শুরু হবে</h4>
-                    <p style="font-size:11px; color:#7f1d1d; margin-top:4px;">প্রতিদিন রাত ৮:০০ টায় লাইভ মেগা এক্সাম অনুষ্ঠিত হয়।</p>
-                </div>
-                <button class="action-btn" onclick="checkExamLimitAndStart()">এখনই অনুশীলন পরীক্ষা দিন <i class="fa-solid fa-play"></i></button>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <!-- ৬. সাবস্ক্রিপশন প্যাকেজ ও পেমেন্ট সেকশন -->
+        <!-- 📚 ৪. কোর্স সেকশন (শিক্ষার্থীদের জন্য) -->
         <div id="courses-section" class="page-section">
             <div class="inner-page-card">
-                <h2 style="color:#4f46e5;"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> প্রিমিয়াম সাবস্ক্রিপশন প্ল্যান</h2>
-                <p style="font-size:12px; margin-bottom:15px;">আপনার পছন্দমতো প্যাকেজ নির্বাচন করে বিকাশে/নগদে/রকেটে পেমেন্ট করুন:</p>
-
-                <div id="user-plans-container"></div>
-
-                <div id="payment-form-box" style="display:none; background:#f8fafc; padding:15px; border-radius:12px; border:1px solid #cbd5e1; margin-top:15px;">
-                    <h4 style="font-size:13px; color:#1e293b; margin-bottom:10px;">💳 পেমেন্ট ও ইউজার ইনফরমেশন জমা দিন:</h4>
-                    
-                    <div style="background:#e0e7ff; padding:8px; border-radius:8px; font-size:11px; color:#3730a3; margin-bottom:12px;">
-                        বিকাশ/নগদ/রকেট (Send Money): <strong>01700000000</strong> (Personal)
-                    </div>
-
-                    <div class="form-group">
-                        <label>আপনার নাম:</label>
-                        <input type="text" id="sub-name" placeholder="আপনার নাম">
-                    </div>
-                    <div class="form-group">
-                        <label>ইমেইল এড্রেস:</label>
-                        <input type="email" id="sub-email" placeholder="example@gmail.com">
-                    </div>
-                    <div class="form-group">
-                        <label>পাসওয়ার্ড:</label>
-                        <input type="password" id="sub-pass" placeholder="পাসওয়ার্ড দিন">
-                    </div>
-                    <div class="form-group">
-                        <label>পেমেন্ট মেথড:</label>
-                        <select id="sub-method">
-                            <option value="bKash">bKash (বিকাশ)</option>
-                            <option value="Nagad">Nagad (নগদ)</option>
-                            <option value="Rocket">Rocket (রকেট)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Transaction ID (TrxID):</label>
-                        <input type="text" id="sub-trxid" placeholder="যেমন: 9J87K2LX">
-                    </div>
-
-                    <button class="action-btn" onclick="submitPaymentRequest()" style="background:#16a34a; color:white;">
-                        ওকে (পেমেন্ট রিকোয়েস্ট পাঠান) <i class="fa-solid fa-check"></i>
-                    </button>
+                <h2 style="color:#047857; font-size:18px; margin-bottom:6px;"><i class="fa-solid fa-graduation-cap"></i> আমাদের সকল কোর্স</h2>
+                <p style="font-size:12px; margin-bottom:15px; color:#64748b;">এইচএসসি প্রস্তুতির জন্য এডমিন পরিচালিত বিশেষ কোর্সসমূহ:</p>
+                
+                <div id="user-course-list-container">
+                    <!-- Dynamic Courses Will Render Here -->
                 </div>
 
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
-        <!-- ৭. লাইভ লিডারবোর্ড -->
+        <!-- ৫. লিডারবোর্ড -->
         <div id="leaderboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>🏆 লাইভ লিডারবোর্ড</h2>
-                <p>পরীক্ষার প্রাপ্ত নাম্বারের ভিত্তিতে ছাত্রছাত্রীদের অবস্থান:</p>
+                <p style="font-size:12px; margin-bottom:15px;">সর্বোচ্চ স্কোরধারী স্টুডেন্টদের তালিকা:</p>
                 <div id="leaderboard-list-container"></div>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
-        <!-- ৮. স্টুডেন্ট ড্যাশবোর্ড -->
+        <!-- ৬. ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
-                <p style="margin-bottom: 12px;">আপনার পড়াশোনার সার্বিক ডায়াগ্রাম ও হিস্ট্রি।</p>
-
-                <div class="stat-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
-                    <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:10px; border-radius:10px;">
-                        <h5 style="font-size:11px; color:#64748b;">মোট পরীক্ষা</h5>
-                        <h3 id="total-exams-count" style="font-size:18px;">০ টি</h3>
-                    </div>
-                    <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:10px; border-radius:10px;">
-                        <h5 style="font-size:11px; color:#64748b;">গড় নম্বর</h5>
-                        <h3 id="avg-score-val" style="font-size:18px; color: #2563eb;">০%</h3>
-                    </div>
+                <p style="font-size:12px; margin-bottom:15px;">আপনার পারফরম্যান্স স্ট্যাটাস:</p>
+                <div style="background: #f8fafc; padding: 10px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                    <canvas id="performanceChart"></canvas>
                 </div>
-
-                <div style="margin-bottom: 20px;">
-                    <h4 style="font-size: 13px; color: #1e293b; margin-bottom: 8px;">📊 বিগত পরীক্ষাগুলোর স্কোর ডায়াগ্রাম:</h4>
-                    <div style="background: #f8fafc; padding: 10px; border-radius: 12px; border: 1px solid #e2e8f0;">
-                        <canvas id="performanceChart"></canvas>
-                    </div>
-                </div>
-
-                <div id="subscription-area"></div>
-
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
-        <!-- 👑 ৯. প্রিমিয়াম এডমিন ড্যাশবোর্ড -->
+        <!-- 👑 ৭. এডমিন ড্যাশবোর্ড -->
         <div id="admin-panel-section" class="page-section">
             <div class="admin-wrapper">
-                
                 <div class="admin-header">
                     <div>
                         <h2 style="font-size:16px; color:#f8fafc;"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> এডমিন ড্যাশবোর্ড</h2>
-                        <p style="font-size:10px; color:#94a3b8; margin:0;" id="admin-role-subtitle">Abs Exam Center Management</p>
+                        <p style="font-size:10px; color:#94a3b8; margin:0;" id="admin-role-subtitle">Abs Exam Management</p>
                     </div>
-                    <span class="admin-title-badge" id="admin-badge-text">PREMIUM</span>
+                    <span style="background:#f59e0b; color:#0f172a; font-size:10px; font-weight:800; padding:2px 8px; border-radius:12px;" id="admin-badge-text">ADMIN</span>
                 </div>
 
                 <div class="admin-stat-grid">
-                    <div class="admin-stat-card">
-                        <h6>টোটাল ইউজার</h6>
-                        <h3 id="stat-total-users" style="color:#60a5fa;">0</h3>
-                    </div>
-                    <div class="admin-stat-card">
-                        <h6>ফ্রি স্টুডেন্ট</h6>
-                        <h3 id="stat-free-users" style="color:#f87171;">0</h3>
-                    </div>
-                    <div class="admin-stat-card">
-                        <h6>পেইড মেম্বার</h6>
-                        <h3 id="stat-paid-users" style="color:#4ade80;">0</h3>
-                    </div>
+                    <div class="admin-stat-card"><h6>টোটাল ইউজার</h6><h3 style="color:#60a5fa;">4</h3></div>
+                    <div class="admin-stat-card"><h6>ফ্রি ইউজার</h6><h3 style="color:#f87171;">2</h3></div>
+                    <div class="admin-stat-card"><h6>পেইড ইউজার</h6><h3 style="color:#4ade80;">2</h3></div>
                 </div>
 
                 <div class="admin-tab-bar">
-                    <button class="admin-tab active" onclick="switchAdminTab('tab-pending', this)"><i class="fa-solid fa-clock"></i> পেন্ডিং</button>
-                    <button class="admin-tab" onclick="switchAdminTab('tab-users', this)"><i class="fa-solid fa-users"></i> ইউজার</button>
-                    <button class="admin-tab" onclick="switchAdminTab('tab-plans', this)"><i class="fa-solid fa-crown"></i> প্যাকেজ প্রাইস</button>
-                    <button class="admin-tab" onclick="switchAdminTab('tab-questions', this)"><i class="fa-solid fa-plus-circle"></i> প্রশ্ন</button>
-                    <button class="admin-tab" onclick="switchAdminTab('tab-inputs', this)"><i class="fa-solid fa-file-pen"></i> কার্ড ও সাজেশন</button>
+                    <button class="admin-tab active" onclick="switchAdminTab('tab-users', this)">ইউজার তালিকা</button>
+                    <button class="admin-tab" onclick="switchAdminTab('tab-add-course', this)">কোর্স ম্যানেজমেন্ট</button>
                 </div>
 
-                <!-- পেন্ডিং পেমেন্ট -->
-                <div id="tab-pending" class="admin-content-box active">
-                    <h4 style="font-size:12px; color:#fbbf24; margin-bottom:8px;">পেন্ডিং পেমেন্ট রিকোয়েস্ট:</h4>
-                    <div style="overflow-x:auto;">
-                        <table class="premium-table">
-                            <thead>
-                                <tr>
-                                    <th>নাম</th>
-                                    <th>ইমেইল</th>
-                                    <th>প্যাক</th>
-                                    <th>TrxID</th>
-                                    <th>অ্যাকশন</th>
-                                </tr>
-                            </thead>
-                            <tbody id="admin-pending-table-body"></tbody>
-                        </table>
+                <div id="tab-users" class="admin-content-box active">
+                    <table class="premium-table">
+                        <thead>
+                            <tr><th>নাম</th><th>স্ট্যাটাস</th><th>অ্যাকশন</th></tr>
+                        </thead>
+                        <tbody id="admin-user-table-body"></tbody>
+                    </table>
+                </div>
+
+                <!-- 🌟 কোর্স এডমিন ম্যানেজমেন্ট ট্যাব -->
+                <div id="tab-add-course" class="admin-content-box">
+                    <h4 style="font-size:13px; color:#fbbf24; margin-bottom:10px;">নতুন কোর্স যুক্ত করুন:</h4>
+                    <div class="form-group">
+                        <label style="color:#cbd5e1;">কোর্সের নাম:</label>
+                        <input type="text" id="course-title-input" placeholder="যেমন: HSC 26 ICT ক্র্যাশ কোর্স">
                     </div>
-                </div>
-
-                <!-- ইউজার মেয়াদের তারিখ -->
-                <div id="tab-users" class="admin-content-box">
-                    <h4 style="font-size:12px; color:#fbbf24; margin-bottom:8px;">ইউজার সাবস্ক্রিপশন মেয়াদের তারিখ:</h4>
-                    <div style="overflow-x:auto;">
-                        <table class="premium-table">
-                            <thead>
-                                <tr>
-                                    <th>স্টুডেন্ট</th>
-                                    <th>স্ট্যাটাস</th>
-                                    <th>পেমেন্টের তারিখ</th>
-                                    <th>মেয়াদ শেষ হবে</th>
-                                    <th>অ্যাকশন</th>
-                                </tr>
-                            </thead>
-                            <tbody id="admin-user-table-body"></tbody>
-                        </table>
+                    <div class="form-group">
+                        <label style="color:#cbd5e1;">কোর্সের ফি (টাকা):</label>
+                        <input type="number" id="course-price-input" placeholder="যেমন: ৯৯">
                     </div>
-                </div>
-
-                <!-- সাবস্ক্রিপশন প্যাকেজ প্রাইজ এডিটর -->
-                <div id="tab-plans" class="admin-content-box">
-                    <h4 style="font-size:12px; color:#fbbf24; margin-bottom:10px;"><i class="fa-solid fa-tags"></i> সাবস্ক্রিপশন প্যাকেজ প্রাইস আপডেট</h4>
-                    <div id="admin-plans-edit-list"></div>
-                </div>
-
-                <!-- প্রশ্ন ইনপুট -->
-                <div id="tab-questions" class="admin-content-box">
-                    <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155; margin-bottom:15px;">
-                        <h4 style="font-size:12px; margin-bottom:10px; color:#fbbf24;">নতুন MCQ কুইজ তৈরি করুন</h4>
-                        
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">বিষয় নির্বাচন করুন:</label>
-                            <select id="admin-q-subject">
-                                <option value="bangla-1">বাংলা ১ম পত্র</option>
-                                <option value="bangla-2">বাংলা ২য় পত্র</option>
-                                <option value="english-1">ইংরেজি ১ম পত্র</option>
-                                <option value="english-2">ইংরেজি ২য় পত্র</option>
-                                <option value="ict">আইসিটি (ICT)</option>
-                                <option value="physics-1">পদার্থবিজ্ঞান ১ম পত্র</option>
-                                <option value="physics-2">পদার্থবিজ্ঞান ২য় পত্র</option>
-                                <option value="chemistry-1">রসায়ন ১ম পত্র</option>
-                                <option value="chemistry-2">রসায়ন ২য় পত্র</option>
-                                <option value="biology-1">জীববিজ্ঞান ১ম পত্র</option>
-                                <option value="biology-2">জীববিজ্ঞান ২য় পত্র</option>
-                                <option value="math-1">উচ্চতর গণিত ১ম পত্র</option>
-                                <option value="math-2">উচ্চতর গণিত ২য় পত্র</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">প্রশ্ন লিখুন:</label>
-                            <input type="text" id="admin-q-text" placeholder="যেমন: সোনার তরী কবিতার কবি কে?">
-                        </div>
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">অপশন ১:</label>
-                            <input type="text" id="admin-opt-0" placeholder="অপশন ১">
-                        </div>
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">অপশন ২:</label>
-                            <input type="text" id="admin-opt-1" placeholder="অপশন ২">
-                        </div>
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">অপশন ৩:</label>
-                            <input type="text" id="admin-opt-2" placeholder="অপশন ৩">
-                        </div>
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">অপশন ৪:</label>
-                            <input type="text" id="admin-opt-3" placeholder="অপশন ৪">
-                        </div>
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">সঠিক উত্তর সিলেক্ট করুন:</label>
-                            <select id="admin-correct-ans">
-                                <option value="0">অপশন ১</option>
-                                <option value="1">অপশন ২</option>
-                                <option value="2">অপশন ৩</option>
-                                <option value="3">অপশন ৪</option>
-                            </select>
-                        </div>
-
-                        <button class="action-btn" onclick="addNewQuestionByAdmin()" style="background:#22c55e; color:#020617; font-weight:bold;">
-                            <i class="fa-solid fa-check-circle"></i> প্রশ্ন যুক্ত করুন
-                        </button>
+                    <div class="form-group">
+                        <label style="color:#cbd5e1;">কোর্সের বিবরণ:</label>
+                        <input type="text" id="course-desc-input" placeholder="যেমন: লাইভ ক্লাস + অধ্যায়ভিত্তিক এক্সাম">
                     </div>
+                    <button class="action-btn" onclick="addNewCourseByAdmin()" style="background:#22c55e; color:#020617; font-weight:bold; margin-bottom:15px;">
+                        <i class="fa-solid fa-plus-circle"></i> কোর্স প্রকাশ করুন
+                    </button>
 
-                    <h4 style="font-size:12px; color:#fbbf24; margin-bottom:8px;">বিদ্যমান প্রশ্ন তালিকা:</h4>
-                    <div id="admin-question-delete-list" style="max-height:180px; overflow-y:auto;"></div>
+                    <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">বিদ্যমান কোর্সসমূহ:</h4>
+                    <div id="admin-course-manage-list"></div>
                 </div>
 
-                <!-- ফ্ল্যাশকার্ড ও বিষয়ভিত্তিক সাজেশন ইনপুট -->
-                <div id="tab-inputs" class="admin-content-box">
-                    <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155; margin-bottom:15px;">
-                        <h4 style="font-size:12px; margin-bottom:10px; color:#fbbf24;"><i class="fa-solid fa-bolt"></i> ফ্ল্যাশকার্ড যুক্ত করুন</h4>
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">ফ্ল্যাশকার্ডের শিরোনাম/বিষয়:</label>
-                            <input type="text" id="flash-title" placeholder="যেমন: ওহমের সূত্র (Physics 1st)">
-                        </div>
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">বিবরণ/উত্তর:</label>
-                            <textarea id="flash-desc" rows="2" placeholder="যেমন: তাপমাত্রা স্থির থাকলে পরিবাহীর মধ্য দিয়ে প্রবাহিত কারেন্ট..."></textarea>
-                        </div>
-                        <button class="action-btn" onclick="addFlashcardByAdmin()" style="background:#38bdf8; color:#0f172a; font-weight:bold;">
-                            <i class="fa-solid fa-plus"></i> ফ্ল্যাশকার্ড পাবলিশ করুন
-                        </button>
-                    </div>
-
-                    <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155;">
-                        <h4 style="font-size:12px; margin-bottom:10px; color:#fbbf24;"><i class="fa-solid fa-lightbulb"></i> বিষয়ভিত্তিক সাজেশন যুক্ত করুন</h4>
-                        
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">বিষয় নির্বাচন করুন:</label>
-                            <select id="sug-subject-select">
-                                <option value="bangla-1">বাংলা ১ম পত্র</option>
-                                <option value="bangla-2">বাংলা ২য় পত্র</option>
-                                <option value="english-1">ইংরেজি ১ম পত্র</option>
-                                <option value="english-2">ইংরেজি ২য় পত্র</option>
-                                <option value="ict">আইসিটি (ICT)</option>
-                                <option value="physics-1">পদার্থবিজ্ঞান ১ম পত্র</option>
-                                <option value="physics-2">পদার্থবিজ্ঞান ২য় পত্র</option>
-                                <option value="chemistry-1">রসায়ন ১ম পত্র</option>
-                                <option value="chemistry-2">রসায়ন ২য় পত্র</option>
-                                <option value="biology-1">জীববিজ্ঞান ১ম পত্র</option>
-                                <option value="biology-2">জীববিজ্ঞান ২য় পত্র</option>
-                                <option value="math-1">উচ্চতর গণিত ১ম পত্র</option>
-                                <option value="math-2">উচ্চতর গণিত ২য় পত্র</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">সাজেশন শিরোনাম / অধ্যায়:</label>
-                            <input type="text" id="sug-title-input" placeholder="যেমন: ১ম অধ্যায় গুরুত্বপূর্ণ টপিক">
-                        </div>
-
-                        <div class="form-group">
-                            <label style="color:#cbd5e1;">সাজেশনের পূর্ণাঙ্গ বিবরণ:</label>
-                            <textarea id="sug-text-input" rows="3" placeholder="যেমন: ভেক্টর ও গতিবিদ্যা অংশ ভালো করে পড়তে হবে..."></textarea>
-                        </div>
-                        
-                        <button class="action-btn" onclick="addSuggestionByAdmin()" style="background:#f59e0b; color:#0f172a; font-weight:bold;">
-                            <i class="fa-solid fa-plus"></i> বিষয়ভিত্তিক সাজেশন যুক্ত করুন
-                        </button>
-                    </div>
-                </div>
-
-                <button class="back-btn" onclick="switchSection('home-section')" style="background:#334155; color:white; margin-top:15px;">
-                    <i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান
-                </button>
+                <button class="back-btn" onclick="switchSection('home-section')" style="background:#334155; color:white; margin-top:15px;">হোমে ফিরে যান</button>
             </div>
         </div>
 
-        <!-- ১০. ফ্ল্যাশকার্ড ভিউ পেজ -->
-        <div id="flashcard-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>⚡ ফ্ল্যাশকার্ডসমূহ</h2>
-                <p>গুরুত্বপূর্ণ সূত্র ও সংক্ষিপ্ত পড়া একনজরে রিভিশন দিন:</p>
-                <div id="flashcards-display-list"></div>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <!-- ১১. বিষয়ভিত্তিক সাজেশন ভিউ পেজ -->
-        <div id="suggestion-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>💡 বিষয়ভিত্তিক এইচএসসি সাজেশন</h2>
-                <p>যেকোনো বিষয় সিলেক্ট করে নির্দিষ্ট সাজেশনগুলো পড়ুন:</p>
-                
-                <div class="subject-chip-container" id="suggestion-filter-chips">
-                    <div class="subject-chip active" onclick="filterSuggestions('all', this)">সকল বিষয়</div>
-                    <div class="subject-chip" onclick="filterSuggestions('bangla-1', this)">বাংলা ১ম</div>
-                    <div class="subject-chip" onclick="filterSuggestions('bangla-2', this)">বাংলা ২য়</div>
-                    <div class="subject-chip" onclick="filterSuggestions('english-1', this)">ইংরেজি ১ম</div>
-                    <div class="subject-chip" onclick="filterSuggestions('english-2', this)">ইংরেজি ২য়</div>
-                    <div class="subject-chip" onclick="filterSuggestions('ict', this)">আইসিটি</div>
-                    <div class="subject-chip" onclick="filterSuggestions('physics-1', this)">পদার্থ ১ম</div>
-                    <div class="subject-chip" onclick="filterSuggestions('physics-2', this)">পদার্থ ২য়</div>
-                    <div class="subject-chip" onclick="filterSuggestions('chemistry-1', this)">রসায়ন ১ম</div>
-                    <div class="subject-chip" onclick="filterSuggestions('chemistry-2', this)">রসায়ন ২য়</div>
-                    <div class="subject-chip" onclick="filterSuggestions('biology-1', this)">জীব ১ম</div>
-                    <div class="subject-chip" onclick="filterSuggestions('biology-2', this)">জীব ২য়</div>
-                    <div class="subject-chip" onclick="filterSuggestions('math-1', this)">উচ্চতর গণিত ১ম</div>
-                    <div class="subject-chip" onclick="filterSuggestions('math-2', this)">উচ্চতর গণিত ২য়</div>
-                </div>
-
-                <div id="suggestions-display-list"></div>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <div id="question-bank-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>📚 প্রশ্নব্যাংক</h2>
-                <p>এখানে আপনার বিষয় ও অধ্যায়ভিত্তিক হাজার হাজার প্রশ্ন পাওয়া যাবে।</p>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <!-- ১২. প্রোফাইল ও লগইন সেকশন -->
+        <!-- 👤 ৮. প্রোফাইল ও লগআউট সেকশন -->
         <div id="profile-section" class="page-section">
             <div class="inner-page-card">
-                <h2>👤 ইউজার প্রোফাইল ও লগইন</h2>
+                <h2>👤 ইউজার প্রোফাইল</h2>
                 
-                <div id="logged-in-profile-info" style="display:none; background:#f8fafc; padding:12px; border-radius:10px; margin-bottom:15px; border:1px solid #cbd5e1;">
-                    <p><strong>নাম:</strong> <span id="prof-display-name">Abs Siddik</span></p>
-                    <p><strong>ইমেইল:</strong> <span id="prof-display-email">abs@exam.com</span></p>
-                    <p><strong>রোল:</strong> <span id="prof-display-role" style="color:#e11d48; font-weight:bold;">ছাত্র</span></p>
-                </div>
-
-                <!-- লগইন ফর্ম -->
-                <div style="background:#f1f5f9; padding:15px; border-radius:12px; border:1px solid #cbd5e1;">
-                    <h4 style="font-size:14px; color:#1e293b; margin-bottom:10px;"><i class="fa-solid fa-right-to-bracket"></i> অ্যাকাউন্ট লগইন করুন</h4>
+                <div style="background:#f8fafc; padding:15px; border-radius:12px; border:1px solid #cbd5e1; margin-top:10px;">
+                    <p style="margin-bottom:6px;"><strong>নাম:</strong> <span id="prof-display-name">গেস্ট ইউজার</span></p>
+                    <p style="margin-bottom:6px;"><strong>ইমেইল/ফোন:</strong> <span id="prof-display-email">N/A</span></p>
+                    <p style="margin-bottom:6px;"><strong>রোল:</strong> <span id="prof-display-role" style="color:#047857; font-weight:bold;">সাধারণ ছাত্র</span></p>
                     
-                    <div class="form-group">
-                        <label>ইমেইল এড্রেস:</label>
-                        <input type="email" id="login-email-input" placeholder="আপনার ইমেইল দিন">
-                    </div>
-                    <div class="form-group">
-                        <label>পাসওয়ার্ড:</label>
-                        <input type="password" id="login-pass-input" placeholder="পাসওয়ার্ড দিন">
-                    </div>
-
-                    <button class="action-btn" onclick="handleUserLogin()" style="background:#4f46e5; color:white; margin-bottom:10px;">
-                        লগইন করুন <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    <!-- 🔴 লগআউট অপশন -->
+                    <button class="logout-btn" onclick="handleUserLogout()">
+                        <i class="fa-solid fa-right-from-bracket"></i> অ্যাকাউন্ট থেকে লগআউট করুন
                     </button>
                 </div>
 
-                <!-- এডমিন প্যানেল বাটন -->
-                <div id="admin-switch-box" style="display:none; background:#fee2e2; padding:12px; border-radius:10px; margin-top:15px; border:1px solid #fca5a5;">
-                    <h4 style="font-size:13px; color:#991b1b; margin-bottom:6px;">এডমিন এক্সেস:</h4>
+                <div id="admin-switch-box" style="display:none; background:#fee2e2; padding:12px; border-radius:10px; margin-top:15px;">
                     <button class="action-btn" onclick="switchSection('admin-panel-section')" style="background:#e11d48; color:white;">
-                        <i class="fa-solid fa-user-shield"></i> এডমিন ড্যাশবোর্ডে যান
+                        <i class="fa-solid fa-user-shield"></i> এডমিন ড্যাশবোর্ডে প্রবেশ করুন
                     </button>
                 </div>
 
@@ -1168,17 +671,6 @@
             </div>
         </div>
 
-    </div>
-
-    <!-- 🔒 ৪০টি পরীক্ষার লিমিট ওভার পপআপ কার্ড -->
-    <div id="exam-limit-modal" class="limit-modal">
-        <div class="limit-box">
-            <div style="font-size: 40px; color: #dc2626; margin-bottom: 10px;"><i class="fa-solid fa-lock"></i></div>
-            <h3 style="color: #1e293b; font-size: 18px; margin-bottom: 8px;">আপনার ফ্রি পরীক্ষা শেষ!</h3>
-            <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">আপনি ৪০টি ফ্রি পরীক্ষার সীমা অতিক্রম করেছেন। আনলিমিটেড পরীক্ষা দিতে সাবস্ক্রিপশন প্ল্যান কিনুন।</p>
-            <button class="action-btn" onclick="switchSection('courses-section'); closeLimitModal();">সাবস্ক্রিপশন কিনুন <i class="fa-solid fa-crown"></i></button>
-            <button class="back-btn" onclick="closeLimitModal()">বন্ধ করুন</button>
-        </div>
     </div>
 
     <!-- Bottom Navigation Bar -->
@@ -1188,8 +680,8 @@
             <span>হোম</span>
         </a>
         <a class="nav-link" onclick="switchSection('courses-section')">
-            <i class="fa-solid fa-crown"></i>
-            <span>প্যাকেজ</span>
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>কোর্স</span>
         </a>
         <a class="nav-link" onclick="switchSection('dashboard-section')">
             <i class="fa-solid fa-chart-pie"></i>
@@ -1205,123 +697,81 @@
         </a>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Engine -->
     <script>
-        const subjectNamesBn = {
-            "bangla-1": "বাংলা ১ম পত্র",
-            "bangla-2": "বাংলা ২য় পত্র",
-            "english-1": "ইংরেজি ১ম পত্র",
-            "english-2": "ইংরেজি ২য় পত্র",
-            "ict": "আইসিটি (ICT)",
-            "physics-1": "পদার্থবিজ্ঞান ১ম পত্র",
-            "physics-2": "পদার্থবিজ্ঞান ২য় পত্র",
-            "chemistry-1": "রসায়ন ১ম পত্র",
-            "chemistry-2": "রসায়ন ২য় পত্র",
-            "biology-1": "জীববিজ্ঞান ১ম পত্র",
-            "biology-2": "জীববিজ্ঞান ২য় পত্র",
-            "math-1": "উচ্চতর গণিত ১ম পত্র",
-            "math-2": "উচ্চতর গণিত ২য় পত্র"
-        };
-
         let currentUser = {
-            name: "Abs Siddik",
-            email: "abs@exam.com",
-            role: "main_admin",
-            isPaid: true
+            name: "গেস্ট ইউজার",
+            email: "guest@exam.com",
+            role: "student",
+            isPaid: false
         };
 
-        let subscriptionPlans = [
-            { id: 1, name: "২ মাসের প্যাকেজ", months: 2, price: 50, note: "আনলিমিটেড পরীক্ষা ও সকল সুবিধা" },
-            { id: 2, name: "৩ মাসের প্যাকেজ", months: 3, price: 100, note: "জনপ্রিয় প্যাক + ফুল এনালাইসিস" },
-            { id: 3, name: "৬ মাসের প্যাকেজ (বেস্ট ভ্যালু)", months: 6, price: 150, note: "দীর্ঘমেয়াদী পূর্ণাঙ্গ প্রস্তুতি" }
-        ];
-
-        let questions = [
-            { subject: "bangla-1", q: "সোনার তরী কবিতার রচয়িতা কে?", options: ["কাজী নজরুল ইসলাম", "রবীন্দ্রনাথ ঠাকুর", "জসীমউদ্দীন", "জীবনানন্দ দাশ"], ans: 1 },
-            { subject: "ict", q: "HTML মূলত কী ধরণের ভাষা?", options: ["Programming Language", "Markup Language", "Database Language", "Scripting Language"], ans: 1 },
-            { subject: "physics-1", q: "ভেক্টর রাশির উদাহরণ কোনটি?", options: ["ভর", "বেগ", "সময়", "তাপমাত্রা"], ans: 1 }
-        ];
-
-        let flashcards = [
-            { title: "ওহমের সূত্র (ICT / Physics)", desc: "তাপমাত্রা স্থির থাকলে কোনো পরিবাহীর মধ্য দিয়ে প্রবাহিত তড়িৎ প্রবাহ তার দুই প্রান্তের বিভব পার্থক্যের সমানুপাতিক।" }
-        ];
-
-        let suggestions = [
-            { subject: "physics-1", title: "১ম ও ২য় অধ্যায় মূল সাজেশান", text: "ভেক্টর রাশিমালা ও গতিবিদ্যা থেকে গাণিতিক সমস্যাগুলোর ওপর বেশি জোর দিন।" },
-            { subject: "ict", title: "ওয়েব ডিজাইন ও HTML", text: "HTML টেবিল তৈরি করা এবং লিস্ট ট্যাগ (ul, ol) থেকে প্রতি বছর নিশ্চিত CQ প্রশ্ন আসে।" }
-        ];
-
+        // 🔑 এডমিন এবং ইউজারদের সেভ ডাটাবেজ
         let leaderboardData = [
-            { name: "Abs Siddik (মেইন এডমিন)", email: "abs@exam.com", pass: "abs889", role: "main_admin", isPaid: true, totalScore: 25, percentage: 83, examCount: 0, paidDate: "2026-01-01", expireDate: "2030-01-01" },
-            { name: "মুশফিকুর রহমান (সাব-এডমিন)", email: "musfiqrahmansubadmin@gmail.com", pass: "musfiq1739", role: "sub_admin", isPaid: true, totalScore: 0, percentage: 0, examCount: 0, paidDate: "2026-10-16", expireDate: "2030-01-01" },
-            { name: "মাসফাকুর রহমান", email: "mushfiq@gmail.com", pass: "123456", role: "student", isPaid: true, totalScore: 28, percentage: 93, examCount: 15, paidDate: "2026-10-01", expireDate: "2027-01-01" },
-            { name: "রাফসান আহমেদ", email: "rafsan@gmail.com", pass: "pass123", role: "student", isPaid: false, totalScore: 20, percentage: 66, examCount: 10, paidDate: "N/A", expireDate: "N/A" }
+            { name: "Abs Siddik (মেইন এডমিন)", email: "absiddikrobi1739@gmail.com", pass: "absiddikrobi1739", role: "main_admin", isPaid: true, totalScore: 25 },
+            { name: "মুশফিকুর রহমান (সাব-এডমিন)", email: "musfiqrahmansubadmin@gmail.com", pass: "musfiq1379", role: "sub_admin", isPaid: true, totalScore: 20 },
+            { name: "মাসফাকুর রহমান", email: "mushfiq@gmail.com", pass: "123456", role: "student", isPaid: true, totalScore: 28 },
+            { name: "রাফসান আহমেদ", email: "rafsan@gmail.com", pass: "pass123", role: "student", isPaid: false, totalScore: 18 }
         ];
 
-        let pendingPayments = [
-            { name: "সাকিব হাসান", email: "sakib@gmail.com", pass: "sakib123", pack: "৩ মাস - ১০০ টাকা", months: 3, method: "bKash", trxId: "9K87L2MX" }
+        // 📚 কোর্সসমূহের তালিকা
+        let coursesList = [
+            { title: "HSC 2026 ICT ফুল ব্যাচ", price: 150, desc: "সম্পূর্ণ আইসিটি থিওরি + প্র্যাকটিক্যাল + ৫০টি অনলাইন এক্সাম" },
+            { title: "পদার্থবিজ্ঞান ১ম ও ২য় পত্র মেগা কোর্স", price: 250, desc: "সকল অধ্যায়ের গাণিতিক ব্যাখ্যা ও মডেল টেস্ট" }
         ];
 
-        let activeExamQuestions = [];
-        let selectedPlanText = "";
-        let selectedPlanMonths = 2;
-        let currentQ = 0;
-        let correctCount = 0;
-        let wrongCount = 0;
-        let timerInterval;
-        let timeLeftSeconds = 60;
-        let isAnswered = false;
-        let wrongAnswersLog = [];
-        let currentSelectedSubjectFilter = 'all';
+        function handleCustomAuth() {
+            const inputVal = document.getElementById('auth-input-field').value.trim();
+            const passVal = document.getElementById('auth-pass-field').value.trim();
 
-        let chartDataScores = [40, 55, 45, 70, 85];
-        let chartLabels = ['পরীক্ষা ১', 'পরীক্ষা ২', 'পরীক্ষা ৩', 'পরীক্ষা ৪', 'পরীক্ষা ৫'];
-        let myChartInstance = null;
-
-        function handleUserLogin() {
-            const email = document.getElementById('login-email-input').value.trim();
-            const pass = document.getElementById('login-pass-input').value.trim();
-
-            if(!email || !pass) {
-                alert("দয়া করে ইমেইল এবং পাসওয়ার্ড দুইটিই পূরণ করুন!");
+            if(!inputVal) {
+                alert("দয়া করে মোবাইল নাম্বার অথবা ইমেইল দিন!");
                 return;
             }
 
-            const foundUser = leaderboardData.find(u => u.email === email && u.pass === pass);
+            const foundAdmin = leaderboardData.find(u => (u.email === inputVal || u.name === inputVal) && u.pass === passVal);
 
-            if(foundUser) {
-                currentUser = foundUser;
-                alert(`স্বাগতম ${foundUser.name}! সফলভাবে লগইন করা হয়েছে।`);
-                
-                document.getElementById('top-user-name').innerText = foundUser.name;
-                document.getElementById('top-avatar').innerText = foundUser.name.charAt(0).toUpperCase();
-                document.getElementById('banner-user-name').innerText = foundUser.name;
-                
-                document.getElementById('login-email-input').value = '';
-                document.getElementById('login-pass-input').value = '';
-
-                renderProfileView();
-                updateHomeTrialBanner();
-
-                if(foundUser.role === 'main_admin' || foundUser.role === 'sub_admin') {
-                    switchSection('admin-panel-section');
-                } else {
-                    switchSection('home-section');
-                }
+            if(foundAdmin) {
+                currentUser = foundAdmin;
+                alert(`স্বাগতম ${foundAdmin.name}! এডমিন হিসেবে লগইন সফল হয়েছে।`);
+                updateUserProfileUI();
+                switchSection('admin-panel-section');
             } else {
-                alert("ভুল ইমেইল অথবা পাসওয়ার্ড! দয়া করে সঠিক তথ্য দিন।");
+                currentUser = {
+                    name: inputVal,
+                    email: inputVal,
+                    role: "student",
+                    isPaid: false
+                };
+                alert(`স্বাগতম ${inputVal}! আপনার লগইন সফল হয়েছে।`);
+                updateUserProfileUI();
+                switchSection('home-section');
             }
         }
 
-        function renderProfileView() {
-            document.getElementById('logged-in-profile-info').style.display = 'block';
+        function quickGuestLogin(provider) {
+            currentUser = {
+                name: provider + " ইউজার",
+                email: provider.toLowerCase() + "@user.com",
+                role: "student",
+                isPaid: false
+            };
+            alert(`${provider} এর মাধ্যমে দ্রুত লগইন করা হয়েছে!`);
+            updateUserProfileUI();
+            switchSection('home-section');
+        }
+
+        function updateUserProfileUI() {
+            document.getElementById('top-user-name').innerText = currentUser.name;
+            document.getElementById('top-avatar').innerText = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('banner-user-name').innerText = currentUser.name;
             document.getElementById('prof-display-name').innerText = currentUser.name;
             document.getElementById('prof-display-email').innerText = currentUser.email;
 
             let roleTxt = "সাধারণ ছাত্র";
             if(currentUser.role === 'main_admin') roleTxt = "মেইন এডমিন (Owner)";
-            else if(currentUser.role === 'sub_admin') roleTxt = "সাব-এডমিন (Sub Admin)";
-            
+            else if(currentUser.role === 'sub_admin') roleTxt = "সাব-এডমিন";
+
             document.getElementById('prof-display-role').innerText = roleTxt;
 
             if(currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
@@ -1331,624 +781,116 @@
             }
         }
 
-        function updateHomeTrialBanner() {
-            const trialCard = document.getElementById('home-trial-card');
-            const trialText = document.getElementById('home-trial-text');
-            const trialBar = document.getElementById('home-trial-bar');
-
-            if (currentUser && trialCard && trialText && trialBar) {
-                if (currentUser.isPaid || currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
-                    trialCard.style.background = 'linear-gradient(135deg, #065f46, #047857)';
-                    trialText.innerHTML = (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') ? 'ADMIN ACCESS' : 'PRO MEMBER (মেয়াদ: ' + currentUser.expireDate + ')';
-                    trialBar.style.width = '100%';
-                } else {
-                    const count = currentUser.examCount || 0;
-                    const percent = Math.min(Math.round((count / 40) * 100), 100);
-                    trialText.innerText = `${count} / 40 টি`;
-                    trialBar.style.width = percent + '%';
-                }
+        function handleUserLogout() {
+            if(confirm("আপনি কি নিশ্চিতভাবে লগআউট করতে চান?")) {
+                currentUser = {
+                    name: "গেস্ট ইউজার",
+                    email: "guest@exam.com",
+                    role: "student",
+                    isPaid: false
+                };
+                updateUserProfileUI();
+                alert("সফলভাবে লগআউট করা হয়েছে!");
+                switchSection('login-screen-section');
             }
-        }
-
-        function renderUserSubscriptionPlans() {
-            const container = document.getElementById('user-plans-container');
-            if(!container) return;
-            container.innerHTML = '';
-
-            subscriptionPlans.forEach(plan => {
-                const div = document.createElement('div');
-                div.className = 'plan-card';
-                div.onclick = (e) => selectPlan(`${plan.name} - ${plan.price} টাকা`, plan.months, e);
-                div.innerHTML = `
-                    <div>
-                        <h4 style="font-size:14px; color:#1e293b;">${plan.name}</h4>
-                        <p style="font-size:11px; color:#64748b;">${plan.note}</p>
-                    </div>
-                    <span style="font-weight:bold; color:#4f46e5; font-size:15px;">${plan.price} টাকা</span>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function renderAdminPlansEditor() {
-            const container = document.getElementById('admin-plans-edit-list');
-            if(!container) return;
-            container.innerHTML = '';
-
-            subscriptionPlans.forEach((plan, index) => {
-                const div = document.createElement('div');
-                div.style.background = 'rgba(255,255,255,0.05)';
-                div.style.padding = '12px';
-                div.style.borderRadius = '10px';
-                div.style.border = '1px solid #334155';
-                div.style.marginBottom = '12px';
-                div.innerHTML = `
-                    <h5 style="color:#fbbf24; margin-bottom:8px; font-size:12px;">প্যাকেজ #${index + 1} এডিট করুন</h5>
-                    <div class="form-group">
-                        <label style="color:#cbd5e1;">প্যাকেজের নাম:</label>
-                        <input type="text" id="plan-name-${index}" value="${plan.name}">
-                    </div>
-                    <div style="display:flex; gap:8px;">
-                        <div class="form-group" style="flex:1;">
-                            <label style="color:#cbd5e1;">মেয়াদ (মাস):</label>
-                            <input type="number" id="plan-months-${index}" value="${plan.months}">
-                        </div>
-                        <div class="form-group" style="flex:1;">
-                            <label style="color:#cbd5e1;">মূল্য (টাকা):</label>
-                            <input type="number" id="plan-price-${index}" value="${plan.price}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label style="color:#cbd5e1;">সংক্ষিপ্ত বিবরণ:</label>
-                        <input type="text" id="plan-note-${index}" value="${plan.note}">
-                    </div>
-                    <button class="action-btn" onclick="savePlanByAdmin(${index})" style="background:#22c55e; color:#0f172a; font-weight:bold; padding:8px;">
-                        <i class="fa-solid fa-save"></i> সেভ করুন
-                    </button>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function savePlanByAdmin(index) {
-            const name = document.getElementById(`plan-name-${index}`).value;
-            const months = parseInt(document.getElementById(`plan-months-${index}`).value);
-            const price = parseInt(document.getElementById(`plan-price-${index}`).value);
-            const note = document.getElementById(`plan-note-${index}`).value;
-
-            if(!name || isNaN(months) || isNaN(price)) {
-                alert("দয়া করে সকল তথ্য সঠিকভাবে পূরণ করুন!");
-                return;
-            }
-
-            subscriptionPlans[index].name = name;
-            subscriptionPlans[index].months = months;
-            subscriptionPlans[index].price = price;
-            subscriptionPlans[index].note = note;
-
-            alert("প্যাকেজের মূল্য ও তথ্য সফলভাবে আপডেট করা হয়েছে!");
-            renderUserSubscriptionPlans();
         }
 
         function switchSection(sectionId) {
-            const sections = document.querySelectorAll('.page-section');
-            sections.forEach(sec => sec.classList.remove('active'));
-
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             const target = document.getElementById(sectionId);
-            if (target) {
-                target.classList.add('active');
-                window.scrollTo(0, 0);
-            }
+            if (target) target.classList.add('active');
+            window.scrollTo(0, 0);
 
-            if(sectionId === 'home-section') {
-                updateHomeTrialBanner();
-            } else if(sectionId === 'courses-section') {
-                renderUserSubscriptionPlans();
-            } else if(sectionId === 'dashboard-section') {
-                renderChart();
-                loadSubscriptionView();
+            if(sectionId === 'admin-panel-section') {
+                renderAdminUserTable();
+                renderAdminCourseList();
             } else if(sectionId === 'leaderboard-section') {
                 renderLeaderboard();
-            } else if(sectionId === 'admin-panel-section') {
-                if(currentUser.role === 'sub_admin') {
-                    document.getElementById('admin-badge-text').innerText = "SUB-ADMIN";
-                    document.getElementById('admin-role-subtitle').innerText = "Logged in as Sub-Admin (View Only for Payments)";
-                } else {
-                    document.getElementById('admin-badge-text').innerText = "MAIN ADMIN";
-                    document.getElementById('admin-role-subtitle').innerText = "Abs Exam Center Management";
-                }
-                renderAdminUserTable();
-                renderAdminQuestionList();
-                renderAdminPendingTable();
-                renderAdminPlansEditor();
-            } else if(sectionId === 'flashcard-section') {
-                renderFlashcards();
-            } else if(sectionId === 'suggestion-section') {
-                renderSuggestions(currentSelectedSubjectFilter);
-            } else if(sectionId === 'profile-section') {
-                renderProfileView();
+            } else if(sectionId === 'courses-section') {
+                renderUserCourses();
             }
         }
 
         function switchAdminTab(tabId, btnElem) {
-            document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.admin-content-box').forEach(box => box.classList.remove('active'));
-
-            if(btnElem) {
-                btnElem.classList.add('active');
-            }
+            document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.admin-content-box').forEach(c => c.classList.remove('active'));
+            if(btnElem) btnElem.classList.add('active');
             document.getElementById(tabId).classList.add('active');
         }
 
-        function selectPlan(planTitle, months, evt) {
-            selectedPlanText = planTitle;
-            selectedPlanMonths = months;
-            document.querySelectorAll('.plan-card').forEach(card => card.classList.remove('selected'));
-            if(evt && evt.currentTarget) {
-                evt.currentTarget.classList.add('selected');
-            }
-            document.getElementById('payment-form-box').style.display = 'block';
-        }
-
-        function submitPaymentRequest() {
-            const name = document.getElementById('sub-name').value;
-            const email = document.getElementById('sub-email').value;
-            const pass = document.getElementById('sub-pass').value;
-            const method = document.getElementById('sub-method').value;
-            const trxId = document.getElementById('sub-trxid').value;
-
-            if(!name || !email || !pass || !trxId) {
-                alert("দয়া করে নাম, ইমেইল, পাসওয়ার্ড এবং Transaction ID সুন্দরভাবে পূরণ করুন!");
-                return;
-            }
-
-            pendingPayments.push({
-                name: name,
-                email: email,
-                pass: pass,
-                pack: selectedPlanText,
-                months: selectedPlanMonths,
-                method: method,
-                trxId: trxId
-            });
-
-            alert("আপনার পেমেন্ট রিকোয়েস্ট সাবমিট হয়েছে! এডমিন যাচাই করে Approve করলেই আপনার প্রিমিয়াম সার্ভিস চালু হয়ে যাবে।");
-            document.getElementById('payment-form-box').style.display = 'none';
-        }
-
-        function checkExamLimitAndStart() {
-            if(currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid) {
-                switchSection('model-test-setup');
-                document.getElementById('used-exam-count').innerText = currentUser.examCount || 0;
-            } else if(currentUser.examCount >= 40) {
-                document.getElementById('exam-limit-modal').style.display = 'flex';
-            } else {
-                switchSection('model-test-setup');
-                document.getElementById('used-exam-count').innerText = currentUser.examCount || 0;
-            }
-        }
-
-        function closeLimitModal() {
-            document.getElementById('exam-limit-modal').style.display = 'none';
-        }
-
-        function startExam() {
-            const selectedSubject = document.getElementById('chapter-select').value;
-            activeExamQuestions = questions.filter(q => q.subject === selectedSubject);
-
-            if (activeExamQuestions.length === 0) {
-                activeExamQuestions = questions;
-            }
-
-            const selectedTimeMin = parseInt(document.getElementById('exam-time').value);
-            timeLeftSeconds = selectedTimeMin * 60;
-            
-            currentQ = 0;
-            correctCount = 0;
-            wrongCount = 0;
-            wrongAnswersLog = [];
-            
-            document.getElementById('live-correct').innerText = "0";
-            document.getElementById('live-wrong').innerText = "0";
-
-            switchSection('model-test-section');
-            startTimer();
-            loadQuiz();
-        }
-
-        function startTimer() {
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                if (timeLeftSeconds <= 0) {
-                    clearInterval(timerInterval);
-                    finishExam();
-                    return;
-                }
-                timeLeftSeconds--;
-                const m = Math.floor(timeLeftSeconds / 60);
-                const s = timeLeftSeconds % 60;
-                document.getElementById('timer-display').innerText = `⏱️ ${m}:${s < 10 ? '0' : ''}${s}`;
-            }, 1000);
-        }
-
-        function loadQuiz() {
-            isAnswered = false;
-            document.getElementById('next-btn').style.display = 'none';
-
-            if (currentQ < activeExamQuestions.length) {
-                document.getElementById('question-text').innerText = (currentQ + 1) + ". " + activeExamQuestions[currentQ].q;
-                const optContainer = document.getElementById('options-container');
-                optContainer.innerHTML = '';
-                
-                activeExamQuestions[currentQ].options.forEach((opt, index) => {
-                    const btn = document.createElement('button');
-                    btn.className = 'option-btn';
-                    btn.innerText = opt;
-                    btn.onclick = () => selectOption(index, btn);
-                    optContainer.appendChild(btn);
-                });
-            } else {
-                finishExam();
-            }
-        }
-
-        function selectOption(selectedIndex, clickedBtn) {
-            if (isAnswered) return;
-            isAnswered = true;
-
-            const currentObj = activeExamQuestions[currentQ];
-            const allButtons = document.querySelectorAll('.option-btn');
-
-            if (selectedIndex === currentObj.ans) {
-                clickedBtn.style.background = '#dcfce7';
-                clickedBtn.style.borderColor = '#16a34a';
-                correctCount++;
-                document.getElementById('live-correct').innerText = correctCount;
-            } else {
-                clickedBtn.style.background = '#fee2e2';
-                clickedBtn.style.borderColor = '#dc2626';
-                allButtons[currentObj.ans].style.background = '#dcfce7';
-                allButtons[currentObj.ans].style.borderColor = '#16a34a';
-
-                wrongCount++;
-                document.getElementById('live-wrong').innerText = wrongCount;
-
-                wrongAnswersLog.push({
-                    q: currentObj.q,
-                    userAns: currentObj.options[selectedIndex],
-                    correctAns: currentObj.options[currentObj.ans]
-                });
-            }
-
-            document.getElementById('next-btn').style.display = 'block';
-        }
-
-        function nextQuestion() {
-            currentQ++;
-            loadQuiz();
-        }
-
-        function cancelExam() {
-            clearInterval(timerInterval);
-            switchSection('home-section');
-        }
-
-        function finishExam() {
-            clearInterval(timerInterval);
-            
-            const totalQ = activeExamQuestions.length;
-            const percentage = Math.round((correctCount / totalQ) * 100);
-
-            document.getElementById('recent-percentage').innerText = percentage + "%";
-            document.getElementById('recent-score-val').innerText = correctCount;
-            document.getElementById('recent-correct-val').innerText = correctCount;
-            document.getElementById('recent-wrong-val').innerText = wrongCount;
-
-            const wrongContainer = document.getElementById('recent-wrong-list-container');
-            wrongContainer.innerHTML = '';
-            
-            if(wrongAnswersLog.length > 0) {
-                wrongContainer.innerHTML = `<h4 style="font-size:13px; color:#1e293b; margin-bottom:8px;">ভুল হওয়া প্রশ্নের রিভিউ:</h4>`;
-                wrongAnswersLog.forEach((item, idx) => {
-                    const div = document.createElement('div');
-                    div.style.background = '#fef2f2';
-                    div.style.padding = '8px';
-                    div.style.borderRadius = '8px';
-                    div.style.marginBottom = '6px';
-                    div.style.border = '1px solid #fecaca';
-                    div.innerHTML = `
-                        <p style="font-size:12px; font-weight:bold; color:#1e293b;">${idx+1}. ${item.q}</p>
-                        <p style="font-size:11px; color:#dc2626;">❌ আপনার উত্তর: ${item.userAns}</p>
-                        <p style="font-size:11px; color:#16a34a; font-weight:bold;">✅ সঠিক উত্তর: ${item.correctAns}</p>
-                    `;
-                    wrongContainer.appendChild(div);
-                });
-            }
-
-            currentUser.totalScore = (currentUser.totalScore || 0) + correctCount;
-            currentUser.percentage = percentage;
-            currentUser.examCount = (currentUser.examCount || 0) + 1;
-
-            chartDataScores.push(percentage);
-            chartLabels.push(`পরীক্ষা ${chartDataScores.length}`);
-
-            updateHomeTrialBanner();
-            switchSection('recent-result-section');
-        }
-
-        function renderLeaderboard() {
-            leaderboardData.sort((a, b) => b.totalScore - a.totalScore);
-
-            const container = document.getElementById('leaderboard-list-container');
+        function renderUserCourses() {
+            const container = document.getElementById('user-course-list-container');
             container.innerHTML = '';
 
-            leaderboardData.forEach((user, idx) => {
+            coursesList.forEach(course => {
                 const div = document.createElement('div');
-                div.className = 'leaderboard-item';
-                div.style.display = 'flex';
-                div.style.justifyContent = 'space-between';
-                div.style.alignItems = 'center';
-                div.style.padding = '10px 0';
-                div.style.borderBottom = '1px solid #f1f5f9';
+                div.className = 'course-card-item';
                 div.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span style="font-weight:bold; color:#4f46e5; width:20px;">#${idx + 1}</span>
-                        <div>
-                            <span style="font-weight:600; font-size:13px;">${user.name}</span>
-                            ${user.role === 'main_admin' ? '<span style="font-size:9px; background:#fecaca; color:#dc2626; padding:1px 4px; border-radius:4px; margin-left:4px;">ADMIN</span>' : ''}
-                            ${user.role === 'sub_admin' ? '<span style="font-size:9px; background:#e0e7ff; color:#3730a3; padding:1px 4px; border-radius:4px; margin-left:4px;">SUB-ADMIN</span>' : ''}
-                            ${user.isPaid && user.role === 'student' ? '<span style="font-size:9px; background:#fef3c7; color:#d97706; padding:1px 4px; border-radius:4px; margin-left:4px;">PRO</span>' : ''}
-                        </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                        <h3 style="font-size:14px; color:#1e293b;">${course.title}</h3>
+                        <span style="background:#dcfce7; color:#16a34a; font-weight:bold; font-size:12px; padding:2px 8px; border-radius:8px;">${course.price} ৳</span>
                     </div>
-                    <div style="text-align:right;">
-                        <span style="font-weight:bold; color:#16a34a; font-size:13px;">${user.totalScore} নম্বর</span>
-                        <span style="font-size:10px; color:#64748b; display:block;">(${user.percentage}%)</span>
-                    </div>
+                    <p style="font-size:11px; color:#64748b; margin-bottom:10px;">${course.desc}</p>
+                    <button class="btn-green" style="padding:8px; font-size:12px;" onclick="alert('কোর্সে এনরোল করার জন্য এডমিনের সাথে যোগাযোগ করুন')">কোর্সটি এনরোল করুন</button>
                 `;
                 container.appendChild(div);
             });
         }
 
-        function addFlashcardByAdmin() {
-            const title = document.getElementById('flash-title').value;
-            const desc = document.getElementById('flash-desc').value;
+        function addNewCourseByAdmin() {
+            const title = document.getElementById('course-title-input').value.trim();
+            const price = document.getElementById('course-price-input').value.trim();
+            const desc = document.getElementById('course-desc-input').value.trim();
 
-            if(!title || !desc) {
-                alert("দয়া করে ফ্ল্যাশকার্ডের শিরোনাম ও বিবরণ লিখুন!");
+            if(!title || !price) {
+                alert("দয়া করে কোর্সের নাম এবং মূল্য প্রদান করুন!");
                 return;
             }
 
-            flashcards.push({ title: title, desc: desc });
-            alert("ফ্ল্যাশকার্ড সফলভাবে যুক্ত হয়েছে!");
-            document.getElementById('flash-title').value = '';
-            document.getElementById('flash-desc').value = '';
+            coursesList.push({ title, price, desc });
+            alert("নতুন কোর্সটি সফলভাবে যুক্ত হয়েছে!");
+
+            document.getElementById('course-title-input').value = '';
+            document.getElementById('course-price-input').value = '';
+            document.getElementById('course-desc-input').value = '';
+
+            renderAdminCourseList();
+            renderUserCourses();
         }
 
-        function addSuggestionByAdmin() {
-            const subjectKey = document.getElementById('sug-subject-select').value;
-            const title = document.getElementById('sug-title-input').value;
-            const text = document.getElementById('sug-text-input').value;
-
-            if(!title || !text) {
-                alert("দয়া করে শিরোনাম ও সাজেশনের বিবরণ সুন্দরভাবে লিখুন!");
-                return;
-            }
-
-            suggestions.push({
-                subject: subjectKey,
-                title: title,
-                text: text
-            });
-
-            alert(`"${subjectNamesBn[subjectKey]}" এর নতুন সাজেশন সফলভাবে যুক্ত হয়েছে!`);
-            document.getElementById('sug-title-input').value = '';
-            document.getElementById('sug-text-input').value = '';
-        }
-
-        function renderFlashcards() {
-            const container = document.getElementById('flashcards-display-list');
-            container.innerHTML = '';
-            if(flashcards.length === 0) {
-                container.innerHTML = `<p style="text-align:center; color:#94a3b8;">কোনো ফ্ল্যাশকার্ড যোগ করা হয়নি</p>`;
-                return;
-            }
-            flashcards.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'flashcard-box';
-                div.innerHTML = `
-                    <h3 style="font-size:15px; margin-bottom:6px;"><i class="fa-solid fa-bolt" style="color:#fbbf24;"></i> ${item.title}</h3>
-                    <p style="font-size:12px; color:#e0e7ff; line-height:1.4;">${item.desc}</p>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function filterSuggestions(subjectKey, chipElem) {
-            currentSelectedSubjectFilter = subjectKey;
-            
-            document.querySelectorAll('.subject-chip').forEach(chip => chip.classList.remove('active'));
-            if(chipElem) {
-                chipElem.classList.add('active');
-            }
-
-            renderSuggestions(subjectKey);
-        }
-
-        function renderSuggestions(filterKey = 'all') {
-            const container = document.getElementById('suggestions-display-list');
+        function renderAdminCourseList() {
+            const container = document.getElementById('admin-course-manage-list');
             container.innerHTML = '';
 
-            let filteredList = suggestions;
-            if(filterKey !== 'all') {
-                filteredList = suggestions.filter(s => s.subject === filterKey);
-            }
-
-            if(filteredList.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align:center; padding:30px 10px; color:#94a3b8;">
-                        <i class="fa-solid fa-folder-open" style="font-size:32px; margin-bottom:8px;"></i>
-                        <p style="font-size:13px;">এই বিষয়ে এখনো কোনো সাজেশন যুক্ত করা হয়নি!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            filteredList.forEach(item => {
-                const subTitle = subjectNamesBn[item.subject] || "সাধারণ সাজেশন";
-                const div = document.createElement('div');
-                div.className = 'suggestion-box';
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                        <span style="font-size:10px; background:#e0e7ff; color:#3730a3; padding:2px 8px; border-radius:12px; font-weight:bold;">${subTitle}</span>
-                        <i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i>
-                    </div>
-                    <h4 style="font-size:14px; color:#1e293b; margin-bottom:4px; font-weight:700;">${item.title || "সাজেশন"}</h4>
-                    <p style="font-size:12px; color:#475569; line-height:1.5;">${item.text}</p>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function addNewQuestionByAdmin() {
-            const subject = document.getElementById('admin-q-subject').value;
-            const q = document.getElementById('admin-q-text').value;
-            const o0 = document.getElementById('admin-opt-0').value;
-            const o1 = document.getElementById('admin-opt-1').value;
-            const o2 = document.getElementById('admin-opt-2').value;
-            const o3 = document.getElementById('admin-opt-3').value;
-            const ans = parseInt(document.getElementById('admin-correct-ans').value);
-
-            if(!q || !o0 || !o1 || !o2 || !o3) {
-                alert("দয়া করে সকল তথ্য পূরণ করুন!");
-                return;
-            }
-
-            questions.push({
-                subject: subject,
-                q: q,
-                options: [o0, o1, o2, o3],
-                ans: ans
-            });
-
-            alert("নির্বাচিত বিষয়ের প্রশ্নটি সফলভাবে যোগ করা হয়েছে!");
-            document.getElementById('admin-q-text').value = '';
-            document.getElementById('admin-opt-0').value = '';
-            document.getElementById('admin-opt-1').value = '';
-            document.getElementById('admin-opt-2').value = '';
-            document.getElementById('admin-opt-3').value = '';
-
-            renderAdminQuestionList();
-        }
-
-        function renderAdminQuestionList() {
-            const container = document.getElementById('admin-question-delete-list');
-            container.innerHTML = '';
-
-            questions.forEach((qObj, idx) => {
+            coursesList.forEach((c, idx) => {
                 const div = document.createElement('div');
                 div.style.background = 'rgba(255,255,255,0.05)';
                 div.style.padding = '8px';
-                div.style.borderRadius = '6px';
+                div.style.borderRadius = '8px';
                 div.style.marginBottom = '6px';
                 div.style.display = 'flex';
                 div.style.justifyContent = 'space-between';
                 div.style.alignItems = 'center';
                 div.innerHTML = `
                     <div>
-                        <span style="font-size:9px; background:#4f46e5; color:white; padding:1px 5px; border-radius:4px; font-weight:bold;">${qObj.subject.toUpperCase()}</span>
-                        <span style="font-size:11px; color:#cbd5e1; margin-left:5px;">${idx + 1}. ${qObj.q}</span>
+                        <h5 style="font-size:12px; color:#cbd5e1;">${c.title}</h5>
+                        <span style="font-size:10px; color:#fbbf24;">মূল্য: ${c.price} ৳</span>
                     </div>
-                    <button class="btn-delete" onclick="deleteQuestionByAdmin(${idx})">ডিলিট</button>
+                    <button style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteCourse(${idx})">ডিলিট</button>
                 `;
                 container.appendChild(div);
             });
         }
 
-        function deleteQuestionByAdmin(idx) {
-            if(confirm("আপনি কি নিশ্চিতভাবে এই প্রশ্নটি মুছে ফেলতে চান?")) {
-                questions.splice(idx, 1);
-                renderAdminQuestionList();
+        function deleteCourse(idx) {
+            if(confirm("আপনি কি কোর্সটি মুছে ফেলতে চান?")) {
+                coursesList.splice(idx, 1);
+                renderAdminCourseList();
+                renderUserCourses();
             }
-        }
-
-        function renderAdminPendingTable() {
-            const tbody = document.getElementById('admin-pending-table-body');
-            tbody.innerHTML = '';
-
-            if(pendingPayments.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8;">কোনো পেন্ডিং পেমেন্ট রিকোয়েস্ট নেই</td></tr>`;
-                return;
-            }
-
-            pendingPayments.forEach((item, idx) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${item.name}</td>
-                    <td>${item.email}</td>
-                    <td>${item.pack}</td>
-                    <td style="color:#fbbf24; font-weight:bold;">${item.trxId}</td>
-                    <td>
-                        ${currentUser.role === 'main_admin' 
-                            ? `<button class="btn-approve" onclick="approvePendingPayment(${idx})">Approve & Paid</button>` 
-                            : `<span style="color:#94a3b8; font-size:10px;">🔒 অনুমোদন কেবল মেইন এডমিনের জন্য</span>`}
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function approvePendingPayment(idx) {
-            if(currentUser.role !== 'main_admin') {
-                alert("দুঃখিত, শুধুমাত্র মেইন এডমিন পেমেন্ট Approve করতে পারবেন!");
-                return;
-            }
-
-            const approvedReq = pendingPayments[idx];
-            
-            const today = new Date();
-            const todayStr = today.toISOString().split('T')[0];
-
-            const expireDateObj = new Date();
-            expireDateObj.setMonth(today.getMonth() + (approvedReq.months || 2));
-            const expireStr = expireDateObj.toISOString().split('T')[0];
-
-            let userObj = leaderboardData.find(u => u.email === approvedReq.email);
-            if(userObj) {
-                userObj.isPaid = true;
-                userObj.paidDate = todayStr;
-                userObj.expireDate = expireStr;
-            } else {
-                leaderboardData.push({
-                    name: approvedReq.name,
-                    email: approvedReq.email,
-                    pass: approvedReq.pass,
-                    role: 'student',
-                    isPaid: true,
-                    totalScore: 0,
-                    percentage: 0,
-                    examCount: 0,
-                    paidDate: todayStr,
-                    expireDate: expireStr
-                });
-            }
-
-            alert(`${approvedReq.name} এর পেমেন্ট Approve করা হয়েছে!\nপেমেন্ট তারিখ: ${todayStr}\nমেয়াদ শেষ হবে: ${expireStr}`);
-            pendingPayments.splice(idx, 1);
-            
-            renderAdminPendingTable();
-            renderAdminUserTable();
-            updateHomeTrialBanner();
         }
 
         function renderAdminUserTable() {
-            const totalUsers = leaderboardData.length;
-            const paidUsers = leaderboardData.filter(u => u.isPaid).length;
-            const freeUsers = totalUsers - paidUsers;
-
-            document.getElementById('stat-total-users').innerText = totalUsers;
-            document.getElementById('stat-free-users').innerText = freeUsers;
-            document.getElementById('stat-paid-users').innerText = paidUsers;
-
             const tbody = document.getElementById('admin-user-table-body');
             tbody.innerHTML = '';
 
@@ -1956,107 +898,44 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${user.name}</td>
-                    <td>
-                        <span class="${user.isPaid ? 'badge-paid' : 'badge-free'}">
-                            ${user.isPaid ? 'PAID' : 'FREE'}
-                        </span>
-                    </td>
-                    <td style="color:#60a5fa;">${user.paidDate || 'N/A'}</td>
-                    <td style="color:#4ade80; font-weight:bold;">${user.expireDate || 'N/A'}</td>
+                    <td><span class="${user.isPaid ? 'badge-paid' : 'badge-free'}">${user.isPaid ? 'PAID' : 'FREE'}</span></td>
                     <td>
                         ${currentUser.role === 'main_admin' 
-                            ? (!user.isPaid ? `<button class="btn-approve" onclick="toggleSubscriptionStatus(${idx})">Approve</button>` : `<button style="background:#ef4444; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:9px; cursor:pointer;" onclick="toggleSubscriptionStatus(${idx})">Revoke</button>`)
-                            : `<span style="color:#94a3b8; font-size:10px;">🔒 শুধুমাত্র দেখার অনুমতি</span>`}
+                            ? `<button style="background:#22c55e; border:none; padding:3px 6px; border-radius:4px; font-size:9px; cursor:pointer;" onclick="togglePaid(${idx})">Toggle</button>` 
+                            : `<span style="color:#94a3b8;">🔒 Locked</span>`}
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        function toggleSubscriptionStatus(idx) {
-            if(currentUser.role !== 'main_admin') {
-                alert("দুঃখিত, শুধুমাত্র মেইন এডমিন সাবস্ক্রিপশন স্ট্যাটাস পরিবর্তন করতে পারবেন!");
-                return;
-            }
-
-            leaderboardData[idx].isPaid = !leaderboardData[idx].isPaid;
-            if(leaderboardData[idx].isPaid) {
-                const today = new Date();
-                const expire = new Date();
-                expire.setMonth(today.getMonth() + 2);
-                leaderboardData[idx].paidDate = today.toISOString().split('T')[0];
-                leaderboardData[idx].expireDate = expire.toISOString().split('T')[0];
-            } else {
-                leaderboardData[idx].paidDate = "N/A";
-                leaderboardData[idx].expireDate = "N/A";
-            }
-            renderAdminUserTable();
-            updateHomeTrialBanner();
-        }
-
-        function loadSubscriptionView() {
-            const subArea = document.getElementById('subscription-area');
-
-            if (currentUser && (currentUser.isPaid || currentUser.role === 'main_admin' || currentUser.role === 'sub_admin')) {
-                subArea.innerHTML = `
-                    <div style="background: linear-gradient(135deg, #1e1b4b, #312e81); color: white; padding: 15px; border-radius: 14px; margin-top: 15px; border: 1px solid #6366f1;">
-                        <h4 style="color:#fbbf24; font-size:14px;"><i class="fa-solid fa-crown"></i> প্রিমিয়াম মেম্বারশিপ এরিয়া</h4>
-                        <p style="font-size:11px; color:#cbd5e1; margin-bottom:8px;">পূর্বে যেসব প্রশ্নে ভুল হয়েছিল সেগুলোর ইতিহাস ও সঠিক উত্তর:</p>
-                        <div style="background: #ffffff1a; padding: 8px; border-radius: 8px; font-size: 11px;">
-                            <strong>১. HTML মূলত কী ধরণের ভাষা?</strong><br>
-                            ❌ আপনার ভুল উত্তর: Programming Language<br>
-                            ✅ সঠিক উত্তর: Markup Language
-                        </div>
-                    </div>
-                `;
-            } else {
-                subArea.innerHTML = `
-                    <div style="background:#f1f5f9; padding:12px; border-radius:12px; text-align:center; border:1px dashed #cbd5e1;">
-                        <h4 style="color:#dc2626; font-size:13px;">🔒 প্রিমিয়াম ফিচার লক করা আছে</h4>
-                        <p style="font-size:11px; color:#64748b; margin-top:3px;">পূর্বের ভুল প্রশ্নগুলোর ব্যাখ্যা দেখতে এডমিনের কাছ থেকে Approve নিন বা সাবস্ক্রিপশন কিনুন।</p>
-                    </div>
-                `;
+        function togglePaid(idx) {
+            if(currentUser.role === 'main_admin') {
+                leaderboardData[idx].isPaid = !leaderboardData[idx].isPaid;
+                renderAdminUserTable();
             }
         }
 
-        function renderChart() {
-            const totalExams = chartDataScores.length;
-            const avgScore = Math.round(chartDataScores.reduce((a, b) => a + b, 0) / totalExams);
-
-            document.getElementById('total-exams-count').innerText = totalExams + " টি";
-            document.getElementById('avg-score-val').innerText = avgScore + "%";
-
-            const ctx = document.getElementById('performanceChart').getContext('2d');
-            
-            if (myChartInstance) {
-                myChartInstance.destroy();
-            }
-
-            myChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: chartLabels,
-                    datasets: [{
-                        label: 'স্কোর (%)',
-                        data: chartDataScores,
-                        borderColor: '#4f46e5',
-                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: { beginAtZero: true, max: 100 }
-                    }
-                }
+        function renderLeaderboard() {
+            const container = document.getElementById('leaderboard-list-container');
+            container.innerHTML = '';
+            leaderboardData.forEach((user, idx) => {
+                const div = document.createElement('div');
+                div.style.display = 'flex';
+                div.style.justifyContent = 'space-between';
+                div.style.padding = '8px 0';
+                div.style.borderBottom = '1px solid #f1f5f9';
+                div.innerHTML = `
+                    <span><strong>#${idx+1}</strong> ${user.name}</span>
+                    <span style="color:#16a34a; font-weight:bold;">${user.totalScore} নম্বর</span>
+                `;
+                container.appendChild(div);
             });
         }
 
         window.onload = function() {
-            updateHomeTrialBanner();
-            renderUserSubscriptionPlans();
+            updateUserProfileUI();
+            renderUserCourses();
         };
     </script>
 </body>
