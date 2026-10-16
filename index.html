@@ -798,29 +798,8 @@
                 <h2 style="color:#4f46e5;"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> প্রিমিয়াম সাবস্ক্রিপশন প্ল্যান</h2>
                 <p style="font-size:12px; margin-bottom:15px;">আপনার পছন্দমতো প্যাকেজ নির্বাচন করে বিকাশে/নগদে/রকেটে পেমেন্ট করুন:</p>
 
-                <div class="plan-card" onclick="selectPlan('২ মাস - ৫০ টাকা', 2, event)">
-                    <div>
-                        <h4 style="font-size:14px; color:#1e293b;">২ মাসের প্যাকেজ</h4>
-                        <p style="font-size:11px; color:#64748b;">আনলিমিটেড পরীক্ষা ও সকল সুবিধা</p>
-                    </div>
-                    <span style="font-weight:bold; color:#4f46e5; font-size:15px;">৫০ টাকা</span>
-                </div>
-
-                <div class="plan-card" onclick="selectPlan('৩ মাস - ১০০ টাকা', 3, event)">
-                    <div>
-                        <h4 style="font-size:14px; color:#1e293b;">৩ মাসের প্যাকেজ</h4>
-                        <p style="font-size:11px; color:#64748b;">জনপ্রিয় প্যাক + ফুল এনালাইসিস</p>
-                    </div>
-                    <span style="font-weight:bold; color:#4f46e5; font-size:15px;">১ ১০০ টাকা</span>
-                </div>
-
-                <div class="plan-card" onclick="selectPlan('৬ মাস - ১৫০ টাকা', 6, event)">
-                    <div>
-                        <h4 style="font-size:14px; color:#1e293b;">৬ মাসের প্যাকেজ (বেস্ট ভ্যালু)</h4>
-                        <p style="font-size:11px; color:#64748b;">দীর্ঘমেয়াদী পূর্ণাঙ্গ প্রস্তুতি</p>
-                    </div>
-                    <span style="font-weight:bold; color:#4f46e5; font-size:15px;">১৫০ টাকা</span>
-                </div>
+                <!-- ডায়নামিক প্ল্যান লিস্ট -->
+                <div id="user-plans-container"></div>
 
                 <!-- পেমেন্ট ইনফরমেশন ফর্ম -->
                 <div id="payment-form-box" style="display:none; background:#f8fafc; padding:15px; border-radius:12px; border:1px solid #cbd5e1; margin-top:15px;">
@@ -934,6 +913,7 @@
                 <div class="admin-tab-bar">
                     <button class="admin-tab active" onclick="switchAdminTab('tab-pending', this)"><i class="fa-solid fa-clock"></i> পেন্ডিং</button>
                     <button class="admin-tab" onclick="switchAdminTab('tab-users', this)"><i class="fa-solid fa-users"></i> ইউজার</button>
+                    <button class="admin-tab" onclick="switchAdminTab('tab-plans', this)"><i class="fa-solid fa-crown"></i> প্যাকেজ প্রাইস</button>
                     <button class="admin-tab" onclick="switchAdminTab('tab-questions', this)"><i class="fa-solid fa-plus-circle"></i> প্রশ্ন</button>
                     <button class="admin-tab" onclick="switchAdminTab('tab-inputs', this)"><i class="fa-solid fa-file-pen"></i> কার্ড ও সাজেশন</button>
                 </div>
@@ -974,6 +954,12 @@
                             <tbody id="admin-user-table-body"></tbody>
                         </table>
                     </div>
+                </div>
+
+                <!-- 🌟 নতুন সাবস্ক্রিপশন প্যাকেজ ম্যানেজমেন্ট ট্যাব -->
+                <div id="tab-plans" class="admin-content-box">
+                    <h4 style="font-size:12px; color:#fbbf24; margin-bottom:10px;"><i class="fa-solid fa-tags"></i> সাবস্ক্রিপশন প্যাকেজ প্রাইস আপডেট</h4>
+                    <div id="admin-plans-edit-list"></div>
                 </div>
 
                 <!-- প্রশ্ন ইনপুট -->
@@ -1039,9 +1025,8 @@
                     <div id="admin-question-delete-list" style="max-height:180px; overflow-y:auto;"></div>
                 </div>
 
-                <!-- 🌟 ফ্ল্যাশকার্ড ও বিষয়ভিত্তিক সাজেশন ইনপুট ট্যাব -->
+                <!-- ফ্ল্যাশকার্ড ও বিষয়ভিত্তিক সাজেশন ইনপুট ট্যাব -->
                 <div id="tab-inputs" class="admin-content-box">
-                    <!-- ফ্ল্যাশকার্ড ইনপুট -->
                     <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155; margin-bottom:15px;">
                         <h4 style="font-size:12px; margin-bottom:10px; color:#fbbf24;"><i class="fa-solid fa-bolt"></i> ফ্ল্যাশকার্ড যুক্ত করুন</h4>
                         <div class="form-group">
@@ -1057,7 +1042,6 @@
                         </button>
                     </div>
 
-                    <!-- 🌟 বিষয়ভিত্তিক সাজেশন ইনপুট -->
                     <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155;">
                         <h4 style="font-size:12px; margin-bottom:10px; color:#fbbf24;"><i class="fa-solid fa-lightbulb"></i> বিষয়ভিত্তিক সাজেশন যুক্ত করুন</h4>
                         
@@ -1112,13 +1096,12 @@
             </div>
         </div>
 
-        <!-- 🌟 ১১. বিষয়ভিত্তিক সাজেশন ভিউ পেজ (স্মার্ট ফিল্টারসহ) -->
+        <!-- ১১. বিষয়ভিত্তিক সাজেশন ভিউ পেজ -->
         <div id="suggestion-section" class="page-section">
             <div class="inner-page-card">
                 <h2>💡 বিষয়ভিত্তিক এইচএসসি সাজেশন</h2>
                 <p>যেকোনো বিষয় সিলেক্ট করে নির্দিষ্ট সাজেশনগুলো পড়ুন:</p>
                 
-                <!-- বিষয় ফিল্টার বাটনসমূহ -->
                 <div class="subject-chip-container" id="suggestion-filter-chips">
                     <div class="subject-chip active" onclick="filterSuggestions('all', this)">সকল বিষয়</div>
                     <div class="subject-chip" onclick="filterSuggestions('bangla-1', this)">বাংলা ১ম</div>
@@ -1220,6 +1203,13 @@
             "math-2": "উচ্চতর গণিত ২য় পত্র"
         };
 
+        // Dynamic Subscription Plans Array
+        let subscriptionPlans = [
+            { id: 1, name: "২ মাসের প্যাকেজ", months: 2, price: 50, note: "আনলিমিটেড পরীক্ষা ও সকল সুবিধা" },
+            { id: 2, name: "৩ মাসের প্যাকেজ", months: 3, price: 100, note: "জনপ্রিয় প্যাক + ফুল এনালাইসিস" },
+            { id: 3, name: "৬ মাসের প্যাকেজ (বেস্ট ভ্যালু)", months: 6, price: 150, note: "দীর্ঘমেয়াদী পূর্ণাঙ্গ প্রস্তুতি" }
+        ];
+
         let questions = [
             { subject: "bangla-1", q: "সোনার তরী কবিতার রচয়িতা কে?", options: ["কাজী নজরুল ইসলাম", "রবীন্দ্রনাথ ঠাকুর", "জসীমউদ্দীন", "জীবনানন্দ দাশ"], ans: 1 },
             { subject: "ict", q: "HTML মূলত কী ধরণের ভাষা?", options: ["Programming Language", "Markup Language", "Database Language", "Scripting Language"], ans: 1 },
@@ -1230,7 +1220,6 @@
             { title: "ওহমের সূত্র (ICT / Physics)", desc: "তাপমাত্রা স্থির থাকলে কোনো পরিবাহীর মধ্য দিয়ে প্রবাহিত তড়িৎ প্রবাহ তার দুই প্রান্তের বিভব পার্থক্যের সমানুপাতিক।" }
         ];
 
-        // বিষয়ভিত্তিক সাজেশনের ডাটা স্ট্রাকচার
         let suggestions = [
             { subject: "physics-1", title: "১ম ও ২য় অধ্যায় মূল সাজেশান", text: "ভেক্টর রাশিমালা ও গতিবিদ্যা থেকে গাণিতিক সমস্যাগুলোর ওপর বেশি জোর দিন।" },
             { subject: "ict", title: "ওয়েব ডিজাইন ও HTML", text: "HTML টেবিল তৈরি করা এবং লিস্ট ট্যাগ (ul, ol) থেকে প্রতি বছর নিশ্চিত CQ প্রশ্ন আসে।" }
@@ -1282,6 +1271,86 @@
             }
         }
 
+        function renderUserSubscriptionPlans() {
+            const container = document.getElementById('user-plans-container');
+            if(!container) return;
+            container.innerHTML = '';
+
+            subscriptionPlans.forEach(plan => {
+                const div = document.createElement('div');
+                div.className = 'plan-card';
+                div.onclick = (e) => selectPlan(`${plan.name} -${plan.price} টাকা`, plan.months, e);
+                div.innerHTML = `
+                    <div>
+                        <h4 style="font-size:14px; color:#1e293b;">${plan.name}</h4>
+                        <p style="font-size:11px; color:#64748b;">${plan.note}</p>
+                    </div>
+                    <span style="font-weight:bold; color:#4f46e5; font-size:15px;">${plan.price} টাকা</span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderAdminPlansEditor() {
+            const container = document.getElementById('admin-plans-edit-list');
+            if(!container) return;
+            container.innerHTML = '';
+
+            subscriptionPlans.forEach((plan, index) => {
+                const div = document.createElement('div');
+                div.style.background = 'rgba(255,255,255,0.05)';
+                div.style.padding = '12px';
+                div.style.borderRadius = '10px';
+                div.style.border = '1px solid #334155';
+                div.style.marginBottom = '12px';
+                div.innerHTML = `
+                    <h5 style="color:#fbbf24; margin-bottom:8px; font-size:12px;">প্যাকেজ #${index + 1} এডিট করুন</h5>
+                    <div class="form-group">
+                        <label style="color:#cbd5e1;">প্যাকেজের নাম:</label>
+                        <input type="text" id="plan-name-${index}" value="${plan.name}">
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <div class="form-group" style="flex:1;">
+                            <label style="color:#cbd5e1;">মেয়াদ (মাস):</label>
+                            <input type="number" id="plan-months-${index}" value="${plan.months}">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label style="color:#cbd5e1;">মূল্য (টাকা):</label>
+                            <input type="number" id="plan-price-${index}" value="${plan.price}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="color:#cbd5e1;">সংক্ষিপ্ত বিবরণ:</label>
+                        <input type="text" id="plan-note-${index}" value="${plan.note}">
+                    </div>
+                    <button class="action-btn" onclick="savePlanByAdmin(${index})" style="background:#22c55e; color:#0f172a; font-weight:bold; padding:8px;">
+                        <i class="fa-solid fa-save"></i> সেভ করুন
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function savePlanByAdmin(index) {
+            const name = document.getElementById(`plan-name-${index}`).value;
+            const months = parseInt(document.getElementById(`plan-months-${index}`).value);
+            const price = parseInt(document.getElementById(`plan-price-${index}`).value);
+            const note = document.getElementById(`plan-note-${index}`).value;
+
+            if(!name || isNaN(months) || isNaN(price)) {
+                alert("দয়া করে সকল তথ্য সঠিকভাবে পূরণ করুন!");
+                return;
+            }
+
+            subscriptionPlans[index].name = name;
+            subscriptionPlans[index].months = months;
+            subscriptionPlans[index].price = price;
+            subscriptionPlans[index].note = note;
+
+            alert("প্যাকেজের মূল্য ও তথ্য সফলভাবে আপডেট করা হয়েছে!");
+            renderUserSubscriptionPlans();
+        }
+
         function switchSection(sectionId) {
             const sections = document.querySelectorAll('.page-section');
             sections.forEach(sec => sec.classList.remove('active'));
@@ -1294,6 +1363,8 @@
 
             if(sectionId === 'home-section') {
                 updateHomeTrialBanner();
+            } else if(sectionId === 'courses-section') {
+                renderUserSubscriptionPlans();
             } else if(sectionId === 'dashboard-section') {
                 renderChart();
                 loadSubscriptionView();
@@ -1303,6 +1374,7 @@
                 renderAdminUserTable();
                 renderAdminQuestionList();
                 renderAdminPendingTable();
+                renderAdminPlansEditor();
             } else if(sectionId === 'flashcard-section') {
                 renderFlashcards();
             } else if(sectionId === 'suggestion-section') {
@@ -1501,7 +1573,7 @@
                     div.style.marginBottom = '6px';
                     div.style.border = '1px solid #fecaca';
                     div.innerHTML = `
-                        <p style="font-size:12px; font-weight:bold; color:#1e293b;">${idx+1}. ${item.q}</p>
+                        <p style="font-size:12px; font-weight:bold; color:#1e293b;">${idx+1}.${item.q}</p>
                         <p style="font-size:11px; color:#dc2626;">❌ আপনার উত্তর: ${item.userAns}</p>
                         <p style="font-size:11px; color:#16a34a; font-weight:bold;">✅ সঠিক উত্তর: ${item.correctAns}</p>
                     `;
@@ -1541,8 +1613,7 @@
                     <div style="display:flex; align-items:center; gap:10px;">
                         <span style="font-weight:bold; color:#4f46e5; width:20px;">#${idx + 1}</span>
                         <div>
-                            <span style="font-weight:600; font-size:13px;">${user.name}</span>
-                            ${user.isPaid ? '<span style="font-size:9px; background:#fef3c7; color:#d97706; padding:1px 4px; border-radius:4px; margin-left:4px;">PRO</span>' : ''}
+                            <span style="font-weight:600; font-size:13px;">${user.name}</span>${user.isPaid ? '<span style="font-size:9px; background:#fef3c7; color:#d97706; padding:1px 4px; border-radius:4px; margin-left:4px;">PRO</span>' : ''}
                         </div>
                     </div>
                     <div style="text-align:right;">
@@ -1554,7 +1625,6 @@
             });
         }
 
-        // ফ্ল্যাশকার্ড এড করার ফাংশন
         function addFlashcardByAdmin() {
             const title = document.getElementById('flash-title').value;
             const desc = document.getElementById('flash-desc').value;
@@ -1570,7 +1640,6 @@
             document.getElementById('flash-desc').value = '';
         }
 
-        // 🌟 বিষয়ভিত্তিক সাজেশন এড করার ফাংশন
         function addSuggestionByAdmin() {
             const subjectKey = document.getElementById('sug-subject-select').value;
             const title = document.getElementById('sug-title-input').value;
@@ -1610,7 +1679,6 @@
             });
         }
 
-        // 🌟 বিষয়ভিত্তিক সাজেশন ফিল্টার ও রেন্ডার ফাংশন
         function filterSuggestions(subjectKey, chipElem) {
             currentSelectedSubjectFilter = subjectKey;
             
@@ -1647,250 +1715,4 @@
                 div.className = 'suggestion-box';
                 div.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                        <span style="font-size:10px; background:#e0e7ff; color:#3730a3; padding:2px 8px; border-radius:12px; font-weight:bold;">${subTitle}</span>
-                        <i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i>
-                    </div>
-                    <h4 style="font-size:14px; color:#1e293b; margin-bottom:4px; font-weight:700;">${item.title || "সাজেশন"}</h4>
-                    <p style="font-size:12px; color:#475569; line-height:1.5;">${item.text}</p>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function addNewQuestionByAdmin() {
-            const subject = document.getElementById('admin-q-subject').value;
-            const q = document.getElementById('admin-q-text').value;
-            const o0 = document.getElementById('admin-opt-0').value;
-            const o1 = document.getElementById('admin-opt-1').value;
-            const o2 = document.getElementById('admin-opt-2').value;
-            const o3 = document.getElementById('admin-opt-3').value;
-            const ans = parseInt(document.getElementById('admin-correct-ans').value);
-
-            if(!q || !o0 || !o1 || !o2 || !o3) {
-                alert("দয়া করে সকল তথ্য পূরণ করুন!");
-                return;
-            }
-
-            questions.push({
-                subject: subject,
-                q: q,
-                options: [o0, o1, o2, o3],
-                ans: ans
-            });
-
-            alert("নির্বাচিত বিষয়ের প্রশ্নটি সফলভাবে যোগ করা হয়েছে!");
-            document.getElementById('admin-q-text').value = '';
-            document.getElementById('admin-opt-0').value = '';
-            document.getElementById('admin-opt-1').value = '';
-            document.getElementById('admin-opt-2').value = '';
-            document.getElementById('admin-opt-3').value = '';
-
-            renderAdminQuestionList();
-        }
-
-        function renderAdminQuestionList() {
-            const container = document.getElementById('admin-question-delete-list');
-            container.innerHTML = '';
-
-            questions.forEach((qObj, idx) => {
-                const div = document.createElement('div');
-                div.style.background = 'rgba(255,255,255,0.05)';
-                div.style.padding = '8px';
-                div.style.borderRadius = '6px';
-                div.style.marginBottom = '6px';
-                div.style.display = 'flex';
-                div.style.justifyContent = 'space-between';
-                div.style.alignItems = 'center';
-                div.innerHTML = `
-                    <div>
-                        <span style="font-size:9px; background:#4f46e5; color:white; padding:1px 5px; border-radius:4px; font-weight:bold;">${qObj.subject.toUpperCase()}</span>
-                        <span style="font-size:11px; color:#cbd5e1; margin-left:5px;">${idx + 1}. ${qObj.q}</span>
-                    </div>
-                    <button class="btn-delete" onclick="deleteQuestionByAdmin(${idx})">ডিলিট</button>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function deleteQuestionByAdmin(idx) {
-            if(confirm("আপনি কি নিশ্চিতভাবে এই প্রশ্নটি মুছে ফেলতে চান?")) {
-                questions.splice(idx, 1);
-                renderAdminQuestionList();
-            }
-        }
-
-        function renderAdminPendingTable() {
-            const tbody = document.getElementById('admin-pending-table-body');
-            tbody.innerHTML = '';
-
-            if(pendingPayments.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8;">কোনো পেন্ডিং পেমেন্ট রিকোয়েস্ট নেই</td></tr>`;
-                return;
-            }
-
-            pendingPayments.forEach((item, idx) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${item.name}</td>
-                    <td>${item.email}</td>
-                    <td>${item.pack}</td>
-                    <td style="color:#fbbf24; font-weight:bold;">${item.trxId}</td>
-                    <td>
-                        <button class="btn-approve" onclick="approvePendingPayment(${idx})">Approve & Paid</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function approvePendingPayment(idx) {
-            const approvedReq = pendingPayments[idx];
-            
-            const today = new Date();
-            const todayStr = today.toISOString().split('T')[0];
-
-            const expireDateObj = new Date();
-            expireDateObj.setMonth(today.getMonth() + (approvedReq.months || 2));
-            const expireStr = expireDateObj.toISOString().split('T')[0];
-
-            let userObj = leaderboardData.find(u => u.email === approvedReq.email);
-            if(userObj) {
-                userObj.isPaid = true;
-                userObj.paidDate = todayStr;
-                userObj.expireDate = expireStr;
-            } else {
-                leaderboardData.push({
-                    name: approvedReq.name,
-                    email: approvedReq.email,
-                    pass: approvedReq.pass,
-                    isPaid: true,
-                    totalScore: 0,
-                    percentage: 0,
-                    examCount: 0,
-                    paidDate: todayStr,
-                    expireDate: expireStr
-                });
-            }
-
-            alert(`${approvedReq.name} এর পেমেন্ট Approve করা হয়েছে!\nপেমেন্ট তারিখ: ${todayStr}\nমেয়াদ শেষ হবে: ${expireStr}`);
-            pendingPayments.splice(idx, 1);
-            
-            renderAdminPendingTable();
-            renderAdminUserTable();
-            updateHomeTrialBanner();
-        }
-
-        function renderAdminUserTable() {
-            const totalUsers = leaderboardData.length;
-            const paidUsers = leaderboardData.filter(u => u.isPaid).length;
-            const freeUsers = totalUsers - paidUsers;
-
-            document.getElementById('stat-total-users').innerText = totalUsers;
-            document.getElementById('stat-free-users').innerText = freeUsers;
-            document.getElementById('stat-paid-users').innerText = paidUsers;
-
-            const tbody = document.getElementById('admin-user-table-body');
-            tbody.innerHTML = '';
-
-            leaderboardData.forEach((user, idx) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${user.name}</td>
-                    <td>
-                        <span class="${user.isPaid ? 'badge-paid' : 'badge-free'}">
-                            ${user.isPaid ? 'PAID' : 'FREE'}
-                        </span>
-                    </td>
-                    <td style="color:#60a5fa;">${user.paidDate || 'N/A'}</td>
-                    <td style="color:#4ade80; font-weight:bold;">${user.expireDate || 'N/A'}</td>
-                    <td>
-                        ${!user.isPaid ? `<button class="btn-approve" onclick="toggleSubscriptionStatus(${idx})">Approve</button>` : `<button style="background:#ef4444; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:9px; cursor:pointer;" onclick="toggleSubscriptionStatus(${idx})">Revoke</button>`}
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function toggleSubscriptionStatus(idx) {
-            leaderboardData[idx].isPaid = !leaderboardData[idx].isPaid;
-            if(leaderboardData[idx].isPaid) {
-                const today = new Date();
-                const expire = new Date();
-                expire.setMonth(today.getMonth() + 2);
-                leaderboardData[idx].paidDate = today.toISOString().split('T')[0];
-                leaderboardData[idx].expireDate = expire.toISOString().split('T')[0];
-            } else {
-                leaderboardData[idx].paidDate = "N/A";
-                leaderboardData[idx].expireDate = "N/A";
-            }
-            renderAdminUserTable();
-            updateHomeTrialBanner();
-        }
-
-        function loadSubscriptionView() {
-            const myUser = leaderboardData.find(u => u.email === "abs@exam.com");
-            const subArea = document.getElementById('subscription-area');
-
-            if (myUser && myUser.isPaid) {
-                subArea.innerHTML = `
-                    <div style="background: linear-gradient(135deg, #1e1b4b, #312e81); color: white; padding: 15px; border-radius: 14px; margin-top: 15px; border: 1px solid #6366f1;">
-                        <h4 style="color:#fbbf24; font-size:14px;"><i class="fa-solid fa-crown"></i> প্রিমিয়াম মেম্বারশিপ এরিয়া</h4>
-                        <p style="font-size:11px; color:#cbd5e1; margin-bottom:8px;">পূর্বে যেসব প্রশ্নে ভুল হয়েছিল সেগুলোর ইতিহাস ও সঠিক উত্তর:</p>
-                        <div style="background: #ffffff1a; padding: 8px; border-radius: 8px; font-size: 11px;">
-                            <strong>১. HTML মূলত কী ধরণের ভাষা?</strong><br>
-                            ❌ আপনার ভুল উত্তর: Programming Language<br>
-                            ✅ সঠিক উত্তর: Markup Language
-                        </div>
-                    </div>
-                `;
-            } else {
-                subArea.innerHTML = `
-                    <div style="background:#f1f5f9; padding:12px; border-radius:12px; text-align:center; border:1px dashed #cbd5e1;">
-                        <h4 style="color:#dc2626; font-size:13px;">🔒 প্রিমিয়াম ফিচার লক করা আছে</h4>
-                        <p style="font-size:11px; color:#64748b; margin-top:3px;">পূর্বের ভুল প্রশ্নগুলোর ব্যাখ্যা দেখতে এডমিনের কাছ থেকে Approve নিন বা সাবস্ক্রিপশন কিনুন।</p>
-                    </div>
-                `;
-            }
-        }
-
-        function renderChart() {
-            const totalExams = chartDataScores.length;
-            const avgScore = Math.round(chartDataScores.reduce((a, b) => a + b, 0) / totalExams);
-
-            document.getElementById('total-exams-count').innerText = totalExams + " টি";
-            document.getElementById('avg-score-val').innerText = avgScore + "%";
-
-            const ctx = document.getElementById('performanceChart').getContext('2d');
-            
-            if (myChartInstance) {
-                myChartInstance.destroy();
-            }
-
-            myChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: chartLabels,
-                    datasets: [{
-                        label: 'স্কোর (%)',
-                        data: chartDataScores,
-                        borderColor: '#4f46e5',
-                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: { beginAtZero: true, max: 100 }
-                    }
-                }
-            });
-        }
-
-        window.onload = function() {
-            updateHomeTrialBanner();
-        };
-    </script>
-</body>
-</html>
+                        <span style="font-size:10px; background:#e0e7ff; color:#3730a3; padding:2px 8px; border-radius
