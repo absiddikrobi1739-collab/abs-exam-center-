@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abs Exam Center - Live Result & Analytics</title>
+    <title>Abs Exam Center - Platform & Admin Panel</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font -->
@@ -199,24 +199,24 @@
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-align: left;
         }
 
         .form-group label {
             display: block;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: #334155;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
-        .form-group select {
+        .form-group select, .form-group input {
             width: 100%;
-            padding: 10px;
+            padding: 9px;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
             background: #f8fafc;
         }
 
@@ -302,6 +302,67 @@
             border-radius: 10px;
         }
 
+        /* Leaderboard Style */
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .leaderboard-rank {
+            font-weight: bold;
+            width: 25px;
+            color: #4f46e5;
+        }
+
+        /* Admin Table Style */
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-top: 10px;
+        }
+
+        .user-table th, .user-table td {
+            border: 1px solid #e2e8f0;
+            padding: 6px;
+            text-align: left;
+        }
+
+        .user-table th {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .approve-btn {
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        .status-badge-free {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .status-badge-paid {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
         .bottom-bar {
             position: fixed;
             bottom: 0;
@@ -341,7 +402,7 @@
     <div class="top-bar">
         <div class="profile-area">
             <div class="avatar-circle">A</div>
-            <span>Abs Siddik</span>
+            <span id="top-user-name">Abs Siddik</span>
         </div>
         <div class="top-icons">
             <i class="fa-regular fa-bell"></i>
@@ -355,7 +416,7 @@
         <div id="home-section" class="page-section active">
             <div class="banner-card">
                 <div class="status-badge">● অ্যাকাউন্ট তৈরি হয়েছে</div>
-                <div class="banner-title">Abs Siddik, ৫ মিনিটে জেনে নাও তোমার কোন অধ্যায়গুলো দুর্বল</div>
+                <div class="banner-title"><span id="banner-user-name">Abs Siddik</span>, ৫ মিনিটে জেনে নাও তোমার কোন অধ্যায়গুলো দুর্বল</div>
                 <button class="action-btn" onclick="switchSection('model-test-setup')">
                     পরীক্ষা দিন <i class="fa-solid fa-pen-to-square"></i>
                 </button>
@@ -372,19 +433,19 @@
                     </div>
                 </div>
 
+                <div class="grid-card" onclick="switchSection('leaderboard-section')">
+                    <div class="icon-box c2"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="card-info">
+                        <h4>লিডারবোর্ড</h4>
+                        <p>লাইভ রিয়েল-টাইম র‍্যাংকিং</p>
+                    </div>
+                </div>
+
                 <div class="grid-card" onclick="switchSection('courses-section')">
                     <div class="icon-box c5"><i class="fa-solid fa-graduation-cap"></i></div>
                     <div class="card-info">
                         <h4>আমাদের কোর্স</h4>
                         <p>প্রিমিয়াম এইচএসসি কোর্স সমূহ</p>
-                    </div>
-                </div>
-
-                <div class="grid-card" onclick="switchSection('leaderboard-section')">
-                    <div class="icon-box c2"><i class="fa-solid fa-trophy"></i></div>
-                    <div class="card-info">
-                        <h4>লিডারবোর্ড</h4>
-                        <p>সেরা ১০ শিক্ষার তালিকা</p>
                     </div>
                 </div>
 
@@ -478,59 +539,138 @@
             </div>
         </div>
 
-        <!-- ৪. সদ্য শেষ হওয়া পরীক্ষার তাৎক্ষণিক রেজাল্ট পেজ (রিসেন্ট পারফরম্যান্স) -->
+        <!-- ৪. তাৎক্ষণিক রেজাল্ট পেজ -->
         <div id="recent-result-section" class="page-section">
             <div class="inner-page-card" style="text-align: center;">
                 <h2 style="color: #16a34a;">🎉 পরীক্ষা সম্পন্ন হয়েছে!</h2>
                 <p style="font-size: 12px; color: #64748b;">আপনার সদ্য দেওয়া পরীক্ষার ফলাফল ডায়াগ্রাম:</p>
 
-                <!-- ডায়াগ্রাম কার্ড -->
                 <div style="background: #f8fafc; padding: 15px; border-radius: 14px; margin: 15px 0; border: 1px solid #e2e8f0;">
                     <h3 id="recent-percentage" style="font-size: 28px; color: #4f46e5; font-weight: 800;">0%</h3>
                     <p style="font-size: 13px; color: #475569; margin-top: 5px;">
-                        সঠিক উত্তর: <strong id="recent-correct-val" style="color: #16a34a;">0</strong> | 
-                        ভুল উত্তর: <strong id="recent-wrong-val" style="color: #dc2626;">0</strong>
+                        প্রাপ্ত নম্বর: <strong id="recent-score-val" style="color: #4f46e5;">0</strong> | 
+                        সঠিক: <strong id="recent-correct-val" style="color: #16a34a;">0</strong> | 
+                        ভুল: <strong id="recent-wrong-val" style="color: #dc2626;">0</strong>
                     </p>
                     <div class="progress-bar-bg" style="height: 10px; margin-top: 10px;">
                         <div id="recent-progress-bar" class="progress-fill" style="width: 0%; background: #4f46e5;"></div>
                     </div>
                 </div>
 
-                <!-- ভুল উত্তর সমূহের তালিকা -->
-                <div id="recent-wrong-list-container" style="text-align: left; margin-bottom: 15px;">
-                    <!-- ভুল প্রশ্ন রিভিউ ডাইনামিক আসবে -->
-                </div>
+                <div id="recent-wrong-list-container" style="text-align: left; margin-bottom: 15px;"></div>
 
-                <button class="action-btn" onclick="switchSection('dashboard-section')" style="margin-bottom: 8px;">
-                    ড্যাশবোর্ডে গিয়ে গ্রাফ দেখুন <i class="fa-solid fa-chart-line"></i>
+                <button class="action-btn" onclick="switchSection('leaderboard-section')" style="margin-bottom: 8px;">
+                    লিডারবোর্ডে নিজের অবস্থান দেখুন <i class="fa-solid fa-trophy"></i>
                 </button>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
-        <!-- ৫. স্টুডেন্ট ড্যাশবোর্ড -->
+        <!-- ৫. রিয়েল-টাইম গতিশীল লিডারবোর্ড -->
+        <div id="leaderboard-section" class="page-section">
+            <div class="inner-page-card">
+                <h2>🏆 লাইভ লিডারবোর্ড</h2>
+                <p>পরীক্ষার প্রাপ্ত নাম্বারের ভিত্তিতে ছাত্রছাত্রীদের অবস্থান:</p>
+
+                <div id="leaderboard-list-container">
+                    <!-- ডাইনামিক রিয়েল টাইম লিডারবোর্ড এখানে আসবে -->
+                </div>
+
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- ৬. স্টুডেন্ট ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
-                <p style="margin-bottom: 12px;">স্বাগতম Abs Siddik! আপনার পড়াশোনার ওভারঅল ডায়াগ্রাম।</p>
+                <p style="margin-bottom: 12px;">আপনার পড়াশোনার সার্বিক ডায়াগ্রাম ও হিস্ট্রি।</p>
 
                 <div class="stat-grid">
                     <div class="stat-card">
                         <h5>মোট পরীক্ষা</h5>
-                        <h3 id="total-exams-count">৫ টি</h3>
+                        <h3 id="total-exams-count">০ টি</h3>
                     </div>
                     <div class="stat-card">
                         <h5>গড় নম্বর</h5>
-                        <h3 id="avg-score-val" style="color: #2563eb;">৬৫%</h3>
+                        <h3 id="avg-score-val" style="color: #2563eb;">০%</h3>
                     </div>
                 </div>
 
-                <!-- পারফরম্যান্স গ্রাফ/ডায়গ্রাম -->
                 <div style="margin-bottom: 20px;">
-                    <h4 style="font-size: 13px; color: #1e293b; margin-bottom: 8px;">📊 বিগত পরীক্ষাগুলোর ওভারঅল স্কোর ডায়াগ্রাম:</h4>
+                    <h4 style="font-size: 13px; color: #1e293b; margin-bottom: 8px;">📊 বিগত পরীক্ষাগুলোর স্কোর ডায়াগ্রাম:</h4>
                     <div style="background: #f8fafc; padding: 10px; border-radius: 12px; border: 1px solid #e2e8f0;">
                         <canvas id="performanceChart"></canvas>
                     </div>
+                </div>
+
+                <!-- 🔒 প্রিমিয়াম সাবস্ক্রিপশন চেক করার জায়গা -->
+                <div id="subscription-area"></div>
+
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- ৭. অ্যাডমিন প্যানেল (Question Add & User Approval) -->
+        <div id="admin-panel-section" class="page-section">
+            <div class="inner-page-card">
+                <h2 style="color:#e11d48;"><i class="fa-solid fa-user-gear"></i> এডমিন কন্ট্রোল প্যানেল</h2>
+                <p>নতুন প্রশ্ন যোগ করুন এবং সাবস্ক্রিপশন Approve করুন।</p>
+
+                <!-- প্রশ্ন যোগ করার ফর্ম -->
+                <div style="background:#f8fafc; padding:12px; border-radius:10px; border:1px solid #cbd5e1; margin-bottom:15px;">
+                    <h4 style="font-size:14px; margin-bottom:8px; color:#1e293b;">➕ নতুন MCQ প্রশ্ন যোগ করুন</h4>
+                    
+                    <div class="form-group">
+                        <label>প্রশ্ন লিখুন:</label>
+                        <input type="text" id="admin-q-text" placeholder="যেমন: আইসিটির জনক কে?">
+                    </div>
+                    <div class="form-group">
+                        <label>অপশন ১:</label>
+                        <input type="text" id="admin-opt-0" placeholder="অপশন ১">
+                    </div>
+                    <div class="form-group">
+                        <label>অপশন ২:</label>
+                        <input type="text" id="admin-opt-1" placeholder="অপশন ২">
+                    </div>
+                    <div class="form-group">
+                        <label>অপশন ৩:</label>
+                        <input type="text" id="admin-opt-2" placeholder="অপশন ৩">
+                    </div>
+                    <div class="form-group">
+                        <label>অপশন ৪:</label>
+                        <input type="text" id="admin-opt-3" placeholder="অপশন ৪">
+                    </div>
+                    <div class="form-group">
+                        <label>সঠিক উত্তর এর ইনডেক্স (0, 1, 2 বা 3):</label>
+                        <select id="admin-correct-ans">
+                            <option value="0">অপশন ১</option>
+                            <option value="1">অপশন ২</option>
+                            <option value="2">অপশন ৩</option>
+                            <option value="3">অপশন ৪</option>
+                        </select>
+                    </div>
+
+                    <button class="action-btn" onclick="addNewQuestionByAdmin()">প্রশ্ন যুক্ত করুন</button>
+                </div>
+
+                <!-- ইউজার তালিকা ও Approval -->
+                <div style="overflow-x:auto;">
+                    <h4 style="font-size:14px; margin-bottom:5px; color:#1e293b;">👥 ইউজার লিস্ট ও সাবস্ক্রিপশন Approval</h4>
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>নাম</th>
+                                <th>ইমেইল</th>
+                                <th>পাসওয়ার্ড</th>
+                                <th>স্ট্যাটাস</th>
+                                <th>অ্যাকশন</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-user-table-body">
+                            <!-- ইউজার তালিকা ডাইনামিক আসবে -->
+                        </tbody>
+                    </table>
                 </div>
 
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
@@ -542,14 +682,6 @@
             <div class="inner-page-card">
                 <h2>🎓 প্রিমিয়াম কোর্সসমূহ</h2>
                 <p>এইচএসসি পরীক্ষায় এ+ পাওয়ার জন্য আমাদের বিশেষ কোর্সগুলোতে এনরোল করুন।</p>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <div id="leaderboard-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>🏆 সাপ্তাহিক লিডারবোর্ড</h2>
-                <p>সর্বোচ্চ স্কোর অর্জনকারী সেরা ১০ শিক্ষার তালিকা:</p>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
@@ -588,8 +720,17 @@
 
         <div id="profile-section" class="page-section">
             <div class="inner-page-card">
-                <h2>👤 ছাত্র প্রোফাইল</h2>
-                <p>নাম: Abs Siddik<br>লক্ষ্য: HSC Science</p>
+                <h2>👤 ছাত্র ও এডমিন প্রোফাইল</h2>
+                <p>নাম: Abs Siddik<br>ইমেইল: abs@exam.com<br>রোল: এডমিন / ছাত্র</p>
+                
+                <!-- এডমিন মোড ও স্টুডেন্ট মোড সুইচিং -->
+                <div style="background:#f1f5f9; padding:12px; border-radius:10px; margin-top:12px;">
+                    <h4 style="font-size:13px; color:#1e293b; margin-bottom:6px;">এডমিন মোড সুইচ:</h4>
+                    <button class="action-btn" onclick="switchSection('admin-panel-section')" style="background:#e11d48; color:white;">
+                        <i class="fa-solid fa-user-shield"></i> এডমিন প্যানেলে যান
+                    </button>
+                </div>
+
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
@@ -622,10 +763,19 @@
 
     <!-- JavaScript Logic -->
     <script>
-        const questions = [
+        // ১. প্রাক-সংসংরক্ষিত প্রশ্নব্যাংক
+        let questions = [
             { q: "বাংলাদেশের রাজধানী কোনটি?", options: ["চট্টগ্রাম", "ঢাকা", "রাজশাহী", "সিলেট"], ans: 1 },
             { q: "HSC পরীক্ষার পূর্ণরূপ কী?", options: ["High School Certificate", "Higher Secondary Certificate", "Higher School Course", "Higher Secondary Class"], ans: 1 },
             { q: "HTML মূলত কী ধরণের ভাষা?", options: ["Programming Language", "Markup Language", "Database Language", "Scripting Language"], ans: 1 }
+        ];
+
+        // ২. ইউজার ডাটা ও লাইভ লিডারবোর্ড তালিকা (মোট নম্বর + পারসেন্টেজ)
+        let leaderboardData = [
+            { name: "মাসফাকুর রহমান", email: "mushfiq@gmail.com", pass: "123456", isPaid: true, totalScore: 28, percentage: 93 },
+            { name: "Abs Siddik (আপনি)", email: "abs@exam.com", pass: "abs889", isPaid: false, totalScore: 25, percentage: 83 },
+            { name: "রাফসান আহমেদ", email: "rafsan@gmail.com", pass: "pass123", isPaid: false, totalScore: 20, percentage: 66 },
+            { name: "তানভীর হাসান", email: "tanvir@gmail.com", pass: "tanvir789", isPaid: false, totalScore: 15, percentage: 50 }
         ];
 
         let currentQ = 0;
@@ -636,7 +786,6 @@
         let isAnswered = false;
         let wrongAnswersLog = [];
 
-        // ড্যাশবোর্ডের ডাটাবেজ/হিস্ট্রি
         let chartDataScores = [40, 55, 45, 70, 85];
         let chartLabels = ['পরীক্ষা ১', 'পরীক্ষা ২', 'পরীক্ষা ৩', 'পরীক্ষা ৪', 'পরীক্ষা ৫'];
         let myChartInstance = null;
@@ -653,6 +802,11 @@
 
             if(sectionId === 'dashboard-section') {
                 renderChart();
+                loadSubscriptionView();
+            } else if(sectionId === 'leaderboard-section') {
+                renderLeaderboard();
+            } else if(sectionId === 'admin-panel-section') {
+                renderAdminUserTable();
             }
         }
 
@@ -750,20 +904,21 @@
             switchSection('home-section');
         }
 
-        // পরীক্ষা শেষ হলে রিসেন্ট পারফরম্যান্স পেজে নিয়ে যাবে
+        // পরীক্ষা শেষ হলে লাইভ লিডারবোর্ড ও ড্যাশবোর্ডে ডাটা আপডেট হবে
         function finishExam() {
             clearInterval(timerInterval);
             
             const totalQ = questions.length;
             const percentage = Math.round((correctCount / totalQ) * 100);
 
-            // রিসেন্ট পারফরম্যান্স পেজের ডাটা বসানো
+            // রিসেন্ট পারফরম্যান্স পেজে দেখানো
             document.getElementById('recent-percentage').innerText = percentage + "%";
+            document.getElementById('recent-score-val').innerText = correctCount;
             document.getElementById('recent-correct-val').innerText = correctCount;
             document.getElementById('recent-wrong-val').innerText = wrongCount;
             document.getElementById('recent-progress-bar').style.width = percentage + "%";
 
-            // ভুল হওয়া প্রশ্নগুলোর ডায়নামিক রিভিউ
+            // ভুল হওয়া প্রশ্নের রিভিউ
             const wrongContainer = document.getElementById('recent-wrong-list-container');
             wrongContainer.innerHTML = '';
             
@@ -785,15 +940,132 @@
                 });
             }
 
-            // ড্যাশবোর্ডে নতুন ডাটা অ্যাড করা
+            // ১. লাইভ লিডারবোর্ডে ব্যবহারকারীর প্রাপ্ত নম্বর ও পারসেন্টেজ যোগ ও সর্টিং
+            let myUserObj = leaderboardData.find(u => u.email === "abs@exam.com");
+            if(myUserObj) {
+                myUserObj.totalScore += correctCount;
+                myUserObj.percentage = percentage;
+            }
+
+            // ২. ড্যাশবোর্ডে যোগ
             chartDataScores.push(percentage);
             chartLabels.push(`পরীক্ষা ${chartDataScores.length}`);
 
-            // রিসেন্ট রেজাল্ট পেজে রিডাইরেক্ট
             switchSection('recent-result-section');
         }
 
-        // ড্যাশবোর্ডের ওভারঅল গ্রাফ আপডেট
+        // রিয়েল-টাইম লিডারবোর্ড রেন্ডারিং
+        function renderLeaderboard() {
+            // প্রাপ্ত টোটাল স্কোরের ওপর ভিত্তি করে সাজানো (Descending Order)
+            leaderboardData.sort((a, b) => b.totalScore - a.totalScore);
+
+            const container = document.getElementById('leaderboard-list-container');
+            container.innerHTML = '';
+
+            leaderboardData.forEach((user, idx) => {
+                const div = document.createElement('div');
+                div.className = 'leaderboard-item';
+                div.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span class="leaderboard-rank">#${idx + 1}</span>
+                        <div>
+                            <span style="font-weight:600; font-size:13px;">${user.name}</span>
+                            ${user.isPaid ? '<span style="font-size:9px; background:#fef3c7; color:#d97706; padding:1px 4px; border-radius:4px; margin-left:4px;">PRO</span>' : ''}
+                        </div>
+                    </div>
+                    <div style="text-align:right;">
+                        <span style="font-weight:bold; color:#16a34a; font-size:13px;">${user.totalScore} নম্বর</span>
+                        <span style="font-size:10px; color:#64748b; display:block;">(${user.percentage}%)</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // এডমিন প্যানেল: নতুন প্রশ্ন যুক্ত করা
+        function addNewQuestionByAdmin() {
+            const q = document.getElementById('admin-q-text').value;
+            const o0 = document.getElementById('admin-opt-0').value;
+            const o1 = document.getElementById('admin-opt-1').value;
+            const o2 = document.getElementById('admin-opt-2').value;
+            const o3 = document.getElementById('admin-opt-3').value;
+            const ans = parseInt(document.getElementById('admin-correct-ans').value);
+
+            if(!q || !o0 || !o1 || !o2 || !o3) {
+                alert("দয়া করে সকল তথ্য পূরণ করুন!");
+                return;
+            }
+
+            questions.push({
+                q: q,
+                options: [o0, o1, o2, o3],
+                ans: ans
+            });
+
+            alert("নতুন প্রশ্ন সফলভাবে যোগ করা হয়েছে!");
+            document.getElementById('admin-q-text').value = '';
+            document.getElementById('admin-opt-0').value = '';
+            document.getElementById('admin-opt-1').value = '';
+            document.getElementById('admin-opt-2').value = '';
+            document.getElementById('admin-opt-3').value = '';
+        }
+
+        // এডমিন প্যানেল: ইউজার তালিকা ও Subscription Approve করা
+        function renderAdminUserTable() {
+            const tbody = document.getElementById('admin-user-table-body');
+            tbody.innerHTML = '';
+
+            leaderboardData.forEach((user, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.pass}</td>
+                    <td>
+                        <span class="${user.isPaid ? 'status-badge-paid' : 'status-badge-free'}">
+                            ${user.isPaid ? 'Paid' : 'Free'}
+                        </span>
+                    </td>
+                    <td>
+                        ${!user.isPaid ? `<button class="approve-btn" onclick="approveUserSubscription(${idx})">Approve</button>` : 'Approved'}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function approveUserSubscription(idx) {
+            leaderboardData[idx].isPaid = true;
+            alert(`${leaderboardData[idx].name} এর সাবস্ক্রিপশন সফলভাবে Approve করা হয়েছে!`);
+            renderAdminUserTable();
+        }
+
+        function loadSubscriptionView() {
+            const myUser = leaderboardData.find(u => u.email === "abs@exam.com");
+            const subArea = document.getElementById('subscription-area');
+
+            if (myUser && myUser.isPaid) {
+                subArea.innerHTML = `
+                    <div class="premium-card">
+                        <h4><i class="fa-solid fa-crown"></i> প্রিমিয়াম মেম্বারশিপ এরিয়া</h4>
+                        <p>পূর্বে যেসব প্রশ্নে ভুল হয়েছিল সেগুলোর ইতিহাস ও সঠিক উত্তর:</p>
+                        <div class="wrong-item-box">
+                            <strong>১. HTML মূলত কী ধরণের ভাষা?</strong><br>
+                            ❌ আপনার ভুল উত্তর: Programming Language<br>
+                            ✅ সঠিক উত্তর: Markup Language
+                        </div>
+                    </div>
+                `;
+            } else {
+                subArea.innerHTML = `
+                    <div style="background:#f1f5f9; padding:12px; border-radius:12px; text-align:center; border:1px dashed #cbd5e1;">
+                        <h4 style="color:#dc2626; font-size:13px;">🔒 প্রিমিয়াম ফিচার লক করা আছে</h4>
+                        <p style="font-size:11px; color:#64748b; margin-top:3px;">পূর্বের ভুল প্রশ্নগুলোর ব্যাখ্যা দেখতে এডমিনের কাছ থেকে Approve নিন বা সাবস্ক্রিপশন কিনুন।</p>
+                    </div>
+                `;
+            }
+        }
+
         function renderChart() {
             const totalExams = chartDataScores.length;
             const avgScore = Math.round(chartDataScores.reduce((a, b) => a + b, 0) / totalExams);
