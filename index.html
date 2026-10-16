@@ -552,11 +552,38 @@
             margin-bottom: 10px;
             border: 1px solid #e2e8f0;
         }
+
+        /* Subject Filter Chips */
+        .subject-chip-container {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        .subject-chip {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid #cbd5e1;
+            cursor: pointer;
+        }
+
+        .subject-chip.active {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
     </style>
 </head>
 <body>
 
-    <!-- 🌟 মেইন হেডার উইথ ব্র্যান্ড নেম (Abs Exam Center) -->
+    <!-- 🌟 মেইন হেডার (Abs Exam Center) -->
     <div class="top-bar">
         <div class="brand-title">
             <i class="fa-solid fa-graduation-cap"></i> Abs Exam Center
@@ -637,7 +664,7 @@
                     </div>
                 </div>
 
-                <!-- ⚡ নতুন লাইভ একজাম অপশন (AI বাদ দিয়ে) -->
+                <!-- ⚡ লাইভ একজাম অপশন -->
                 <div class="grid-card" onclick="switchSection('live-exam-section')">
                     <div class="icon-box c3"><i class="fa-solid fa-tower-broadcast"></i></div>
                     <div class="card-info">
@@ -784,7 +811,7 @@
                         <h4 style="font-size:14px; color:#1e293b;">৩ মাসের প্যাকেজ</h4>
                         <p style="font-size:11px; color:#64748b;">জনপ্রিয় প্যাক + ফুল এনালাইসিস</p>
                     </div>
-                    <span style="font-weight:bold; color:#4f46e5; font-size:15px;">১০০ টাকা</span>
+                    <span style="font-weight:bold; color:#4f46e5; font-size:15px;">১ ১০০ টাকা</span>
                 </div>
 
                 <div class="plan-card" onclick="selectPlan('৬ মাস - ১৫০ টাকা', 6, event)">
@@ -877,7 +904,7 @@
             </div>
         </div>
 
-        <!-- 👑 ৯. প্রিমিয়াম এডমিন প্যানেল (ফ্ল্যাশকার্ড ও সাজেশন ইনপুটসহ) -->
+        <!-- 👑 ৯. প্রিমিয়াম এডমিন প্যানেল -->
         <div id="admin-panel-section" class="page-section">
             <div class="admin-wrapper">
                 
@@ -1012,7 +1039,7 @@
                     <div id="admin-question-delete-list" style="max-height:180px; overflow-y:auto;"></div>
                 </div>
 
-                <!-- 🌟 নতুন ফ্ল্যাশকার্ড ও সাজেশন ইনপুট ট্যাব -->
+                <!-- 🌟 ফ্ল্যাশকার্ড ও বিষয়ভিত্তিক সাজেশন ইনপুট ট্যাব -->
                 <div id="tab-inputs" class="admin-content-box">
                     <!-- ফ্ল্যাশকার্ড ইনপুট -->
                     <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155; margin-bottom:15px;">
@@ -1030,19 +1057,41 @@
                         </button>
                     </div>
 
-                    <!-- সাজেশন ইনপুট -->
+                    <!-- 🌟 বিষয়ভিত্তিক সাজেশন ইনপুট -->
                     <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155;">
-                        <h4 style="font-size:12px; margin-bottom:10px; color:#fbbf24;"><i class="fa-solid fa-lightbulb"></i> সাজেশন যুক্ত করুন</h4>
+                        <h4 style="font-size:12px; margin-bottom:10px; color:#fbbf24;"><i class="fa-solid fa-lightbulb"></i> বিষয়ভিত্তিক সাজেশন যুক্ত করুন</h4>
+                        
                         <div class="form-group">
-                            <label style="color:#cbd5e1;">বিষয়ের নাম:</label>
-                            <input type="text" id="sug-subject" placeholder="যেমন: পদার্থবিজ্ঞান ১ম পত্র">
+                            <label style="color:#cbd5e1;">বিষয় নির্বাচন করুন:</label>
+                            <select id="sug-subject-select">
+                                <option value="bangla-1">বাংলা ১ম পত্র</option>
+                                <option value="bangla-2">বাংলা ২য় পত্র</option>
+                                <option value="english-1">ইংরেজি ১ম পত্র</option>
+                                <option value="english-2">ইংরেজি ২য় পত্র</option>
+                                <option value="ict">আইসিটি (ICT)</option>
+                                <option value="physics-1">পদার্থবিজ্ঞান ১ম পত্র</option>
+                                <option value="physics-2">পদার্থবিজ্ঞান ২য় পত্র</option>
+                                <option value="chemistry-1">রসায়ন ১ম পত্র</option>
+                                <option value="chemistry-2">রসায়ন ২য় পত্র</option>
+                                <option value="biology-1">জীববিজ্ঞান ১ম পত্র</option>
+                                <option value="biology-2">জীববিজ্ঞান ২য় পত্র</option>
+                                <option value="math-1">উচ্চতর গণিত ১ম পত্র</option>
+                                <option value="math-2">উচ্চতর গণিত ২য় পত্র</option>
+                            </select>
                         </div>
+
                         <div class="form-group">
-                            <label style="color:#cbd5e1;">সাজেশন বিবরণ:</label>
-                            <textarea id="sug-text" rows="3" placeholder="যেমন: ১ম অধ্যায় থেকে ভেক্টর ও গতিবিদ্যা অংশ ভালো করে পড়তে হবে..."></textarea>
+                            <label style="color:#cbd5e1;">সাজেশন শিরোনাম / অধ্যায়:</label>
+                            <input type="text" id="sug-title-input" placeholder="যেমন: ১ম অধ্যায় গুরুত্বপূর্ণ টপিক">
                         </div>
+
+                        <div class="form-group">
+                            <label style="color:#cbd5e1;">সাজেশনের পূর্ণাঙ্গ বিবরণ:</label>
+                            <textarea id="sug-text-input" rows="3" placeholder="যেমন: ভেক্টর ও গতিবিদ্যা অংশ ভালো করে পড়তে হবে..."></textarea>
+                        </div>
+                        
                         <button class="action-btn" onclick="addSuggestionByAdmin()" style="background:#f59e0b; color:#0f172a; font-weight:bold;">
-                            <i class="fa-solid fa-plus"></i> সাজেশন পাবলিশ করুন
+                            <i class="fa-solid fa-plus"></i> বিষয়ভিত্তিক সাজেশন যুক্ত করুন
                         </button>
                     </div>
                 </div>
@@ -1063,11 +1112,30 @@
             </div>
         </div>
 
-        <!-- ১১. সাজেশন ভিউ পেজ -->
+        <!-- 🌟 ১১. বিষয়ভিত্তিক সাজেশন ভিউ পেজ (স্মার্ট ফিল্টারসহ) -->
         <div id="suggestion-section" class="page-section">
             <div class="inner-page-card">
-                <h2>💡 এইচএসসি সাজেশন</h2>
-                <p>পরীক্ষায় ভালো ফলাফল করার শর্ট সাজেশন:</p>
+                <h2>💡 বিষয়ভিত্তিক এইচএসসি সাজেশন</h2>
+                <p>যেকোনো বিষয় সিলেক্ট করে নির্দিষ্ট সাজেশনগুলো পড়ুন:</p>
+                
+                <!-- বিষয় ফিল্টার বাটনসমূহ -->
+                <div class="subject-chip-container" id="suggestion-filter-chips">
+                    <div class="subject-chip active" onclick="filterSuggestions('all', this)">সকল বিষয়</div>
+                    <div class="subject-chip" onclick="filterSuggestions('bangla-1', this)">বাংলা ১ম</div>
+                    <div class="subject-chip" onclick="filterSuggestions('bangla-2', this)">বাংলা ২য়</div>
+                    <div class="subject-chip" onclick="filterSuggestions('english-1', this)">ইংরেজি ১ম</div>
+                    <div class="subject-chip" onclick="filterSuggestions('english-2', this)">ইংরেজি ২য়</div>
+                    <div class="subject-chip" onclick="filterSuggestions('ict', this)">আইসিটি</div>
+                    <div class="subject-chip" onclick="filterSuggestions('physics-1', this)">পদার্থ ১ম</div>
+                    <div class="subject-chip" onclick="filterSuggestions('physics-2', this)">পদার্থ ২য়</div>
+                    <div class="subject-chip" onclick="filterSuggestions('chemistry-1', this)">রসায়ন ১ম</div>
+                    <div class="subject-chip" onclick="filterSuggestions('chemistry-2', this)">রসায়ন ২য়</div>
+                    <div class="subject-chip" onclick="filterSuggestions('biology-1', this)">জীব ১ম</div>
+                    <div class="subject-chip" onclick="filterSuggestions('biology-2', this)">জীব ২য়</div>
+                    <div class="subject-chip" onclick="filterSuggestions('math-1', this)">উচ্চতর গণিত ১ম</div>
+                    <div class="subject-chip" onclick="filterSuggestions('math-2', this)">উচ্চতর গণিত ২য়</div>
+                </div>
+
                 <div id="suggestions-display-list"></div>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
@@ -1136,6 +1204,22 @@
 
     <!-- JavaScript Logic -->
     <script>
+        const subjectNamesBn = {
+            "bangla-1": "বাংলা ১ম পত্র",
+            "bangla-2": "বাংলা ২য় পত্র",
+            "english-1": "ইংরেজি ১ম পত্র",
+            "english-2": "ইংরেজি ২য় পত্র",
+            "ict": "আইসিটি (ICT)",
+            "physics-1": "পদার্থবিজ্ঞান ১ম পত্র",
+            "physics-2": "পদার্থবিজ্ঞান ২য় পত্র",
+            "chemistry-1": "রসায়ন ১ম পত্র",
+            "chemistry-2": "রসায়ন ২য় পত্র",
+            "biology-1": "জীববিজ্ঞান ১ম পত্র",
+            "biology-2": "জীববিজ্ঞান ২য় পত্র",
+            "math-1": "উচ্চতর গণিত ১ম পত্র",
+            "math-2": "উচ্চতর গণিত ২য় পত্র"
+        };
+
         let questions = [
             { subject: "bangla-1", q: "সোনার তরী কবিতার রচয়িতা কে?", options: ["কাজী নজরুল ইসলাম", "রবীন্দ্রনাথ ঠাকুর", "জসীমউদ্দীন", "জীবনানন্দ দাশ"], ans: 1 },
             { subject: "ict", q: "HTML মূলত কী ধরণের ভাষা?", options: ["Programming Language", "Markup Language", "Database Language", "Scripting Language"], ans: 1 },
@@ -1146,8 +1230,10 @@
             { title: "ওহমের সূত্র (ICT / Physics)", desc: "তাপমাত্রা স্থির থাকলে কোনো পরিবাহীর মধ্য দিয়ে প্রবাহিত তড়িৎ প্রবাহ তার দুই প্রান্তের বিভব পার্থক্যের সমানুপাতিক।" }
         ];
 
+        // বিষয়ভিত্তিক সাজেশনের ডাটা স্ট্রাকচার
         let suggestions = [
-            { subject: "পদার্থবিজ্ঞান ১ম পত্র", text: "ভেক্টর এবং গতিবিদ্যা অধ্যায় থেকে প্রতি বছর ১০ নম্বরের সৃজনশীল প্রশ্ন অবশ্যই আসে।" }
+            { subject: "physics-1", title: "১ম ও ২য় অধ্যায় মূল সাজেশান", text: "ভেক্টর রাশিমালা ও গতিবিদ্যা থেকে গাণিতিক সমস্যাগুলোর ওপর বেশি জোর দিন।" },
+            { subject: "ict", title: "ওয়েব ডিজাইন ও HTML", text: "HTML টেবিল তৈরি করা এবং লিস্ট ট্যাগ (ul, ol) থেকে প্রতি বছর নিশ্চিত CQ প্রশ্ন আসে।" }
         ];
 
         let leaderboardData = [
@@ -1170,6 +1256,7 @@
         let timeLeftSeconds = 60;
         let isAnswered = false;
         let wrongAnswersLog = [];
+        let currentSelectedSubjectFilter = 'all';
 
         let chartDataScores = [40, 55, 45, 70, 85];
         let chartLabels = ['পরীক্ষা ১', 'পরীক্ষা ২', 'পরীক্ষা ৩', 'পরীক্ষা ৪', 'পরীক্ষা ৫'];
@@ -1219,7 +1306,7 @@
             } else if(sectionId === 'flashcard-section') {
                 renderFlashcards();
             } else if(sectionId === 'suggestion-section') {
-                renderSuggestions();
+                renderSuggestions(currentSelectedSubjectFilter);
             }
         }
 
@@ -1467,7 +1554,7 @@
             });
         }
 
-        // এডমিন থেকে ফ্ল্যাশকার্ড ও সাজেশন এড করার ফাংশন
+        // ফ্ল্যাশকার্ড এড করার ফাংশন
         function addFlashcardByAdmin() {
             const title = document.getElementById('flash-title').value;
             const desc = document.getElementById('flash-desc').value;
@@ -1483,19 +1570,26 @@
             document.getElementById('flash-desc').value = '';
         }
 
+        // 🌟 বিষয়ভিত্তিক সাজেশন এড করার ফাংশন
         function addSuggestionByAdmin() {
-            const subject = document.getElementById('sug-subject').value;
-            const text = document.getElementById('sug-text').value;
+            const subjectKey = document.getElementById('sug-subject-select').value;
+            const title = document.getElementById('sug-title-input').value;
+            const text = document.getElementById('sug-text-input').value;
 
-            if(!subject || !text) {
-                alert("দয়া করে বিষয় ও সাজেশনের বিবরণ লিখুন!");
+            if(!title || !text) {
+                alert("দয়া করে শিরোনাম ও সাজেশনের বিবরণ সুন্দরভাবে লিখুন!");
                 return;
             }
 
-            suggestions.push({ subject: subject, text: text });
-            alert("সাজেশন সফলভাবে যুক্ত হয়েছে!");
-            document.getElementById('sug-subject').value = '';
-            document.getElementById('sug-text').value = '';
+            suggestions.push({
+                subject: subjectKey,
+                title: title,
+                text: text
+            });
+
+            alert(`"${subjectNamesBn[subjectKey]}" এর নতুন সাজেশন সফলভাবে যুক্ত হয়েছে!`);
+            document.getElementById('sug-title-input').value = '';
+            document.getElementById('sug-text-input').value = '';
         }
 
         function renderFlashcards() {
@@ -1516,19 +1610,48 @@
             });
         }
 
-        function renderSuggestions() {
+        // 🌟 বিষয়ভিত্তিক সাজেশন ফিল্টার ও রেন্ডার ফাংশন
+        function filterSuggestions(subjectKey, chipElem) {
+            currentSelectedSubjectFilter = subjectKey;
+            
+            document.querySelectorAll('.subject-chip').forEach(chip => chip.classList.remove('active'));
+            if(chipElem) {
+                chipElem.classList.add('active');
+            }
+
+            renderSuggestions(subjectKey);
+        }
+
+        function renderSuggestions(filterKey = 'all') {
             const container = document.getElementById('suggestions-display-list');
             container.innerHTML = '';
-            if(suggestions.length === 0) {
-                container.innerHTML = `<p style="text-align:center; color:#94a3b8;">কোনো সাজেশন যোগ করা হয়নি</p>`;
+
+            let filteredList = suggestions;
+            if(filterKey !== 'all') {
+                filteredList = suggestions.filter(s => s.subject === filterKey);
+            }
+
+            if(filteredList.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:30px 10px; color:#94a3b8;">
+                        <i class="fa-solid fa-folder-open" style="font-size:32px; margin-bottom:8px;"></i>
+                        <p style="font-size:13px;">এই বিষয়ে এখনো কোনো সাজেশন যুক্ত করা হয়নি!</p>
+                    </div>
+                `;
                 return;
             }
-            suggestions.forEach(item => {
+
+            filteredList.forEach(item => {
+                const subTitle = subjectNamesBn[item.subject] || "সাধারণ সাজেশন";
                 const div = document.createElement('div');
                 div.className = 'suggestion-box';
                 div.innerHTML = `
-                    <h4 style="font-size:13px; color:#1e293b; margin-bottom:4px;"><i class="fa-solid fa-book" style="color:#f59e0b;"></i> ${item.subject}</h4>
-                    <p style="font-size:12px; color:#475569; line-height:1.4;">${item.text}</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="font-size:10px; background:#e0e7ff; color:#3730a3; padding:2px 8px; border-radius:12px; font-weight:bold;">${subTitle}</span>
+                        <i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i>
+                    </div>
+                    <h4 style="font-size:14px; color:#1e293b; margin-bottom:4px; font-weight:700;">${item.title || "সাজেশন"}</h4>
+                    <p style="font-size:12px; color:#475569; line-height:1.5;">${item.text}</p>
                 `;
                 container.appendChild(div);
             });
