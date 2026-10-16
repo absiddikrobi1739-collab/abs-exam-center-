@@ -844,14 +844,20 @@
             { name: "মাসফাকুর রহমান", score: "২/২", percent: "১০০%" }
         ];
 
-        let coursesList = [
+        let coursesList = JSON.parse(localStorage.getItem('abs_courses')) || [
             { name: "এইচএসসি আইসিটি ফুল কোর্স", desc: "অধ্যায়ভিত্তিক লাইভ ক্লাস ও পরীক্ষা" },
             { name: "পদার্থবিজ্ঞান ও রসায়ন ক্র্যাশ কোর্স", desc: "শেষ মুহূর্তের সেরা প্রস্তুতি" }
         ];
 
-        let packagesList = [
+        let packagesList = JSON.parse(localStorage.getItem('abs_packages')) || [
             { name: "মাসিক প্রিমিয়াম প্যাক", price: "৯৯ টাকা (১ মাস)" },
             { name: "এইচএসসি ফুল কোর্স প্যাক", price: "৪৯৯ টাকা (৬ মাস)" }
+        ];
+
+        // ব্যবহারকারী ডেটা লোড বা ইনিশিয়ালাইজ করা
+        let usersList = JSON.parse(localStorage.getItem('abs_users')) || [
+            { name: "মাসফাকুর রহমান", phone: "01711111111", email: "mushfiq@gmail.com", pass: "123456", package: "মাসিক প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" },
+            { name: "রাফসান আহমেদ", phone: "01933333333", email: "rafsan@gmail.com", pass: "pass789", package: "ফুল কোর্স", isPaid: true, paidDate: "2026-04-10", expireDate: "2026-05-10", trx: "TRX998877" }
         ];
 
         const bookChapters = {
@@ -866,11 +872,6 @@
             "জীববিজ্ঞান ২য় পত্র": ["অধ্যায় ১: প্রাণীর বিভিন্নতা", "অধ্যায় ২: প্রাণীর পরিচিতি"],
             "আইসিটি": ["অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত", "অধ্যায় ২: নেটওয়ার্কিং", "অধ্যায় ৩: সংখ্যা পদ্ধতি", "অধ্যায় ৪: HTML", "অধ্যায় ৫: প্রোগ্রামিং", "অধ্যায় ৬: ডেটাবেজ"]
         };
-
-        let usersList = [
-            { name: "মাসফাকুর রহমান", phone: "01711111111", email: "mushfiq@gmail.com", pass: "123456", package: "মাসিক প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" },
-            { name: "রাফসান আহমেদ", phone: "01933333333", email: "rafsan@gmail.com", pass: "pass789", package: "ফুল কোর্স", isPaid: true, paidDate: "2026-04-10", expireDate: "2026-05-10", trx: "TRX998877" }
-        ];
 
         function toggleAuthForm(type) {
             if(type === 'login') {
@@ -897,8 +898,10 @@
                 currentUser = { name: "মুশফিকুর রহমান", email: "musfiqrahmansubadmin@gmail.com", role: "sub_admin" };
             } else {
                 currentUser = { name: inputVal, email: inputVal, role: "student" };
+                // যদি নতুন ইউজার রেজিস্টার্ড না থাকে, তবে অটো যুক্ত হবে
                 if(!usersList.some(u => u.email === inputVal)) {
                     usersList.push({ name: inputVal, phone: "N/A", email: inputVal, pass: passVal || "******", package: "ফ্রি প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" });
+                    localStorage.setItem('abs_users', JSON.stringify(usersList));
                 }
             }
 
@@ -913,8 +916,30 @@
             const pass = document.getElementById('signup-pass-field').value.trim();
             if(!name || !email || !pass) { alert("সব তথ্য পূরণ করুন!"); return; }
 
+            // যদি ইমেইল অলরেডি থাকে চেক করা
+            if(usersList.some(u => u.email === email)) {
+                alert("এই ইমেইল দিয়ে ইতিপূর্বে অ্যাকাউন্ট খোলা হয়েছে!");
+                return;
+            }
+
             currentUser = { name: name, email: email, role: "student" };
-            usersList.push({ name: name, phone: email, email: email, pass: pass, package: "-", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" });
+            
+            // নতুন ইউজার পুশ করা
+            usersList.push({ 
+                name: name, 
+                phone: email, 
+                email: email, 
+                pass: pass, 
+                package: "ফ্রি প্যাক", 
+                isPaid: false, 
+                paidDate: "-", 
+                expireDate: "-", 
+                trx: "-" 
+            });
+            
+            // লোকাল স্টোরেজে ইনস্ট্যান্ট সেভ
+            localStorage.setItem('abs_users', JSON.stringify(usersList));
+
             alert("অ্যাকাউন্ট তৈরি সফল!");
             unlockPlatformUI();
             switchSection('home-section');
@@ -953,6 +978,8 @@
             window.scrollTo(0, 0);
 
             if(secId === 'admin-panel-section') {
+                // সবসময় লোকাল স্টোরেজ থেকে লেটেস্ট ইউজার ডাটা রিফ্রেশ করা হবে
+                usersList = JSON.parse(localStorage.getItem('abs_users')) || usersList;
                 renderAdminTable();
                 renderCoursesTable();
                 renderPackagesTable();
@@ -1012,6 +1039,7 @@
             const desc = document.getElementById('new-course-desc').value.trim();
             if(!name) { alert("কোর্সের নাম দিন!"); return; }
             coursesList.push({ name, desc });
+            localStorage.setItem('abs_courses', JSON.stringify(coursesList));
             document.getElementById('new-course-name').value = '';
             document.getElementById('new-course-desc').value = '';
             renderCoursesTable();
@@ -1020,6 +1048,7 @@
 
         function deleteCourse(idx) {
             coursesList.splice(idx, 1);
+            localStorage.setItem('abs_courses', JSON.stringify(coursesList));
             renderCoursesTable();
         }
 
@@ -1069,6 +1098,7 @@
             const price = document.getElementById('new-pkg-price').value.trim();
             if(!name || !price) { alert("সব তথ্য দিন!"); return; }
             packagesList.push({ name, price });
+            localStorage.setItem('abs_packages', JSON.stringify(packagesList));
             document.getElementById('new-pkg-name').value = '';
             document.getElementById('new-pkg-price').value = '';
             renderPackagesTable();
@@ -1077,6 +1107,7 @@
 
         function deletePackage(idx) {
             packagesList.splice(idx, 1);
+            localStorage.setItem('abs_packages', JSON.stringify(packagesList));
             renderPackagesTable();
         }
 
@@ -1200,6 +1231,8 @@
             }
 
             usersList.push({ name: name, phone: phone, email: email, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid });
+            localStorage.setItem('abs_users', JSON.stringify(usersList));
+
             alert("পেমেন্ট রিকোয়েস্ট সাবমিট হয়েছে! এডমিন যাচাই করে অ্যাপ্রুভ করবে।");
             switchSection('home-section');
         }
@@ -1209,6 +1242,7 @@
             if(!tbody) return;
             tbody.innerHTML = '';
             
+            // মেইন এডমিন লুকিয়ে রেখে বাকি ইউজার ফিল্টার করা
             let filteredUsers = usersList.filter(u => !u.name.toLowerCase().includes("abs siddik"));
 
             let total = filteredUsers.length;
@@ -1261,6 +1295,8 @@
                 usersList[idx].paidDate = today.toISOString().slice(0, 10);
                 usersList[idx].expireDate = expiry.toISOString().slice(0, 10);
             }
+            
+            localStorage.setItem('abs_users', JSON.stringify(usersList));
             renderAdminTable();
         }
     </script>
