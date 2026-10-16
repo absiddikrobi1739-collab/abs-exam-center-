@@ -436,20 +436,20 @@
 </head>
 <body>
 
-    <!-- 🌟 মেইন হেডার -->
-    <div class="top-bar">
+    <!-- 🌟 মেইন হেডার (লগইনের পর অন হবে) -->
+    <div class="top-bar" id="app-header" style="display: none;">
         <div class="brand-title">
             🎓 Abs Exam Center
         </div>
         <div class="profile-area" onclick="switchSection('profile-section')">
-            <div class="avatar-circle" id="top-avatar">G</div>
-            <span id="top-user-name">গেস্ট ইউজার</span>
+            <div class="avatar-circle" id="top-avatar">U</div>
+            <span id="top-user-name">ইউজার</span>
         </div>
     </div>
 
     <div class="container">
         
-        <!-- 🌟 ১. লগইন ও সাইন আপ (রেজিস্ট্রেশন) পেজ -->
+        <!-- 🌟 ১. লগইন ও সাইন আপ পেজ (লগইন না হওয়া পর্যন্ত শুধু এটিই দেখাবে) -->
         <div id="login-screen-section" class="page-section active">
             <div class="auth-screen-card">
                 <div class="lang-switch">
@@ -466,7 +466,7 @@
                     </div>
                 </div>
 
-                <!-- 🔄 লগইন / সাইন আপ সুইচ টগল -->
+                <!-- 🔄 টগল ট্যাব -->
                 <div class="auth-toggle-tabs">
                     <button class="auth-tab-btn active" id="tab-login-btn" onclick="toggleAuthForm('login')">লগইন করুন</button>
                     <button class="auth-tab-btn" id="tab-signup-btn" onclick="toggleAuthForm('signup')">সাইন আপ (Sign Up)</button>
@@ -485,7 +485,7 @@
                     <button class="btn-green" onclick="handleCustomAuth()">লগইন করুন</button>
                 </div>
 
-                <!-- 📝 সাইন আপ (রেজিস্ট্রেশন) ফর্ম -->
+                <!-- 📝 সাইন আপ ফর্ম -->
                 <div id="signup-form-box" style="display:none;">
                     <div style="text-align:left;">
                         <label class="input-label">আপনার পূর্ণ নাম</label>
@@ -516,7 +516,7 @@
             </div>
         </div>
 
-        <!-- ২. মূল হোম পেজ -->
+        <!-- ২. মূল হোম পেজ (লগইনের পর দৃশ্যমান হবে) -->
         <div id="home-section" class="page-section">
             <div class="banner-card">
                 <div class="status-badge">● অ্যাকাউন্ট সক্রিয় আছে</div>
@@ -613,437 +613,4 @@
                 <h2 style="color:#f8fafc;">🏆 লাইভ লিডারবোর্ড</h2>
                 <p style="font-size:12px; margin-bottom:15px; color:#94a3b8;">সর্বোচ্চ স্কোরধারী স্টুডেন্টদের তালিকা:</p>
                 <div id="leaderboard-list-container"></div>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <!-- ৬. ড্যাশবোর্ড -->
-        <div id="dashboard-section" class="page-section">
-            <div class="inner-page-card">
-                <h2 style="color:#f8fafc;">📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
-                <p style="font-size:12px; margin-bottom:15px; color:#94a3b8;">আপনার পারফরম্যান্স স্ট্যাটাস:</p>
-                <div style="background: #0f172a; padding: 10px; border-radius: 12px; border: 1px solid #334155;">
-                    <canvas id="performanceChart"></canvas>
-                </div>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <!-- 👑 ৭. এডমিন ড্যাশবোর্ড -->
-        <div id="admin-panel-section" class="page-section">
-            <div class="admin-wrapper">
-                <div class="admin-header">
-                    <div>
-                        <h2 style="font-size:16px; color:#f8fafc;"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> এডমিন ড্যাশবোর্ড</h2>
-                        <p style="font-size:10px; color:#94a3b8; margin:0;" id="admin-role-subtitle">Abs Exam Management</p>
-                    </div>
-                    <span style="background:#f59e0b; color:#0f172a; font-size:10px; font-weight:800; padding:2px 8px; border-radius:12px;" id="admin-badge-text">ADMIN</span>
-                </div>
-
-                <div class="admin-stat-grid">
-                    <div class="admin-stat-card"><h6>টোটাল ইউজার</h6><h3 id="admin-stat-total" style="color:#60a5fa;">4</h3></div>
-                    <div class="admin-stat-card"><h6>ফ্রি ইউজার</h6><h3 id="admin-stat-free" style="color:#f87171;">2</h3></div>
-                    <div class="admin-stat-card"><h6>পেইড ইউজার</h6><h3 id="admin-stat-paid" style="color:#4ade80;">2</h3></div>
-                </div>
-
-                <div class="admin-tab-bar">
-                    <button class="admin-tab active" onclick="switchAdminTab('tab-users', this)">ইউজার তালিকা</button>
-                    <button class="admin-tab" onclick="switchAdminTab('tab-add-course', this)">কোর্স ম্যানেজমেন্ট</button>
-                </div>
-
-                <div id="tab-users" class="admin-content-box active">
-                    <table class="premium-table">
-                        <thead>
-                            <tr><th>নাম</th><th>স্ট্যাটাস</th><th>অ্যাকশন</th></tr>
-                        </thead>
-                        <tbody id="admin-user-table-body"></tbody>
-                    </table>
-                </div>
-
-                <!-- কোর্স এডমিন ম্যানেজমেন্ট ট্যাব -->
-                <div id="tab-add-course" class="admin-content-box">
-                    <h4 style="font-size:13px; color:#fbbf24; margin-bottom:10px;">নতুন কোর্স যুক্ত করুন:</h4>
-                    <div class="form-group">
-                        <label>কোর্সের নাম:</label>
-                        <input type="text" id="course-title-input" placeholder="যেমন: HSC 26 ICT ক্র্যাশ কোর্স">
-                    </div>
-                    <div class="form-group">
-                        <label>কোর্সের ফি (টাকা):</label>
-                        <input type="number" id="course-price-input" placeholder="যেমন: ৯৯">
-                    </div>
-                    <div class="form-group">
-                        <label>কোর্সের বিবরণ:</label>
-                        <input type="text" id="course-desc-input" placeholder="যেমন: লাইভ ক্লাস + অধ্যায়ভিত্তিক এক্সাম">
-                    </div>
-                    <button class="action-btn" onclick="addNewCourseByAdmin()" style="background:#22c55e; color:#020617; font-weight:bold; margin-bottom:15px;">
-                        <i class="fa-solid fa-plus-circle"></i> কোর্স প্রকাশ করুন
-                    </button>
-
-                    <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">বিদ্যমান কোর্সসমূহ:</h4>
-                    <div id="admin-course-manage-list"></div>
-                </div>
-
-                <button class="back-btn" onclick="switchSection('home-section')" style="background:#334155; color:white; margin-top:15px;">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <!-- 👤 ৮. প্রোফাইল সেকশন -->
-        <div id="profile-section" class="page-section">
-            <div class="inner-page-card">
-                <h2 style="color:#f8fafc;">👤 ইউজার প্রোফাইল</h2>
-                
-                <div style="background:#0f172a; padding:15px; border-radius:12px; border:1px solid #334155; margin-top:10px;">
-                    <p style="margin-bottom:6px;"><strong>নাম:</strong> <span id="prof-display-name">গেস্ট ইউজার</span></p>
-                    <p style="margin-bottom:6px;"><strong>ইমেইল/ফোন:</strong> <span id="prof-display-email">N/A</span></p>
-                    <p style="margin-bottom:6px;"><strong>রোল:</strong> <span id="prof-display-role" style="color:#10b981; font-weight:bold;">সাধারণ ছাত্র</span></p>
-                    
-                    <button class="logout-btn" onclick="handleUserLogout()">
-                        <i class="fa-solid fa-right-from-bracket"></i> অ্যাকাউন্ট থেকে লগআউট করুন
-                    </button>
-                </div>
-
-                <div id="admin-switch-box" style="display:none; background:#881337; padding:12px; border-radius:10px; margin-top:15px; border: 1px solid #f43f5e;">
-                    <button class="action-btn" onclick="switchSection('admin-panel-section')" style="background:#e11d48; color:white;">
-                        <i class="fa-solid fa-user-shield"></i> এডমিন ড্যাশবোর্ডে প্রবেশ করুন
-                    </button>
-                </div>
-
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Bottom Navigation Bar -->
-    <div class="bottom-bar">
-        <a class="nav-link active" id="nav-home" onclick="switchSection('home-section')">
-            <i class="fa-solid fa-house"></i>
-            <span>হোম</span>
-        </a>
-        <a class="nav-link" id="nav-courses" onclick="switchSection('courses-section')">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span>কোর্স</span>
-        </a>
-        <a class="nav-link" id="nav-dashboard" onclick="switchSection('dashboard-section')">
-            <i class="fa-solid fa-chart-pie"></i>
-            <span>ড্যাশবোর্ড</span>
-        </a>
-        <a class="nav-link" id="nav-leaderboard" onclick="switchSection('leaderboard-section')">
-            <i class="fa-solid fa-trophy"></i>
-            <span>লিডারবোর্ড</span>
-        </a>
-        <a class="nav-link" id="nav-profile" onclick="switchSection('profile-section')">
-            <i class="fa-solid fa-user"></i>
-            <span>প্রোফাইল</span>
-        </a>
-    </div>
-
-    <!-- JavaScript Engine -->
-    <script>
-        let currentUser = {
-            name: "গেস্ট ইউজার",
-            email: "guest@exam.com",
-            role: "student",
-            isPaid: false
-        };
-
-        // 🔑 রেজিস্টার্ড ইউজার ও এডমিন ডাটাবেজ
-        let leaderboardData = [
-            { name: "Abs Siddik (মেইন এডমিন)", email: "absiddikrobi1739@gmail.com", pass: "absiddikrobi1739", role: "main_admin", isPaid: true, totalScore: 25 },
-            { name: "মুশফিকুর রহমান (সাব-এডমিন)", email: "musfiqrahmansubadmin@gmail.com", pass: "musfiq1379", role: "sub_admin", isPaid: true, totalScore: 20 },
-            { name: "মাসফাকুর রহমান", email: "mushfiq@gmail.com", pass: "123456", role: "student", isPaid: true, totalScore: 28 },
-            { name: "রাফসান আহমেদ", email: "rafsan@gmail.com", pass: "pass123", role: "student", isPaid: false, totalScore: 18 }
-        ];
-
-        let coursesList = [
-            { title: "HSC 2026 ICT ফুল ব্যাচ", price: 150, desc: "সম্পূর্ণ আইসিটি থিওরি + প্র্যাকটিক্যাল + ৫০টি অনলাইন এক্সাম" },
-            { title: "পদার্থবিজ্ঞান ১ম ও ২য় পত্র মেগা কোর্স", price: 250, desc: "সকল অধ্যায়ের গাণিতিক ব্যাখ্যা ও মডেল টেস্ট" }
-        ];
-
-        // 🔄 লগইন / সাইন আপ সুইচ হ্যান্ডলার
-        function toggleAuthForm(type) {
-            if(type === 'login') {
-                document.getElementById('login-form-box').style.display = 'block';
-                document.getElementById('signup-form-box').style.display = 'none';
-                document.getElementById('tab-login-btn').classList.add('active');
-                document.getElementById('tab-signup-btn').classList.remove('active');
-            } else {
-                document.getElementById('login-form-box').style.display = 'none';
-                document.getElementById('signup-form-box').style.display = 'block';
-                document.getElementById('tab-signup-btn').classList.add('active');
-                document.getElementById('tab-login-btn').classList.remove('active');
-            }
-        }
-
-        // 📝 নতুন অ্যাকাউন্ট তৈরি (Sign Up)
-        function handleUserSignUp() {
-            const name = document.getElementById('signup-name-field').value.trim();
-            const emailPhone = document.getElementById('signup-input-field').value.trim();
-            const pass = document.getElementById('signup-pass-field').value.trim();
-
-            if(!name || !emailPhone || !pass) {
-                alert("দয়া করে নাম, ইমেইল/মোবাইল এবং পাসওয়ার্ড সবগুলো ঘর সঠিক তথ্য দিয়ে পূরণ করুন!");
-                return;
-            }
-
-            // আগে একই অ্যাকাউন্ট আছে কিনা চেক
-            const existingUser = leaderboardData.find(u => u.email.toLowerCase() === emailPhone.toLowerCase());
-            if(existingUser) {
-                alert("এই ইমেইল/মোবাইল দিয়ে ইতিমধ্যেই একটি অ্যাকাউন্ট খোলা রয়েছে! অনুগ্রহ করে লগইন করুন।");
-                toggleAuthForm('login');
-                return;
-            }
-
-            const newUser = {
-                name: name,
-                email: emailPhone,
-                pass: pass,
-                role: "student",
-                isPaid: false,
-                totalScore: 0
-            };
-
-            leaderboardData.push(newUser);
-            currentUser = newUser;
-
-            alert(`🎉 অভিনন্দন ${name}! আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।`);
-            updateUserProfileUI();
-            switchSection('home-section');
-        }
-
-        // 🔑 লগইন প্রসেস
-        function handleCustomAuth() {
-            const inputVal = document.getElementById('auth-input-field').value.trim();
-            const passVal = document.getElementById('auth-pass-field').value.trim();
-
-            if(!inputVal) {
-                alert("দয়া করে মোবাইল নাম্বার অথবা ইমেইল দিন!");
-                return;
-            }
-
-            const foundUser = leaderboardData.find(u => (u.email.toLowerCase() === inputVal.toLowerCase() || u.name.toLowerCase() === inputVal.toLowerCase()) && u.pass === passVal);
-
-            if(foundUser) {
-                currentUser = foundUser;
-                alert(`স্বাগতম ${foundUser.name}! সফলভাবে লগইন হয়েছে।`);
-                updateUserProfileUI();
-                if(currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
-                    switchSection('admin-panel-section');
-                } else {
-                    switchSection('home-section');
-                }
-            } else {
-                alert("ভুল ইমেইল/মোবাইল অথবা পাসওয়ার্ড! নতুন অ্যাকাউন্ট খুলতে 'সাইন আপ' ট্যাবে ক্লিক করুন।");
-            }
-        }
-
-        function quickGuestLogin(provider) {
-            currentUser = {
-                name: provider + " ইউজার",
-                email: provider.toLowerCase() + "@user.com",
-                role: "student",
-                isPaid: false
-            };
-            alert(`${provider} এর মাধ্যমে দ্রুত লগইন করা হয়েছে!`);
-            updateUserProfileUI();
-            switchSection('home-section');
-        }
-
-        function updateUserProfileUI() {
-            document.getElementById('top-user-name').innerText = currentUser.name;
-            document.getElementById('top-avatar').innerText = currentUser.name.charAt(0).toUpperCase();
-            document.getElementById('banner-user-name').innerText = currentUser.name;
-            document.getElementById('prof-display-name').innerText = currentUser.name;
-            document.getElementById('prof-display-email').innerText = currentUser.email;
-
-            let roleTxt = "সাধারণ ছাত্র";
-            if(currentUser.role === 'main_admin') roleTxt = "মেইন এডমিন (Owner)";
-            else if(currentUser.role === 'sub_admin') roleTxt = "সাব-এডমিন";
-
-            document.getElementById('prof-display-role').innerText = roleTxt;
-
-            if(currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
-                document.getElementById('admin-switch-box').style.display = 'block';
-            } else {
-                document.getElementById('admin-switch-box').style.display = 'none';
-            }
-        }
-
-        function handleUserLogout() {
-            if(confirm("আপনি কি নিশ্চিতভাবে লগআউট করতে চান?")) {
-                currentUser = {
-                    name: "গেস্ট ইউজার",
-                    email: "guest@exam.com",
-                    role: "student",
-                    isPaid: false
-                };
-                updateUserProfileUI();
-                alert("সফলভাবে লগআউট করা হয়েছে!");
-                switchSection('login-screen-section');
-            }
-        }
-
-        function switchSection(sectionId) {
-            const sections = document.querySelectorAll('.page-section');
-            sections.forEach(sec => sec.classList.remove('active'));
-
-            const target = document.getElementById(sectionId);
-            if (target) {
-                target.classList.add('active');
-            }
-            window.scrollTo(0, 0);
-
-            document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
-            if(sectionId === 'home-section') document.getElementById('nav-home').classList.add('active');
-            if(sectionId === 'courses-section') document.getElementById('nav-courses').classList.add('active');
-            if(sectionId === 'dashboard-section') document.getElementById('nav-dashboard').classList.add('active');
-            if(sectionId === 'leaderboard-section') document.getElementById('nav-leaderboard').classList.add('active');
-            if(sectionId === 'profile-section') document.getElementById('nav-profile').classList.add('active');
-
-            if(sectionId === 'admin-panel-section') {
-                renderAdminUserTable();
-                renderAdminCourseList();
-            } else if(sectionId === 'leaderboard-section') {
-                renderLeaderboard();
-            } else if(sectionId === 'courses-section') {
-                renderUserCourses();
-            }
-        }
-
-        function switchAdminTab(tabId, btnElem) {
-            document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.admin-content-box').forEach(c => c.classList.remove('active'));
-            if(btnElem) btnElem.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-        }
-
-        function renderUserCourses() {
-            const container = document.getElementById('user-course-list-container');
-            container.innerHTML = '';
-
-            coursesList.forEach(course => {
-                const div = document.createElement('div');
-                div.className = 'course-card-item';
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                        <h3 style="font-size:14px; color:#f8fafc;">${course.title}</h3>
-                        <span style="background:#065f46; color:#34d399; font-weight:bold; font-size:12px; padding:2px 8px; border-radius:8px;">${course.price} ৳</span>
-                    </div>
-                    <p style="font-size:11px; color:#94a3b8; margin-bottom:10px;">${course.desc}</p>
-                    <button class="btn-green" style="padding:8px; font-size:12px;" onclick="alert('কোর্সে এনরোল করার জন্য এডমিনের সাথে যোগাযোগ করুন')">কোর্সটি এনরোল করুন</button>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function addNewCourseByAdmin() {
-            const title = document.getElementById('course-title-input').value.trim();
-            const price = document.getElementById('course-price-input').value.trim();
-            const desc = document.getElementById('course-desc-input').value.trim();
-
-            if(!title || !price) {
-                alert("দয়া করে কোর্সের নাম এবং মূল্য প্রদান করুন!");
-                return;
-            }
-
-            coursesList.push({ title, price, desc });
-            alert("নতুন কোর্সটি সফলভাবে যুক্ত হয়েছে!");
-
-            document.getElementById('course-title-input').value = '';
-            document.getElementById('course-price-input').value = '';
-            document.getElementById('course-desc-input').value = '';
-
-            renderAdminCourseList();
-            renderUserCourses();
-        }
-
-        function renderAdminCourseList() {
-            const container = document.getElementById('admin-course-manage-list');
-            container.innerHTML = '';
-
-            coursesList.forEach((c, idx) => {
-                const div = document.createElement('div');
-                div.style.background = 'rgba(255,255,255,0.05)';
-                div.style.padding = '8px';
-                div.style.borderRadius = '8px';
-                div.style.marginBottom = '6px';
-                div.style.display = 'flex';
-                div.style.justifyContent = 'space-between';
-                div.style.alignItems = 'center';
-                div.innerHTML = `
-                    <div>
-                        <h5 style="font-size:12px; color:#cbd5e1;">${c.title}</h5>
-                        <span style="font-size:10px; color:#fbbf24;">মূল্য: ${c.price} ৳</span>
-                    </div>
-                    <button style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteCourse(${idx})">ডিলিট</button>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function deleteCourse(idx) {
-            if(confirm("আপনি কি কোর্সটি মুছে ফেলতে চান?")) {
-                coursesList.splice(idx, 1);
-                renderAdminCourseList();
-                renderUserCourses();
-            }
-        }
-
-        function renderAdminUserTable() {
-            const tbody = document.getElementById('admin-user-table-body');
-            tbody.innerHTML = '';
-
-            const total = leaderboardData.length;
-            const paid = leaderboardData.filter(u => u.isPaid).length;
-            const free = total - paid;
-
-            document.getElementById('admin-stat-total').innerText = total;
-            document.getElementById('admin-stat-free').innerText = free;
-            document.getElementById('admin-stat-paid').innerText = paid;
-
-            leaderboardData.forEach((user, idx) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${user.name}</td>
-                    <td><span class="${user.isPaid ? 'badge-paid' : 'badge-free'}">${user.isPaid ? 'PAID' : 'FREE'}</span></td>
-                    <td>
-                        ${currentUser.role === 'main_admin' 
-                            ? `<button style="background:#22c55e; border:none; padding:3px 6px; border-radius:4px; font-size:9px; cursor:pointer;" onclick="togglePaid(${idx})">Toggle</button>` 
-                            : `<span style="color:#94a3b8;">🔒 Locked</span>`}
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function togglePaid(idx) {
-            if(currentUser.role === 'main_admin') {
-                leaderboardData[idx].isPaid = !leaderboardData[idx].isPaid;
-                renderAdminUserTable();
-            }
-        }
-
-        function renderLeaderboard() {
-            const container = document.getElementById('leaderboard-list-container');
-            container.innerHTML = '';
-            leaderboardData.forEach((user, idx) => {
-                const div = document.createElement('div');
-                div.style.display = 'flex';
-                div.style.justifyContent = 'space-between';
-                div.style.padding = '8px 0';
-                div.style.borderBottom = '1px solid #334155';
-                div.innerHTML = `
-                    <span><strong>#${idx+1}</strong> ${user.name}</span>
-                    <span style="color:#10b981; font-weight:bold;">${user.totalScore} নম্বর</span>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        window.onload = function() {
-            updateUserProfileUI();
-            renderUserCourses();
-        };
-    </script>
-</body>
-</html>
+                <button class="back-btn" onclick="switchSection('home-section
