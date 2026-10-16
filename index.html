@@ -48,7 +48,7 @@
         }
 
         .brand-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 800;
             color: #fbbf24;
             display: flex;
@@ -735,7 +735,7 @@
                 <h2 style="color:#4f46e5;"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> প্রিমিয়াম সাবস্ক্রিপশন প্ল্যান</h2>
                 <p style="font-size:12px; margin-bottom:15px;">আপনার পছন্দমতো প্যাকেজ নির্বাচন করে বিকাশে/নগদে/রকেটে পেমেন্ট করুন:</p>
 
-                <div class="plan-card" onclick="selectPlan('২ মাস - ৫০ টাকা', 2)">
+                <div class="plan-card" onclick="selectPlan('২ মাস - ৫০ টাকা', 2, event)">
                     <div>
                         <h4 style="font-size:14px; color:#1e293b;">২ মাসের প্যাকেজ</h4>
                         <p style="font-size:11px; color:#64748b;">আনলিমিটেড পরীক্ষা ও সকল সুবিধা</p>
@@ -743,7 +743,7 @@
                     <span style="font-weight:bold; color:#4f46e5; font-size:15px;">৫০ টাকা</span>
                 </div>
 
-                <div class="plan-card" onclick="selectPlan('৩ মাস - ১০০ টাকা', 3)">
+                <div class="plan-card" onclick="selectPlan('৩ মাস - ১০০ টাকা', 3, event)">
                     <div>
                         <h4 style="font-size:14px; color:#1e293b;">৩ মাসের প্যাকেজ</h4>
                         <p style="font-size:11px; color:#64748b;">জনপ্রিয় প্যাক + ফুল এনালাইসিস</p>
@@ -751,7 +751,7 @@
                     <span style="font-weight:bold; color:#4f46e5; font-size:15px;">১০০ টাকা</span>
                 </div>
 
-                <div class="plan-card" onclick="selectPlan('৬ মাস - ১৫০ টাকা', 6)">
+                <div class="plan-card" onclick="selectPlan('৬ মাস - ১৫০ টাকা', 6, event)">
                     <div>
                         <h4 style="font-size:14px; color:#1e293b;">৬ মাসের প্যাকেজ (বেস্ট ভ্যালু)</h4>
                         <p style="font-size:11px; color:#64748b;">দীর্ঘমেয়াদী পূর্ণাঙ্গ প্রস্তুতি</p>
@@ -841,7 +841,7 @@
             </div>
         </div>
 
-        <!-- 👑 ৮. প্রিমিয়াম এডমিন প্যানেল (পেমেন্ট তারিখ ও মেয়াদ হিসেবসহ) -->
+        <!-- 👑 ৮. প্রিমিয়াম এডমিন প্যানেল -->
         <div id="admin-panel-section" class="page-section">
             <div class="admin-wrapper">
                 
@@ -1076,7 +1076,7 @@
         ];
 
         let leaderboardData = [
-            { name: "মাসফাকুর রহমান", email: "mushfiq@gmail.com", pass: "123456", isPaid: true, totalScore: 28, percentage: 93, examCount: 15, paidDate: "2023-10-01", expireDate: "2024-01-01" },
+            { name: "মাসফাকুর রহমান", email: "mushfiq@gmail.com", pass: "123456", isPaid: true, totalScore: 28, percentage: 93, examCount: 15, paidDate: "2026-10-01", expireDate: "2027-01-01" },
             { name: "Abs Siddik (আপনি)", email: "abs@exam.com", pass: "abs889", isPaid: false, totalScore: 25, percentage: 83, examCount: 0, paidDate: "N/A", expireDate: "N/A" },
             { name: "রাফসান আহমেদ", email: "rafsan@gmail.com", pass: "pass123", isPaid: false, totalScore: 20, percentage: 66, examCount: 10, paidDate: "N/A", expireDate: "N/A" }
         ];
@@ -1154,12 +1154,12 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        function selectPlan(planTitle, months) {
+        function selectPlan(planTitle, months, evt) {
             selectedPlanText = planTitle;
             selectedPlanMonths = months;
             document.querySelectorAll('.plan-card').forEach(card => card.classList.remove('selected'));
-            if(event && event.currentTarget) {
-                event.currentTarget.classList.add('selected');
+            if(evt && evt.currentTarget) {
+                evt.currentTarget.classList.add('selected');
             }
             document.getElementById('payment-form-box').style.display = 'block';
         }
@@ -1204,4 +1204,424 @@
             document.getElementById('exam-limit-modal').style.display = 'none';
         }
 
-        function startExam()
+        function startExam() {
+            let myUser = leaderboardData.find(u => u.email === "abs@exam.com");
+            if(myUser && !myUser.isPaid && myUser.examCount >= 40) {
+                document.getElementById('exam-limit-modal').style.display = 'flex';
+                return;
+            }
+
+            const selectedSubject = document.getElementById('chapter-select').value;
+            activeExamQuestions = questions.filter(q => q.subject === selectedSubject);
+
+            if (activeExamQuestions.length === 0) {
+                activeExamQuestions = questions;
+            }
+
+            const selectedTimeMin = parseInt(document.getElementById('exam-time').value);
+            timeLeftSeconds = selectedTimeMin * 60;
+            
+            currentQ = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            wrongAnswersLog = [];
+            
+            document.getElementById('live-correct').innerText = "0";
+            document.getElementById('live-wrong').innerText = "0";
+
+            switchSection('model-test-section');
+            startTimer();
+            loadQuiz();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (timeLeftSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    finishExam();
+                    return;
+                }
+                timeLeftSeconds--;
+                const m = Math.floor(timeLeftSeconds / 60);
+                const s = timeLeftSeconds % 60;
+                document.getElementById('timer-display').innerText = `⏱️ ${m}:${s < 10 ? '0' : ''}${s}`;
+            }, 1000);
+        }
+
+        function loadQuiz() {
+            isAnswered = false;
+            document.getElementById('next-btn').style.display = 'none';
+
+            if (currentQ < activeExamQuestions.length) {
+                document.getElementById('question-text').innerText = (currentQ + 1) + ". " + activeExamQuestions[currentQ].q;
+                const optContainer = document.getElementById('options-container');
+                optContainer.innerHTML = '';
+                
+                activeExamQuestions[currentQ].options.forEach((opt, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerText = opt;
+                    btn.onclick = () => selectOption(index, btn);
+                    optContainer.appendChild(btn);
+                });
+            } else {
+                finishExam();
+            }
+        }
+
+        function selectOption(selectedIndex, clickedBtn) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const currentObj = activeExamQuestions[currentQ];
+            const allButtons = document.querySelectorAll('.option-btn');
+
+            if (selectedIndex === currentObj.ans) {
+                clickedBtn.style.background = '#dcfce7';
+                clickedBtn.style.borderColor = '#16a34a';
+                correctCount++;
+                document.getElementById('live-correct').innerText = correctCount;
+            } else {
+                clickedBtn.style.background = '#fee2e2';
+                clickedBtn.style.borderColor = '#dc2626';
+                allButtons[currentObj.ans].style.background = '#dcfce7';
+                allButtons[currentObj.ans].style.borderColor = '#16a34a';
+
+                wrongCount++;
+                document.getElementById('live-wrong').innerText = wrongCount;
+
+                wrongAnswersLog.push({
+                    q: currentObj.q,
+                    userAns: currentObj.options[selectedIndex],
+                    correctAns: currentObj.options[currentObj.ans]
+                });
+            }
+
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            loadQuiz();
+        }
+
+        function cancelExam() {
+            clearInterval(timerInterval);
+            switchSection('home-section');
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            
+            const totalQ = activeExamQuestions.length;
+            const percentage = Math.round((correctCount / totalQ) * 100);
+
+            document.getElementById('recent-percentage').innerText = percentage + "%";
+            document.getElementById('recent-score-val').innerText = correctCount;
+            document.getElementById('recent-correct-val').innerText = correctCount;
+            document.getElementById('recent-wrong-val').innerText = wrongCount;
+
+            const wrongContainer = document.getElementById('recent-wrong-list-container');
+            wrongContainer.innerHTML = '';
+            
+            if(wrongAnswersLog.length > 0) {
+                wrongContainer.innerHTML = `<h4 style="font-size:13px; color:#1e293b; margin-bottom:8px;">ভুল হওয়া প্রশ্নের রিভিউ:</h4>`;
+                wrongAnswersLog.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.style.background = '#fef2f2';
+                    div.style.padding = '8px';
+                    div.style.borderRadius = '8px';
+                    div.style.marginBottom = '6px';
+                    div.style.border = '1px solid #fecaca';
+                    div.innerHTML = `
+                        <p style="font-size:12px; font-weight:bold; color:#1e293b;">${idx+1}. ${item.q}</p>
+                        <p style="font-size:11px; color:#dc2626;">❌ আপনার উত্তর: ${item.userAns}</p>
+                        <p style="font-size:11px; color:#16a34a; font-weight:bold;">✅ সঠিক উত্তর: ${item.correctAns}</p>
+                    `;
+                    wrongContainer.appendChild(div);
+                });
+            }
+
+            let myUserObj = leaderboardData.find(u => u.email === "abs@exam.com");
+            if(myUserObj) {
+                myUserObj.totalScore += correctCount;
+                myUserObj.percentage = percentage;
+                myUserObj.examCount += 1;
+            }
+
+            chartDataScores.push(percentage);
+            chartLabels.push(`পরীক্ষা ${chartDataScores.length}`);
+
+            updateHomeTrialBanner();
+            switchSection('recent-result-section');
+        }
+
+        function renderLeaderboard() {
+            leaderboardData.sort((a, b) => b.totalScore - a.totalScore);
+
+            const container = document.getElementById('leaderboard-list-container');
+            container.innerHTML = '';
+
+            leaderboardData.forEach((user, idx) => {
+                const div = document.createElement('div');
+                div.className = 'leaderboard-item';
+                div.style.display = 'flex';
+                div.style.justifyContent = 'space-between';
+                div.style.alignItems = 'center';
+                div.style.padding = '10px 0';
+                div.style.borderBottom = '1px solid #f1f5f9';
+                div.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span style="font-weight:bold; color:#4f46e5; width:20px;">#${idx + 1}</span>
+                        <div>
+                            <span style="font-weight:600; font-size:13px;">${user.name}</span>
+                            ${user.isPaid ? '<span style="font-size:9px; background:#fef3c7; color:#d97706; padding:1px 4px; border-radius:4px; margin-left:4px;">PRO</span>' : ''}
+                        </div>
+                    </div>
+                    <div style="text-align:right;">
+                        <span style="font-weight:bold; color:#16a34a; font-size:13px;">${user.totalScore} নম্বর</span>
+                        <span style="font-size:10px; color:#64748b; display:block;">(${user.percentage}%)</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addNewQuestionByAdmin() {
+            const subject = document.getElementById('admin-q-subject').value;
+            const q = document.getElementById('admin-q-text').value;
+            const o0 = document.getElementById('admin-opt-0').value;
+            const o1 = document.getElementById('admin-opt-1').value;
+            const o2 = document.getElementById('admin-opt-2').value;
+            const o3 = document.getElementById('admin-opt-3').value;
+            const ans = parseInt(document.getElementById('admin-correct-ans').value);
+
+            if(!q || !o0 || !o1 || !o2 || !o3) {
+                alert("দয়া করে সকল তথ্য পূরণ করুন!");
+                return;
+            }
+
+            questions.push({
+                subject: subject,
+                q: q,
+                options: [o0, o1, o2, o3],
+                ans: ans
+            });
+
+            alert("নির্বাচিত বিষয়ের প্রশ্নটি সফলভাবে যোগ করা হয়েছে!");
+            document.getElementById('admin-q-text').value = '';
+            document.getElementById('admin-opt-0').value = '';
+            document.getElementById('admin-opt-1').value = '';
+            document.getElementById('admin-opt-2').value = '';
+            document.getElementById('admin-opt-3').value = '';
+
+            renderAdminQuestionList();
+        }
+
+        function renderAdminQuestionList() {
+            const container = document.getElementById('admin-question-delete-list');
+            container.innerHTML = '';
+
+            questions.forEach((qObj, idx) => {
+                const div = document.createElement('div');
+                div.style.background = 'rgba(255,255,255,0.05)';
+                div.style.padding = '8px';
+                div.style.borderRadius = '6px';
+                div.style.marginBottom = '6px';
+                div.style.display = 'flex';
+                div.style.justifyContent = 'space-between';
+                div.style.alignItems = 'center';
+                div.innerHTML = `
+                    <div>
+                        <span style="font-size:9px; background:#4f46e5; color:white; padding:1px 5px; border-radius:4px; font-weight:bold;">${qObj.subject.toUpperCase()}</span>
+                        <span style="font-size:11px; color:#cbd5e1; margin-left:5px;">${idx + 1}. ${qObj.q}</span>
+                    </div>
+                    <button class="btn-delete" onclick="deleteQuestionByAdmin(${idx})">ডিলিট</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function deleteQuestionByAdmin(idx) {
+            if(confirm("আপনি কি নিশ্চিতভাবে এই প্রশ্নটি মুছে ফেলতে চান?")) {
+                questions.splice(idx, 1);
+                renderAdminQuestionList();
+            }
+        }
+
+        function renderAdminPendingTable() {
+            const tbody = document.getElementById('admin-pending-table-body');
+            tbody.innerHTML = '';
+
+            if(pendingPayments.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8;">কোনো পেন্ডিং পেমেন্ট রিকোয়েস্ট নেই</td></tr>`;
+                return;
+            }
+
+            pendingPayments.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.email}</td>
+                    <td>${item.pack}</td>
+                    <td style="color:#fbbf24; font-weight:bold;">${item.trxId}</td>
+                    <td>
+                        <button class="btn-approve" onclick="approvePendingPayment(${idx})">Approve & Paid</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function approvePendingPayment(idx) {
+            const approvedReq = pendingPayments[idx];
+            
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+
+            const expireDateObj = new Date();
+            expireDateObj.setMonth(today.getMonth() + (approvedReq.months || 2));
+            const expireStr = expireDateObj.toISOString().split('T')[0];
+
+            let userObj = leaderboardData.find(u => u.email === approvedReq.email);
+            if(userObj) {
+                userObj.isPaid = true;
+                userObj.paidDate = todayStr;
+                userObj.expireDate = expireStr;
+            } else {
+                leaderboardData.push({
+                    name: approvedReq.name,
+                    email: approvedReq.email,
+                    pass: approvedReq.pass,
+                    isPaid: true,
+                    totalScore: 0,
+                    percentage: 0,
+                    examCount: 0,
+                    paidDate: todayStr,
+                    expireDate: expireStr
+                });
+            }
+
+            alert(`${approvedReq.name} এর পেমেন্ট Approve করা হয়েছে!\nপেমেন্ট তারিখ: ${todayStr}\nমেয়াদ শেষ হবে: ${expireStr}`);
+            pendingPayments.splice(idx, 1);
+            
+            renderAdminPendingTable();
+            renderAdminUserTable();
+            updateHomeTrialBanner();
+        }
+
+        function renderAdminUserTable() {
+            const totalUsers = leaderboardData.length;
+            const paidUsers = leaderboardData.filter(u => u.isPaid).length;
+            const freeUsers = totalUsers - paidUsers;
+
+            document.getElementById('stat-total-users').innerText = totalUsers;
+            document.getElementById('stat-free-users').innerText = freeUsers;
+            document.getElementById('stat-paid-users').innerText = paidUsers;
+
+            const tbody = document.getElementById('admin-user-table-body');
+            tbody.innerHTML = '';
+
+            leaderboardData.forEach((user, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${user.name}</td>
+                    <td>
+                        <span class="${user.isPaid ? 'badge-paid' : 'badge-free'}">
+                            ${user.isPaid ? 'PAID' : 'FREE'}
+                        </span>
+                    </td>
+                    <td style="color:#60a5fa;">${user.paidDate || 'N/A'}</td>
+                    <td style="color:#4ade80; font-weight:bold;">${user.expireDate || 'N/A'}</td>
+                    <td>
+                        ${!user.isPaid ? `<button class="btn-approve" onclick="toggleSubscriptionStatus(${idx})">Approve</button>` : `<button style="background:#ef4444; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:9px; cursor:pointer;" onclick="toggleSubscriptionStatus(${idx})">Revoke</button>`}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleSubscriptionStatus(idx) {
+            leaderboardData[idx].isPaid = !leaderboardData[idx].isPaid;
+            if(leaderboardData[idx].isPaid) {
+                const today = new Date();
+                const expire = new Date();
+                expire.setMonth(today.getMonth() + 2);
+                leaderboardData[idx].paidDate = today.toISOString().split('T')[0];
+                leaderboardData[idx].expireDate = expire.toISOString().split('T')[0];
+            } else {
+                leaderboardData[idx].paidDate = "N/A";
+                leaderboardData[idx].expireDate = "N/A";
+            }
+            renderAdminUserTable();
+            updateHomeTrialBanner();
+        }
+
+        function loadSubscriptionView() {
+            const myUser = leaderboardData.find(u => u.email === "abs@exam.com");
+            const subArea = document.getElementById('subscription-area');
+
+            if (myUser && myUser.isPaid) {
+                subArea.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #1e1b4b, #312e81); color: white; padding: 15px; border-radius: 14px; margin-top: 15px; border: 1px solid #6366f1;">
+                        <h4 style="color:#fbbf24; font-size:14px;"><i class="fa-solid fa-crown"></i> প্রিমিয়াম মেম্বারশিপ এরিয়া</h4>
+                        <p style="font-size:11px; color:#cbd5e1; margin-bottom:8px;">পূর্বে যেসব প্রশ্নে ভুল হয়েছিল সেগুলোর ইতিহাস ও সঠিক উত্তর:</p>
+                        <div style="background: #ffffff1a; padding: 8px; border-radius: 8px; font-size: 11px;">
+                            <strong>১. HTML মূলত কী ধরণের ভাষা?</strong><br>
+                            ❌ আপনার ভুল উত্তর: Programming Language<br>
+                            ✅ সঠিক উত্তর: Markup Language
+                        </div>
+                    </div>
+                `;
+            } else {
+                subArea.innerHTML = `
+                    <div style="background:#f1f5f9; padding:12px; border-radius:12px; text-align:center; border:1px dashed #cbd5e1;">
+                        <h4 style="color:#dc2626; font-size:13px;">🔒 প্রিমিয়াম ফিচার লক করা আছে</h4>
+                        <p style="font-size:11px; color:#64748b; margin-top:3px;">পূর্বের ভুল প্রশ্নগুলোর ব্যাখ্যা দেখতে এডমিনের কাছ থেকে Approve নিন বা সাবস্ক্রিপশন কিনুন।</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderChart() {
+            const totalExams = chartDataScores.length;
+            const avgScore = Math.round(chartDataScores.reduce((a, b) => a + b, 0) / totalExams);
+
+            document.getElementById('total-exams-count').innerText = totalExams + " টি";
+            document.getElementById('avg-score-val').innerText = avgScore + "%";
+
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (myChartInstance) {
+                myChartInstance.destroy();
+            }
+
+            myChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'স্কোর (%)',
+                        data: chartDataScores,
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, max: 100 }
+                    }
+                }
+            });
+        }
+
+        window.onload = function() {
+            updateHomeTrialBanner();
+        };
+    </script>
+</body>
+</html>
