@@ -311,7 +311,6 @@
             margin-bottom: 12px;
         }
 
-        /* Exam Options Styling */
         .option-btn {
             background: #06081a;
             color: white;
@@ -425,7 +424,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <div>
                         <h3 style="color:#fbbf24; font-size:16px;"><i class="fa-solid fa-crown"></i> এডমিন ড্যাশবোর্ড</h3>
-                        <p style="font-size: 10px; color: #94a3b8;">Abs Exam Center Management</p>
+                        <p id="admin-role-title" style="font-size: 10px; color: #94a3b8;">Abs Exam Center Management</p>
                     </div>
                     <span style="background: #991b1b; color: white; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">ADMIN</span>
                 </div>
@@ -434,11 +433,11 @@
                 <div class="admin-stats-grid">
                     <div class="stat-box">
                         <span>টোটাল ইউজার</span>
-                        <h3 id="stat-total-users">4</h3>
+                        <h3 id="stat-total-users">0</h3>
                     </div>
                     <div class="stat-box">
                         <span>ফ্রি স্টুডেন্ট</span>
-                        <h3 id="stat-free-users">4</h3>
+                        <h3 id="stat-free-users">0</h3>
                     </div>
                     <div class="stat-box">
                         <span>পেইড মেম্বার</span>
@@ -448,6 +447,8 @@
 
                 <div class="admin-nav-tabs">
                     <button class="admin-nav-btn active" onclick="switchAdminTab('adm-tab-users', this)">👥 ইউজার লিস্ট</button>
+                    <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-courses', this)">📖 কোর্স ম্যানেজমেন্ট</button>
+                    <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-packages', this)">📦 প্যাকেজ</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-flashcard', this)">⚡ ফ্ল্যাশকার্ড</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-live', this)">🔴 লাইভ প্রশ্ন</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-general', this)">📝 সাধারণ প্রশ্ন</button>
@@ -455,16 +456,18 @@
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-bank', this)">📚 প্রশ্নব্যাংক</button>
                 </div>
 
-                <!-- ইউজার লিস্ট ট্যাব (ফ্রি/পেইড ও তারিখ কন্ট্রোল) -->
+                <!-- ইউজার লিস্ট ট্যাব (পাসওয়ার্ড সহ ও মেইন এডমিন হাইড) -->
                 <div id="adm-tab-users" class="adm-tab-content">
-                    <h4 style="font-size:12px; color:#38bdf8; margin-bottom:8px;">ইউজার সাবস্ক্রিপশন ও পেমেন্ট ম্যানেজমেন্ট:</h4>
+                    <h4 style="font-size:12px; color:#38bdf8; margin-bottom:8px;">ইউজার সাবস্ক্রিপশন ও তথ্য ম্যানেজমেন্ট:</h4>
                     <div style="overflow-x:auto;">
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>নাম ও মোবাইল</th>
+                                    <th>নাম ও ফোন</th>
+                                    <th>ইমেইল</th>
+                                    <th>পাসওয়ার্ড</th>
                                     <th>স্ট্যাটাস</th>
-                                    <th>পেইড তারিখ</th>
+                                    <th>পেইড ও শেষ তারিখ</th>
                                     <th>TrxID</th>
                                     <th>অ্যাকশন</th>
                                 </tr>
@@ -474,31 +477,65 @@
                     </div>
                 </div>
 
+                <!-- 📖 কোর্স ম্যানেজমেন্ট ট্যাব -->
+                <div id="adm-tab-courses" class="adm-tab-content" style="display:none;">
+                    <div class="content-box">
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📖 নতুন কোর্স যোগ করুন</h4>
+                        <label class="input-label">কোর্সের নাম:</label>
+                        <input type="text" id="new-course-name" class="auth-input" placeholder="যেমন: এইচএসসি ২০২৬ ফুল কোর্স">
+                        <label class="input-label">কোর্সের বিবরণ:</label>
+                        <input type="text" id="new-course-desc" class="auth-input" placeholder="যেমন: সকল বিষয়ের ওপর লাইভ ক্লাস">
+                        <button class="btn-green" onclick="addNewCourse()">কোর্স যোগ করুন</button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead><tr><th>কোর্সের নাম</th><th>বিবরণ</th><th>অ্যাকশন</th></tr></thead>
+                            <tbody id="admin-course-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 📦 প্যাকেজ ম্যানেজমেন্ট ট্যাব -->
+                <div id="adm-tab-packages" class="adm-tab-content" style="display:none;">
+                    <div class="content-box">
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📦 নতুন প্যাকেজ যোগ করুন</h4>
+                        <label class="input-label">প্যাকেজের নাম:</label>
+                        <input type="text" id="new-pkg-name" class="auth-input" placeholder="যেমন: ক্র্যাশ কোর্স প্যাক">
+                        <label class="input-label">মূল্য ও সময়সীমা:</label>
+                        <input type="text" id="new-pkg-price" class="auth-input" placeholder="যেমন: ১৯০ টাকা (২ মাস)">
+                        <button class="btn-green" onclick="addNewPackage()">প্যাকেজ যোগ করুন</button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead><tr><th>প্যাকেজের নাম</th><th>মূল্য ও মেয়াদ</th><th>অ্যাকশন</th></tr></thead>
+                            <tbody id="admin-package-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <!-- ⚡ ফ্ল্যাশকার্ড যোগ করার বক্স -->
                 <div id="adm-tab-flashcard" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">⚡ নতুন ফ্ল্যাশকার্ড যোগ করুন</h4>
                         <label class="input-label">বিষয় নির্বাচন:</label>
-                        <select id="fc-subject" class="select-input">
-                            <option value="আইসিটি">আইসিটি (ICT)</option>
-                            <option value="পদার্থবিজ্ঞান">পদার্থবিজ্ঞান</option>
-                            <option value="রসায়ন">রসায়ন</option>
-                            <option value="জীববিজ্ঞান">জীববিজ্ঞান</option>
+                        <select id="fc-subject" class="select-input" onchange="updateChapters('fc-subject', 'fc-chapter')">
+                            <option value="বাংলা">বাংলা</option>
+                            <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                            <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                            <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                            <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                            <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                            <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                            <option value="আইসিটি">আইসিটি</option>
                         </select>
-
                         <label class="input-label">অধ্যায় নির্বাচন:</label>
-                        <select id="fc-chapter" class="select-input">
-                            <option value="১ম অধ্যায়">১ম অধ্যায়</option>
-                            <option value="২য় অধ্যায়">২য় অধ্যায়</option>
-                            <option value="৩য় অধ্যায়">৩য় অধ্যায়</option>
-                            <option value="৪র্থ অধ্যায়">৪র্থ অধ্যায়</option>
-                        </select>
-
-                        <label class="input-label">প্রশ্ন / টপিক:</label>
+                        <select id="fc-chapter" class="select-input"></select>
+                        <label class="input-label">টপিক / প্রশ্ন:</label>
                         <input type="text" id="fc-title" class="auth-input" placeholder="ফ্ল্যাশকার্ডের মূল বিষয়">
                         <label class="input-label">ব্যাখ্যা / উত্তর:</label>
                         <textarea id="fc-desc" class="auth-input" placeholder="বিস্তারিত ব্যাখ্যা লিখুন" style="height:60px;"></textarea>
-
                         <button class="btn-green" onclick="saveAdminContent('ফ্ল্যাশকার্ড')">ফ্ল্যাশকার্ড সেভ করুন</button>
                     </div>
                 </div>
@@ -508,15 +545,20 @@
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">🔴 লাইভ পরীক্ষা প্রশ্ন যোগ করুন</h4>
                         <label class="input-label">বিষয় নির্বাচন:</label>
-                        <select id="live-subject" class="select-input">
-                            <option value="আইসিটি">আইসিটি (ICT)</option>
-                            <option value="পদার্থবিজ্ঞান">পদার্থবিজ্ঞান</option>
+                        <select id="live-subject" class="select-input" onchange="updateChapters('live-subject', 'live-chapter')">
+                            <option value="বাংলা">বাংলা</option>
+                            <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                            <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                            <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                            <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                            <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                            <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                            <option value="আইসিটি">আইসিটি</option>
                         </select>
                         <label class="input-label">অধ্যায় নির্বাচন:</label>
-                        <select id="live-chapter" class="select-input">
-                            <option value="১ম অধ্যায়">১ম অধ্যায়</option>
-                            <option value="২য় অধ্যায়">২য় অধ্যায়</option>
-                        </select>
+                        <select id="live-chapter" class="select-input"></select>
                         <label class="input-label">প্রশ্ন:</label>
                         <input type="text" id="live-q" class="auth-input" placeholder="প্রশ্ন লিখুন">
                         <button class="btn-green" onclick="saveAdminContent('লাইভ প্রশ্ন')">লাইভ প্রশ্ন সেভ করুন</button>
@@ -528,14 +570,20 @@
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📝 সাধারণ প্রশ্ন (মডেল টেস্ট) যোগ করুন</h4>
                         <label class="input-label">বিষয় নির্বাচন:</label>
-                        <select id="gen-subject" class="select-input">
-                            <option value="আইসিটি">আইসিটি</option>
+                        <select id="gen-subject" class="select-input" onchange="updateChapters('gen-subject', 'gen-chapter')">
                             <option value="বাংলা">বাংলা</option>
+                            <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                            <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                            <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                            <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                            <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                            <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                            <option value="আইসিটি">আইসিটি</option>
                         </select>
                         <label class="input-label">অধ্যায়:</label>
-                        <select id="gen-chapter" class="select-input">
-                            <option value="পূর্ণাঙ্গ সিলেবাস">পূর্ণাঙ্গ সিলেবাস</option>
-                        </select>
+                        <select id="gen-chapter" class="select-input"></select>
                         <label class="input-label">প্রশ্ন:</label>
                         <input type="text" id="gen-q" class="auth-input" placeholder="মডেল টেস্ট প্রশ্ন">
                         <button class="btn-green" onclick="saveAdminContent('সাধারণ প্রশ্ন')">প্রশ্ন সেভ করুন</button>
@@ -547,9 +595,20 @@
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">💡 সাজেশন যোগ করুন</h4>
                         <label class="input-label">বিষয়:</label>
-                        <select id="sug-subject" class="select-input"><option value="আইসিটি">আইসিটি</option></select>
+                        <select id="sug-subject" class="select-input" onchange="updateChapters('sug-subject', 'sug-chapter')">
+                            <option value="বাংলা">বাংলা</option>
+                            <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                            <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                            <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                            <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                            <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                            <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                            <option value="আইসিটি">আইসিটি</option>
+                        </select>
                         <label class="input-label">অধ্যায়:</label>
-                        <select id="sug-chapter" class="select-input"><option value="গুরুত্বপূর্ণ টপিক">গুরুত্বপূর্ণ টপিক</option></select>
+                        <select id="sug-chapter" class="select-input"></select>
                         <label class="input-label">সাজেশনের বিবরণ:</label>
                         <textarea id="sug-desc" class="auth-input" placeholder="সাজেশন লিখুন"></textarea>
                         <button class="btn-green" onclick="saveAdminContent('সাজেশন')">সাজেশন সেভ করুন</button>
@@ -561,9 +620,20 @@
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📚 প্রশ্নব্যাংক প্রশ্ন যোগ করুন</h4>
                         <label class="input-label">বিষয়:</label>
-                        <select id="bank-subject" class="select-input"><option value="আইসিটি">আইসিটি</option></select>
+                        <select id="bank-subject" class="select-input" onchange="updateChapters('bank-subject', 'bank-chapter')">
+                            <option value="বাংলা">বাংলা</option>
+                            <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                            <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                            <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                            <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                            <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                            <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                            <option value="আইসিটি">আইসিটি</option>
+                        </select>
                         <label class="input-label">অধ্যায়:</label>
-                        <select id="bank-chapter" class="select-input"><option value="বোর্ড প্রশ্ন">বোর্ড প্রশ্ন</option></select>
+                        <select id="bank-chapter" class="select-input"></select>
                         <label class="input-label">প্রশ্ন:</label>
                         <input type="text" id="bank-q" class="auth-input" placeholder="প্রশ্নব্যাংকের প্রশ্ন">
                         <button class="btn-green" onclick="saveAdminContent('প্রশ্নব্যাংক')">প্রশ্নব্যাংকে সেভ করুন</button>
@@ -597,12 +667,17 @@
             <div class="grid-container">
                 <div class="grid-card" onclick="switchSection('dashboard-section')">
                     <div class="icon-box c-yellow"><i class="fa-solid fa-chart-line"></i></div>
-                    <div class="card-info"><h4>ড্যাশবোর্ড</h4><p>পারফরম্যান্স ও ভুল বিশ্লেষণ</p></div>
+                    <div class="card-info"><h4>ড্যাশবোর্ড</h4><p>পারফরম্যান্স ও বিশ্লেষণ</p></div>
                 </div>
 
                 <div class="grid-card" onclick="switchSection('leaderboard-section')">
                     <div class="icon-box c-green"><i class="fa-solid fa-trophy"></i></div>
-                    <div class="card-info"><h4>লিডারবোর্ড</h4><p>লাইভ ট্রায়াল-টেস্ট র‍্যাংকিং</p></div>
+                    <div class="card-info"><h4>লিডারবোর্ড</h4><p>লাইভ টেস্ট র‍্যাংকিং</p></div>
+                </div>
+
+                <div class="grid-card" onclick="switchSection('courses-section')">
+                    <div class="icon-box c-blue"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="card-info"><h4>কোর্সসমূহ</h4><p>আমাদের প্রিমিয়াম কোর্স</p></div>
                 </div>
 
                 <div class="grid-card" onclick="switchSection('subscription-payment-section')">
@@ -611,37 +686,31 @@
                 </div>
 
                 <div class="grid-card" onclick="startExamSession()">
-                    <div class="icon-box c-blue"><i class="fa-solid fa-pen-to-square"></i></div>
-                    <div class="card-info"><h4>মডেল টেস্ট</h4><p>আসন্ন পরীক্ষার প্রস্তুতি</p></div>
+                    <div class="icon-box c-orange"><i class="fa-solid fa-pen-to-square"></i></div>
+                    <div class="card-info"><h4>মডেল টেস্ট</h4><p>পরীক্ষার প্রস্তুতি</p></div>
                 </div>
 
-                <div class="grid-card" onclick="alert('প্রশ্নব্যাংক মডিউল থেকে প্রশ্ন অনুশীলন করুন!')">
-                    <div class="icon-box c-orange"><i class="fa-solid fa-book"></i></div>
+                <div class="grid-card" onclick="alert('প্রশ্নব্যাংক মডিউল সক্রিয় আছে!')">
+                    <div class="icon-box c-purple"><i class="fa-solid fa-book"></i></div>
                     <div class="card-info"><h4>প্রশ্নব্যাংক</h4><p>অধ্যায়ভিত্তিক অনুশীলন</p></div>
-                </div>
-
-                <div class="grid-card" onclick="alert('লাইভ এক্সাম সেকশন সক্রিয় আছে!')">
-                    <div class="icon-box c-red"><i class="fa-solid fa-tower-broadcast"></i></div>
-                    <div class="card-info"><h4>লাইভ এক্সাম</h4><p>সবার সাথে প্রতিযোগিতা</p></div>
-                </div>
-
-                <div class="grid-card" onclick="alert('ফ্ল্যাশকার্ড মডিউল লোড হয়েছে!')">
-                    <div class="icon-box c-purple"><i class="fa-solid fa-bolt"></i></div>
-                    <div class="card-info"><h4>ফ্ল্যাশকার্ড</h4><p>গল্পে ভুলে যাওয়া বস্তু</p></div>
-                </div>
-
-                <div class="grid-card" onclick="alert('সাজেশন মডিউল চেক করুন!')">
-                    <div class="icon-box c-yellow"><i class="fa-solid fa-lightbulb"></i></div>
-                    <div class="card-info"><h4>সাজেশন</h4><p>কম কষ্টে ভালো ফল</p></div>
                 </div>
             </div>
         </div>
 
-        <!-- 🌟 ৪. লাইভ এক্সাম স্ক্রিন -->
+        <!-- 🌟 ৪. কোর্স পেজ -->
+        <div id="courses-section" class="page-section">
+            <div class="inner-page-box">
+                <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-graduation-cap"></i> আমাদের কোর্সসমূহ</h3>
+                <div id="student-courses-list"></div>
+                <button class="btn-green" style="background:#334155; margin-top:15px;" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- 🌟 ৫. লাইভ এক্সাম স্ক্রিন -->
         <div id="exam-screen-section" class="page-section">
             <div class="inner-page-box">
                 <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-                    <span style="font-size:12px; color:#fbbf24;" id="exam-progress-txt">প্রশ্ন ১/৫</span>
+                    <span style="font-size:12px; color:#fbbf24;" id="exam-progress-txt">প্রশ্ন ১/২</span>
                     <span style="font-size:12px; color:#ef4444;" id="exam-timer-txt">সময়: ৬০ সে.</span>
                 </div>
                 <h3 id="question-title-box" style="font-size:15px; margin-bottom:15px; color:#f8fafc;">প্রশ্ন লোড হচ্ছে...</h3>
@@ -649,19 +718,19 @@
             </div>
         </div>
 
-        <!-- 🌟 ৫. ইনস্ট্যান্ট রেজাল্ট -->
+        <!-- 🌟 ৬. ইনস্ট্যান্ট রেজাল্ট -->
         <div id="result-screen-section" class="page-section">
             <div class="inner-page-box" style="text-align:center;">
                 <h2 style="color:#10b981; margin-bottom:8px;"><i class="fa-solid fa-award"></i> পরীক্ষার ফলাফল</h2>
                 <div style="background:#06081a; padding:15px; border-radius:12px; margin:15px 0;">
-                    <h3 style="font-size:24px; color:#fbbf24;" id="res-score-box">নম্বর: ৪/৫</h3>
-                    <p style="font-size:16px; color:#38bdf8; margin-top:5px;" id="res-percent-box">পার্সেন্টেজ: ৮০%</p>
+                    <h3 style="font-size:24px; color:#fbbf24;" id="res-score-box">নম্বর: ২/২</h3>
+                    <p style="font-size:16px; color:#38bdf8; margin-top:5px;" id="res-percent-box">পার্সেন্টেজ: ১০০%</p>
                 </div>
                 <button class="btn-green" onclick="switchSection('dashboard-section')">ড্যাশবোর্ডে ফলাফল দেখুন</button>
             </div>
         </div>
 
-        <!-- 🌟 ৬. স্টুডেন্ট ড্যাশবোর্ড -->
+        <!-- 🌟 ৭. স্টুডেন্ট ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-chart-pie"></i> পারফরম্যান্স ড্যাশবোর্ড</h3>
@@ -672,7 +741,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ৭. লিডারবোর্ড -->
+        <!-- 🌟 ৮. লিডারবোর্ড -->
         <div id="leaderboard-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#10b981; margin-bottom:12px;"><i class="fa-solid fa-trophy"></i> লাইভ লিডারবোর্ড র‍্যাংকিং</h3>
@@ -693,19 +762,24 @@
             </div>
         </div>
 
-        <!-- 🌟 ৮. সাবস্ক্রিপশন ও পেমেন্ট ফর্ম -->
+        <!-- 🌟 ৯. সাবস্ক্রিপশন ও পেমেন্ট ফর্ম -->
         <div id="subscription-payment-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:10px;">👑 প্রিমিয়াম সাবস্ক্রিপশন</h3>
                 <p style="font-size:12px; color:#cbd5e1; margin-bottom:12px;">বিকাশ/নগদ সেন্ড মানি করুন: <strong style="color:#10b981;">01700000000</strong></p>
 
                 <div style="text-align:left;">
+                    <label class="input-label">প্যাকেজ সিলেক্ট করুন</label>
+                    <select id="pay-package" class="select-input"></select>
+
                     <label class="input-label">আপনার নাম</label>
                     <input type="text" id="pay-name" class="auth-input" placeholder="আপনার নাম">
                     <label class="input-label">মোবাইল নম্বর</label>
                     <input type="text" id="pay-phone" class="auth-input" placeholder="মোবাইল নম্বর">
                     <label class="input-label">ইমেইল</label>
                     <input type="text" id="pay-email" class="auth-input" placeholder="ইমেইল">
+                    <label class="input-label">পাসওয়ার্ড</label>
+                    <input type="password" id="pay-pass" class="auth-input" placeholder="পাসওয়ার্ড">
                     <label class="input-label">ট্রানজেকশন আইডি (TrxID)</label>
                     <input type="text" id="pay-trxid" class="auth-input" placeholder="TrxID দিন">
                 </div>
@@ -714,7 +788,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ৯. প্রোফাইল পেজ -->
+        <!-- 🌟 ১০. প্রোফাইল পেজ -->
         <div id="profile-section" class="page-section">
             <div class="inner-page-box">
                 <h3>👤 অ্যাকাউন্ট প্রোফাইল</h3>
@@ -735,6 +809,10 @@
             <i class="fa-solid fa-house" style="font-size:18px;"></i>
             <span>হোম</span>
         </a>
+        <a class="nav-link" id="nav-courses" onclick="switchSection('courses-section')">
+            <i class="fa-solid fa-graduation-cap" style="font-size:18px;"></i>
+            <span>কোর্স</span>
+        </a>
         <a class="nav-link" id="nav-dash" onclick="switchSection('dashboard-section')">
             <i class="fa-solid fa-chart-pie" style="font-size:18px;"></i>
             <span>ড্যাশবোর্ড</span>
@@ -751,7 +829,7 @@
 
     <script>
         let currentUser = null;
-        let freeExamCount = 40; // ৪০টি ফ্রি এক্সাম লিমিট
+        let freeExamCount = 40;
 
         let examQuestions = [
             { q: "HTML-এর পূর্ণরূপ কী?", options: ["Hyper Text Markup Language", "High Text Machine Language", "Hyper Tabular Markup", "Home Tool Markup"], correct: 0 },
@@ -765,11 +843,33 @@
             { name: "মাসফাকুর রহমান", score: "২/২", percent: "১০০%" }
         ];
 
-        // ইউজার ও পেমেন্ট ম্যানেজমেন্ট ডাটা
+        let coursesList = [
+            { name: "এইচএসসি আইসিটি ফুল কোর্স", desc: "অধ্যায়ভিত্তিক লাইভ ক্লাস ও পরীক্ষা" },
+            { name: "পদার্থবিজ্ঞান ও রসায়ন ক্র্যাশ কোর্স", desc: "শেষ মুহূর্তের সেরা প্রস্তুতি" }
+        ];
+
+        let packagesList = [
+            { name: "মাসিক প্রিমিয়াম প্যাক", price: "৯৯ টাকা (১ মাস)" },
+            { name: "এইচএসসি ফুল কোর্স প্যাক", price: "৪৯৯ টাকা (৬ মাস)" }
+        ];
+
+        const bookChapters = {
+            "বাংলা": ["১ম অধ্যায়: গদ্য", "২য় অধ্যায়: কবিতা", "৩য় অধ্যায়: ব্যাকরণ"],
+            "উচ্চতর গণিত ১ম পত্র": ["অধ্যায় ১: ম্যাট্রিক্স ও নির্ণায়ক", "অধ্যায় ২: ভেক্টর", "অধ্যায় ৩: সরলরেখা"],
+            "উচ্চতর গণিত ২য় পত্র": ["অধ্যায় ১: বাস্তব সংখ্যা", "অধ্যায় ৩: জটিল সংখ্যা", "অধ্যায় ৪: বহুপদী"],
+            "রসায়ন ১ম পত্র": ["অধ্যায় ১: ল্যাবরেটরি নিরাপদ ব্যবহার", "অধ্যায় ২: গুণগত রসায়ন"],
+            "রসায়ন ২য় পত্র": ["অধ্যায় ১: পরিবেশ রসায়ন", "অধ্যায় ২: জৈব রসায়ন"],
+            "পদার্থবিজ্ঞান ১ম পত্র": ["অধ্যায় ১: ভৌত জগত", "অধ্যায় ২: ভেক্টর", "অধ্যায় ৩: গতিবিদ্যা"],
+            "পদার্থবিজ্ঞান ২য় পত্র": ["অধ্যায় ১: তাপগতিবিদ্যা", "অধ্যায় ২: স্থির তড়িৎ"],
+            "জীববিজ্ঞান ১ম পত্র": ["অধ্যায় ১: কোষ ও গঠন", "অধ্যায় ২: কোষ বিভাজন"],
+            "জীববিজ্ঞান ২য় পত্র": ["অধ্যায় ১: প্রাণীর বিভিন্নতা", "অধ্যায় ২: প্রাণীর পরিচিতি"],
+            "আইসিটি": ["অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত", "অধ্যায় ২: নেটওয়ার্কিং", "অধ্যায় ৩: সংখ্যা পদ্ধতি", "অধ্যায় ৪: HTML", "অধ্যায় ৫: প্রোগ্রামিং", "অধ্যায় ৬: ডেটাবেজ"]
+        };
+
+        // ইউজার লিস্টে পাসওয়ার্ড সহ ডাটা (মেইন এডমিন Abs Siddik এখানে লুকানো থাকবে)
         let usersList = [
-            { name: "মাসফাকুর রহমান", phone: "01711111111", email: "mushfiq@gmail.com", isPaid: false, paidDate: "-", trx: "-" },
-            { name: "Abs Siddik", phone: "01822222222", email: "abs@exam.com", isPaid: true, paidDate: "2026-04-10", trx: "TRX998877" },
-            { name: "রাফসান আহমেদ", phone: "01933333333", email: "rafsan@gmail.com", isPaid: false, paidDate: "-", trx: "-" }
+            { name: "মাসফাকুর রহমান", phone: "01711111111", email: "mushfiq@gmail.com", pass: "123456", package: "মাসিক প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" },
+            { name: "রাফসান আহমেদ", phone: "01933333333", email: "rafsan@gmail.com", pass: "pass789", package: "ফুল কোর্স", isPaid: true, paidDate: "2026-04-10", expireDate: "2026-05-10", trx: "TRX998877" }
         ];
 
         function toggleAuthForm(type) {
@@ -788,6 +888,7 @@
 
         function handleCustomAuth() {
             const inputVal = document.getElementById('auth-input-field').value.trim().toLowerCase();
+            const passVal = document.getElementById('auth-pass-field').value.trim();
             if(!inputVal) { alert("দয়া করে ইমেইল বা মোবাইল দিন!"); return; }
 
             if(inputVal.includes("absiddikrobi1739")) {
@@ -796,6 +897,10 @@
                 currentUser = { name: "মুশফিকুর রহমান", email: "musfiqrahmansubadmin@gmail.com", role: "sub_admin" };
             } else {
                 currentUser = { name: inputVal, email: inputVal, role: "student" };
+                // নতুন কেউ লগইন করলে ইউজার লিস্টে স্বয়ংক্রিয়ভাবে যুক্ত হবে যদি না থাকে
+                if(!usersList.some(u => u.email === inputVal)) {
+                    usersList.push({ name: inputVal, phone: "N/A", email: inputVal, pass: passVal || "******", package: "ফ্রি প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" });
+                }
             }
 
             alert("লগইন সফল হয়েছে!");
@@ -806,10 +911,11 @@
         function handleUserSignUp() {
             const name = document.getElementById('signup-name-field').value.trim();
             const email = document.getElementById('signup-input-field').value.trim();
-            if(!name || !email) { alert("সব তথ্য পূরণ করুন!"); return; }
+            const pass = document.getElementById('signup-pass-field').value.trim();
+            if(!name || !email || !pass) { alert("সব তথ্য পূরণ করুন!"); return; }
 
             currentUser = { name: name, email: email, role: "student" };
-            usersList.push({ name: name, phone: email, email: email, isPaid: false, paidDate: "-", trx: "-" });
+            usersList.push({ name: name, phone: email, email: email, pass: pass, package: "-", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" });
             alert("অ্যাকাউন্ট তৈরি সফল!");
             unlockPlatformUI();
             switchSection('home-section');
@@ -823,11 +929,17 @@
             document.getElementById('banner-user-name').innerText = currentUser.name;
             document.getElementById('prof-name').innerText = currentUser.name;
             document.getElementById('prof-email').innerText = currentUser.email;
-            document.getElementById('prof-role').innerText = (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') ? "এডমিন" : "শিক্ষার্থী";
 
-            if(currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
+            if(currentUser.role === 'main_admin') {
+                document.getElementById('prof-role').innerText = "মেইন এডমিন (Full Control)";
+                document.getElementById('admin-role-title').innerText = "Abs Exam Center - Main Admin Panel";
+                document.getElementById('admin-shortcut-banner').style.display = 'flex';
+            } else if(currentUser.role === 'sub_admin') {
+                document.getElementById('prof-role').innerText = "সাব-এডমিন (Approve Locked)";
+                document.getElementById('admin-role-title').innerText = "Abs Exam Center - Sub Admin Panel";
                 document.getElementById('admin-shortcut-banner').style.display = 'flex';
             } else {
+                document.getElementById('prof-role').innerText = "শিক্ষার্থী";
                 document.getElementById('admin-shortcut-banner').style.display = 'none';
             }
         }
@@ -845,7 +957,18 @@
             if(target) target.classList.add('active');
             window.scrollTo(0, 0);
 
-            if(secId === 'admin-panel-section') renderAdminTable();
+            if(secId === 'admin-panel-section') {
+                renderAdminTable();
+                renderCoursesTable();
+                renderPackagesTable();
+                updateChapters('fc-subject', 'fc-chapter');
+                updateChapters('live-subject', 'live-chapter');
+                updateChapters('gen-subject', 'gen-chapter');
+                updateChapters('sug-subject', 'sug-chapter');
+                updateChapters('bank-subject', 'bank-chapter');
+            }
+            if(secId === 'courses-section') renderStudentCourses();
+            if(secId === 'subscription-payment-section') renderSubscriptionPackages();
             if(secId === 'dashboard-section') renderStudentDashboard();
             if(secId === 'leaderboard-section') renderLeaderboard();
         }
@@ -857,7 +980,111 @@
             document.getElementById(tabId).style.display = 'block';
         }
 
-        // ৪০টি এক্সাম লিমিট চেক
+        function updateChapters(subjectId, chapterId) {
+            const subSelect = document.getElementById(subjectId);
+            const chapSelect = document.getElementById(chapterId);
+            if(!subSelect || !chapSelect) return;
+
+            const selectedSub = subSelect.value;
+            const chapters = bookChapters[selectedSub] || [];
+
+            chapSelect.innerHTML = '';
+            chapters.forEach(ch => {
+                const opt = document.createElement('option');
+                opt.value = ch;
+                opt.innerText = ch;
+                chapSelect.appendChild(opt);
+            });
+        }
+
+        function renderCoursesTable() {
+            const tbody = document.getElementById('admin-course-table');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            coursesList.forEach((c, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${c.name}</strong></td>
+                    <td style="color:#cbd5e1;">${c.desc}</td>
+                    <td><button style="background:#dc2626; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteCourse(${idx})">ডিলিট</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function addNewCourse() {
+            const name = document.getElementById('new-course-name').value.trim();
+            const desc = document.getElementById('new-course-desc').value.trim();
+            if(!name) { alert("কোর্সের নাম দিন!"); return; }
+            coursesList.push({ name, desc });
+            document.getElementById('new-course-name').value = '';
+            document.getElementById('new-course-desc').value = '';
+            renderCoursesTable();
+            alert("কোর্স সফলভাবে যোগ হয়েছে!");
+        }
+
+        function deleteCourse(idx) {
+            coursesList.splice(idx, 1);
+            renderCoursesTable();
+        }
+
+        function renderStudentCourses() {
+            const container = document.getElementById('student-courses-list');
+            container.innerHTML = '';
+            if(coursesList.length === 0) {
+                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">বর্তমানে কোনো কোর্স নেই।</p>';
+                return;
+            }
+            coursesList.forEach(c => {
+                const div = document.createElement('div');
+                div.style.cssText = "background:#06081a; padding:12px; border-radius:10px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.08);";
+                div.innerHTML = `<h4 style="color:#fbbf24; font-size:14px; margin-bottom:4px;">${c.name}</h4><p style="font-size:11px; color:#cbd5e1;">${c.desc}</p>`;
+                container.appendChild(div);
+            });
+        }
+
+        function renderSubscriptionPackages() {
+            const selectBox = document.getElementById('pay-package');
+            selectBox.innerHTML = '';
+            packagesList.forEach(pkg => {
+                const opt = document.createElement('option');
+                opt.value = pkg.name;
+                opt.innerText = `${pkg.name} - ${pkg.price}`;
+                selectBox.appendChild(opt);
+            });
+        }
+
+        function renderPackagesTable() {
+            const tbody = document.getElementById('admin-package-table');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            packagesList.forEach((pkg, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${pkg.name}</strong></td>
+                    <td style="color:#38bdf8;">${pkg.price}</td>
+                    <td><button style="background:#dc2626; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deletePackage(${idx})">ডিলিট</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function addNewPackage() {
+            const name = document.getElementById('new-pkg-name').value.trim();
+            const price = document.getElementById('new-pkg-price').value.trim();
+            if(!name || !price) { alert("সব তথ্য দিন!"); return; }
+            packagesList.push({ name, price });
+            document.getElementById('new-pkg-name').value = '';
+            document.getElementById('new-pkg-price').value = '';
+            renderPackagesTable();
+            alert("প্যাকেজ যোগ হয়েছে!");
+        }
+
+        function deletePackage(idx) {
+            packagesList.splice(idx, 1);
+            renderPackagesTable();
+        }
+
         function startExamSession() {
             if(freeExamCount > 0) {
                 freeExamCount--;
@@ -867,7 +1094,7 @@
                 switchSection('exam-screen-section');
                 loadQuestion();
             } else {
-                alert("আপনার ৪০টি ফ্রি পরীক্ষা শেষ হয়ে গেছে! পরীক্ষা দিতে প্রিমিয়াম সাবস্ক্রিপশন নিন।");
+                alert("আপনার ৪০টি ফ্রি পরীক্ষা শেষ হয়ে গেছে! সাবস্ক্রিপশন নিন।");
                 switchSection('subscription-payment-section');
             }
         }
@@ -960,51 +1187,62 @@
             });
         }
 
-        // এডমিন সেভ ফাংশন (ফ্ল্যাশকার্ড, লাইভ, সাজেশন ইত্যাদি)
         function saveAdminContent(type) {
-            alert(`${type} সফলভাবে সাবজেক্ট ও অধ্যায় অনুযায়ী ডাটাবেজে সংরক্ষণ করা হয়েছে!`);
+            alert(`${type} সফলভাবে নির্দিষ্ট বিষয় ও অধ্যায়ের সাথে ডাটাবেজে সংরক্ষণ করা হয়েছে!`);
         }
 
-        // পেমেন্ট রিকোয়েস্ট সাবমিট (নাম, নম্বর, ইমেইল, TrxID)
         function submitPaymentRequest() {
+            const pkg = document.getElementById('pay-package').value;
             const name = document.getElementById('pay-name').value.trim();
             const phone = document.getElementById('pay-phone').value.trim();
             const email = document.getElementById('pay-email').value.trim();
+            const pass = document.getElementById('pay-pass').value.trim();
             const trxid = document.getElementById('pay-trxid').value.trim();
 
             if(!name || !phone || !trxid) {
-                alert("দয়া করে নাম, নম্বর ও TrxID প্রদান করুন!");
+                alert("দয়া করে নাম, মোবাইল ও TrxID প্রদান করুন!");
                 return;
             }
 
-            usersList.push({ name: name, phone: phone, email: email, isPaid: false, paidDate: "-", trx: trxid });
-            alert("আপনার পেমেন্ট রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে! এডমিন যাচাই করে অ্যাপ্রুভ করলে প্রিমিয়াম প্যাক চালু হবে।");
+            usersList.push({ name: name, phone: phone, email: email, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid });
+            alert("পেমেন্ট রিকোয়েস্ট সাবমিট হয়েছে! মেইন এডমিন যাচাই করে অ্যাপ্রুভ করবে।");
             switchSection('home-section');
         }
 
-        // এডমিন ইউজার টেবিল ও পেইড/ফ্রি কন্ট্রোল
+        // ইউজার লিস্ট রেন্ডার (পাসওয়ার্ড সহ এবং মেইন এডমিন Abs Siddik হাইড রাখা)
         function renderAdminTable() {
             const tbody = document.getElementById('admin-user-table');
+            if(!tbody) return;
             tbody.innerHTML = '';
             
-            let total = usersList.length;
-            let paidCount = usersList.filter(u => u.isPaid).length;
+            // মেইন এডমিন (Abs Siddik) ফিল্টার করে বাদ দেওয়া হয়েছে যাতে লিস্টে দেখা না যায়
+            let filteredUsers = usersList.filter(u => !u.name.toLowerCase().includes("abs siddik"));
+
+            let total = filteredUsers.length;
+            let paidCount = filteredUsers.filter(u => u.isPaid).length;
             let freeCount = total - paidCount;
 
             document.getElementById('stat-total-users').innerText = total;
             document.getElementById('stat-free-users').innerText = freeCount;
             document.getElementById('stat-paid-users').innerText = paidCount;
 
-            usersList.forEach((u, idx) => {
+            let isSubAdmin = (currentUser && currentUser.role === 'sub_admin');
+
+            filteredUsers.forEach((u, idx) => {
+                // মূল অ্যারের আসল ইনডেক্স খুঁজে বের করা
+                let originalIndex = usersList.findIndex(item => item.email === u.email);
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${u.name}<br><small style="color:#94a3b8;">${u.phone}</small></td>
+                    <td>${u.name}<br><small style="color:#94a3b8;">${u.phone} (${u.package})</small></td>
+                    <td style="color:#38bdf8; font-size:10px;">${u.email}</td>
+                    <td><code style="color:#fbbf24;">${u.pass}</code></td>
                     <td><span class="${u.isPaid ? 'badge-paid' : 'badge-free'}">${u.isPaid ? 'PAID' : 'FREE'}</span></td>
-                    <td style="color:#38bdf8; font-size:10px;">${u.paidDate}</td>
+                    <td style="color:#38bdf8; font-size:10px;">শুরু: ${u.paidDate}<br>শেষ: ${u.expireDate}</td>
                     <td><code style="color:#fbbf24;">${u.trx}</code></td>
                     <td>
-                        <button style="background:${u.isPaid ? '#dc2626' : '#16a34a'}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="toggleUserPayment(${idx})">
-                            ${u.isPaid ? 'Revoke' : 'Approve'}
+                        <button style="background:${isSubAdmin ? '#475569' : (u.isPaid ? '#dc2626' : '#16a34a')}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:${isSubAdmin ? 'not-allowed' : 'pointer'};" ${isSubAdmin ? 'disabled title="শুধুমাত্র মেইন এডমিন এপ্রুভ করতে পারবে"' : ''} onclick="toggleUserPayment(${originalIndex})">
+                            ${isSubAdmin ? '🔒 Locked' : (u.isPaid ? 'Revoke' : 'Approve')}
                         </button>
                     </td>
                 `;
@@ -1013,14 +1251,23 @@
         }
 
         function toggleUserPayment(idx) {
+            if(currentUser && currentUser.role === 'sub_admin') {
+                alert("দুঃখিত! সাব-এডমিন পেমেন্ট এপ্রুভ বা রিভোক করতে পারবেন না। এটি শুধুমাত্র মেইন এডমিন করতে পারবেন।");
+                return;
+            }
+
             if(usersList[idx].isPaid) {
                 usersList[idx].isPaid = false;
                 usersList[idx].paidDate = "-";
+                usersList[idx].expireDate = "-";
             } else {
                 usersList[idx].isPaid = true;
-                // বর্তমান তারিখ স্বয়ংক্রিয়ভাবে যুক্ত হবে
-                let today = new Date().toISOString().slice(0, 10);
-                usersList[idx].paidDate = today;
+                let today = new Date();
+                let expiry = new Date();
+                expiry.setMonth(today.getMonth() + 1);
+
+                usersList[idx].paidDate = today.toISOString().slice(0, 10);
+                usersList[idx].expireDate = expiry.toISOString().slice(0, 10);
             }
             renderAdminTable();
         }
