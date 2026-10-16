@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abs Exam Center - Practice Platform</title>
+    <title>Abs Exam Center - HSC Platform</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font -->
@@ -85,7 +85,7 @@
             display: block;
         }
 
-        /* 🌟 1st Page Login/Register Screen Styling */
+        /* 🌟 Login Screen Styling */
         .auth-screen-card {
             background: white;
             border-radius: 20px;
@@ -134,9 +134,8 @@
         .logo-badge {
             background: #181443;
             color: #fbbf24;
-            width: 80px;
-            height: 80px;
-            border-radius: 24px;
+            padding: 15px 20px;
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -418,7 +417,7 @@
     <!-- 🌟 মেইন হেডার -->
     <div class="top-bar">
         <div class="brand-title">
-            <i class="fa-solid fa-graduation-cap"></i> Abs Exam Center
+            🎓 Abs Exam Center
         </div>
         <div class="profile-area" onclick="switchSection('profile-section')">
             <div class="avatar-circle" id="top-avatar">G</div>
@@ -440,8 +439,8 @@
 
                 <div class="brand-logo-box">
                     <div class="logo-badge">
-                        <i class="fa-solid fa-pen-nib" style="font-size:28px;"></i>
-                        <span>চর্চা</span>
+                        <i class="fa-solid fa-graduation-cap" style="font-size:32px; margin-bottom: 5px;"></i>
+                        <span style="font-size: 16px;">🎓 abs exam center</span>
                     </div>
                 </div>
 
@@ -830,113 +829,4 @@
                         <h3 style="font-size:14px; color:#1e293b;">${course.title}</h3>
                         <span style="background:#dcfce7; color:#16a34a; font-weight:bold; font-size:12px; padding:2px 8px; border-radius:8px;">${course.price} ৳</span>
                     </div>
-                    <p style="font-size:11px; color:#64748b; margin-bottom:10px;">${course.desc}</p>
-                    <button class="btn-green" style="padding:8px; font-size:12px;" onclick="alert('কোর্সে এনরোল করার জন্য এডমিনের সাথে যোগাযোগ করুন')">কোর্সটি এনরোল করুন</button>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function addNewCourseByAdmin() {
-            const title = document.getElementById('course-title-input').value.trim();
-            const price = document.getElementById('course-price-input').value.trim();
-            const desc = document.getElementById('course-desc-input').value.trim();
-
-            if(!title || !price) {
-                alert("দয়া করে কোর্সের নাম এবং মূল্য প্রদান করুন!");
-                return;
-            }
-
-            coursesList.push({ title, price, desc });
-            alert("নতুন কোর্সটি সফলভাবে যুক্ত হয়েছে!");
-
-            document.getElementById('course-title-input').value = '';
-            document.getElementById('course-price-input').value = '';
-            document.getElementById('course-desc-input').value = '';
-
-            renderAdminCourseList();
-            renderUserCourses();
-        }
-
-        function renderAdminCourseList() {
-            const container = document.getElementById('admin-course-manage-list');
-            container.innerHTML = '';
-
-            coursesList.forEach((c, idx) => {
-                const div = document.createElement('div');
-                div.style.background = 'rgba(255,255,255,0.05)';
-                div.style.padding = '8px';
-                div.style.borderRadius = '8px';
-                div.style.marginBottom = '6px';
-                div.style.display = 'flex';
-                div.style.justifyContent = 'space-between';
-                div.style.alignItems = 'center';
-                div.innerHTML = `
-                    <div>
-                        <h5 style="font-size:12px; color:#cbd5e1;">${c.title}</h5>
-                        <span style="font-size:10px; color:#fbbf24;">মূল্য: ${c.price} ৳</span>
-                    </div>
-                    <button style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteCourse(${idx})">ডিলিট</button>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function deleteCourse(idx) {
-            if(confirm("আপনি কি কোর্সটি মুছে ফেলতে চান?")) {
-                coursesList.splice(idx, 1);
-                renderAdminCourseList();
-                renderUserCourses();
-            }
-        }
-
-        function renderAdminUserTable() {
-            const tbody = document.getElementById('admin-user-table-body');
-            tbody.innerHTML = '';
-
-            leaderboardData.forEach((user, idx) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${user.name}</td>
-                    <td><span class="${user.isPaid ? 'badge-paid' : 'badge-free'}">${user.isPaid ? 'PAID' : 'FREE'}</span></td>
-                    <td>
-                        ${currentUser.role === 'main_admin' 
-                            ? `<button style="background:#22c55e; border:none; padding:3px 6px; border-radius:4px; font-size:9px; cursor:pointer;" onclick="togglePaid(${idx})">Toggle</button>` 
-                            : `<span style="color:#94a3b8;">🔒 Locked</span>`}
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function togglePaid(idx) {
-            if(currentUser.role === 'main_admin') {
-                leaderboardData[idx].isPaid = !leaderboardData[idx].isPaid;
-                renderAdminUserTable();
-            }
-        }
-
-        function renderLeaderboard() {
-            const container = document.getElementById('leaderboard-list-container');
-            container.innerHTML = '';
-            leaderboardData.forEach((user, idx) => {
-                const div = document.createElement('div');
-                div.style.display = 'flex';
-                div.style.justifyContent = 'space-between';
-                div.style.padding = '8px 0';
-                div.style.borderBottom = '1px solid #f1f5f9';
-                div.innerHTML = `
-                    <span><strong>#${idx+1}</strong> ${user.name}</span>
-                    <span style="color:#16a34a; font-weight:bold;">${user.totalScore} নম্বর</span>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        window.onload = function() {
-            updateUserProfileUI();
-            renderUserCourses();
-        };
-    </script>
-</body>
-</html>
+                    <p style="font-size:11px; color:#64
