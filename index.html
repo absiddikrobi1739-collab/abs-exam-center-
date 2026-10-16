@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abs Exam Center - HSC Platform</title>
+    <title>Abs Exam Center</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font -->
@@ -20,8 +20,8 @@
         }
 
         body {
-            background-color: #f8fafc;
-            color: #333;
+            background-color: #0f172a;
+            color: #f8fafc;
             padding-bottom: 85px;
             min-height: 100vh;
         }
@@ -36,7 +36,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .profile-area {
@@ -82,17 +82,18 @@
         }
 
         .page-section.active {
-            display: block;
+            display: block !important;
         }
 
-        /* 🌟 Login Screen Styling */
+        /* 🌟 Login/Signup Screen Styling */
         .auth-screen-card {
-            background: white;
+            background: #1e293b;
             border-radius: 20px;
             padding: 24px 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             text-align: center;
             margin-top: 10px;
+            border: 1px solid #334155;
         }
 
         .lang-switch {
@@ -102,7 +103,7 @@
         }
 
         .lang-btn-group {
-            background: #f1f5f9;
+            background: #0f172a;
             padding: 3px;
             border-radius: 20px;
             display: inline-flex;
@@ -116,13 +117,12 @@
             font-weight: 700;
             cursor: pointer;
             background: transparent;
-            color: #64748b;
+            color: #94a3b8;
         }
 
         .lang-btn.active {
-            background: white;
-            color: #0f172a;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            background: #334155;
+            color: #ffffff;
         }
 
         .brand-logo-box {
@@ -134,28 +134,48 @@
         .logo-badge {
             background: #181443;
             color: #fbbf24;
-            padding: 15px 20px;
+            padding: 15px 25px;
             border-radius: 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             font-weight: 800;
-            box-shadow: 0 8px 20px rgba(24, 20, 67, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #312e81;
         }
 
-        .auth-title {
-            font-size: 20px;
-            font-weight: 800;
-            color: #0f172a;
+        .auth-toggle-tabs {
+            display: flex;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 4px;
             margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+
+        .auth-tab-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            font-weight: 700;
+            font-size: 13px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .auth-tab-btn.active {
+            background: #047857;
+            color: white;
         }
 
         .input-label {
             text-align: left;
             font-size: 12px;
             font-weight: 700;
-            color: #475569;
+            color: #cbd5e1;
             margin-bottom: 6px;
             display: block;
         }
@@ -163,18 +183,17 @@
         .auth-input {
             width: 100%;
             padding: 12px 14px;
-            border: 1.5px solid #e2e8f0;
+            border: 1.5px solid #334155;
             border-radius: 12px;
             font-size: 14px;
             outline: none;
-            background: #f8fafc;
+            background: #0f172a;
+            color: #f8fafc;
             margin-bottom: 15px;
-            transition: 0.2s;
         }
 
         .auth-input:focus {
-            border-color: #047857;
-            background: white;
+            border-color: #10b981;
         }
 
         .btn-green {
@@ -187,8 +206,7 @@
             font-weight: 700;
             font-size: 15px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.25);
-            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.4);
         }
 
         .btn-green:active {
@@ -198,7 +216,7 @@
         .social-divider {
             margin: 20px 0 15px;
             font-size: 12px;
-            color: #64748b;
+            color: #94a3b8;
         }
 
         .social-btn-grid {
@@ -209,8 +227,8 @@
         }
 
         .social-btn {
-            border: 1px solid #e2e8f0;
-            background: white;
+            border: 1px solid #334155;
+            background: #0f172a;
             padding: 10px;
             border-radius: 12px;
             display: flex;
@@ -219,12 +237,12 @@
             gap: 8px;
             font-size: 13px;
             font-weight: 700;
-            color: #1e293b;
+            color: #f8fafc;
             cursor: pointer;
         }
 
         .support-link {
-            color: #0284c7;
+            color: #38bdf8;
             font-size: 13px;
             font-weight: 700;
             text-decoration: underline;
@@ -233,17 +251,18 @@
 
         /* 🌟 Main App Section Styling */
         .banner-card {
-            background: #ffffff;
+            background: #1e293b;
             border-radius: 16px;
             padding: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             margin-bottom: 15px;
+            border: 1px solid #334155;
         }
 
         .status-badge {
             display: inline-block;
-            background: #e0f2fe;
-            color: #0284c7;
+            background: #0284c7;
+            color: #ffffff;
             font-size: 11px;
             padding: 3px 10px;
             border-radius: 12px;
@@ -254,7 +273,7 @@
         .banner-title {
             font-size: 15px;
             font-weight: 700;
-            color: #1e293b;
+            color: #f8fafc;
             margin-bottom: 15px;
             line-height: 1.4;
         }
@@ -281,7 +300,8 @@
             border-radius: 16px;
             padding: 14px 16px;
             margin-bottom: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 1px solid #4338ca;
         }
 
         .trial-tracker-header {
@@ -318,14 +338,15 @@
         }
 
         .grid-card {
-            background: #ffffff;
+            background: #1e293b;
             border-radius: 14px;
             padding: 14px;
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             cursor: pointer;
+            border: 1px solid #334155;
         }
 
         .icon-box {
@@ -346,39 +367,40 @@
         .c5 { background: #ffe4e6; color: #e11d48; }
         .c6 { background: #fef9c3; color: #ca8a04; }
 
-        .card-info h4 { font-size: 14px; font-weight: 700; color: #1e293b; }
-        .card-info p { font-size: 10px; color: #64748b; line-height: 1.2; }
+        .card-info h4 { font-size: 14px; font-weight: 700; color: #f8fafc; }
+        .card-info p { font-size: 10px; color: #94a3b8; line-height: 1.2; }
 
         .inner-page-card {
-            background: white;
+            background: #1e293b;
             border-radius: 16px;
             padding: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             margin-bottom: 15px;
+            border: 1px solid #334155;
         }
 
         .course-card-item {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
+            background: #0f172a;
+            border: 1px solid #334155;
             border-radius: 12px;
             padding: 12px;
             margin-bottom: 12px;
         }
 
         .form-group { margin-bottom: 12px; text-align: left; }
-        .form-group label { display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px; }
+        .form-group label { display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 4px; }
         .form-group select, .form-group input, .form-group textarea {
-            width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px; background: #f8fafc;
+            width: 100%; padding: 10px; border: 1px solid #334155; border-radius: 8px; font-size: 13px; background: #0f172a; color: #f8fafc;
         }
 
         .back-btn {
-            background: #e2e8f0; color: #334155; border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; width: 100%; margin-top: 10px;
+            background: #334155; color: #f8fafc; border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; width: 100%; margin-top: 10px;
         }
 
         /* PREMIUM ADMIN PANEL STYLING */
         .admin-wrapper {
             background: linear-gradient(145deg, #0f172a, #1e1b4b);
-            border-radius: 18px; padding: 18px; color: white;
+            border-radius: 18px; padding: 18px; color: white; border: 1px solid #312e81;
         }
 
         .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 12px; margin-bottom: 15px; }
@@ -394,18 +416,18 @@
 
         .premium-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 10px; }
         .premium-table th, .premium-table td { border: 1px solid #334155; padding: 6px; text-align: left; }
-        .premium-table th { background: #1e293b; color: #fbbf24; }
+        .premium-table th { background: #0f172a; color: #fbbf24; }
 
         .badge-free { background: rgba(239, 68, 68, 0.2); color: #f87171; padding: 2px 4px; border-radius: 4px; border: 1px solid #ef4444; }
         .badge-paid { background: rgba(34, 197, 94, 0.2); color: #4ade80; padding: 2px 4px; border-radius: 4px; border: 1px solid #22c55e; }
 
         .bottom-bar {
-            position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -3px 12px rgba(0,0,0,0.1); z-index: 1000;
+            position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -3px 12px rgba(0,0,0,0.3); z-index: 1000; border-top: 1px solid #334155;
         }
 
-        .nav-link { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #64748b; font-size: 11px; gap: 3px; cursor: pointer; }
+        .nav-link { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 11px; gap: 3px; cursor: pointer; }
         .nav-link i { font-size: 18px; }
-        .nav-link.active { color: #047857; font-weight: 700; }
+        .nav-link.active { color: #10b981; font-weight: 700; }
 
         .logout-btn {
             background: #ef4444; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; width: 100%; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -427,7 +449,7 @@
 
     <div class="container">
         
-        <!-- 🌟 ১ম পেজ: লগইন ও রেজিস্ট্রেশন পেজ -->
+        <!-- 🌟 ১. লগইন ও সাইন আপ (রেজিস্ট্রেশন) পেজ -->
         <div id="login-screen-section" class="page-section active">
             <div class="auth-screen-card">
                 <div class="lang-switch">
@@ -444,17 +466,40 @@
                     </div>
                 </div>
 
-                <h2 class="auth-title">লগইন/রেজিস্টার</h2>
-
-                <div style="text-align:left;">
-                    <label class="input-label">মোবাইল নম্বর / ইমেইল</label>
-                    <input type="text" id="auth-input-field" class="auth-input" placeholder="01XXXXXXXXX অথবা ইমেইল">
-
-                    <label class="input-label">পাসওয়ার্ড (এডমিন হলে লিখুন)</label>
-                    <input type="password" id="auth-pass-field" class="auth-input" placeholder="পাসওয়ার্ড দিন">
+                <!-- 🔄 লগইন / সাইন আপ সুইচ টগল -->
+                <div class="auth-toggle-tabs">
+                    <button class="auth-tab-btn active" id="tab-login-btn" onclick="toggleAuthForm('login')">লগইন করুন</button>
+                    <button class="auth-tab-btn" id="tab-signup-btn" onclick="toggleAuthForm('signup')">সাইন আপ (Sign Up)</button>
                 </div>
 
-                <button class="btn-green" onclick="handleCustomAuth()">এগিয়ে যাও</button>
+                <!-- 🔑 লগইন ফর্ম -->
+                <div id="login-form-box">
+                    <div style="text-align:left;">
+                        <label class="input-label">মোবাইল নম্বর / ইমেইল</label>
+                        <input type="text" id="auth-input-field" class="auth-input" placeholder="01XXXXXXXXX অথবা ইমেইল">
+
+                        <label class="input-label">পাসওয়ার্ড</label>
+                        <input type="password" id="auth-pass-field" class="auth-input" placeholder="পাসওয়ার্ড দিন">
+                    </div>
+
+                    <button class="btn-green" onclick="handleCustomAuth()">লগইন করুন</button>
+                </div>
+
+                <!-- 📝 সাইন আপ (রেজিস্ট্রেশন) ফর্ম -->
+                <div id="signup-form-box" style="display:none;">
+                    <div style="text-align:left;">
+                        <label class="input-label">আপনার পূর্ণ নাম</label>
+                        <input type="text" id="signup-name-field" class="auth-input" placeholder="যেমন: সাজিদ হাসান">
+
+                        <label class="input-label">মোবাইল নম্বর / ইমেইল</label>
+                        <input type="text" id="signup-input-field" class="auth-input" placeholder="01XXXXXXXXX অথবা ইমেইল">
+
+                        <label class="input-label">নতুন পাসওয়ার্ড</label>
+                        <input type="password" id="signup-pass-field" class="auth-input" placeholder="পাসওয়ার্ড তৈরি করুন">
+                    </div>
+
+                    <button class="btn-green" style="background:#10b981;" onclick="handleUserSignUp()">নতুন অ্যাকাউন্ট তৈরি করুন</button>
+                </div>
 
                 <div class="social-divider">Login / Registration with</div>
 
@@ -467,7 +512,7 @@
                     </button>
                 </div>
 
-                <p class="support-link" onclick="alert('সহায়তার জন্য ইমেইল করুন: support@absexam.com')">সাহায্য দরকার? সাপোর্টে জানাও</p>
+                <p class="support-link" onclick="alert('সহায়তার জন্য ইমেইল করুন: absiddikrobi1739@gmail.com')">সাহায্য দরকার? সাপোর্টে জানাও</p>
             </div>
         </div>
 
@@ -536,7 +581,7 @@
         <!-- ৩. মডেল টেস্ট সেটআপ -->
         <div id="model-test-setup" class="page-section">
             <div class="inner-page-card">
-                <h2 style="font-size:18px; margin-bottom:10px;">⚙️ পরীক্ষার কাস্টমাইজেশন</h2>
+                <h2 style="font-size:18px; margin-bottom:10px; color:#f8fafc;">⚙️ পরীক্ষার কাস্টমাইজেশন</h2>
                 <div class="form-group">
                     <label>বিষয় নির্বাচন করুন:</label>
                     <select id="chapter-select">
@@ -550,15 +595,13 @@
             </div>
         </div>
 
-        <!-- 📚 ৪. কোর্স সেকশন (শিক্ষার্থীদের জন্য) -->
+        <!-- 📚 ৪. কোর্স সেকশন -->
         <div id="courses-section" class="page-section">
             <div class="inner-page-card">
-                <h2 style="color:#047857; font-size:18px; margin-bottom:6px;"><i class="fa-solid fa-graduation-cap"></i> আমাদের সকল কোর্স</h2>
-                <p style="font-size:12px; margin-bottom:15px; color:#64748b;">এইচএসসি প্রস্তুতির জন্য এডমিন পরিচালিত বিশেষ কোর্সসমূহ:</p>
+                <h2 style="color:#10b981; font-size:18px; margin-bottom:6px;"><i class="fa-solid fa-graduation-cap"></i> আমাদের সকল কোর্স</h2>
+                <p style="font-size:12px; margin-bottom:15px; color:#94a3b8;">এইচএসসি প্রস্তুতির জন্য এডমিন পরিচালিত বিশেষ কোর্সসমূহ:</p>
                 
-                <div id="user-course-list-container">
-                    <!-- Dynamic Courses Will Render Here -->
-                </div>
+                <div id="user-course-list-container"></div>
 
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
@@ -567,8 +610,8 @@
         <!-- ৫. লিডারবোর্ড -->
         <div id="leaderboard-section" class="page-section">
             <div class="inner-page-card">
-                <h2>🏆 লাইভ লিডারবোর্ড</h2>
-                <p style="font-size:12px; margin-bottom:15px;">সর্বোচ্চ স্কোরধারী স্টুডেন্টদের তালিকা:</p>
+                <h2 style="color:#f8fafc;">🏆 লাইভ লিডারবোর্ড</h2>
+                <p style="font-size:12px; margin-bottom:15px; color:#94a3b8;">সর্বোচ্চ স্কোরধারী স্টুডেন্টদের তালিকা:</p>
                 <div id="leaderboard-list-container"></div>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
@@ -577,9 +620,9 @@
         <!-- ৬. ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-card">
-                <h2>📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
-                <p style="font-size:12px; margin-bottom:15px;">আপনার পারফরম্যান্স স্ট্যাটাস:</p>
-                <div style="background: #f8fafc; padding: 10px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <h2 style="color:#f8fafc;">📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
+                <p style="font-size:12px; margin-bottom:15px; color:#94a3b8;">আপনার পারফরম্যান্স স্ট্যাটাস:</p>
+                <div style="background: #0f172a; padding: 10px; border-radius: 12px; border: 1px solid #334155;">
                     <canvas id="performanceChart"></canvas>
                 </div>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
@@ -598,9 +641,9 @@
                 </div>
 
                 <div class="admin-stat-grid">
-                    <div class="admin-stat-card"><h6>টোটাল ইউজার</h6><h3 style="color:#60a5fa;">4</h3></div>
-                    <div class="admin-stat-card"><h6>ফ্রি ইউজার</h6><h3 style="color:#f87171;">2</h3></div>
-                    <div class="admin-stat-card"><h6>পেইড ইউজার</h6><h3 style="color:#4ade80;">2</h3></div>
+                    <div class="admin-stat-card"><h6>টোটাল ইউজার</h6><h3 id="admin-stat-total" style="color:#60a5fa;">4</h3></div>
+                    <div class="admin-stat-card"><h6>ফ্রি ইউজার</h6><h3 id="admin-stat-free" style="color:#f87171;">2</h3></div>
+                    <div class="admin-stat-card"><h6>পেইড ইউজার</h6><h3 id="admin-stat-paid" style="color:#4ade80;">2</h3></div>
                 </div>
 
                 <div class="admin-tab-bar">
@@ -617,19 +660,19 @@
                     </table>
                 </div>
 
-                <!-- 🌟 কোর্স এডমিন ম্যানেজমেন্ট ট্যাব -->
+                <!-- কোর্স এডমিন ম্যানেজমেন্ট ট্যাব -->
                 <div id="tab-add-course" class="admin-content-box">
                     <h4 style="font-size:13px; color:#fbbf24; margin-bottom:10px;">নতুন কোর্স যুক্ত করুন:</h4>
                     <div class="form-group">
-                        <label style="color:#cbd5e1;">কোর্সের নাম:</label>
+                        <label>কোর্সের নাম:</label>
                         <input type="text" id="course-title-input" placeholder="যেমন: HSC 26 ICT ক্র্যাশ কোর্স">
                     </div>
                     <div class="form-group">
-                        <label style="color:#cbd5e1;">কোর্সের ফি (টাকা):</label>
+                        <label>কোর্সের ফি (টাকা):</label>
                         <input type="number" id="course-price-input" placeholder="যেমন: ৯৯">
                     </div>
                     <div class="form-group">
-                        <label style="color:#cbd5e1;">কোর্সের বিবরণ:</label>
+                        <label>কোর্সের বিবরণ:</label>
                         <input type="text" id="course-desc-input" placeholder="যেমন: লাইভ ক্লাস + অধ্যায়ভিত্তিক এক্সাম">
                     </div>
                     <button class="action-btn" onclick="addNewCourseByAdmin()" style="background:#22c55e; color:#020617; font-weight:bold; margin-bottom:15px;">
@@ -644,23 +687,22 @@
             </div>
         </div>
 
-        <!-- 👤 ৮. প্রোফাইল ও লগআউট সেকশন -->
+        <!-- 👤 ৮. প্রোফাইল সেকশন -->
         <div id="profile-section" class="page-section">
             <div class="inner-page-card">
-                <h2>👤 ইউজার প্রোফাইল</h2>
+                <h2 style="color:#f8fafc;">👤 ইউজার প্রোফাইল</h2>
                 
-                <div style="background:#f8fafc; padding:15px; border-radius:12px; border:1px solid #cbd5e1; margin-top:10px;">
+                <div style="background:#0f172a; padding:15px; border-radius:12px; border:1px solid #334155; margin-top:10px;">
                     <p style="margin-bottom:6px;"><strong>নাম:</strong> <span id="prof-display-name">গেস্ট ইউজার</span></p>
                     <p style="margin-bottom:6px;"><strong>ইমেইল/ফোন:</strong> <span id="prof-display-email">N/A</span></p>
-                    <p style="margin-bottom:6px;"><strong>রোল:</strong> <span id="prof-display-role" style="color:#047857; font-weight:bold;">সাধারণ ছাত্র</span></p>
+                    <p style="margin-bottom:6px;"><strong>রোল:</strong> <span id="prof-display-role" style="color:#10b981; font-weight:bold;">সাধারণ ছাত্র</span></p>
                     
-                    <!-- 🔴 লগআউট অপশন -->
                     <button class="logout-btn" onclick="handleUserLogout()">
                         <i class="fa-solid fa-right-from-bracket"></i> অ্যাকাউন্ট থেকে লগআউট করুন
                     </button>
                 </div>
 
-                <div id="admin-switch-box" style="display:none; background:#fee2e2; padding:12px; border-radius:10px; margin-top:15px;">
+                <div id="admin-switch-box" style="display:none; background:#881337; padding:12px; border-radius:10px; margin-top:15px; border: 1px solid #f43f5e;">
                     <button class="action-btn" onclick="switchSection('admin-panel-section')" style="background:#e11d48; color:white;">
                         <i class="fa-solid fa-user-shield"></i> এডমিন ড্যাশবোর্ডে প্রবেশ করুন
                     </button>
@@ -674,23 +716,23 @@
 
     <!-- Bottom Navigation Bar -->
     <div class="bottom-bar">
-        <a class="nav-link active" onclick="switchSection('home-section')">
+        <a class="nav-link active" id="nav-home" onclick="switchSection('home-section')">
             <i class="fa-solid fa-house"></i>
             <span>হোম</span>
         </a>
-        <a class="nav-link" onclick="switchSection('courses-section')">
+        <a class="nav-link" id="nav-courses" onclick="switchSection('courses-section')">
             <i class="fa-solid fa-graduation-cap"></i>
             <span>কোর্স</span>
         </a>
-        <a class="nav-link" onclick="switchSection('dashboard-section')">
+        <a class="nav-link" id="nav-dashboard" onclick="switchSection('dashboard-section')">
             <i class="fa-solid fa-chart-pie"></i>
             <span>ড্যাশবোর্ড</span>
         </a>
-        <a class="nav-link" onclick="switchSection('leaderboard-section')">
+        <a class="nav-link" id="nav-leaderboard" onclick="switchSection('leaderboard-section')">
             <i class="fa-solid fa-trophy"></i>
             <span>লিডারবোর্ড</span>
         </a>
-        <a class="nav-link" onclick="switchSection('profile-section')">
+        <a class="nav-link" id="nav-profile" onclick="switchSection('profile-section')">
             <i class="fa-solid fa-user"></i>
             <span>প্রোফাইল</span>
         </a>
@@ -705,7 +747,7 @@
             isPaid: false
         };
 
-        // 🔑 এডমিন এবং ইউজারদের সেভ ডাটাবেজ
+        // 🔑 রেজিস্টার্ড ইউজার ও এডমিন ডাটাবেজ
         let leaderboardData = [
             { name: "Abs Siddik (মেইন এডমিন)", email: "absiddikrobi1739@gmail.com", pass: "absiddikrobi1739", role: "main_admin", isPaid: true, totalScore: 25 },
             { name: "মুশফিকুর রহমান (সাব-এডমিন)", email: "musfiqrahmansubadmin@gmail.com", pass: "musfiq1379", role: "sub_admin", isPaid: true, totalScore: 20 },
@@ -713,12 +755,63 @@
             { name: "রাফসান আহমেদ", email: "rafsan@gmail.com", pass: "pass123", role: "student", isPaid: false, totalScore: 18 }
         ];
 
-        // 📚 কোর্সসমূহের তালিকা
         let coursesList = [
             { title: "HSC 2026 ICT ফুল ব্যাচ", price: 150, desc: "সম্পূর্ণ আইসিটি থিওরি + প্র্যাকটিক্যাল + ৫০টি অনলাইন এক্সাম" },
             { title: "পদার্থবিজ্ঞান ১ম ও ২য় পত্র মেগা কোর্স", price: 250, desc: "সকল অধ্যায়ের গাণিতিক ব্যাখ্যা ও মডেল টেস্ট" }
         ];
 
+        // 🔄 লগইন / সাইন আপ সুইচ হ্যান্ডলার
+        function toggleAuthForm(type) {
+            if(type === 'login') {
+                document.getElementById('login-form-box').style.display = 'block';
+                document.getElementById('signup-form-box').style.display = 'none';
+                document.getElementById('tab-login-btn').classList.add('active');
+                document.getElementById('tab-signup-btn').classList.remove('active');
+            } else {
+                document.getElementById('login-form-box').style.display = 'none';
+                document.getElementById('signup-form-box').style.display = 'block';
+                document.getElementById('tab-signup-btn').classList.add('active');
+                document.getElementById('tab-login-btn').classList.remove('active');
+            }
+        }
+
+        // 📝 নতুন অ্যাকাউন্ট তৈরি (Sign Up)
+        function handleUserSignUp() {
+            const name = document.getElementById('signup-name-field').value.trim();
+            const emailPhone = document.getElementById('signup-input-field').value.trim();
+            const pass = document.getElementById('signup-pass-field').value.trim();
+
+            if(!name || !emailPhone || !pass) {
+                alert("দয়া করে নাম, ইমেইল/মোবাইল এবং পাসওয়ার্ড সবগুলো ঘর সঠিক তথ্য দিয়ে পূরণ করুন!");
+                return;
+            }
+
+            // আগে একই অ্যাকাউন্ট আছে কিনা চেক
+            const existingUser = leaderboardData.find(u => u.email.toLowerCase() === emailPhone.toLowerCase());
+            if(existingUser) {
+                alert("এই ইমেইল/মোবাইল দিয়ে ইতিমধ্যেই একটি অ্যাকাউন্ট খোলা রয়েছে! অনুগ্রহ করে লগইন করুন।");
+                toggleAuthForm('login');
+                return;
+            }
+
+            const newUser = {
+                name: name,
+                email: emailPhone,
+                pass: pass,
+                role: "student",
+                isPaid: false,
+                totalScore: 0
+            };
+
+            leaderboardData.push(newUser);
+            currentUser = newUser;
+
+            alert(`🎉 অভিনন্দন ${name}! আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।`);
+            updateUserProfileUI();
+            switchSection('home-section');
+        }
+
+        // 🔑 লগইন প্রসেস
         function handleCustomAuth() {
             const inputVal = document.getElementById('auth-input-field').value.trim();
             const passVal = document.getElementById('auth-pass-field').value.trim();
@@ -728,23 +821,19 @@
                 return;
             }
 
-            const foundAdmin = leaderboardData.find(u => (u.email === inputVal || u.name === inputVal) && u.pass === passVal);
+            const foundUser = leaderboardData.find(u => (u.email.toLowerCase() === inputVal.toLowerCase() || u.name.toLowerCase() === inputVal.toLowerCase()) && u.pass === passVal);
 
-            if(foundAdmin) {
-                currentUser = foundAdmin;
-                alert(`স্বাগতম ${foundAdmin.name}! এডমিন হিসেবে লগইন সফল হয়েছে।`);
+            if(foundUser) {
+                currentUser = foundUser;
+                alert(`স্বাগতম ${foundUser.name}! সফলভাবে লগইন হয়েছে।`);
                 updateUserProfileUI();
-                switchSection('admin-panel-section');
+                if(currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
+                    switchSection('admin-panel-section');
+                } else {
+                    switchSection('home-section');
+                }
             } else {
-                currentUser = {
-                    name: inputVal,
-                    email: inputVal,
-                    role: "student",
-                    isPaid: false
-                };
-                alert(`স্বাগতম ${inputVal}! আপনার লগইন সফল হয়েছে।`);
-                updateUserProfileUI();
-                switchSection('home-section');
+                alert("ভুল ইমেইল/মোবাইল অথবা পাসওয়ার্ড! নতুন অ্যাকাউন্ট খুলতে 'সাইন আপ' ট্যাবে ক্লিক করুন।");
             }
         }
 
@@ -795,10 +884,21 @@
         }
 
         function switchSection(sectionId) {
-            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
             const target = document.getElementById(sectionId);
-            if (target) target.classList.add('active');
+            if (target) {
+                target.classList.add('active');
+            }
             window.scrollTo(0, 0);
+
+            document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+            if(sectionId === 'home-section') document.getElementById('nav-home').classList.add('active');
+            if(sectionId === 'courses-section') document.getElementById('nav-courses').classList.add('active');
+            if(sectionId === 'dashboard-section') document.getElementById('nav-dashboard').classList.add('active');
+            if(sectionId === 'leaderboard-section') document.getElementById('nav-leaderboard').classList.add('active');
+            if(sectionId === 'profile-section') document.getElementById('nav-profile').classList.add('active');
 
             if(sectionId === 'admin-panel-section') {
                 renderAdminUserTable();
@@ -826,7 +926,124 @@
                 div.className = 'course-card-item';
                 div.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                        <h3 style="font-size:14px; color:#1e293b;">${course.title}</h3>
-                        <span style="background:#dcfce7; color:#16a34a; font-weight:bold; font-size:12px; padding:2px 8px; border-radius:8px;">${course.price} ৳</span>
+                        <h3 style="font-size:14px; color:#f8fafc;">${course.title}</h3>
+                        <span style="background:#065f46; color:#34d399; font-weight:bold; font-size:12px; padding:2px 8px; border-radius:8px;">${course.price} ৳</span>
                     </div>
-                    <p style="font-size:11px; color:#64
+                    <p style="font-size:11px; color:#94a3b8; margin-bottom:10px;">${course.desc}</p>
+                    <button class="btn-green" style="padding:8px; font-size:12px;" onclick="alert('কোর্সে এনরোল করার জন্য এডমিনের সাথে যোগাযোগ করুন')">কোর্সটি এনরোল করুন</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addNewCourseByAdmin() {
+            const title = document.getElementById('course-title-input').value.trim();
+            const price = document.getElementById('course-price-input').value.trim();
+            const desc = document.getElementById('course-desc-input').value.trim();
+
+            if(!title || !price) {
+                alert("দয়া করে কোর্সের নাম এবং মূল্য প্রদান করুন!");
+                return;
+            }
+
+            coursesList.push({ title, price, desc });
+            alert("নতুন কোর্সটি সফলভাবে যুক্ত হয়েছে!");
+
+            document.getElementById('course-title-input').value = '';
+            document.getElementById('course-price-input').value = '';
+            document.getElementById('course-desc-input').value = '';
+
+            renderAdminCourseList();
+            renderUserCourses();
+        }
+
+        function renderAdminCourseList() {
+            const container = document.getElementById('admin-course-manage-list');
+            container.innerHTML = '';
+
+            coursesList.forEach((c, idx) => {
+                const div = document.createElement('div');
+                div.style.background = 'rgba(255,255,255,0.05)';
+                div.style.padding = '8px';
+                div.style.borderRadius = '8px';
+                div.style.marginBottom = '6px';
+                div.style.display = 'flex';
+                div.style.justifyContent = 'space-between';
+                div.style.alignItems = 'center';
+                div.innerHTML = `
+                    <div>
+                        <h5 style="font-size:12px; color:#cbd5e1;">${c.title}</h5>
+                        <span style="font-size:10px; color:#fbbf24;">মূল্য: ${c.price} ৳</span>
+                    </div>
+                    <button style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteCourse(${idx})">ডিলিট</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function deleteCourse(idx) {
+            if(confirm("আপনি কি কোর্সটি মুছে ফেলতে চান?")) {
+                coursesList.splice(idx, 1);
+                renderAdminCourseList();
+                renderUserCourses();
+            }
+        }
+
+        function renderAdminUserTable() {
+            const tbody = document.getElementById('admin-user-table-body');
+            tbody.innerHTML = '';
+
+            const total = leaderboardData.length;
+            const paid = leaderboardData.filter(u => u.isPaid).length;
+            const free = total - paid;
+
+            document.getElementById('admin-stat-total').innerText = total;
+            document.getElementById('admin-stat-free').innerText = free;
+            document.getElementById('admin-stat-paid').innerText = paid;
+
+            leaderboardData.forEach((user, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${user.name}</td>
+                    <td><span class="${user.isPaid ? 'badge-paid' : 'badge-free'}">${user.isPaid ? 'PAID' : 'FREE'}</span></td>
+                    <td>
+                        ${currentUser.role === 'main_admin' 
+                            ? `<button style="background:#22c55e; border:none; padding:3px 6px; border-radius:4px; font-size:9px; cursor:pointer;" onclick="togglePaid(${idx})">Toggle</button>` 
+                            : `<span style="color:#94a3b8;">🔒 Locked</span>`}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function togglePaid(idx) {
+            if(currentUser.role === 'main_admin') {
+                leaderboardData[idx].isPaid = !leaderboardData[idx].isPaid;
+                renderAdminUserTable();
+            }
+        }
+
+        function renderLeaderboard() {
+            const container = document.getElementById('leaderboard-list-container');
+            container.innerHTML = '';
+            leaderboardData.forEach((user, idx) => {
+                const div = document.createElement('div');
+                div.style.display = 'flex';
+                div.style.justifyContent = 'space-between';
+                div.style.padding = '8px 0';
+                div.style.borderBottom = '1px solid #334155';
+                div.innerHTML = `
+                    <span><strong>#${idx+1}</strong> ${user.name}</span>
+                    <span style="color:#10b981; font-weight:bold;">${user.totalScore} নম্বর</span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.onload = function() {
+            updateUserProfileUI();
+            renderUserCourses();
+        };
+    </script>
+</body>
+</html>
