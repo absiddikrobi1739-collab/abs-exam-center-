@@ -829,7 +829,8 @@
     </div>
 
     <script>
-        let currentUser = null;
+        // লোকাল স্টোরেজ থেকে চেক করা ইউজার অলরেডি লগইন করা আছে কিনা
+        let currentUser = JSON.parse(localStorage.getItem('abs_current_user')) || null;
         let freeExamCount = 40;
 
         let examQuestions = [
@@ -854,7 +855,6 @@
             { name: "এইচএসসি ফুল কোর্স প্যাক", price: "৪৯৯ টাকা (৬ মাস)" }
         ];
 
-        // ব্যবহারকারী ডেটা লোড বা ইনিশিয়ালাইজ করা
         let usersList = JSON.parse(localStorage.getItem('abs_users')) || [
             { name: "মাসফাকুর রহমান", phone: "01711111111", email: "mushfiq@gmail.com", pass: "123456", package: "মাসিক প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" },
             { name: "রাফসান আহমেদ", phone: "01933333333", email: "rafsan@gmail.com", pass: "pass789", package: "ফুল কোর্স", isPaid: true, paidDate: "2026-04-10", expireDate: "2026-05-10", trx: "TRX998877" }
@@ -871,6 +871,16 @@
             "জীববিজ্ঞান ১ম পত্র": ["অধ্যায় ১: কোষ ও গঠন", "অধ্যায় ২: কোষ বিভাজন"],
             "জীববিজ্ঞান ২য় পত্র": ["অধ্যায় ১: প্রাণীর বিভিন্নতা", "অধ্যায় ২: প্রাণীর পরিচিতি"],
             "আইসিটি": ["অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত", "অধ্যায় ২: নেটওয়ার্কিং", "অধ্যায় ৩: সংখ্যা পদ্ধতি", "অধ্যায় ৪: HTML", "অধ্যায় ৫: প্রোগ্রামিং", "অধ্যায় ৬: ডেটাবেজ"]
+        };
+
+        // পেজ লোড হওয়ার সাথে সাথেই চেক করবে ইউজার লগইন করা আছে কিনা
+        window.onload = function() {
+            if (currentUser) {
+                unlockPlatformUI();
+                switchSection('home-section');
+            } else {
+                switchSection('login-screen-section');
+            }
         };
 
         function toggleAuthForm(type) {
@@ -898,12 +908,14 @@
                 currentUser = { name: "মুশফিকুর রহমান", email: "musfiqrahmansubadmin@gmail.com", role: "sub_admin" };
             } else {
                 currentUser = { name: inputVal, email: inputVal, role: "student" };
-                // যদি নতুন ইউজার রেজিস্টার্ড না থাকে, তবে অটো যুক্ত হবে
                 if(!usersList.some(u => u.email === inputVal)) {
                     usersList.push({ name: inputVal, phone: "N/A", email: inputVal, pass: passVal || "******", package: "ফ্রি প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" });
                     localStorage.setItem('abs_users', JSON.stringify(usersList));
                 }
             }
+
+            // লোকাল স্টোরেজে লগইন স্টেট পার্মানেন্ট সেভ
+            localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
 
             alert("লগইন সফল হয়েছে!");
             unlockPlatformUI();
@@ -916,7 +928,6 @@
             const pass = document.getElementById('signup-pass-field').value.trim();
             if(!name || !email || !pass) { alert("সব তথ্য পূরণ করুন!"); return; }
 
-            // যদি ইমেইল অলরেডি থাকে চেক করা
             if(usersList.some(u => u.email === email)) {
                 alert("এই ইমেইল দিয়ে ইতিপূর্বে অ্যাকাউন্ট খোলা হয়েছে!");
                 return;
@@ -924,7 +935,6 @@
 
             currentUser = { name: name, email: email, role: "student" };
             
-            // নতুন ইউজার পুশ করা
             usersList.push({ 
                 name: name, 
                 phone: email, 
@@ -937,10 +947,10 @@
                 trx: "-" 
             });
             
-            // লোকাল স্টোরেজে ইনস্ট্যান্ট সেভ
             localStorage.setItem('abs_users', JSON.stringify(usersList));
+            localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
 
-            alert("অ্যাকাউন্ট তৈরি সফল!");
+            alert("অ্যাকাউন্ট তৈরি ও লগইন সফল!");
             unlockPlatformUI();
             switchSection('home-section');
         }
@@ -966,6 +976,7 @@
 
         function handleUserLogout() {
             currentUser = null;
+            localStorage.removeItem('abs_current_user'); // লগআউটের সময় ডেটা মুছে ফেলা
             document.getElementById('app-header').style.display = 'none';
             document.getElementById('app-bottom-bar').style.display = 'none';
             switchSection('login-screen-section');
@@ -978,7 +989,6 @@
             window.scrollTo(0, 0);
 
             if(secId === 'admin-panel-section') {
-                // সবসময় লোকাল স্টোরেজ থেকে লেটেস্ট ইউজার ডাটা রিফ্রেশ করা হবে
                 usersList = JSON.parse(localStorage.getItem('abs_users')) || usersList;
                 renderAdminTable();
                 renderCoursesTable();
@@ -1242,7 +1252,6 @@
             if(!tbody) return;
             tbody.innerHTML = '';
             
-            // মেইন এডমিন লুকিয়ে রেখে বাকি ইউজার ফিল্টার করা
             let filteredUsers = usersList.filter(u => !u.name.toLowerCase().includes("abs siddik"));
 
             let total = filteredUsers.length;
