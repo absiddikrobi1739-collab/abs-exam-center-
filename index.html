@@ -440,7 +440,7 @@
         </div>
     </div>
 
-    <!-- 🌟 পরীক্ষা শুরুর কনফিগারেশন মডাল (অধ্যায়+বিষয়ভিত্তিক, MCQ ও সময় সিলেকশন) -->
+    <!-- 🌟 পরীক্ষা শুরুর কনফিগারেশন মডাল -->
     <div id="exam-config-modal" class="modal-overlay">
         <div class="modal-box" style="text-align: left;">
             <h3 style="color: #fbbf24; font-size: 16px; margin-bottom: 12px; text-align: center;"><i class="fa-solid fa-pen-to-square"></i> পরীক্ষা সেটআপ করুন</h3>
@@ -771,7 +771,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ৩. সাধারণ স্টুডেন্ট হোম (৮টি অংশ) -->
+        <!-- 🌟 ৩. সাধারণ স্টুডেন্ট হোম -->
         <div id="home-section" class="page-section">
             <div class="student-welcome-box">
                 <div style="background:#38bdf8; color:#0f172a; font-size:11px; padding:3px 10px; border-radius:12px; font-weight:700; display:inline-block; margin-bottom:8px;">
@@ -1033,17 +1033,118 @@
             { name: "রাফসান আহমেদ", phone: "01933333333", pass: "pass789", package: "ফুল কোর্স", isPaid: true, paidDate: "2026-04-10", expireDate: "2026-05-10", trx: "TRX998877" }
         ];
 
+        /* 🌟 সকল বিষয়ের সম্পূর্ণ অধ্যায়ের তালিকা */
         const bookChapters = {
-            "বাংলা": ["১ম অধ্যায়: গদ্য", "২য় অধ্যায়: কবিতা", "৩য় অধ্যায়: ব্যাকরণ"],
-            "উচ্চতর গণিত ১ম পত্র": ["অধ্যায় ১: ম্যাট্রিক্স ও নির্ণায়ক", "অধ্যায় ২: ভেক্টর", "অধ্যায় ৩: সরলরেখা"],
-            "উচ্চতর গণিত ২য় পত্র": ["অধ্যায় ১: বাস্তব সংখ্যা", "অধ্যায় ৩: জটিল সংখ্যা", "অধ্যায় ৪: বহুপদী"],
-            "রসায়ন ১ম পত্র": ["অধ্যায় ১: ল্যাবরেটরি নিরাপদ ব্যবহার", "অধ্যায় ২: গুণগত রসায়ন"],
-            "রসায়ন ২য় পত্র": ["অধ্যায় ১: পরিবেশ রসায়ন", "অধ্যায় ২: জৈব রসায়ন"],
-            "পদার্থবিজ্ঞান ১ম পত্র": ["অধ্যায় ১: ভৌত জগত", "অধ্যায় ২: ভেক্টর", "অধ্যায় ৩: গতিবিদ্যা"],
-            "পদার্থবিজ্ঞান ২য় পত্র": ["অধ্যায় ১: তাপগতিবিদ্যা", "অধ্যায় ২: স্থির তড়িৎ"],
-            "জীববিজ্ঞান ১ম পত্র": ["অধ্যায় ১: কোষ ও গঠন", "অধ্যায় ২: কোষ বিভাজন"],
-            "জীববিজ্ঞান ২য় পত্র": ["অধ্যায় ১: প্রাণীর বিভিন্নতা", "অধ্যায় ২: প্রাণীর পরিচিতি"],
-            "আইসিটি": ["অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত", "অধ্যায় ২: নেটওয়ার্কিং", "অধ্যায় ৩: সংখ্যা পদ্ধতি", "অধ্যায় ৪: HTML", "অধ্যায় ৫: প্রোগ্রামিং", "অধ্যায় ৬: ডেটাবেজ"]
+            "বাংলা": [
+                "অধ্যায় ১: গদ্য - অপরিচিতা",
+                "অধ্যায় ২: গদ্য - আমার পথ",
+                "অধ্যায় ৩: গদ্য - বায়ান্নর দিনগুলো",
+                "অধ্যায় ৪: গদ্য - রেইনকোট",
+                "অধ্যায় ৫: কবিতা - সোনার তরী",
+                "অধ্যায় ৬: কবিতা - বিদ্রোহী",
+                "অধ্যায় ৭: কবিতা - প্রতিদান",
+                "অধ্যায় ৮: কবিতা - ফেব্রুয়ারি ১৯৬৯",
+                "অধ্যায় ৯: ব্যাকরণ - বাংলা উচ্চারণের নিয়ম",
+                "অধ্যায় ১০: ব্যাকরণ - বানানের নিয়ম"
+            ],
+            "উচ্চতর গণিত ১ম পত্র": [
+                "অধ্যায় ১: ম্যাট্রিক্স ও নির্ণায়ক",
+                "অধ্যায় ২: ভেক্টর",
+                "অধ্যায় ৩: সরলরেখা",
+                "অধ্যায় ৪: বৃত্ত",
+                "অধ্যায় ৫: বিন্যাস ও সমাবেশ",
+                "অধ্যায় ৬: ত্রিকোণমিতিক অনুপাত",
+                "অধ্যায় ৭: সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত",
+                "অধ্যায় ৮: ফাংশন ও ফাংশনের লেখচিত্র",
+                "অধ্যায় ৯: অন্তরীকরণ (Differentiation)",
+                "অধ্যায় ১০: যোগজীকরণ (Integration)"
+            ],
+            "উচ্চতর গণিত ২য় পত্র": [
+                "অধ্যায় ১: বাস্তব সংখ্যা ও অসমতা",
+                "অধ্যায় ২: রৈখিক প্রোগ্রামন",
+                "অধ্যায় ৩: জটিল সংখ্যা",
+                "অধ্যায় ৪: বহুপদী ও বহুপদী সমীকরণ",
+                "অধ্যায় ৫: দ্বিপদী বিস্তার",
+                "অধ্যায় ৬: কনিক",
+                "অধ্যায় ৭: বিপরীত ত্রিকোণমিতিক ফাংশন",
+                "অধ্যায় ৮: স্থিতিবিদ্যা",
+                "অধ্যায় ৯: সমতলে বস্তুকণার গতি",
+                "অধ্যায় ১০: সম্ভাবনা"
+            ],
+            "রসায়ন ১ম পত্র": [
+                "অধ্যায় ১: ল্যাবরেটরির নিরাপদ ব্যবহার",
+                "অধ্যায় ২: গুণগত রসায়ন",
+                "অধ্যায় ৩: মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন",
+                "অধ্যায় ৪: রাসায়নিক পরিবর্তন",
+                "অধ্যায় ৫: কর্মমুখী রসায়ন"
+            ],
+            "রসায়ন ২য় পত্র": [
+                "অধ্যায় ১: পরিবেশ রসায়ন",
+                "অধ্যায় ২: জৈব রসায়ন (Organic Chemistry)",
+                "অধ্যায় ৩: পরিমাণগত রসায়ন",
+                "অধ্যায় ৪: তড়িৎ রসায়ন",
+                "অধ্যায় ৫: অর্থনৈতিক রসায়ন"
+            ],
+            "পদার্থবিজ্ঞান ১ম পত্র": [
+                "অধ্যায় ১: ভৌত জগত ও পরিমাপ",
+                "অধ্যায় ২: ভেক্টর",
+                "অধ্যায় ৩: গতিবিদ্যা",
+                "অধ্যায় ৪: নিউটনীয় বলবিদ্যা",
+                "অধ্যায় ৫: কাজ, শক্তি ও ক্ষমতা",
+                "অধ্যায় ৬: মহাকর্ষ ও অভিকর্ষ",
+                "অধ্যায় ৭: পদার্থের গাঠনিক ধর্ম",
+                "অধ্যায় ৮: পর্যায়বৃত্ত গতি",
+                "অধ্যায় ৯: তরঙ্গ",
+                "অধ্যায় ১০: আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব"
+            ],
+            "পদার্থবিজ্ঞান ২য় পত্র": [
+                "অধ্যায় ১: তাপগতিবিদ্যা",
+                "অধ্যায় ২: স্থির তড়িৎ",
+                "অধ্যায় ৩: চল তড়িৎ",
+                "অধ্যায় ৪: তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চৌম্বকত্ব",
+                "অধ্যায় ৫: তাড়িতচৌম্বকীয় আবেশ ও পরিবর্তী প্রবাহ",
+                "অধ্যায় ৬: জ্যামিতিক আলোকবিজ্ঞান",
+                "অধ্যায় ৭: ভৌত আলোকবিজ্ঞান",
+                "অধ্যায় ৮: আধুনিক পদার্থবিজ্ঞানের সূচনা",
+                "অধ্যায় ৯: পরমাণুর মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান",
+                "অধ্যায় ১০: সেমিকন্ডাক্টর ও ইলেকট্রনিক্স"
+            ],
+            "জীববিজ্ঞান ১ম পত্র": [
+                "অধ্যায় ১: কোষ ও এর গঠন",
+                "অধ্যায় ২: কোষ বিভাজন",
+                "অধ্যায় ৩: কোষ রসায়ন",
+                "অধ্যায় ৪: অনুজীব",
+                "অধ্যায় ৫: শৈবাল ও ছত্রাক",
+                "অধ্যায় ৬: ব্রায়োফাইটা ও টেরিডোফাইটা",
+                "অধ্যায় ৭: নগ্নবীজী ও আবৃতবীজী উদ্ভিদ",
+                "অধ্যায় ৮: টিস্যু ও টিস্যুতন্ত্র",
+                "অধ্যায় ৯: উদ্ভিদ শারীরতত্ত্ব",
+                "অধ্যায় ১০: উদ্ভিদ প্রজনন",
+                "অধ্যায় ১১: জীবপ্রযুক্তি",
+                "অধ্যায় ১২: জীবের পরিবেশ, বিস্তার ও সংরক্ষণ"
+            ],
+            "জীববিজ্ঞান ২য় পত্র": [
+                "অধ্যায় ১: প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস",
+                "অধ্যায় ২: প্রাণীর পরিচিতি (হাইড্রা, ঘাসফড়িং, রুই মাছ)",
+                "অধ্যায় ৩: মানব শারীরতত্ত্ব: পরিপাক ও শোষণ",
+                "অধ্যায় ৪: মানব শারীরতত্ত্ব: রক্ত ও সঞ্চালন",
+                "অধ্যায় ৫: মানব শারীরতত্ত্ব: শ্বাসক্রিয়া ও শ্বসন",
+                "অধ্যায় ৬: মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন",
+                "অধ্যায় ৭: মানব শারীরতত্ত্ব: চলন ও অঙ্গচালনা",
+                "অধ্যায় ৮: মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ",
+                "অধ্যায় ৯: মানব জীবনের ধারাবাহিকতা",
+                "অধ্যায় ১০: মানবদেহের প্রতিরক্ষা (ইমিউনিটি)",
+                "অধ্যায় ১১: জিনতত্ত্ব ও বিবর্তন",
+                "অধ্যায় ১২: প্রাণীর আচরণ"
+            ],
+            "আইসিটি": [
+                "অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত",
+                "অধ্যায় ২: কমিউনিকেশন সিস্টেমস ও নেটওয়ার্কিং",
+                "অধ্যায় ৩: সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস",
+                "অধ্যায় ৪: ওয়েব ডিজাইন পরিচিতি এবং HTML",
+                "অধ্যায় ৫: প্রোগ্রামিং ভাষা (C Programming)",
+                "অধ্যায় ৬: ডেটাবেজ ম্যানেজমেন্ট সিস্টেম"
+            ]
         };
 
         window.onload = function() {
@@ -1377,7 +1478,6 @@
             renderPackagesTable();
         }
 
-        /* 🌟 পরীক্ষা কনফিগারেশন ওপেন ও স্টার্ট ফাংশন */
         function openExamConfig() {
             if(freeExamCount > 0) {
                 updateChapters('cfg-subject', 'cfg-chapter');
@@ -1398,218 +1498,4 @@
             const mcqCount = document.getElementById('cfg-mcq-count').value;
             const timeMin = document.getElementById('cfg-time').value;
 
-            document.getElementById('exam-config-modal').style.display = 'none';
-
-            freeExamCount--;
-            document.getElementById('exam-counter-txt').innerText = freeExamCount;
-
-            currentQuestionIndex = 0;
-            scoreCount = 0;
-
-            document.getElementById('exam-timer-txt').innerText = `সময়: ${timeMin} মিনিট`;
-            switchSection('exam-screen-section');
-            loadQuestion();
-        }
-
-        function goToSubscription() {
-            document.getElementById('limit-popup-modal').style.display = 'none';
-            switchSection('subscription-payment-section');
-        }
-
-        function closeLimitModal() {
-            document.getElementById('limit-popup-modal').style.display = 'none';
-        }
-
-        function loadQuestion() {
-            if(currentQuestionIndex >= examQuestions.length) {
-                finishExamSession();
-                return;
-            }
-
-            const qObj = examQuestions[currentQuestionIndex];
-            document.getElementById('exam-progress-txt').innerText = `প্রশ্ন ${currentQuestionIndex + 1}/${examQuestions.length}`;
-            document.getElementById('question-title-box').innerText = qObj.q;
-
-            const optContainer = document.getElementById('options-container');
-            optContainer.innerHTML = '';
-
-            qObj.options.forEach((optText, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = optText;
-                btn.onclick = function() {
-                    const allBtns = optContainer.querySelectorAll('button');
-                    allBtns.forEach(b => b.style.pointerEvents = 'none');
-
-                    if(idx === qObj.correct) {
-                        btn.classList.add('correct');
-                        scoreCount++;
-                    } else {
-                        btn.classList.add('wrong');
-                        allBtns[qObj.correct].classList.add('correct');
-                    }
-
-                    setTimeout(() => {
-                        currentQuestionIndex++;
-                        loadQuestion();
-                    }, 1200);
-                };
-                optContainer.appendChild(btn);
-            });
-        }
-
-        function finishExamSession() {
-            let totalQ = examQuestions.length;
-            let percent = Math.round((scoreCount / totalQ) * 100);
-
-            document.getElementById('res-score-box').innerText = `নম্বর: ${scoreCount}/${totalQ}`;
-            document.getElementById('res-percent-box').innerText = `পার্সেন্টেজ: ${percent}%`;
-
-            studentExamHistory.push({ title: "মডেল টেস্ট পরীক্ষা", score: `${scoreCount}/${totalQ}`, percent: `${percent}%`, date: "আজ" });
-            leaderboardData.push({ name: currentUser.name, score: `${scoreCount}/${totalQ}`, percent: `${percent}%` });
-
-            switchSection('result-screen-section');
-        }
-
-        function renderStudentDashboard() {
-            const container = document.getElementById('student-history-list');
-            container.innerHTML = '';
-            if(studentExamHistory.length === 0) {
-                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">এখনো কোনো পরীক্ষার ফলাফল নেই।</p>';
-                return;
-            }
-
-            studentExamHistory.forEach(h => {
-                const div = document.createElement('div');
-                div.style.cssText = "background:#06081a; padding:10px; border-radius:8px; margin-bottom:8px; border:1px solid rgba(255,255,255,0.05);";
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; font-size:12px; color:#fbbf24; font-weight:bold;">
-                        <span>${h.title}</span>
-                        <span style="color:#10b981;">${h.percent}</span>
-                    </div>
-                    <p style="font-size:11px; color:#cbd5e1; margin-top:4px;">প্রাপ্ত নম্বর: ${h.score} | সময়: ${h.date}</p>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function renderLeaderboard() {
-            const tbody = document.getElementById('leaderboard-table-body');
-            tbody.innerHTML = '';
-            leaderboardData.forEach((item, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>#${index + 1}</strong></td>
-                    <td>${item.name}</td>
-                    <td style="color:#fbbf24; font-weight:bold;">${item.score}</td>
-                    <td style="color:#10b981; font-weight:bold;">${item.percent}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function saveAdminContent(type) {
-            alert(`${type} সফলভাবে নির্দিষ্ট বিষয় ও অধ্যায়ের সাথে ডাটাবেজে সংরক্ষণ করা হয়েছে!`);
-        }
-
-        function submitPaymentRequest() {
-            const pkg = document.getElementById('pay-package').value;
-            const name = document.getElementById('pay-name').value.trim();
-            const phone = document.getElementById('pay-phone').value.trim();
-            const pass = document.getElementById('pay-pass').value.trim();
-            const trxid = document.getElementById('pay-trxid').value.trim();
-
-            if(!name || !phone || !trxid) {
-                alert("দয়া করে নাম, মোবাইল নম্বর ও TrxID প্রদান করুন!");
-                return;
-            }
-
-            usersList = JSON.parse(localStorage.getItem('abs_users')) || usersList;
-            usersList.push({ name: name, phone: phone, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid });
-            localStorage.setItem('abs_users', JSON.stringify(usersList));
-
-            alert("পেমেন্ট রিকোয়েস্ট সাবমিট হয়েছে! এডমিন যাচাই করে অ্যাপ্রুভ করবে।");
-            switchSection('home-section');
-        }
-
-        function renderAdminTable() {
-            const tbody = document.getElementById('admin-user-table');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            
-            let filteredUsers = usersList.filter(u => !u.name.toLowerCase().includes("abs siddik"));
-
-            let total = filteredUsers.length;
-            let paidCount = filteredUsers.filter(u => u.isPaid).length;
-            let freeCount = total - paidCount;
-
-            document.getElementById('stat-total-users').innerText = total;
-            document.getElementById('stat-free-users').innerText = freeCount;
-            document.getElementById('stat-paid-users').innerText = paidCount;
-
-            let isSubAdmin = (currentUser && currentUser.role === 'sub_admin');
-
-            filteredUsers.forEach((u, idx) => {
-                let originalIndex = usersList.findIndex(item => item.phone === u.phone);
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${u.name}</strong><br><small style="color:#38bdf8;">ফোন: ${u.phone}</small><br><small style="color:#fbbf24;">পাস: ${u.pass}</small></td>
-                    <td><span class="${u.isPaid ? 'badge-paid' : 'badge-free'}">${u.isPaid ? 'PAID' : 'FREE'}</span></td>
-                    <td style="color:#38bdf8; font-size:10px;">শুরু: ${u.paidDate}<br>শেষ: ${u.expireDate}</td>
-                    <td><code style="color:#fbbf24;">${u.trx}</code></td>
-                    <td>
-                        <div style="display: flex; gap: 4px; flex-direction: column;">
-                            <button style="background:${isSubAdmin ? '#475569' : (u.isPaid ? '#dc2626' : '#16a34a')}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:${isSubAdmin ? 'not-allowed' : 'pointer'};" ${isSubAdmin ? 'disabled title="শুধুমাত্র মেইন এডমিন এপ্রুভ করতে পারবে"' : ''} onclick="toggleUserPayment(${originalIndex})">
-                                ${isSubAdmin ? '🔒 Locked' : (u.isPaid ? 'Revoke' : 'Approve')}
-                            </button>
-                            <button style="background:#b91c1c; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteUser(${originalIndex})">
-                                <i class="fa-solid fa-trash"></i> ডিলিট
-                            </button>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function toggleUserPayment(idx) {
-            if(currentUser && currentUser.role === 'sub_admin') {
-                alert("দুঃখিত! সাব-এডমিন পেমেন্ট এপ্রুভ বা রিভোক করতে পারবেন না। এটি শুধুমাত্র মেইন এডমিন করতে পারবেন।");
-                return;
-            }
-
-            if(usersList[idx].isPaid) {
-                usersList[idx].isPaid = false;
-                usersList[idx].paidDate = "-";
-                usersList[idx].expireDate = "-";
-            } else {
-                usersList[idx].isPaid = true;
-                let today = new Date();
-                let expiry = new Date();
-                expiry.setMonth(today.getMonth() + 1);
-
-                usersList[idx].paidDate = today.toISOString().slice(0, 10);
-                usersList[idx].expireDate = expiry.toISOString().slice(0, 10);
-            }
-            
-            localStorage.setItem('abs_users', JSON.stringify(usersList));
-            renderAdminTable();
-        }
-
-        function deleteUser(idx) {
-            if(currentUser && currentUser.role === 'sub_admin') {
-                alert("দুঃখিত! সাব-এডমিন ইউজার ডিলিট করতে পারবেন না। এটি শুধুমাত্র মেইন এডমিন করতে পারবেন।");
-                return;
-            }
-
-            if(confirm(`আপনি কি নিশ্চিতভাবে "${usersList[idx].name}" ইউজারটিকে ডিলিট করতে চান?`)) {
-                usersList.splice(idx, 1);
-                localStorage.setItem('abs_users', JSON.stringify(usersList));
-                renderAdminTable();
-                alert("ইউজার সফলভাবে ডিলিট করা হয়েছে!");
-            }
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('exam-config-modal').style.display
