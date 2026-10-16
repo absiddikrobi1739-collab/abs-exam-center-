@@ -225,6 +225,7 @@
         .c-red { background: #fee2e2; color: #dc2626; }
         .c-orange { background: #ffedd5; color: #ea580c; }
         .c-blue { background: #e0f2fe; color: #0284c7; }
+        .c-teal { background: #ccfbf1; color: #0d9488; }
 
         .card-info h4 { font-size: 13px; font-weight: 800; }
         .card-info p { font-size: 10px; color: #64748b; }
@@ -334,7 +335,7 @@
             line-height: 1.5;
         }
 
-        /* Edu-tech Center Popup Modal */
+        /* Popup Modals */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -420,7 +421,7 @@
 </head>
 <body>
 
-    <!-- 🌟 এডু-টেক প্রিমিয়াম পপ-আপ মডাল (লিমিট শেষ হলে মাঝখানে দেখাবে) -->
+    <!-- 🌟 লিমিট শেষ হওয়ার প্রিমিয়াম পপ-আপ মডাল -->
     <div id="limit-popup-modal" class="modal-overlay">
         <div class="modal-box">
             <div style="background: rgba(251, 191, 36, 0.15); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: #fbbf24; font-size: 26px;">
@@ -436,6 +437,55 @@
             <button class="btn-green" style="background: #334155; color: #cbd5e1; font-size: 12px; padding: 8px;" onclick="closeLimitModal()">
                 পরে দেখব
             </button>
+        </div>
+    </div>
+
+    <!-- 🌟 পরীক্ষা শুরুর কনফিগারেশন মডাল (অধ্যায়+বিষয়ভিত্তিক, MCQ ও সময় সিলেকশন) -->
+    <div id="exam-config-modal" class="modal-overlay">
+        <div class="modal-box" style="text-align: left;">
+            <h3 style="color: #fbbf24; font-size: 16px; margin-bottom: 12px; text-align: center;"><i class="fa-solid fa-pen-to-square"></i> পরীক্ষা সেটআপ করুন</h3>
+            
+            <label class="input-label">পরীক্ষার ধরণ:</label>
+            <select id="cfg-exam-type" class="select-input">
+                <option value="chapter">অধ্যায়ভিত্তিক এক্সাম</option>
+                <option value="subject">বিষয়ভিত্তিক এক্সাম (ফুল সিলেবাস)</option>
+            </select>
+
+            <label class="input-label">বিষয় নির্বাচন:</label>
+            <select id="cfg-subject" class="select-input" onchange="updateChapters('cfg-subject', 'cfg-chapter')">
+                <option value="বাংলা">বাংলা</option>
+                <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
+                <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                <option value="আইসিটি">আইসিটি</option>
+            </select>
+
+            <label class="input-label">অধ্যায় নির্বাচন:</label>
+            <select id="cfg-chapter" class="select-input"></select>
+
+            <label class="input-label">কতটি MCQ প্রশ্ন হবে?</label>
+            <select id="cfg-mcq-count" class="select-input">
+                <option value="10">১০টি MCQ</option>
+                <option value="20" selected>২০টি MCQ</option>
+                <option value="30">৩০টি MCQ</option>
+                <option value="50">৫০টি MCQ</option>
+            </select>
+
+            <label class="input-label">সময় নির্ধারণ (মিনিট):</label>
+            <select id="cfg-time" class="select-input">
+                <option value="5">৫ মিনিট</option>
+                <option value="10" selected>১০ মিনিট</option>
+                <option value="15">১৫ মিনিট</option>
+                <option value="30">৩০ মিনিট</option>
+            </select>
+
+            <button class="btn-green" style="background: #10b981; margin-top: 10px;" onclick="startConfiguredExam()">পরীক্ষা শুরু করুন <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn-green" style="background: #334155; margin-top: 8px; font-size: 12px; padding: 8px;" onclick="closeExamConfigModal()">বাতিল</button>
         </div>
     </div>
 
@@ -524,10 +574,10 @@
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-courses', this)">📖 কোর্স</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-packages', this)">📦 প্যাকেজ</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-flashcard', this)">⚡ ফ্ল্যাশকার্ড</button>
-                    <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-live', this)">🔴 লাইভ</button>
+                    <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-live', this)">🔴 লাইভ এক্সাম</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-general', this)">📝 প্রশ্ন</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-sug', this)">💡 সাজেশন</button>
-                    <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-bank', this)">📚 ব্যাংক</button>
+                    <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-bank', this)">📚 প্রশ্নব্যাংক</button>
                 </div>
 
                 <!-- ইউজার লিস্ট ট্যাব -->
@@ -612,10 +662,10 @@
                     </div>
                 </div>
 
-                <!-- 🔴 লাইভ প্রশ্ন যোগ করার বক্স -->
+                <!-- 🔴 লাইভ এক্সাম প্রশ্ন যোগ করার বক্স -->
                 <div id="adm-tab-live" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
-                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">🔴 লাইভ পরীক্ষা প্রশ্ন যোগ করুন</h4>
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;"><i class="fa-solid fa-circle-dot"></i> লাইভ পরীক্ষা প্রশ্ন যোগ করুন</h4>
                         <label class="input-label">বিষয় নির্বাচন:</label>
                         <select id="live-subject" class="select-input" onchange="updateChapters('live-subject', 'live-chapter')">
                             <option value="বাংলা">বাংলা</option>
@@ -692,7 +742,7 @@
                 <!-- 📚 প্রশ্নব্যাংক যোগ করার বক্স -->
                 <div id="adm-tab-bank" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
-                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📚 প্রশ্নব্যাংক প্রশ্ন যোগ করুন</h4>
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;"><i class="fa-solid fa-book-bookmark"></i> প্রশ্নব্যাংক প্রশ্ন যোগ করুন</h4>
                         <label class="input-label">বিষয়:</label>
                         <select id="bank-subject" class="select-input" onchange="updateChapters('bank-subject', 'bank-chapter')">
                             <option value="বাংলা">বাংলা</option>
@@ -721,14 +771,14 @@
             </div>
         </div>
 
-        <!-- 🌟 ৩. সাধারণ স্টুডেন্ট হোম -->
+        <!-- 🌟 ৩. সাধারণ স্টুডেন্ট হোম (৮টি অংশ) -->
         <div id="home-section" class="page-section">
             <div class="student-welcome-box">
                 <div style="background:#38bdf8; color:#0f172a; font-size:11px; padding:3px 10px; border-radius:12px; font-weight:700; display:inline-block; margin-bottom:8px;">
                     ● ফ্রি এক্সাম লিমিট বাকি: <span id="exam-counter-txt" style="color:#b91c1c; font-weight:800;">40</span>/40 টি
                 </div>
                 <h3 style="font-size:15px; margin-bottom:10px;"><span id="banner-user-name">শিক্ষার্থী</span>, অনুশীলনে স্বাগতম!</h3>
-                <button class="btn-green" style="background:#f59e0b; color:#0f172a;" onclick="startExamSession()">
+                <button class="btn-green" style="background:#f59e0b; color:#0f172a;" onclick="openExamConfig()">
                     পরীক্ষা দিন <i class="fa-solid fa-pen-to-square"></i>
                 </button>
             </div>
@@ -739,6 +789,7 @@
                 <span style="background:#06081a; padding:4px 8px; border-radius:8px;">ADMIN <i class="fa-solid fa-arrow-right"></i></span>
             </div>
 
+            <!-- মোট ৮টি প্রিমিয়াম কার্ড গ্রিড -->
             <div class="grid-container">
                 <div class="grid-card" onclick="switchSection('dashboard-section')">
                     <div class="icon-box c-yellow"><i class="fa-solid fa-chart-line"></i></div>
@@ -768,6 +819,16 @@
                 <div class="grid-card" onclick="switchSection('suggestion-section')">
                     <div class="icon-box c-orange"><i class="fa-solid fa-lightbulb"></i></div>
                     <div class="card-info"><h4>সাজেশন</h4><p>পরীক্ষার চূড়ান্ত সাজেশন</p></div>
+                </div>
+
+                <div class="grid-card" onclick="openExamConfig()">
+                    <div class="icon-box c-red"><i class="fa-solid fa-circle-dot"></i></div>
+                    <div class="card-info"><h4>লাইভ এক্সাম</h4><p>লাইভ মডেল টেস্ট জোন</p></div>
+                </div>
+
+                <div class="grid-card" onclick="switchSection('bank-section')">
+                    <div class="icon-box c-teal"><i class="fa-solid fa-book-bookmark"></i></div>
+                    <div class="card-info"><h4>প্রশ্নব্যাংক</h4><p>বোর্ড প্রশ্ন আর্কাইভ</p></div>
                 </div>
             </div>
         </div>
@@ -803,19 +864,30 @@
             </div>
         </div>
 
-        <!-- 🌟 ৭. লাইভ এক্সাম স্ক্রিন -->
+        <!-- 🌟 ৭. প্রশ্নব্যাংক পেজ (স্টুডেন্ট ভিউ) -->
+        <div id="bank-section" class="page-section">
+            <div class="inner-page-box">
+                <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-book-bookmark"></i> বোর্ড প্রশ্নব্যাংক আর্কাইভ</h3>
+                <div id="student-bank-container">
+                    <p style="font-size:12px; color:#94a3b8;">আইসিটি ও বিজ্ঞান বিষয়ের গুরুত্বপূর্ণ বোর্ড প্রশ্ন ও ব্যাখ্যা এখানে সংরক্ষিত রয়েছে।</p>
+                </div>
+                <button class="btn-green" style="background:#334155; margin-top:15px;" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- 🌟 ৮. লাইভ এক্সাম স্ক্রিন -->
         <div id="exam-screen-section" class="page-section">
             <div class="inner-page-box">
                 <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-                    <span style="font-size:12px; color:#fbbf24;" id="exam-progress-txt">প্রশ্ন ১/২</span>
-                    <span style="font-size:12px; color:#ef4444;" id="exam-timer-txt">সময়: ৬০ সে.</span>
+                    <span style="font-size:12px; color:#fbbf24;" id="exam-progress-txt">প্রশ্ন ১/২০</span>
+                    <span style="font-size:12px; color:#ef4444;" id="exam-timer-txt">সময়: ১০ মিনিট</span>
                 </div>
                 <h3 id="question-title-box" style="font-size:15px; margin-bottom:15px; color:#f8fafc;">প্রশ্ন লোড হচ্ছে...</h3>
                 <div id="options-container"></div>
             </div>
         </div>
 
-        <!-- 🌟 ৮. ইনস্ট্যান্ট রেজাল্ট -->
+        <!-- 🌟 ৯. ইনস্ট্যান্ট রেজাল্ট -->
         <div id="result-screen-section" class="page-section">
             <div class="inner-page-box" style="text-align:center;">
                 <h2 style="color:#10b981; margin-bottom:8px;"><i class="fa-solid fa-award"></i> পরীক্ষার ফলাফল</h2>
@@ -827,7 +899,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ৯. স্টুডেন্ট ড্যাশবোর্ড -->
+        <!-- 🌟 ১০. স্টুডেন্ট ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-chart-pie"></i> পারফরম্যান্স ড্যাশবোর্ড</h3>
@@ -838,7 +910,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ১০. লিডারবোর্ড -->
+        <!-- 🌟 ১১. লিডারবোর্ড -->
         <div id="leaderboard-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#10b981; margin-bottom:12px;"><i class="fa-solid fa-trophy"></i> লাইভ লিডারবোর্ড র‍্যাংকিং</h3>
@@ -859,7 +931,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ১১. সাবস্ক্রিপশন ও পেমেন্ট ফর্ম -->
+        <!-- 🌟 ১২. সাবস্ক্রিপশন ও পেমেন্ট ফর্ম -->
         <div id="subscription-payment-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:10px;">👑 প্রিমিয়াম সাবস্ক্রিপশন</h3>
@@ -883,7 +955,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ১২. প্রোফাইল পেজ -->
+        <!-- 🌟 ১৩. প্রোফাইল পেজ -->
         <div id="profile-section" class="page-section">
             <div class="inner-page-box">
                 <h3>👤 অ্যাকাউন্ট প্রোফাইল</h3>
@@ -1305,18 +1377,38 @@
             renderPackagesTable();
         }
 
-        function startExamSession() {
+        /* 🌟 পরীক্ষা কনফিগারেশন ওপেন ও স্টার্ট ফাংশন */
+        function openExamConfig() {
             if(freeExamCount > 0) {
-                freeExamCount--;
-                document.getElementById('exam-counter-txt').innerText = freeExamCount;
-                currentQuestionIndex = 0;
-                scoreCount = 0;
-                switchSection('exam-screen-section');
-                loadQuestion();
+                updateChapters('cfg-subject', 'cfg-chapter');
+                document.getElementById('exam-config-modal').style.display = 'flex';
             } else {
-                // লিমিট শেষ হলে স্ক্রিনের মাঝখানে প্রিমিয়াম পপ-আপ মডাল দেখাবে
                 document.getElementById('limit-popup-modal').style.display = 'flex';
             }
+        }
+
+        function closeExamConfigModal() {
+            document.getElementById('exam-config-modal').style.display = 'none';
+        }
+
+        function startConfiguredExam() {
+            const examType = document.getElementById('cfg-exam-type').value;
+            const subject = document.getElementById('cfg-subject').value;
+            const chapter = document.getElementById('cfg-chapter').value;
+            const mcqCount = document.getElementById('cfg-mcq-count').value;
+            const timeMin = document.getElementById('cfg-time').value;
+
+            document.getElementById('exam-config-modal').style.display = 'none';
+
+            freeExamCount--;
+            document.getElementById('exam-counter-txt').innerText = freeExamCount;
+
+            currentQuestionIndex = 0;
+            scoreCount = 0;
+
+            document.getElementById('exam-timer-txt').innerText = `সময়: ${timeMin} মিনিট`;
+            switchSection('exam-screen-section');
+            loadQuestion();
         }
 
         function goToSubscription() {
@@ -1383,7 +1475,7 @@
             const container = document.getElementById('student-history-list');
             container.innerHTML = '';
             if(studentExamHistory.length === 0) {
-                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">এখনো কোনো পরীক্ষা দেওয়া হয়নি।</p>';
+                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">এখনো কোনো পরীক্ষার ফলাফল নেই।</p>';
                 return;
             }
 
