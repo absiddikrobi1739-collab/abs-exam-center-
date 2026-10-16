@@ -22,7 +22,7 @@
         body {
             background-color: #1e1b4b;
             color: #333;
-            padding-bottom: 80px;
+            padding-bottom: 85px;
             min-height: 100vh;
         }
 
@@ -30,12 +30,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 18px;
+            padding: 12px 18px;
             color: white;
-            background: #1e1b4b;
+            background: #181443;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .profile-area {
@@ -43,29 +44,33 @@
             align-items: center;
             gap: 10px;
             font-weight: 600;
+            font-size: 14px;
+        }
+
+        .brand-title {
             font-size: 15px;
+            font-weight: 800;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .avatar-circle {
             background: #e11d48;
             color: white;
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: bold;
-        }
-
-        .top-icons {
-            display: flex;
-            gap: 18px;
-            font-size: 18px;
+            font-size: 13px;
         }
 
         .container {
-            padding: 10px 15px;
+            padding: 12px 15px;
             max-width: 480px;
             margin: 0 auto;
             width: 100%;
@@ -122,7 +127,6 @@
             gap: 8px;
         }
 
-        /* 👑 Home Free Trial Progress Banner */
         .trial-tracker-card {
             background: linear-gradient(135deg, #312e81, #4338ca);
             color: white;
@@ -177,7 +181,6 @@
             color: #38bdf8;
             font-weight: 700;
             cursor: pointer;
-            text-decoration: none;
         }
 
         .target-title {
@@ -271,18 +274,18 @@
             display: block;
             font-size: 12px;
             font-weight: 600;
-            color: #cbd5e1;
+            color: #334155;
             margin-bottom: 4px;
         }
 
         .form-group select, .form-group input {
             width: 100%;
             padding: 10px;
-            border: 1px solid #475569;
+            border: 1px solid #cbd5e1;
             border-radius: 8px;
             font-size: 13px;
-            background: #0f172a;
-            color: white;
+            background: #f8fafc;
+            color: #0f172a;
         }
 
         .option-btn {
@@ -315,7 +318,7 @@
             background: linear-gradient(145deg, #0f172a, #1e1b4b);
             border: 1px solid #38357a;
             border-radius: 18px;
-            padding: 20px;
+            padding: 18px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
             color: white;
         }
@@ -342,15 +345,14 @@
         .admin-stat-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 18px;
         }
 
         .admin-stat-card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 12px 8px;
+            padding: 10px 6px;
             border-radius: 12px;
             text-align: center;
         }
@@ -362,13 +364,13 @@
         }
 
         .admin-stat-card h3 {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
         }
 
         .admin-tab-bar {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             background: #020617;
             padding: 4px;
             border-radius: 10px;
@@ -377,8 +379,8 @@
 
         .admin-tab {
             flex: 1;
-            padding: 8px;
-            font-size: 11px;
+            padding: 8px 4px;
+            font-size: 10px;
             font-weight: 700;
             border: none;
             background: transparent;
@@ -405,13 +407,13 @@
         .premium-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 11px;
+            font-size: 10px;
             margin-top: 10px;
         }
 
         .premium-table th, .premium-table td {
             border: 1px solid #334155;
-            padding: 8px;
+            padding: 6px;
             text-align: left;
         }
 
@@ -423,7 +425,7 @@
         .badge-free {
             background: rgba(239, 68, 68, 0.2);
             color: #f87171;
-            padding: 2px 6px;
+            padding: 2px 4px;
             border-radius: 4px;
             font-weight: bold;
             border: 1px solid #ef4444;
@@ -432,7 +434,7 @@
         .badge-paid {
             background: rgba(34, 197, 94, 0.2);
             color: #4ade80;
-            padding: 2px 6px;
+            padding: 2px 4px;
             border-radius: 4px;
             font-weight: bold;
             border: 1px solid #22c55e;
@@ -442,10 +444,10 @@
             background: #22c55e;
             color: #020617;
             border: none;
-            padding: 4px 8px;
+            padding: 4px 6px;
             border-radius: 4px;
             font-weight: 800;
-            font-size: 10px;
+            font-size: 9px;
             cursor: pointer;
         }
 
@@ -453,10 +455,10 @@
             background: #ef4444;
             color: white;
             border: none;
-            padding: 4px 8px;
+            padding: 4px 6px;
             border-radius: 4px;
             font-weight: bold;
-            font-size: 10px;
+            font-size: 9px;
             cursor: pointer;
         }
 
@@ -486,7 +488,7 @@
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
-            box-shadow: 0 -3px 12px rgba(0,0,0,0.12);
+            box-shadow: 0 -3px 12px rgba(0,0,0,0.15);
             z-index: 1000;
         }
 
@@ -533,14 +535,14 @@
 </head>
 <body>
 
+    <!-- 🌟 মেইন হেডার উইথ ব্র্যান্ড নেম (Abs Exam Center) -->
     <div class="top-bar">
+        <div class="brand-title">
+            <i class="fa-solid fa-graduation-cap"></i> Abs Exam Center
+        </div>
         <div class="profile-area">
             <div class="avatar-circle">A</div>
             <span id="top-user-name">Abs Siddik</span>
-        </div>
-        <div class="top-icons">
-            <i class="fa-regular fa-bell"></i>
-            <i class="fa-solid fa-bars"></i>
         </div>
     </div>
 
@@ -650,9 +652,9 @@
                     📊 আপনার ব্যবহৃত ফ্রি পরীক্ষা: <span id="used-exam-count">0</span> / 40
                 </div>
                 
-                <div class="form-group" style="color:#333;">
-                    <label style="color:#333;">বিষয় নির্বাচন করুন:</label>
-                    <select id="chapter-select" style="background:#f8fafc; color:#333;">
+                <div class="form-group">
+                    <label>বিষয় নির্বাচন করুন:</label>
+                    <select id="chapter-select">
                         <option value="bangla-1">বাংলা ১ম পত্র</option>
                         <option value="bangla-2">বাংলা ২য় পত্র</option>
                         <option value="english-1">ইংরেজি ১ম পত্র</option>
@@ -670,8 +672,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label style="color:#333;">সময়সীমা:</label>
-                    <select id="exam-time" style="background:#f8fafc; color:#333;">
+                    <label>সময়সীমা:</label>
+                    <select id="exam-time">
                         <option value="1">১ মিনিট</option>
                         <option value="2">২ মিনিট</option>
                         <option value="5">৫ মিনিট</option>
@@ -733,7 +735,7 @@
                 <h2 style="color:#4f46e5;"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> প্রিমিয়াম সাবস্ক্রিপশন প্ল্যান</h2>
                 <p style="font-size:12px; margin-bottom:15px;">আপনার পছন্দমতো প্যাকেজ নির্বাচন করে বিকাশে/নগদে/রকেটে পেমেন্ট করুন:</p>
 
-                <div class="plan-card" onclick="selectPlan('২ মাস - ৫০ টাকা', '50')">
+                <div class="plan-card" onclick="selectPlan('২ মাস - ৫০ টাকা', 2)">
                     <div>
                         <h4 style="font-size:14px; color:#1e293b;">২ মাসের প্যাকেজ</h4>
                         <p style="font-size:11px; color:#64748b;">আনলিমিটেড পরীক্ষা ও সকল সুবিধা</p>
@@ -741,7 +743,7 @@
                     <span style="font-weight:bold; color:#4f46e5; font-size:15px;">৫০ টাকা</span>
                 </div>
 
-                <div class="plan-card" onclick="selectPlan('৩ মাস - ১০০ টাকা', '100')">
+                <div class="plan-card" onclick="selectPlan('৩ মাস - ১০০ টাকা', 3)">
                     <div>
                         <h4 style="font-size:14px; color:#1e293b;">৩ মাসের প্যাকেজ</h4>
                         <p style="font-size:11px; color:#64748b;">জনপ্রিয় প্যাক + ফুল এনালাইসিস</p>
@@ -749,7 +751,7 @@
                     <span style="font-weight:bold; color:#4f46e5; font-size:15px;">১০০ টাকা</span>
                 </div>
 
-                <div class="plan-card" onclick="selectPlan('৬ মাস - ১৫০ টাকা', '150')">
+                <div class="plan-card" onclick="selectPlan('৬ মাস - ১৫০ টাকা', 6)">
                     <div>
                         <h4 style="font-size:14px; color:#1e293b;">৬ মাসের প্যাকেজ (বেস্ট ভ্যালু)</h4>
                         <p style="font-size:11px; color:#64748b;">দীর্ঘমেয়াদী পূর্ণাঙ্গ প্রস্তুতি</p>
@@ -765,29 +767,29 @@
                         বিকাশ/নগদ/রকেট (Send Money): <strong>01700000000</strong> (Personal)
                     </div>
 
-                    <div class="form-group" style="color:#333;">
-                        <label style="color:#333;">আপনার নাম:</label>
-                        <input type="text" id="sub-name" placeholder="আপনার নাম" style="background:white; color:#333; border:1px solid #cbd5e1;">
+                    <div class="form-group">
+                        <label>আপনার নাম:</label>
+                        <input type="text" id="sub-name" placeholder="আপনার নাম">
                     </div>
                     <div class="form-group">
-                        <label style="color:#333;">ইমেইল এড্রেস:</label>
-                        <input type="email" id="sub-email" placeholder="example@gmail.com" style="background:white; color:#333; border:1px solid #cbd5e1;">
+                        <label>ইমেইল এড্রেস:</label>
+                        <input type="email" id="sub-email" placeholder="example@gmail.com">
                     </div>
                     <div class="form-group">
-                        <label style="color:#333;">পাসওয়ার্ড:</label>
-                        <input type="password" id="sub-pass" placeholder="পাসওয়ার্ড দিন" style="background:white; color:#333; border:1px solid #cbd5e1;">
+                        <label>পাসওয়ার্ড:</label>
+                        <input type="password" id="sub-pass" placeholder="পাসওয়ার্ড দিন">
                     </div>
                     <div class="form-group">
-                        <label style="color:#333;">পেমেন্ট মেথড:</label>
-                        <select id="sub-method" style="background:white; color:#333; border:1px solid #cbd5e1;">
+                        <label>পেমেন্ট মেথড:</label>
+                        <select id="sub-method">
                             <option value="bKash">bKash (বিকাশ)</option>
                             <option value="Nagad">Nagad (নগদ)</option>
                             <option value="Rocket">Rocket (রকেট)</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label style="color:#333;">Transaction ID (TrxID):</label>
-                        <input type="text" id="sub-trxid" placeholder="যেমন: 9J87K2LX" style="background:white; color:#333; border:1px solid #cbd5e1;">
+                        <label>Transaction ID (TrxID):</label>
+                        <input type="text" id="sub-trxid" placeholder="যেমন: 9J87K2LX">
                     </div>
 
                     <button class="action-btn" onclick="submitPaymentRequest()" style="background:#16a34a; color:white;">
@@ -815,14 +817,14 @@
                 <h2>📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
                 <p style="margin-bottom: 12px;">আপনার পড়াশোনার সার্বিক ডায়াগ্রাম ও হিস্ট্রি।</p>
 
-                <div class="stat-grid">
-                    <div class="stat-card">
-                        <h5>মোট পরীক্ষা</h5>
-                        <h3 id="total-exams-count">০ টি</h3>
+                <div class="stat-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:10px; border-radius:10px;">
+                        <h5 style="font-size:11px; color:#64748b;">মোট পরীক্ষা</h5>
+                        <h3 id="total-exams-count" style="font-size:18px;">০ টি</h3>
                     </div>
-                    <div class="stat-card">
-                        <h5>গড় নম্বর</h5>
-                        <h3 id="avg-score-val" style="color: #2563eb;">০%</h3>
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:10px; border-radius:10px;">
+                        <h5 style="font-size:11px; color:#64748b;">গড় নম্বর</h5>
+                        <h3 id="avg-score-val" style="font-size:18px; color: #2563eb;">০%</h3>
                     </div>
                 </div>
 
@@ -839,14 +841,14 @@
             </div>
         </div>
 
-        <!-- 👑 ৮. প্রিমিয়াম এডমিন প্যানেল -->
+        <!-- 👑 ৮. প্রিমিয়াম এডমিন প্যানেল (পেমেন্ট তারিখ ও মেয়াদ হিসেবসহ) -->
         <div id="admin-panel-section" class="page-section">
             <div class="admin-wrapper">
                 
                 <div class="admin-header">
                     <div>
-                        <h2 style="font-size:18px; color:#f8fafc;"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> এডমিন ড্যাশবোর্ড</h2>
-                        <p style="font-size:11px; color:#94a3b8; margin:0;">Abs Exam Center Management</p>
+                        <h2 style="font-size:16px; color:#f8fafc;"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> এডমিন ড্যাশবোর্ড</h2>
+                        <p style="font-size:10px; color:#94a3b8; margin:0;">Abs Exam Center Management</p>
                     </div>
                     <span class="admin-title-badge">PREMIUM</span>
                 </div>
@@ -867,13 +869,14 @@
                 </div>
 
                 <div class="admin-tab-bar">
-                    <button class="admin-tab active" onclick="switchAdminTab('tab-pending')"><i class="fa-solid fa-clock"></i> পেন্ডিং পেমেন্ট</button>
-                    <button class="admin-tab" onclick="switchAdminTab('tab-users')"><i class="fa-solid fa-users"></i> ইউজার লিস্ট</button>
-                    <button class="admin-tab" onclick="switchAdminTab('tab-questions')"><i class="fa-solid fa-plus-circle"></i> প্রশ্ন যোগ/ডিলিট</button>
+                    <button class="admin-tab active" onclick="switchAdminTab('tab-pending', this)"><i class="fa-solid fa-clock"></i> পেন্ডিং</button>
+                    <button class="admin-tab" onclick="switchAdminTab('tab-users', this)"><i class="fa-solid fa-users"></i> ইউজার তারিখসহ</button>
+                    <button class="admin-tab" onclick="switchAdminTab('tab-questions', this)"><i class="fa-solid fa-plus-circle"></i> প্রশ্ন যোগ/ডিলিট</button>
                 </div>
 
+                <!-- পেন্ডিং পেমেন্ট রিকোয়েস্ট -->
                 <div id="tab-pending" class="admin-content-box active">
-                    <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">পেন্ডিং সাবস্ক্রিপশন রিকোয়েস্ট সমূহ:</h4>
+                    <h4 style="font-size:12px; color:#fbbf24; margin-bottom:8px;">পেন্ডিং পেমেন্ট রিকোয়েস্ট:</h4>
                     <div style="overflow-x:auto;">
                         <table class="premium-table">
                             <thead>
@@ -881,7 +884,6 @@
                                     <th>নাম</th>
                                     <th>ইমেইল</th>
                                     <th>প্যাক</th>
-                                    <th>মেথড</th>
                                     <th>TrxID</th>
                                     <th>অ্যাকশন</th>
                                 </tr>
@@ -891,15 +893,17 @@
                     </div>
                 </div>
 
+                <!-- ইউজার লিস্ট উইথ পেমেন্ট ডেট & এক্সপায়ারি ডেট -->
                 <div id="tab-users" class="admin-content-box">
+                    <h4 style="font-size:12px; color:#fbbf24; margin-bottom:8px;">ইউজার সাবস্ক্রিপশন মেয়াদের তারিখ:</h4>
                     <div style="overflow-x:auto;">
                         <table class="premium-table">
                             <thead>
                                 <tr>
                                     <th>স্টুডেন্ট</th>
-                                    <th>ইমেইল</th>
-                                    <th>পাসওয়ার্ড</th>
                                     <th>স্ট্যাটাস</th>
+                                    <th>পেমেন্টের তারিখ</th>
+                                    <th>মেয়াদ শেষ হবে</th>
                                     <th>অ্যাকশন</th>
                                 </tr>
                             </thead>
@@ -908,12 +912,13 @@
                     </div>
                 </div>
 
+                <!-- প্রশ্ন যোগ ও ডিলিট -->
                 <div id="tab-questions" class="admin-content-box">
                     <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155; margin-bottom:15px;">
-                        <h4 style="font-size:13px; margin-bottom:10px; color:#fbbf24;">নতুন MCQ কুইজ তৈরি করুন</h4>
+                        <h4 style="font-size:12px; margin-bottom:10px; color:#fbbf24;">নতুন MCQ কুইজ তৈরি করুন</h4>
                         
                         <div class="form-group">
-                            <label>বিষয় নির্বাচন করুন:</label>
+                            <label style="color:#cbd5e1;">বিষয় নির্বাচন করুন:</label>
                             <select id="admin-q-subject">
                                 <option value="bangla-1">বাংলা ১ম পত্র</option>
                                 <option value="bangla-2">বাংলা ২য় পত্র</option>
@@ -932,27 +937,27 @@
                         </div>
 
                         <div class="form-group">
-                            <label>প্রশ্ন লিখুন:</label>
+                            <label style="color:#cbd5e1;">প্রশ্ন লিখুন:</label>
                             <input type="text" id="admin-q-text" placeholder="যেমন: সোনার তরী কবিতার কবি কে?">
                         </div>
                         <div class="form-group">
-                            <label>অপশন ১:</label>
+                            <label style="color:#cbd5e1;">অপশন ১:</label>
                             <input type="text" id="admin-opt-0" placeholder="অপশন ১">
                         </div>
                         <div class="form-group">
-                            <label>অপশন ২:</label>
+                            <label style="color:#cbd5e1;">অপশন ২:</label>
                             <input type="text" id="admin-opt-1" placeholder="অপশন ২">
                         </div>
                         <div class="form-group">
-                            <label>অপশন ৩:</label>
+                            <label style="color:#cbd5e1;">অপশন ৩:</label>
                             <input type="text" id="admin-opt-2" placeholder="অপশন ৩">
                         </div>
                         <div class="form-group">
-                            <label>অপশন ৪:</label>
+                            <label style="color:#cbd5e1;">অপশন ৪:</label>
                             <input type="text" id="admin-opt-3" placeholder="অপশন ৪">
                         </div>
                         <div class="form-group">
-                            <label>সঠিক উত্তর সিলেক্ট করুন:</label>
+                            <label style="color:#cbd5e1;">সঠিক উত্তর সিলেক্ট করুন:</label>
                             <select id="admin-correct-ans">
                                 <option value="0">অপশন ১</option>
                                 <option value="1">অপশন ২</option>
@@ -966,7 +971,7 @@
                         </button>
                     </div>
 
-                    <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">বিদ্যমান প্রশ্ন তালিকা (বিষয়সহ):</h4>
+                    <h4 style="font-size:12px; color:#fbbf24; margin-bottom:8px;">বিদ্যমান প্রশ্ন তালিকা (বিষয়সহ):</h4>
                     <div id="admin-question-delete-list" style="max-height:220px; overflow-y:auto;"></div>
                 </div>
 
@@ -1071,17 +1076,18 @@
         ];
 
         let leaderboardData = [
-            { name: "মাসফাকুর রহমান", email: "mushfiq@gmail.com", pass: "123456", isPaid: true, totalScore: 28, percentage: 93, examCount: 15 },
-            { name: "Abs Siddik (আপনি)", email: "abs@exam.com", pass: "abs889", isPaid: false, totalScore: 25, percentage: 83, examCount: 0 },
-            { name: "রাফসান আহমেদ", email: "rafsan@gmail.com", pass: "pass123", isPaid: false, totalScore: 20, percentage: 66, examCount: 10 }
+            { name: "মাসফাকুর রহমান", email: "mushfiq@gmail.com", pass: "123456", isPaid: true, totalScore: 28, percentage: 93, examCount: 15, paidDate: "2023-10-01", expireDate: "2024-01-01" },
+            { name: "Abs Siddik (আপনি)", email: "abs@exam.com", pass: "abs889", isPaid: false, totalScore: 25, percentage: 83, examCount: 0, paidDate: "N/A", expireDate: "N/A" },
+            { name: "রাফসান আহমেদ", email: "rafsan@gmail.com", pass: "pass123", isPaid: false, totalScore: 20, percentage: 66, examCount: 10, paidDate: "N/A", expireDate: "N/A" }
         ];
 
         let pendingPayments = [
-            { name: "সাকিব হাসান", email: "sakib@gmail.com", pass: "sakib123", pack: "৩ মাস - ১০০ টাকা", method: "bKash", trxId: "9K87L2MX" }
+            { name: "সাকিব হাসান", email: "sakib@gmail.com", pass: "sakib123", pack: "৩ মাস - ১০০ টাকা", months: 3, method: "bKash", trxId: "9K87L2MX" }
         ];
 
         let activeExamQuestions = [];
         let selectedPlanText = "";
+        let selectedPlanMonths = 2;
         let currentQ = 0;
         let correctCount = 0;
         let wrongCount = 0;
@@ -1103,7 +1109,7 @@
             if (myUser && trialCard && trialText && trialBar) {
                 if (myUser.isPaid) {
                     trialCard.style.background = 'linear-gradient(135deg, #065f46, #047857)';
-                    trialText.innerHTML = 'PRO MEMBER (আনলিমিটেড)';
+                    trialText.innerHTML = 'PRO MEMBER (মেয়াদ: ' + myUser.expireDate + ')';
                     trialBar.style.width = '100%';
                 } else {
                     const count = myUser.examCount || 0;
@@ -1138,18 +1144,19 @@
             }
         }
 
-        function switchAdminTab(tabId) {
+        function switchAdminTab(tabId, btnElem) {
             document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.admin-content-box').forEach(box => box.classList.remove('active'));
 
-            if(event && event.currentTarget) {
-                event.currentTarget.classList.add('active');
+            if(btnElem) {
+                btnElem.classList.add('active');
             }
             document.getElementById(tabId).classList.add('active');
         }
 
-        function selectPlan(planTitle, price) {
+        function selectPlan(planTitle, months) {
             selectedPlanText = planTitle;
+            selectedPlanMonths = months;
             document.querySelectorAll('.plan-card').forEach(card => card.classList.remove('selected'));
             if(event && event.currentTarget) {
                 event.currentTarget.classList.add('selected');
@@ -1174,6 +1181,7 @@
                 email: email,
                 pass: pass,
                 pack: selectedPlanText,
+                months: selectedPlanMonths,
                 method: method,
                 trxId: trxId
             });
@@ -1196,278 +1204,4 @@
             document.getElementById('exam-limit-modal').style.display = 'none';
         }
 
-        function startExam() {
-            let myUser = leaderboardData.find(u => u.email === "abs@exam.com");
-            if(myUser && !myUser.isPaid && myUser.examCount >= 40) {
-                document.getElementById('exam-limit-modal').style.display = 'flex';
-                return;
-            }
-
-            const selectedSubject = document.getElementById('chapter-select').value;
-            activeExamQuestions = questions.filter(q => q.subject === selectedSubject);
-
-            if (activeExamQuestions.length === 0) {
-                activeExamQuestions = questions;
-            }
-
-            const selectedTimeMin = parseInt(document.getElementById('exam-time').value);
-            timeLeftSeconds = selectedTimeMin * 60;
-            
-            currentQ = 0;
-            correctCount = 0;
-            wrongCount = 0;
-            wrongAnswersLog = [];
-            
-            document.getElementById('live-correct').innerText = "0";
-            document.getElementById('live-wrong').innerText = "0";
-
-            switchSection('model-test-section');
-            startTimer();
-            loadQuiz();
-        }
-
-        function startTimer() {
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                if (timeLeftSeconds <= 0) {
-                    clearInterval(timerInterval);
-                    finishExam();
-                    return;
-                }
-                timeLeftSeconds--;
-                const m = Math.floor(timeLeftSeconds / 60);
-                const s = timeLeftSeconds % 60;
-                document.getElementById('timer-display').innerText = `⏱️ ${m}:${s < 10 ? '0' : ''}${s}`;
-            }, 1000);
-        }
-
-        function loadQuiz() {
-            isAnswered = false;
-            document.getElementById('next-btn').style.display = 'none';
-
-            if (currentQ < activeExamQuestions.length) {
-                document.getElementById('question-text').innerText = (currentQ + 1) + ". " + activeExamQuestions[currentQ].q;
-                const optContainer = document.getElementById('options-container');
-                optContainer.innerHTML = '';
-                
-                activeExamQuestions[currentQ].options.forEach((opt, index) => {
-                    const btn = document.createElement('button');
-                    btn.className = 'option-btn';
-                    btn.innerText = opt;
-                    btn.onclick = () => selectOption(index, btn);
-                    optContainer.appendChild(btn);
-                });
-            } else {
-                finishExam();
-            }
-        }
-
-        function selectOption(selectedIndex, clickedBtn) {
-            if (isAnswered) return;
-            isAnswered = true;
-
-            const currentObj = activeExamQuestions[currentQ];
-            const allButtons = document.querySelectorAll('.option-btn');
-
-            if (selectedIndex === currentObj.ans) {
-                clickedBtn.style.background = '#dcfce7';
-                clickedBtn.style.borderColor = '#16a34a';
-                correctCount++;
-                document.getElementById('live-correct').innerText = correctCount;
-            } else {
-                clickedBtn.style.background = '#fee2e2';
-                clickedBtn.style.borderColor = '#dc2626';
-                allButtons[currentObj.ans].style.background = '#dcfce7';
-                allButtons[currentObj.ans].style.borderColor = '#16a34a';
-
-                wrongCount++;
-                document.getElementById('live-wrong').innerText = wrongCount;
-
-                wrongAnswersLog.push({
-                    q: currentObj.q,
-                    userAns: currentObj.options[selectedIndex],
-                    correctAns: currentObj.options[currentObj.ans]
-                });
-            }
-
-            document.getElementById('next-btn').style.display = 'block';
-        }
-
-        function nextQuestion() {
-            currentQ++;
-            loadQuiz();
-        }
-
-        function cancelExam() {
-            clearInterval(timerInterval);
-            switchSection('home-section');
-        }
-
-        function finishExam() {
-            clearInterval(timerInterval);
-            
-            const totalQ = activeExamQuestions.length;
-            const percentage = Math.round((correctCount / totalQ) * 100);
-
-            document.getElementById('recent-percentage').innerText = percentage + "%";
-            document.getElementById('recent-score-val').innerText = correctCount;
-            document.getElementById('recent-correct-val').innerText = correctCount;
-            document.getElementById('recent-wrong-val').innerText = wrongCount;
-
-            const wrongContainer = document.getElementById('recent-wrong-list-container');
-            wrongContainer.innerHTML = '';
-            
-            if(wrongAnswersLog.length > 0) {
-                wrongContainer.innerHTML = `<h4 style="font-size:13px; color:#1e293b; margin-bottom:8px;">ভুল হওয়া প্রশ্নের রিভিউ:</h4>`;
-                wrongAnswersLog.forEach((item, idx) => {
-                    const div = document.createElement('div');
-                    div.style.background = '#fef2f2';
-                    div.style.padding = '8px';
-                    div.style.borderRadius = '8px';
-                    div.style.marginBottom = '6px';
-                    div.style.border = '1px solid #fecaca';
-                    div.innerHTML = `
-                        <p style="font-size:12px; font-weight:bold; color:#1e293b;">${idx+1}. ${item.q}</p>
-                        <p style="font-size:11px; color:#dc2626;">❌ আপনার উত্তর: ${item.userAns}</p>
-                        <p style="font-size:11px; color:#16a34a; font-weight:bold;">✅ সঠিক উত্তর: ${item.correctAns}</p>
-                    `;
-                    wrongContainer.appendChild(div);
-                });
-            }
-
-            let myUserObj = leaderboardData.find(u => u.email === "abs@exam.com");
-            if(myUserObj) {
-                myUserObj.totalScore += correctCount;
-                myUserObj.percentage = percentage;
-                myUserObj.examCount += 1;
-            }
-
-            chartDataScores.push(percentage);
-            chartLabels.push(`পরীক্ষা ${chartDataScores.length}`);
-
-            updateHomeTrialBanner();
-            switchSection('recent-result-section');
-        }
-
-        function renderLeaderboard() {
-            leaderboardData.sort((a, b) => b.totalScore - a.totalScore);
-
-            const container = document.getElementById('leaderboard-list-container');
-            container.innerHTML = '';
-
-            leaderboardData.forEach((user, idx) => {
-                const div = document.createElement('div');
-                div.className = 'leaderboard-item';
-                div.style.display = 'flex';
-                div.style.justifyContent = 'space-between';
-                div.style.alignItems = 'center';
-                div.style.padding = '10px 0';
-                div.style.borderBottom = '1px solid #f1f5f9';
-                div.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span style="font-weight:bold; color:#4f46e5; width:20px;">#${idx + 1}</span>
-                        <div>
-                            <span style="font-weight:600; font-size:13px;">${user.name}</span>
-                            ${user.isPaid ? '<span style="font-size:9px; background:#fef3c7; color:#d97706; padding:1px 4px; border-radius:4px; margin-left:4px;">PRO</span>' : ''}
-                        </div>
-                    </div>
-                    <div style="text-align:right;">
-                        <span style="font-weight:bold; color:#16a34a; font-size:13px;">${user.totalScore} নম্বর</span>
-                        <span style="font-size:10px; color:#64748b; display:block;">(${user.percentage}%)</span>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function addNewQuestionByAdmin() {
-            const subject = document.getElementById('admin-q-subject').value;
-            const q = document.getElementById('admin-q-text').value;
-            const o0 = document.getElementById('admin-opt-0').value;
-            const o1 = document.getElementById('admin-opt-1').value;
-            const o2 = document.getElementById('admin-opt-2').value;
-            const o3 = document.getElementById('admin-opt-3').value;
-            const ans = parseInt(document.getElementById('admin-correct-ans').value);
-
-            if(!q || !o0 || !o1 || !o2 || !o3) {
-                alert("দয়া করে সকল তথ্য পূরণ করুন!");
-                return;
-            }
-
-            questions.push({
-                subject: subject,
-                q: q,
-                options: [o0, o1, o2, o3],
-                ans: ans
-            });
-
-            alert("নির্বাচিত বিষয়ের প্রশ্নটি সফলভাবে যোগ করা হয়েছে!");
-            document.getElementById('admin-q-text').value = '';
-            document.getElementById('admin-opt-0').value = '';
-            document.getElementById('admin-opt-1').value = '';
-            document.getElementById('admin-opt-2').value = '';
-            document.getElementById('admin-opt-3').value = '';
-
-            renderAdminQuestionList();
-        }
-
-        function renderAdminQuestionList() {
-            const container = document.getElementById('admin-question-delete-list');
-            container.innerHTML = '';
-
-            questions.forEach((qObj, idx) => {
-                const div = document.createElement('div');
-                div.style.background = 'rgba(255,255,255,0.05)';
-                div.style.padding = '8px';
-                div.style.borderRadius = '6px';
-                div.style.marginBottom = '6px';
-                div.style.display = 'flex';
-                div.style.justifyContent = 'space-between';
-                div.style.alignItems = 'center';
-                div.innerHTML = `
-                    <div>
-                        <span style="font-size:9px; background:#4f46e5; color:white; padding:1px 5px; border-radius:4px; font-weight:bold;">${qObj.subject.toUpperCase()}</span>
-                        <span style="font-size:11px; color:#cbd5e1; margin-left:5px;">${idx + 1}. ${qObj.q}</span>
-                    </div>
-                    <button class="btn-delete" onclick="deleteQuestionByAdmin(${idx})">ডিলিট</button>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function deleteQuestionByAdmin(idx) {
-            if(confirm("আপনি কি নিশ্চিতভাবে এই প্রশ্নটি মুছে ফেলতে চান?")) {
-                questions.splice(idx, 1);
-                renderAdminQuestionList();
-            }
-        }
-
-        function renderAdminPendingTable() {
-            const tbody = document.getElementById('admin-pending-table-body');
-            tbody.innerHTML = '';
-
-            if(pendingPayments.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#94a3b8;">কোনো পেন্ডিং পেমেন্ট রিকোয়েস্ট নেই</td></tr>`;
-                return;
-            }
-
-            pendingPayments.forEach((item, idx) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${item.name}</td>
-                    <td>${item.email}</td>
-                    <td>${item.pack}</td>
-                    <td>${item.method}</td>
-                    <td style="color:#fbbf24; font-weight:bold;">${item.trxId}</td>
-                    <td>
-                        <button class="btn-approve" onclick="approvePendingPayment(${idx})">Approve & Make Paid</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function approvePendingPayment(idx) {
-            const approvedReq = pendingPayments[idx];
-            
-            let userObj = leaderboardData.find(u => u.email === approvedReq.email
+        function startExam()
