@@ -456,7 +456,7 @@
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-bank', this)">📚 প্রশ্নব্যাংক</button>
                 </div>
 
-                <!-- ইউজার লিস্ট ট্যাব (পাসওয়ার্ড সহ ও মেইন এডমিন হাইড) -->
+                <!-- ইউজার লিস্ট ট্যাব -->
                 <div id="adm-tab-users" class="adm-tab-content">
                     <h4 style="font-size:12px; color:#38bdf8; margin-bottom:8px;">ইউজার সাবস্ক্রিপশন ও তথ্য ম্যানেজমেন্ট:</h4>
                     <div style="overflow-x:auto;">
@@ -640,8 +640,9 @@
                     </div>
                 </div>
 
-                <button class="btn-green" style="background:#334155; margin-top:15px;" onclick="switchSection('home-section')">
-                    <i class="fa-solid fa-arrow-left"></i> হোমে ফিরে যান
+                <!-- সুইচ বাটন: সরাসরি শিক্ষার্থী মোডে যাওয়ার জন্য -->
+                <button class="btn-green" style="background:#f59e0b; color:#0f172a; margin-top:15px; font-weight:800;" onclick="switchSection('home-section')">
+                    <i class="fa-solid fa-graduation-cap"></i> শিক্ষার্থী মোডে যান (Switch to Student)
                 </button>
             </div>
         </div>
@@ -658,10 +659,10 @@
                 </button>
             </div>
 
-            <!-- এডমিন শর্টকাট ব্যানার -->
+            <!-- এডমিন শর্টকাট বা সুইচ বাটন -->
             <div id="admin-shortcut-banner" class="admin-access-badge" style="display:none;" onclick="switchSection('admin-panel-section')">
-                <span>⚡ এডমিন কন্ট্রোল প্যানেল</span>
-                <span style="background:#06081a; padding:4px 8px; border-radius:8px;">ADMIN ACCESS <i class="fa-solid fa-arrow-right"></i></span>
+                <span>⚡ এডমিন কন্ট্রোল প্যানেলে যান (Switch to Admin)</span>
+                <span style="background:#06081a; padding:4px 8px; border-radius:8px;">ADMIN <i class="fa-solid fa-arrow-right"></i></span>
             </div>
 
             <div class="grid-container">
@@ -866,7 +867,6 @@
             "আইসিটি": ["অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত", "অধ্যায় ২: নেটওয়ার্কিং", "অধ্যায় ৩: সংখ্যা পদ্ধতি", "অধ্যায় ৪: HTML", "অধ্যায় ৫: প্রোগ্রামিং", "অধ্যায় ৬: ডেটাবেজ"]
         };
 
-        // ইউজার লিস্টে পাসওয়ার্ড সহ ডাটা (মেইন এডমিন Abs Siddik এখানে লুকানো থাকবে)
         let usersList = [
             { name: "মাসফাকুর রহমান", phone: "01711111111", email: "mushfiq@gmail.com", pass: "123456", package: "মাসিক প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" },
             { name: "রাফসান আহমেদ", phone: "01933333333", email: "rafsan@gmail.com", pass: "pass789", package: "ফুল কোর্স", isPaid: true, paidDate: "2026-04-10", expireDate: "2026-05-10", trx: "TRX998877" }
@@ -897,7 +897,6 @@
                 currentUser = { name: "মুশফিকুর রহমান", email: "musfiqrahmansubadmin@gmail.com", role: "sub_admin" };
             } else {
                 currentUser = { name: inputVal, email: inputVal, role: "student" };
-                // নতুন কেউ লগইন করলে ইউজার লিস্টে স্বয়ংক্রিয়ভাবে যুক্ত হবে যদি না থাকে
                 if(!usersList.some(u => u.email === inputVal)) {
                     usersList.push({ name: inputVal, phone: "N/A", email: inputVal, pass: passVal || "******", package: "ফ্রি প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" });
                 }
@@ -930,13 +929,9 @@
             document.getElementById('prof-name').innerText = currentUser.name;
             document.getElementById('prof-email').innerText = currentUser.email;
 
-            if(currentUser.role === 'main_admin') {
-                document.getElementById('prof-role').innerText = "মেইন এডমিন (Full Control)";
-                document.getElementById('admin-role-title').innerText = "Abs Exam Center - Main Admin Panel";
-                document.getElementById('admin-shortcut-banner').style.display = 'flex';
-            } else if(currentUser.role === 'sub_admin') {
-                document.getElementById('prof-role').innerText = "সাব-এডমিন (Approve Locked)";
-                document.getElementById('admin-role-title').innerText = "Abs Exam Center - Sub Admin Panel";
+            if(currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
+                document.getElementById('prof-role').innerText = (currentUser.role === 'main_admin') ? "মেইন এডমিন (Full Control)" : "সাব-এডমিন";
+                document.getElementById('admin-role-title').innerText = "Abs Exam Center - Control Panel";
                 document.getElementById('admin-shortcut-banner').style.display = 'flex';
             } else {
                 document.getElementById('prof-role').innerText = "শিক্ষার্থী";
@@ -1205,17 +1200,15 @@
             }
 
             usersList.push({ name: name, phone: phone, email: email, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid });
-            alert("পেমেন্ট রিকোয়েস্ট সাবমিট হয়েছে! মেইন এডমিন যাচাই করে অ্যাপ্রুভ করবে।");
+            alert("পেমেন্ট রিকোয়েস্ট সাবমিট হয়েছে! এডমিন যাচাই করে অ্যাপ্রুভ করবে।");
             switchSection('home-section');
         }
 
-        // ইউজার লিস্ট রেন্ডার (পাসওয়ার্ড সহ এবং মেইন এডমিন Abs Siddik হাইড রাখা)
         function renderAdminTable() {
             const tbody = document.getElementById('admin-user-table');
             if(!tbody) return;
             tbody.innerHTML = '';
             
-            // মেইন এডমিন (Abs Siddik) ফিল্টার করে বাদ দেওয়া হয়েছে যাতে লিস্টে দেখা না যায়
             let filteredUsers = usersList.filter(u => !u.name.toLowerCase().includes("abs siddik"));
 
             let total = filteredUsers.length;
@@ -1229,7 +1222,6 @@
             let isSubAdmin = (currentUser && currentUser.role === 'sub_admin');
 
             filteredUsers.forEach((u, idx) => {
-                // মূল অ্যারের আসল ইনডেক্স খুঁজে বের করা
                 let originalIndex = usersList.findIndex(item => item.email === u.email);
 
                 const tr = document.createElement('tr');
