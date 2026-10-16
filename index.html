@@ -225,12 +225,12 @@
 
         .c1 { background: #fef3c7; color: #d97706; }
         .c2 { background: #dcfce7; color: #16a34a; }
-        .c3 { background: #e0e7ff; color: #4f46e5; }
+        .c3 { background: #fee2e2; color: #dc2626; }
         .c4 { background: #e0f2fe; color: #0284c7; }
         .c5 { background: #ffe4e6; color: #e11d48; }
         .c6 { background: #fef9c3; color: #ca8a04; }
         .c7 { background: #fae8ff; color: #a21caf; }
-        .c8 { background: #fee2e2; color: #dc2626; }
+        .c8 { background: #e0e7ff; color: #4f46e5; }
 
         .card-info h4 {
             font-size: 14px;
@@ -278,7 +278,7 @@
             margin-bottom: 4px;
         }
 
-        .form-group select, .form-group input {
+        .form-group select, .form-group input, .form-group textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #cbd5e1;
@@ -370,11 +370,12 @@
 
         .admin-tab-bar {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             background: #020617;
             padding: 4px;
             border-radius: 10px;
             margin-bottom: 15px;
+            overflow-x: auto;
         }
 
         .admin-tab {
@@ -388,6 +389,7 @@
             border-radius: 8px;
             cursor: pointer;
             transition: 0.2s;
+            white-space: nowrap;
         }
 
         .admin-tab.active {
@@ -531,6 +533,25 @@
             max-width: 380px;
             width: 100%;
         }
+
+        /* Flashcard Design */
+        .flashcard-box {
+            background: linear-gradient(135deg, #4f46e5, #3730a3);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .suggestion-box {
+            background: #f8fafc;
+            border-left: 4px solid #f59e0b;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #e2e8f0;
+        }
     </style>
 </head>
 <body>
@@ -616,11 +637,12 @@
                     </div>
                 </div>
 
-                <div class="grid-card" onclick="switchSection('ai-helper-section')">
-                    <div class="icon-box c3"><i class="fa-solid fa-robot"></i></div>
+                <!-- ⚡ নতুন লাইভ একজাম অপশন (AI বাদ দিয়ে) -->
+                <div class="grid-card" onclick="switchSection('live-exam-section')">
+                    <div class="icon-box c3"><i class="fa-solid fa-tower-broadcast"></i></div>
                     <div class="card-info">
-                        <h4>সহায়ক AI</h4>
-                        <p>২৪ ঘণ্টা স্মার্ট সহায়ক</p>
+                        <h4>লাইভ একজাম</h4>
+                        <p>সবার সাথে সরাসরি প্রতিযোগিতা</p>
                     </div>
                 </div>
 
@@ -729,7 +751,21 @@
             </div>
         </div>
 
-        <!-- ৫. সাবস্ক্রিপশন প্যাকেজ ও পেমেন্ট সেকশন -->
+        <!-- ৫. লাইভ একজাম পেজ -->
+        <div id="live-exam-section" class="page-section">
+            <div class="inner-page-card" style="text-align:center;">
+                <h2 style="color:#dc2626;"><i class="fa-solid fa-tower-broadcast"></i> লাইভ একজাম রুম</h2>
+                <p>সব শিক্ষার্থী একসাথে নির্ধারিত সময়ে লাইভ পরীক্ষায় অংশগ্রহণ করুন।</p>
+                <div style="background:#fee2e2; padding:15px; border-radius:12px; border:1px solid #fca5a5; margin-bottom:15px;">
+                    <h4 style="color:#991b1b; font-size:14px;">🔴 পরবর্তী লাইভ পরীক্ষা শীঘ্রই শুরু হবে</h4>
+                    <p style="font-size:11px; color:#7f1d1d; margin-top:4px;">প্রতিদিন রাত ৮:০০ টায় লাইভ মেগা এক্সাম অনুষ্ঠিত হয়।</p>
+                </div>
+                <button class="action-btn" onclick="checkExamLimitAndStart()">এখনই অনুশীলন পরীক্ষা দিন <i class="fa-solid fa-play"></i></button>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- ৬. সাবস্ক্রিপশন প্যাকেজ ও পেমেন্ট সেকশন -->
         <div id="courses-section" class="page-section">
             <div class="inner-page-card">
                 <h2 style="color:#4f46e5;"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> প্রিমিয়াম সাবস্ক্রিপশন প্ল্যান</h2>
@@ -801,7 +837,7 @@
             </div>
         </div>
 
-        <!-- ৬. লাইভ লিডারবোর্ড -->
+        <!-- ৭. লাইভ লিডারবোর্ড -->
         <div id="leaderboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>🏆 লাইভ লিডারবোর্ড</h2>
@@ -811,7 +847,7 @@
             </div>
         </div>
 
-        <!-- ৭. স্টুডেন্ট ড্যাশবোর্ড -->
+        <!-- ৮. স্টুডেন্ট ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
@@ -841,7 +877,7 @@
             </div>
         </div>
 
-        <!-- 👑 ৮. প্রিমিয়াম এডমিন প্যানেল -->
+        <!-- 👑 ৯. প্রিমিয়াম এডমিন প্যানেল (ফ্ল্যাশকার্ড ও সাজেশন ইনপুটসহ) -->
         <div id="admin-panel-section" class="page-section">
             <div class="admin-wrapper">
                 
@@ -870,11 +906,12 @@
 
                 <div class="admin-tab-bar">
                     <button class="admin-tab active" onclick="switchAdminTab('tab-pending', this)"><i class="fa-solid fa-clock"></i> পেন্ডিং</button>
-                    <button class="admin-tab" onclick="switchAdminTab('tab-users', this)"><i class="fa-solid fa-users"></i> ইউজার তারিখসহ</button>
-                    <button class="admin-tab" onclick="switchAdminTab('tab-questions', this)"><i class="fa-solid fa-plus-circle"></i> প্রশ্ন যোগ/ডিলিট</button>
+                    <button class="admin-tab" onclick="switchAdminTab('tab-users', this)"><i class="fa-solid fa-users"></i> ইউজার</button>
+                    <button class="admin-tab" onclick="switchAdminTab('tab-questions', this)"><i class="fa-solid fa-plus-circle"></i> প্রশ্ন</button>
+                    <button class="admin-tab" onclick="switchAdminTab('tab-inputs', this)"><i class="fa-solid fa-file-pen"></i> কার্ড ও সাজেশন</button>
                 </div>
 
-                <!-- পেন্ডিং পেমেন্ট রিকোয়েস্ট -->
+                <!-- পেন্ডিং পেমেন্ট -->
                 <div id="tab-pending" class="admin-content-box active">
                     <h4 style="font-size:12px; color:#fbbf24; margin-bottom:8px;">পেন্ডিং পেমেন্ট রিকোয়েস্ট:</h4>
                     <div style="overflow-x:auto;">
@@ -893,7 +930,7 @@
                     </div>
                 </div>
 
-                <!-- ইউজার লিস্ট উইথ পেমেন্ট ডেট & এক্সপায়ারি ডেট -->
+                <!-- ইউজার মেয়াদের তারিখ -->
                 <div id="tab-users" class="admin-content-box">
                     <h4 style="font-size:12px; color:#fbbf24; margin-bottom:8px;">ইউজার সাবস্ক্রিপশন মেয়াদের তারিখ:</h4>
                     <div style="overflow-x:auto;">
@@ -912,7 +949,7 @@
                     </div>
                 </div>
 
-                <!-- প্রশ্ন যোগ ও ডিলিট -->
+                <!-- প্রশ্ন ইনপুট -->
                 <div id="tab-questions" class="admin-content-box">
                     <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155; margin-bottom:15px;">
                         <h4 style="font-size:12px; margin-bottom:10px; color:#fbbf24;">নতুন MCQ কুইজ তৈরি করুন</h4>
@@ -971,8 +1008,43 @@
                         </button>
                     </div>
 
-                    <h4 style="font-size:12px; color:#fbbf24; margin-bottom:8px;">বিদ্যমান প্রশ্ন তালিকা (বিষয়সহ):</h4>
-                    <div id="admin-question-delete-list" style="max-height:220px; overflow-y:auto;"></div>
+                    <h4 style="font-size:12px; color:#fbbf24; margin-bottom:8px;">বিদ্যমান প্রশ্ন তালিকা:</h4>
+                    <div id="admin-question-delete-list" style="max-height:180px; overflow-y:auto;"></div>
+                </div>
+
+                <!-- 🌟 নতুন ফ্ল্যাশকার্ড ও সাজেশন ইনপুট ট্যাব -->
+                <div id="tab-inputs" class="admin-content-box">
+                    <!-- ফ্ল্যাশকার্ড ইনপুট -->
+                    <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155; margin-bottom:15px;">
+                        <h4 style="font-size:12px; margin-bottom:10px; color:#fbbf24;"><i class="fa-solid fa-bolt"></i> ফ্ল্যাশকার্ড যুক্ত করুন</h4>
+                        <div class="form-group">
+                            <label style="color:#cbd5e1;">ফ্ল্যাশকার্ডের শিরোনাম/বিষয়:</label>
+                            <input type="text" id="flash-title" placeholder="যেমন: ওহমের সূত্র (Physics 1st)">
+                        </div>
+                        <div class="form-group">
+                            <label style="color:#cbd5e1;">বিবরণ/উত্তর:</label>
+                            <textarea id="flash-desc" rows="2" placeholder="যেমন: তাপমাত্রা স্থির থাকলে পরিবাহীর মধ্য দিয়ে প্রবাহিত কারেন্ট..."></textarea>
+                        </div>
+                        <button class="action-btn" onclick="addFlashcardByAdmin()" style="background:#38bdf8; color:#0f172a; font-weight:bold;">
+                            <i class="fa-solid fa-plus"></i> ফ্ল্যাশকার্ড পাবলিশ করুন
+                        </button>
+                    </div>
+
+                    <!-- সাজেশন ইনপুট -->
+                    <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155;">
+                        <h4 style="font-size:12px; margin-bottom:10px; color:#fbbf24;"><i class="fa-solid fa-lightbulb"></i> সাজেশন যুক্ত করুন</h4>
+                        <div class="form-group">
+                            <label style="color:#cbd5e1;">বিষয়ের নাম:</label>
+                            <input type="text" id="sug-subject" placeholder="যেমন: পদার্থবিজ্ঞান ১ম পত্র">
+                        </div>
+                        <div class="form-group">
+                            <label style="color:#cbd5e1;">সাজেশন বিবরণ:</label>
+                            <textarea id="sug-text" rows="3" placeholder="যেমন: ১ম অধ্যায় থেকে ভেক্টর ও গতিবিদ্যা অংশ ভালো করে পড়তে হবে..."></textarea>
+                        </div>
+                        <button class="action-btn" onclick="addSuggestionByAdmin()" style="background:#f59e0b; color:#0f172a; font-weight:bold;">
+                            <i class="fa-solid fa-plus"></i> সাজেশন পাবলিশ করুন
+                        </button>
+                    </div>
                 </div>
 
                 <button class="back-btn" onclick="switchSection('home-section')" style="background:#334155; color:white; margin-top:15px;">
@@ -981,35 +1053,30 @@
             </div>
         </div>
 
-        <!-- অন্যান্য সেকশনসমূহ -->
+        <!-- ১০. ফ্ল্যাশকার্ড ভিউ পেজ -->
+        <div id="flashcard-section" class="page-section">
+            <div class="inner-page-card">
+                <h2>⚡ ফ্ল্যাশকার্ডসমূহ</h2>
+                <p>গুরুত্বপূর্ণ সূত্র ও সংক্ষিপ্ত পড়া একনজরে রিভিশন দিন:</p>
+                <div id="flashcards-display-list"></div>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- ১১. সাজেশন ভিউ পেজ -->
+        <div id="suggestion-section" class="page-section">
+            <div class="inner-page-card">
+                <h2>💡 এইচএসসি সাজেশন</h2>
+                <p>পরীক্ষায় ভালো ফলাফল করার শর্ট সাজেশন:</p>
+                <div id="suggestions-display-list"></div>
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
         <div id="question-bank-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📚 প্রশ্নব্যাংক</h2>
                 <p>এখানে আপনার বিষয় ও অধ্যায়ভিত্তিক হাজার হাজার প্রশ্ন পাওয়া যাবে।</p>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <div id="ai-helper-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>🤖 সহায়ক AI</h2>
-                <p>যেকোনো কঠিন প্রশ্নের তাৎক্ষণিক সমাধান পেতে সাহায্য নিন।</p>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <div id="flashcard-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>⚡ ফ্ল্যাশকার্ড</h2>
-                <p>গুরুত্বপূর্ণ সূত্র ও তথ্য সহজে মনে রাখুন।</p>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
-        <div id="suggestion-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>💡 এইচএসসি সাজেশন</h2>
-                <p>পরীক্ষায় ভালো ফলাফল করার শর্ট সাজেশন।</p>
                 <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
@@ -1073,6 +1140,14 @@
             { subject: "bangla-1", q: "সোনার তরী কবিতার রচয়িতা কে?", options: ["কাজী নজরুল ইসলাম", "রবীন্দ্রনাথ ঠাকুর", "জসীমউদ্দীন", "জীবনানন্দ দাশ"], ans: 1 },
             { subject: "ict", q: "HTML মূলত কী ধরণের ভাষা?", options: ["Programming Language", "Markup Language", "Database Language", "Scripting Language"], ans: 1 },
             { subject: "physics-1", q: "ভেক্টর রাশির উদাহরণ কোনটি?", options: ["ভর", "বেগ", "সময়", "তাপমাত্রা"], ans: 1 }
+        ];
+
+        let flashcards = [
+            { title: "ওহমের সূত্র (ICT / Physics)", desc: "তাপমাত্রা স্থির থাকলে কোনো পরিবাহীর মধ্য দিয়ে প্রবাহিত তড়িৎ প্রবাহ তার দুই প্রান্তের বিভব পার্থক্যের সমানুপাতিক।" }
+        ];
+
+        let suggestions = [
+            { subject: "পদার্থবিজ্ঞান ১ম পত্র", text: "ভেক্টর এবং গতিবিদ্যা অধ্যায় থেকে প্রতি বছর ১০ নম্বরের সৃজনশীল প্রশ্ন অবশ্যই আসে।" }
         ];
 
         let leaderboardData = [
@@ -1141,6 +1216,10 @@
                 renderAdminUserTable();
                 renderAdminQuestionList();
                 renderAdminPendingTable();
+            } else if(sectionId === 'flashcard-section') {
+                renderFlashcards();
+            } else if(sectionId === 'suggestion-section') {
+                renderSuggestions();
             }
         }
 
@@ -1383,6 +1462,73 @@
                         <span style="font-weight:bold; color:#16a34a; font-size:13px;">${user.totalScore} নম্বর</span>
                         <span style="font-size:10px; color:#64748b; display:block;">(${user.percentage}%)</span>
                     </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // এডমিন থেকে ফ্ল্যাশকার্ড ও সাজেশন এড করার ফাংশন
+        function addFlashcardByAdmin() {
+            const title = document.getElementById('flash-title').value;
+            const desc = document.getElementById('flash-desc').value;
+
+            if(!title || !desc) {
+                alert("দয়া করে ফ্ল্যাশকার্ডের শিরোনাম ও বিবরণ লিখুন!");
+                return;
+            }
+
+            flashcards.push({ title: title, desc: desc });
+            alert("ফ্ল্যাশকার্ড সফলভাবে যুক্ত হয়েছে!");
+            document.getElementById('flash-title').value = '';
+            document.getElementById('flash-desc').value = '';
+        }
+
+        function addSuggestionByAdmin() {
+            const subject = document.getElementById('sug-subject').value;
+            const text = document.getElementById('sug-text').value;
+
+            if(!subject || !text) {
+                alert("দয়া করে বিষয় ও সাজেশনের বিবরণ লিখুন!");
+                return;
+            }
+
+            suggestions.push({ subject: subject, text: text });
+            alert("সাজেশন সফলভাবে যুক্ত হয়েছে!");
+            document.getElementById('sug-subject').value = '';
+            document.getElementById('sug-text').value = '';
+        }
+
+        function renderFlashcards() {
+            const container = document.getElementById('flashcards-display-list');
+            container.innerHTML = '';
+            if(flashcards.length === 0) {
+                container.innerHTML = `<p style="text-align:center; color:#94a3b8;">কোনো ফ্ল্যাশকার্ড যোগ করা হয়নি</p>`;
+                return;
+            }
+            flashcards.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'flashcard-box';
+                div.innerHTML = `
+                    <h3 style="font-size:15px; margin-bottom:6px;"><i class="fa-solid fa-bolt" style="color:#fbbf24;"></i> ${item.title}</h3>
+                    <p style="font-size:12px; color:#e0e7ff; line-height:1.4;">${item.desc}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderSuggestions() {
+            const container = document.getElementById('suggestions-display-list');
+            container.innerHTML = '';
+            if(suggestions.length === 0) {
+                container.innerHTML = `<p style="text-align:center; color:#94a3b8;">কোনো সাজেশন যোগ করা হয়নি</p>`;
+                return;
+            }
+            suggestions.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-box';
+                div.innerHTML = `
+                    <h4 style="font-size:13px; color:#1e293b; margin-bottom:4px;"><i class="fa-solid fa-book" style="color:#f59e0b;"></i> ${item.subject}</h4>
+                    <p style="font-size:12px; color:#475569; line-height:1.4;">${item.text}</p>
                 `;
                 container.appendChild(div);
             });
