@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abs Exam Center - Premium Platform & Admin Panel</title>
+    <title>Abs Exam Center - Complete HSC Platform</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font -->
@@ -246,7 +246,7 @@
             width: 100%;
         }
 
-        /* 👑 ULTRA PREMIUM ADMIN PANEL STYLING */
+        /* PREMIUM ADMIN PANEL STYLING */
         .admin-wrapper {
             background: linear-gradient(145deg, #0f172a, #1e1b4b);
             border: 1px solid #38357a;
@@ -385,6 +385,35 @@
             cursor: pointer;
         }
 
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        /* Package Cards */
+        .plan-card {
+            border: 2px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .plan-card.selected {
+            border-color: #4f46e5;
+            background: #f0fdf4;
+        }
+
         .bottom-bar {
             position: fixed;
             bottom: 0;
@@ -417,6 +446,26 @@
             color: #4f46e5;
             font-weight: 700;
         }
+
+        .limit-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .limit-box {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 380px;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -439,7 +488,7 @@
             <div class="banner-card">
                 <div class="status-badge">● অ্যাকাউন্ট তৈরি হয়েছে</div>
                 <div class="banner-title"><span id="banner-user-name">Abs Siddik</span>, ৫ মিনিটে জেনে নাও তোমার কোন অধ্যায়গুলো দুর্বল</div>
-                <button class="action-btn" onclick="switchSection('model-test-setup')">
+                <button class="action-btn" onclick="checkExamLimitAndStart()">
                     পরীক্ষা দিন <i class="fa-solid fa-pen-to-square"></i>
                 </button>
             </div>
@@ -464,14 +513,14 @@
                 </div>
 
                 <div class="grid-card" onclick="switchSection('courses-section')">
-                    <div class="icon-box c5"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="icon-box c5"><i class="fa-solid fa-crown"></i></div>
                     <div class="card-info">
-                        <h4>আমাদের কোর্স</h4>
-                        <p>প্রিমিয়াম এইচএসসি কোর্স সমূহ</p>
+                        <h4>সাবস্ক্রিপশন</h4>
+                        <p>প্রিমিয়াম প্যাক কিনুন</p>
                     </div>
                 </div>
 
-                <div class="grid-card" onclick="switchSection('model-test-setup')">
+                <div class="grid-card" onclick="checkExamLimitAndStart()">
                     <div class="icon-box c4"><i class="fa-solid fa-pen-to-square"></i></div>
                     <div class="card-info">
                         <h4>মডেল টেস্ট</h4>
@@ -517,13 +566,26 @@
         <div id="model-test-setup" class="page-section">
             <div class="inner-page-card">
                 <h2>⚙️ পরীক্ষার কাস্টমাইজেশন</h2>
-                <p>পরীক্ষা শুরু করার আগে আপনার পছন্দমতো অধ্যায় ও সময় সিলেক্ট করুন।</p>
+                <p>পরীক্ষা শুরু করার আগে আপনার বিষয় ও সময় সিলেক্ট করুন।</p>
+
+                <div style="background:#e0f2fe; color:#0369a1; padding:8px 12px; border-radius:8px; font-size:12px; font-weight:600; margin-bottom:12px;">
+                    📊 আপনার ব্যবহৃত ফ্রি পরীক্ষা: <span id="used-exam-count">0</span> / 40
+                </div>
                 
                 <div class="form-group" style="color:#333;">
-                    <label style="color:#333;">অধ্যায় নির্বাচন করুন:</label>
+                    <label style="color:#333;">বিষয় নির্বাচন করুন:</label>
                     <select id="chapter-select" style="background:#f8fafc; color:#333;">
-                        <option value="ict-1">আইসিটি - প্রথম ও দ্বিতীয় অধ্যায়</option>
-                        <option value="physics-1">পদার্থবিজ্ঞান - প্রথম অধ্যায়</option>
+                        <option value="bangla-1">বাংলা ১ম পত্র</option>
+                        <option value="bangla-2">বাংলা ২য় পত্র</option>
+                        <option value="ict">আইসিটি (ICT)</option>
+                        <option value="physics-1">পদার্থবিজ্ঞান ১ম পত্র</option>
+                        <option value="physics-2">পদার্থবিজ্ঞান ২য় পত্র</option>
+                        <option value="chemistry-1">রসায়ন ১ম পত্র</option>
+                        <option value="chemistry-2">রসায়ন ২য় পত্র</option>
+                        <option value="biology-1">জীববিজ্ঞান ১ম পত্র</option>
+                        <option value="biology-2">জীববিজ্ঞান ২য় পত্র</option>
+                        <option value="math-1">উচ্চতর গণিত ১ম পত্র</option>
+                        <option value="math-2">উচ্চতর গণিত ২য় পত্র</option>
                     </select>
                 </div>
 
@@ -544,7 +606,7 @@
         <!-- ৩. মূল পরীক্ষা পেজ -->
         <div id="model-test-section" class="page-section">
             <div class="inner-page-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; align- items: center; margin-bottom: 12px;">
                     <span id="timer-display" style="background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">⏱️ 00:00</span>
                     <div style="background: #f1f5f9; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">
                         <span style="color: #16a34a;">সঠিক: <span id="live-correct">0</span></span> | 
@@ -561,7 +623,7 @@
             </div>
         </div>
 
-        <!-- ৪. সেকশন: রিসেন্ট রেজাল্ট -->
+        <!-- ৪. রিসেন্ট রেজাল্ট পেজ -->
         <div id="recent-result-section" class="page-section">
             <div class="inner-page-card" style="text-align: center;">
                 <h2 style="color: #16a34a;">🎉 পরীক্ষা সম্পন্ন হয়েছে!</h2>
@@ -585,7 +647,79 @@
             </div>
         </div>
 
-        <!-- ৫. লাইভ লিডারবোর্ড -->
+        <!-- ৫. সাবস্ক্রিপশন প্যাকেজ ও পেমেন্ট সেকশন -->
+        <div id="courses-section" class="page-section">
+            <div class="inner-page-card">
+                <h2 style="color:#4f46e5;"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> প্রিমিয়াম সাবস্ক্রিপশন প্ল্যান</h2>
+                <p style="font-size:12px; margin-bottom:15px;">আপনার পছন্দমতো প্যাকেজ নির্বাচন করে বিকাশে/নগদে/রকেটে পেমেন্ট করুন:</p>
+
+                <div class="plan-card" onclick="selectPlan('২ মাস - ৫০ টাকা', '50')">
+                    <div>
+                        <h4 style="font-size:14px; color:#1e293b;">২ মাসের প্যাকেজ</h4>
+                        <p style="font-size:11px; color:#64748b;">আনলিমিটেড পরীক্ষা ও সকল সুবিধা</p>
+                    </div>
+                    <span style="font-weight:bold; color:#4f46e5; font-size:15px;">৫০ টাকা</span>
+                </div>
+
+                <div class="plan-card" onclick="selectPlan('৩ মাস - ১০০ টাকা', '100')">
+                    <div>
+                        <h4 style="font-size:14px; color:#1e293b;">৩ মাসের প্যাকেজ</h4>
+                        <p style="font-size:11px; color:#64748b;">জনপ্রিয় প্যাক + ফুল এনালাইসিস</p>
+                    </div>
+                    <span style="font-weight:bold; color:#4f46e5; font-size:15px;">১০০ টাকা</span>
+                </div>
+
+                <div class="plan-card" onclick="selectPlan('৬ মাস - ১৫০ টাকা', '150')">
+                    <div>
+                        <h4 style="font-size:14px; color:#1e293b;">৬ মাসের প্যাকেজ (বেস্ট ভ্যালু)</h4>
+                        <p style="font-size:11px; color:#64748b;">দীর্ঘমেয়াদী পূর্ণাঙ্গ প্রস্তুতি</p>
+                    </div>
+                    <span style="font-weight:bold; color:#4f46e5; font-size:15px;">১৫০ টাকা</span>
+                </div>
+
+                <!-- পেমেন্ট ইনফরমেশন ফর্ম -->
+                <div id="payment-form-box" style="display:none; background:#f8fafc; padding:15px; border-radius:12px; border:1px solid #cbd5e1; margin-top:15px;">
+                    <h4 style="font-size:13px; color:#1e293b; margin-bottom:10px;">💳 পেমেন্ট ও ইউজার ইনফরমেশন জমা দিন:</h4>
+                    
+                    <div style="background:#e0e7ff; padding:8px; border-radius:8px; font-size:11px; color:#3730a3; margin-bottom:12px;">
+                        বিকাশ/নগদ/রকেট (Send Money): <strong>01700000000</strong> (Personal)
+                    </div>
+
+                    <div class="form-group" style="color:#333;">
+                        <label style="color:#333;">আপনার নাম:</label>
+                        <input type="text" id="sub-name" placeholder="আপনার নাম" style="background:white; color:#333; border:1px solid #cbd5e1;">
+                    </div>
+                    <div class="form-group">
+                        <label style="color:#333;">ইমেইল এড্রেস:</label>
+                        <input type="email" id="sub-email" placeholder="example@gmail.com" style="background:white; color:#333; border:1px solid #cbd5e1;">
+                    </div>
+                    <div class="form-group">
+                        <label style="color:#333;">পাসওয়ার্ড:</label>
+                        <input type="password" id="sub-pass" placeholder="পাসওয়ার্ড দিন" style="background:white; color:#333; border:1px solid #cbd5e1;">
+                    </div>
+                    <div class="form-group">
+                        <label style="color:#333;">পেমেন্ট মেথড:</label>
+                        <select id="sub-method" style="background:white; color:#333; border:1px solid #cbd5e1;">
+                            <option value="bKash">bKash (বিকাশ)</option>
+                            <option value="Nagad">Nagad (নগদ)</option>
+                            <option value="Rocket">Rocket (রকেট)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="color:#333;">Transaction ID (TrxID):</label>
+                        <input type="text" id="sub-trxid" placeholder="যেমন: 9J87K2LX" style="background:white; color:#333; border:1px solid #cbd5e1;">
+                    </div>
+
+                    <button class="action-btn" onclick="submitPaymentRequest()" style="background:#16a34a; color:white;">
+                        ওকে (পেমেন্ট রিকোয়েস্ট পাঠান) <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+
+                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- ৬. লাইভ লিডারবোর্ড -->
         <div id="leaderboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>🏆 লাইভ লিডারবোর্ড</h2>
@@ -595,7 +729,7 @@
             </div>
         </div>
 
-        <!-- ৬. স্টুডেন্ট ড্যাশবোর্ড -->
+        <!-- ৭. স্টুডেন্ট ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📈 স্টুডেন্ট ড্যাশবোর্ড</h2>
@@ -625,7 +759,7 @@
             </div>
         </div>
 
-        <!-- 👑 ৭. প্রিমিয়াম এডমিন প্যানেল (GORGEOUS ULTRA DARK DESIGN) -->
+        <!-- 👑 ৮. প্রিমিয়াম এডমিন প্যানেল (Pending Requests Approve System) -->
         <div id="admin-panel-section" class="page-section">
             <div class="admin-wrapper">
                 
@@ -637,7 +771,7 @@
                     <span class="admin-title-badge">PREMIUM</span>
                 </div>
 
-                <!-- ইউজার মেট্রিক্স (Realtime Digital Stats) -->
+                <!-- ইউজার মেট্রিক্স -->
                 <div class="admin-stat-grid">
                     <div class="admin-stat-card">
                         <h6>টোটাল ইউজার</h6>
@@ -655,12 +789,35 @@
 
                 <!-- এডমিন কাস্টম ট্যাব বার -->
                 <div class="admin-tab-bar">
-                    <button class="admin-tab active" onclick="switchAdminTab('tab-users')"><i class="fa-solid fa-users"></i> ইউজার লিস্ট</button>
-                    <button class="admin-tab" onclick="switchAdminTab('tab-questions')"><i class="fa-solid fa-plus-circle"></i> প্রশ্ন যোগ করুন</button>
+                    <button class="admin-tab active" onclick="switchAdminTab('tab-pending')"><i class="fa-solid fa-clock"></i> পেন্ডিং পেমেন্ট</button>
+                    <button class="admin-tab" onclick="switchAdminTab('tab-users')"><i class="fa-solid fa-users"></i> ইউজার লিস্ট</button>
+                    <button class="admin-tab" onclick="switchAdminTab('tab-questions')"><i class="fa-solid fa-plus-circle"></i> প্রশ্ন যোগ/ডিলিট</button>
                 </div>
 
-                <!-- ট্যাব ১: ইউজার লিস্ট ও Approval -->
-                <div id="tab-users" class="admin-content-box active">
+                <!-- ট্যাব ১: পেন্ডিং পেমেন্ট রিকোয়েস্ট (Approve Option) -->
+                <div id="tab-pending" class="admin-content-box active">
+                    <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">পেন্ডিং সাবস্ক্রিপশন রিকোয়েস্ট সমূহ:</h4>
+                    <div style="overflow-x:auto;">
+                        <table class="premium-table">
+                            <thead>
+                                <tr>
+                                    <th>নাম</th>
+                                    <th>ইমেইল</th>
+                                    <th>প্যাক</th>
+                                    <th>মেথড</th>
+                                    <th>TrxID</th>
+                                    <th>অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-pending-table-body">
+                                <!-- পেন্ডিং পেমেন্ট রিকোয়েস্ট আসবে -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ট্যাব ২: ইউজার লিস্ট -->
+                <div id="tab-users" class="admin-content-box">
                     <div style="overflow-x:auto;">
                         <table class="premium-table">
                             <thead>
@@ -677,9 +834,9 @@
                     </div>
                 </div>
 
-                <!-- ট্যাব ২: নতুন প্রশ্ন যোগ করার প্যানেল -->
+                <!-- ট্যাব ৩: প্রশ্ন যোগ ও ডিলিট -->
                 <div id="tab-questions" class="admin-content-box">
-                    <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155;">
+                    <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid #334155; margin-bottom:15px;">
                         <h4 style="font-size:13px; margin-bottom:10px; color:#fbbf24;">নতুন MCQ কুইজ তৈরি করুন</h4>
                         
                         <div class="form-group">
@@ -716,6 +873,9 @@
                             <i class="fa-solid fa-check-circle"></i> প্রশ্ন যুক্ত করুন
                         </button>
                     </div>
+
+                    <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">বিদ্যমান প্রশ্ন তালিকা (ডিলিট অপশনসহ):</h4>
+                    <div id="admin-question-delete-list" style="max-height:200px; overflow-y:auto;"></div>
                 </div>
 
                 <button class="back-btn" onclick="switchSection('home-section')" style="background:#334155; color:white; margin-top:15px;">
@@ -725,14 +885,6 @@
         </div>
 
         <!-- অন্যান্য সেকশনসমূহ -->
-        <div id="courses-section" class="page-section">
-            <div class="inner-page-card">
-                <h2>🎓 প্রিমিয়াম কোর্সসমূহ</h2>
-                <p>এইচএসসি পরীক্ষায় এ+ পাওয়ার জন্য আমাদের বিশেষ কোর্সগুলোতে এনরোল করুন।</p>
-                <button class="back-btn" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
-            </div>
-        </div>
-
         <div id="question-bank-section" class="page-section">
             <div class="inner-page-card">
                 <h2>📚 প্রশ্নব্যাংক</h2>
@@ -783,6 +935,17 @@
 
     </div>
 
+    <!-- 🔒 ৪০টি পরীক্ষার লিমিট ওভার পপআপ কার্ড -->
+    <div id="exam-limit-modal" class="limit-modal">
+        <div class="limit-box">
+            <div style="font-size: 40px; color: #dc2626; margin-bottom: 10px;"><i class="fa-solid fa-lock"></i></div>
+            <h3 style="color: #1e293b; font-size: 18px; margin-bottom: 8px;">আপনার ফ্রি পরীক্ষা শেষ!</h3>
+            <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">আপনি ৪০টি ফ্রি পরীক্ষার সীমা অতিক্রম করেছেন। আনলিমিটেড পরীক্ষা দিতে সাবস্ক্রিপশন প্ল্যান কিনুন।</p>
+            <button class="action-btn" onclick="switchSection('courses-section'); closeLimitModal();">সাবস্ক্রিপশন কিনুন <i class="fa-solid fa-crown"></i></button>
+            <button class="back-btn" onclick="closeLimitModal()">বন্ধ করুন</button>
+        </div>
+    </div>
+
     <!-- Bottom Navigation Bar -->
     <div class="bottom-bar">
         <a class="nav-link active" onclick="switchSection('home-section')">
@@ -790,8 +953,8 @@
             <span>হোম</span>
         </a>
         <a class="nav-link" onclick="switchSection('courses-section')">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span>কোর্স</span>
+            <i class="fa-solid fa-crown"></i>
+            <span>প্যাকেজ</span>
         </a>
         <a class="nav-link" onclick="switchSection('dashboard-section')">
             <i class="fa-solid fa-chart-pie"></i>
@@ -816,12 +979,16 @@
         ];
 
         let leaderboardData = [
-            { name: "মাসফাকুর রহমান", email: "mushfiq@gmail.com", pass: "123456", isPaid: true, totalScore: 28, percentage: 93 },
-            { name: "Abs Siddik (আপনি)", email: "abs@exam.com", pass: "abs889", isPaid: false, totalScore: 25, percentage: 83 },
-            { name: "রাফসান আহমেদ", email: "rafsan@gmail.com", pass: "pass123", isPaid: false, totalScore: 20, percentage: 66 },
-            { name: "তানভীর হাসান", email: "tanvir@gmail.com", pass: "tanvir789", isPaid: false, totalScore: 15, percentage: 50 }
+            { name: "মাসফাকুর রহমান", email: "mushfiq@gmail.com", pass: "123456", isPaid: true, totalScore: 28, percentage: 93, examCount: 15 },
+            { name: "Abs Siddik (আপনি)", email: "abs@exam.com", pass: "abs889", isPaid: false, totalScore: 25, percentage: 83, examCount: 0 },
+            { name: "রাফসান আহমেদ", email: "rafsan@gmail.com", pass: "pass123", isPaid: false, totalScore: 20, percentage: 66, examCount: 10 }
         ];
 
+        let pendingPayments = [
+            { name: "সাকিব হাসান", email: "sakib@gmail.com", pass: "sakib123", pack: "৩ মাস - ১০০ টাকা", method: "bKash", trxId: "9K87L2MX" }
+        ];
+
+        let selectedPlanText = "";
         let currentQ = 0;
         let correctCount = 0;
         let wrongCount = 0;
@@ -851,6 +1018,8 @@
                 renderLeaderboard();
             } else if(sectionId === 'admin-panel-section') {
                 renderAdminUserTable();
+                renderAdminQuestionList();
+                renderAdminPendingTable();
             }
         }
 
@@ -862,7 +1031,60 @@
             document.getElementById(tabId).classList.add('active');
         }
 
+        // প্যাকেজ সিলেকশন ও পেমেন্ট ফর্ম দেখানো
+        function selectPlan(planTitle, price) {
+            selectedPlanText = planTitle;
+            document.querySelectorAll('.plan-card').forEach(card => card.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            document.getElementById('payment-form-box').style.display = 'block';
+        }
+
+        function submitPaymentRequest() {
+            const name = document.getElementById('sub-name').value;
+            const email = document.getElementById('sub-email').value;
+            const pass = document.getElementById('sub-pass').value;
+            const method = document.getElementById('sub-method').value;
+            const trxId = document.getElementById('sub-trxid').value;
+
+            if(!name || !email || !pass || !trxId) {
+                alert("দয়া করে নাম, ইমেইল, পাসওয়ার্ড এবং Transaction ID সুন্দরভাবে পূরণ করুন!");
+                return;
+            }
+
+            pendingPayments.push({
+                name: name,
+                email: email,
+                pass: pass,
+                pack: selectedPlanText,
+                method: method,
+                trxId: trxId
+            });
+
+            alert("আপনার পেমেন্ট রিকোয়েস্ট সাবমিট হয়েছে! এডমিন যাচাই করে Approve করলেই আপনার প্রিমিয়াম সার্ভিস চালু হয়ে যাবে।");
+            document.getElementById('payment-form-box').style.display = 'none';
+        }
+
+        function checkExamLimitAndStart() {
+            let myUser = leaderboardData.find(u => u.email === "abs@exam.com");
+            if(myUser && !myUser.isPaid && myUser.examCount >= 40) {
+                document.getElementById('exam-limit-modal').style.display = 'flex';
+            } else {
+                switchSection('model-test-setup');
+                document.getElementById('used-exam-count').innerText = myUser ? myUser.examCount : 0;
+            }
+        }
+
+        function closeLimitModal() {
+            document.getElementById('exam-limit-modal').style.display = 'none';
+        }
+
         function startExam() {
+            let myUser = leaderboardData.find(u => u.email === "abs@exam.com");
+            if(myUser && !myUser.isPaid && myUser.examCount >= 40) {
+                document.getElementById('exam-limit-modal').style.display = 'flex';
+                return;
+            }
+
             const selectedTimeMin = parseInt(document.getElementById('exam-time').value);
             timeLeftSeconds = selectedTimeMin * 60;
             
@@ -992,6 +1214,7 @@
             if(myUserObj) {
                 myUserObj.totalScore += correctCount;
                 myUserObj.percentage = percentage;
+                myUserObj.examCount += 1;
             }
 
             chartDataScores.push(percentage);
@@ -1051,6 +1274,87 @@
             document.getElementById('admin-opt-1').value = '';
             document.getElementById('admin-opt-2').value = '';
             document.getElementById('admin-opt-3').value = '';
+
+            renderAdminQuestionList();
+        }
+
+        function renderAdminQuestionList() {
+            const container = document.getElementById('admin-question-delete-list');
+            container.innerHTML = '';
+
+            questions.forEach((qObj, idx) => {
+                const div = document.createElement('div');
+                div.style.background = 'rgba(255,255,255,0.05)';
+                div.style.padding = '8px';
+                div.style.borderRadius = '6px';
+                div.style.marginBottom = '6px';
+                div.style.display = 'flex';
+                div.style.justifyContent = 'space-between';
+                div.style.alignItems = 'center';
+                div.innerHTML = `
+                    <span style="font-size:11px; color:#cbd5e1;">${idx + 1}. ${qObj.q}</span>
+                    <button class="btn-delete" onclick="deleteQuestionByAdmin(${idx})">ডিলিট</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function deleteQuestionByAdmin(idx) {
+            if(confirm("আপনি কি নিশ্চিতভাবে এই প্রশ্নটি মুছে ফেলতে চান?")) {
+                questions.splice(idx, 1);
+                renderAdminQuestionList();
+            }
+        }
+
+        // এডমিন প্যানেল: পেন্ডিং পেমেন্ট টেবিল রেন্ডারিং ও Approve করা
+        function renderAdminPendingTable() {
+            const tbody = document.getElementById('admin-pending-table-body');
+            tbody.innerHTML = '';
+
+            if(pendingPayments.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#94a3b8;">কোনো পেন্ডিং পেমেন্ট রিকোয়েস্ট নেই</td></tr>`;
+                return;
+            }
+
+            pendingPayments.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.email}</td>
+                    <td>${item.pack}</td>
+                    <td>${item.method}</td>
+                    <td style="color:#fbbf24; font-weight:bold;">${item.trxId}</td>
+                    <td>
+                        <button class="btn-approve" onclick="approvePendingPayment(${idx})">Approve & Make Paid</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function approvePendingPayment(idx) {
+            const approvedReq = pendingPayments[idx];
+            
+            let userObj = leaderboardData.find(u => u.email === approvedReq.email);
+            if(userObj) {
+                userObj.isPaid = true;
+            } else {
+                leaderboardData.push({
+                    name: approvedReq.name,
+                    email: approvedReq.email,
+                    pass: approvedReq.pass,
+                    isPaid: true,
+                    totalScore: 0,
+                    percentage: 0,
+                    examCount: 0
+                });
+            }
+
+            alert(`${approvedReq.name} এর পেমেন্ট সফলভাবে Approve করা হয়েছে এবং তাকে Paid মডিউলে যুক্ত করা হয়েছে!`);
+            pendingPayments.splice(idx, 1);
+            
+            renderAdminPendingTable();
+            renderAdminUserTable();
         }
 
         function renderAdminUserTable() {
