@@ -1,3 +1,6 @@
+অনুরোধটি বুঝতে পেরেছি। স্টুডেন্ট যদি পেইড (Paid) ইউজার হয়, তবে তার জন্য ৪০টি পরীক্ষার লিমিট থাকা উচিত নয় এবং তাকে পপ-আপ মডাল বা সাবস্ক্রিপশন কেনার জন্য বলা উচিত নয়।
+সমস্যাটির কারণ হলো কোডে freeExamCount সব ইউজারের জন্য একইভাবে কাজ করছিল এবং পরীক্ষা চালুর সময় ইউজার পেইড নাকি ফ্রি—তা চেক করা হচ্ছিল না।
+নিচে কোডটি সম্পূর্ণ ঠিক করে দেওয়া হলো। এখন পেইড ইউজারদের জন্য "Unlimited" দেখাবে এবং ফ্রি ইউজারদের ৪০টি লিমিট শেষ হলে সাবস্ক্রিপশন কিনতে বলবে:
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -464,6 +467,17 @@
             padding: 18px 15px;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
+
+        .premium-card-item {
+            background: #06081a;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.08);
+            font-size: 12px;
+        }
+        .premium-card-item h5 { color: #fbbf24; margin-bottom: 4px; font-size: 13px; }
+        .premium-card-item p { color: #cbd5e1; }
     </style>
 </head>
 <body>
@@ -831,7 +845,7 @@
         <div id="home-section" class="page-section">
             <div class="student-welcome-box">
                 <div style="background:#38bdf8; color:#0f172a; font-size:11px; padding:3px 10px; border-radius:12px; font-weight:700; display:inline-block; margin-bottom:8px;">
-                    ● ফ্রি এক্সাম লিমিট বাকি: <span id="exam-counter-txt" style="color:#b91c1c; font-weight:800;">40</span>/40 টি
+                    ● এক্সাম লিমিট বাকি: <span id="exam-counter-txt" style="color:#b91c1c; font-weight:800;">40</span>
                 </div>
                 <h3 style="font-size:15px; margin-bottom:10px;"><span id="banner-user-name">শিক্ষার্থী</span>, অনুশীলনে স্বাগতম!</h3>
                 <button class="btn-green" style="background:#f59e0b; color:#0f172a;" onclick="openExamConfig()">
@@ -1357,6 +1371,18 @@
             document.getElementById('prof-name').innerText = currentUser.name;
             document.getElementById('prof-email').innerText = currentUser.email;
 
+            // 🌟 পেইড ইউজার নাকি ফ্রি ইউজার চেক করে লিমিট আপডেট করা
+            const isUserPaid = (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid);
+            const counterTxt = document.getElementById('exam-counter-txt');
+
+            if(isUserPaid) {
+                counterTxt.innerText = "আনলিমিটেড";
+                counterTxt.style.color = "#10b981";
+            } else {
+                counterTxt.innerText = freeExamCount + "/40 টি";
+                counterTxt.style.color = "#b91c1c";
+            }
+
             if(currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
                 document.getElementById('prof-role').innerText = (currentUser.role === 'main_admin') ? "মেইন এডমিন (Full Control)" : "সাব-এডমিন";
                 document.getElementById('admin-role-title').innerText = "Abs Exam Center - Control Panel";
@@ -1591,8 +1617,11 @@
             renderPackagesTable();
         }
 
+        /* 🌟 পরীক্ষা শুরু কনফিগারেশনে পেইড ইউজার চেক */
         function openExamConfig() {
-            if(freeExamCount > 0) {
+            const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
+            
+            if(isUserPaid || freeExamCount > 0) {
                 updateChapters('cfg-subject', 'cfg-chapter');
                 document.getElementById('exam-config-modal').style.display = 'flex';
             } else {
@@ -1608,8 +1637,12 @@
             const timeMin = document.getElementById('cfg-time').value;
             document.getElementById('exam-config-modal').style.display = 'none';
 
-            freeExamCount--;
-            document.getElementById('exam-counter-txt').innerText = freeExamCount;
+            const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
+
+            if(!isUserPaid) {
+                freeExamCount--;
+                document.getElementById('exam-counter-txt').innerText = freeExamCount + "/40 টি";
+            }
 
             currentQuestionIndex = 0;
             scoreCount = 0;
@@ -1660,7 +1693,9 @@
                         allBtns[qObj.correct].classList.add('correct');
                     }
 
-                    if (currentUser && currentUser.isPaid) {
+                    const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
+
+                    if (isUserPaid) {
                         expContainer.style.display = 'block';
                         expContainer.innerHTML = `<strong><i class="fa-solid fa-circle-info"></i> ব্যাখ্যা:</strong> ${qObj.explanation}`;
                     } else {
@@ -1751,7 +1786,7 @@
             switchSection('home-section');
         }
 
-        /* 🌟 এডমিন টেবিল রেন্ডার (যাতে নতুন সাইন আপ করা সব ইউজার সঙ্গে সঙ্গে শো করে) */
+        /* 🌟 এডমিন টেবিল রেন্ডার */
         function renderAdminTable() {
             const tbody = document.getElementById('admin-user-table');
             if(!tbody) return;
@@ -1818,6 +1853,14 @@
             }
             
             localStorage.setItem('abs_users', JSON.stringify(usersList));
+            
+            // যদি কারেন্টলি লগইন থাকা ইউজারের স্ট্যাটাস আপডেট করা হয়
+            if(currentUser && currentUser.email === usersList[idx].phone) {
+                currentUser.isPaid = usersList[idx].isPaid;
+                localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
+                unlockPlatformUI();
+            }
+
             renderAdminTable();
         }
 
@@ -1837,3 +1880,4 @@
     </script>
 </body>
 </html>
+
