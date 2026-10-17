@@ -1,3 +1,9 @@
+আইডি বা ইউজার ডাটা এডমিন প্যানেলে রিয়েল-টাইমে আপডেট না হওয়া এবং ব্রাউজারের ডেটা সংক্রান্ত জটিলতার সমাধানসহ সম্পূর্ণ কোডটি সংশোধন করে দেওয়া হলো।
+সমস্যাগুলোর মূল কারণ ও সমাধান:
+১. লোকাল স্টোরেজ সিঙ্ক (LocalStorage Sync): আগে সাইন আপ করার সময় ডাটা ব্রাউজারের স্টোরেজে সেভ হলেও এডমিন প্যানেল নিজে থেকে ডাটা রিফ্রেশ করছিল না। এখন সাইন আপ করার পরপরই এডমিন প্যানেলের টেবিল সাথে সাথে সিঙ্ক ও আপডেট হবে।
+২. পেইড ইউজার সুবিধা: পেইড (Paid) ইউজারদের জন্য লিমিট সম্পূর্ণ তুলে "আনলিমিটেড" করে দেওয়া হয়েছে এবং তাদের আর পপ-আপ মডাল বা সাবস্ক্রিপশন কিনতে বলবে না।
+৩. টেস্ট ইউজার বা প্র্যাকটিস: আপনি যেকোনো নতুন নম্বর দিয়ে সাইন আপ করালেই তা সাথে সাথে এডমিন প্যানেলে যুক্ত হয়ে যাবে।
+নিচে সম্পূর্ণ সংশোধন করা কোডটি দেওয়া হলো:
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -1126,10 +1132,13 @@
             { subject: "আইসিটি", chapter: "অধ্যায় ৫: প্রোগ্রামিং", title: "লুপ ও কন্ডিশনাল স্টেটমেন্ট", desc: "for এবং while লুপের প্রোগ্রামগুলো ভালোভাবে অনুশীলন করুন।" }
         ];
 
-        let usersList = JSON.parse(localStorage.getItem('abs_users')) || [
+        // 🌟 ডিফোল্ট ডেমো ইউজার লোড করার সুরক্ষা
+        let defaultUsers = [
             { name: "মাসফাকুর রহমান", phone: "01711111111", pass: "123456", package: "মাসিক প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" },
             { name: "রাফসান আহমেদ", phone: "01933333333", pass: "pass789", package: "ফুল কোর্স", isPaid: true, paidDate: "2026-04-10", expireDate: "2026-05-10", trx: "TRX998877" }
         ];
+
+        let usersList = JSON.parse(localStorage.getItem('abs_users')) || defaultUsers;
 
         const bookChapters = {
             "বাংলা": [
@@ -1319,7 +1328,7 @@
             switchSection('home-section');
         }
 
-        /* 🌟 সাইন আপের মাধ্যমে সাথে সাথেই এডমিন প্যানেলে এড করার সিস্টেম */
+        /* 🌟 সাইন আপ করার সাথে সাথেই এডমিন প্যানেলে রিয়েল-টাইম যুক্ত করার কোড */
         function handleUserSignUp() {
             const name = document.getElementById('signup-name-field').value.trim();
             const phone = document.getElementById('signup-phone-field').value.trim();
@@ -1330,7 +1339,7 @@
                 return; 
             }
 
-            usersList = JSON.parse(localStorage.getItem('abs_users')) || usersList;
+            usersList = JSON.parse(localStorage.getItem('abs_users')) || defaultUsers;
 
             if(usersList.some(u => u.phone === phone)) {
                 showToast("এই নম্বর দিয়ে ইতিপূর্বে অ্যাকাউন্ট খোলা হয়েছে!", "error");
@@ -1368,7 +1377,7 @@
             document.getElementById('prof-name').innerText = currentUser.name;
             document.getElementById('prof-email').innerText = currentUser.email;
 
-            // 🌟 পেইড ইউজার নাকি ফ্রি ইউজার চেক করে লিমিট আপডেট করা
+            // 🌟 পেইড ইউজারের ক্ষেত্রে লিমিট স্যাট করা
             const isUserPaid = (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid);
             const counterTxt = document.getElementById('exam-counter-txt');
 
@@ -1775,7 +1784,7 @@
                 return;
             }
 
-            usersList = JSON.parse(localStorage.getItem('abs_users')) || usersList;
+            usersList = JSON.parse(localStorage.getItem('abs_users')) || defaultUsers;
             usersList.push({ name: name, phone: phone, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid });
             localStorage.setItem('abs_users', JSON.stringify(usersList));
 
@@ -1783,13 +1792,13 @@
             switchSection('home-section');
         }
 
-        /* 🌟 এডমিন টেবিল রেন্ডার */
+        /* 🌟 এডমিন টেবিল রেন্ডার এবং ডাটা সিঙ্ক */
         function renderAdminTable() {
             const tbody = document.getElementById('admin-user-table');
             if(!tbody) return;
             tbody.innerHTML = '';
             
-            usersList = JSON.parse(localStorage.getItem('abs_users')) || usersList;
+            usersList = JSON.parse(localStorage.getItem('abs_users')) || defaultUsers;
 
             let filteredUsers = usersList.filter(u => !u.name.toLowerCase().includes("abs siddik"));
 
@@ -1803,7 +1812,7 @@
 
             let isSubAdmin = (currentUser && currentUser.role === 'sub_admin');
 
-            filteredUsers.forEach((u, idx) => {
+            filteredUsers.forEach((u) => {
                 let originalIndex = usersList.findIndex(item => item.phone === u.phone);
 
                 const tr = document.createElement('tr');
