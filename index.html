@@ -1,4 +1,3 @@
-আপনার অনুরোধ অনুযায়ী সম্পূর্ণ আপডেট করা কোডটি একসাথে নিচে দেওয়া হলো:
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -25,7 +24,7 @@
             min-height: 100vh;
         }
 
-        /* 🌟 EduTech-Style Professional Floating Toast Notification */
+        /* 🌟 EduTech-Style Toast Notification */
         #toast-container {
             position: fixed;
             top: 20px;
@@ -142,7 +141,6 @@
             display: block !important;
         }
 
-        /* Auth Card */
         .auth-screen-card {
             background: #111538;
             border-radius: 20px;
@@ -225,7 +223,6 @@
             cursor: pointer;
         }
 
-        /* Student Home */
         .student-welcome-box {
             background: #111538;
             border-radius: 18px;
@@ -290,7 +287,6 @@
         .card-info h4 { font-size: 13px; font-weight: 800; }
         .card-info p { font-size: 10px; color: #64748b; }
 
-        /* Admin Dashboard */
         .admin-dashboard-box {
             background: #111538;
             border-radius: 20px;
@@ -372,7 +368,6 @@
             margin-bottom: 12px;
         }
 
-        /* Modals */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -469,10 +464,10 @@
 </head>
 <body>
 
-    <!-- 🌟 এডুটেক স্টাইলের নোটিফিকেশন কনটেইনার -->
+    <!-- 🌟 টোস্ট নোটিফিকেশন কনটেইনার -->
     <div id="toast-container"></div>
 
-    <!-- 🌟 লিমিট শেষ হওয়ার প্রিমিয়াম পপ-আপ মডাল -->
+    <!-- 🌟 ফ্রি লিমিট মডাল -->
     <div id="limit-popup-modal" class="modal-overlay">
         <div class="modal-box">
             <div style="background: rgba(251, 191, 36, 0.15); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: #fbbf24; font-size: 26px;">
@@ -491,7 +486,7 @@
         </div>
     </div>
 
-    <!-- 🌟 পরীক্ষা শুরুর কনফিগারেশন মডাল -->
+    <!-- 🌟 পরীক্ষা সেটআপ মডাল -->
     <div id="exam-config-modal" class="modal-overlay">
         <div class="modal-box" style="text-align: left;">
             <h3 style="color: #fbbf24; font-size: 16px; margin-bottom: 12px; text-align: center;"><i class="fa-solid fa-pen-to-square"></i> পরীক্ষা সেটআপ করুন</h3>
@@ -551,7 +546,7 @@
 
     <div class="container">
         
-        <!-- 🌟 ১. লগইন / সাইন আপ স্ক্রিন -->
+        <!-- ১. লগইন / সাইন আপ -->
         <div id="login-screen-section" class="page-section active">
             <div class="auth-screen-card">
                 <div class="logo-badge">
@@ -593,7 +588,7 @@
             </div>
         </div>
 
-        <!-- 🌟 👑 ২. এডমিন প্যানেল -->
+        <!-- ২. এডমিন প্যানেল -->
         <div id="admin-panel-section" class="page-section">
             <div class="admin-dashboard-box">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -604,7 +599,6 @@
                     <span style="background: #991b1b; color: white; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">ADMIN</span>
                 </div>
 
-                <!-- পরিসংখ্যান স্ট্যাটস -->
                 <div class="admin-stats-grid">
                     <div class="stat-box">
                         <span>টোটাল ইউজার</span>
@@ -631,7 +625,6 @@
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-bank', this)">📚 প্রশ্নব্যাংক</button>
                 </div>
 
-                <!-- ইউজার লিস্ট ট্যাব -->
                 <div id="adm-tab-users" class="adm-tab-content">
                     <h4 style="font-size:12px; color:#38bdf8; margin-bottom:8px;">ইউজার সাবস্ক্রিপশন ও তথ্য ম্যানেজমেন্ট:</h4>
                     <div style="overflow-x:auto;">
@@ -650,7 +643,6 @@
                     </div>
                 </div>
 
-                <!-- 📖 কোর্স ম্যানেজমেন্ট ট্যাব -->
                 <div id="adm-tab-courses" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📖 নতুন কোর্স যোগ করুন</h4>
@@ -668,7 +660,6 @@
                     </div>
                 </div>
 
-                <!-- 📦 প্যাকেজ ম্যানেজমেন্ট ট্যাব -->
                 <div id="adm-tab-packages" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📦 নতুন প্যাকেজ যোগ করুন</h4>
@@ -686,7 +677,6 @@
                     </div>
                 </div>
 
-                <!-- ⚡ ফ্ল্যাশকার্ড যোগ করার বক্স -->
                 <div id="adm-tab-flashcard" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;"><i class="fa-solid fa-bolt"></i> প্রিমিয়াম ফ্ল্যাশকার্ড যোগ করুন</h4>
@@ -713,7 +703,6 @@
                     </div>
                 </div>
 
-                <!-- 🔴 লাইভ এক্সাম প্রশ্ন ও ব্যাখ্যা যোগ করার বক্স -->
                 <div id="adm-tab-live" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;"><i class="fa-solid fa-circle-dot"></i> লাইভ পরীক্ষা প্রশ্ন ও ব্যাখ্যা যোগ করুন</h4>
@@ -740,7 +729,6 @@
                     </div>
                 </div>
 
-                <!-- 📝 প্রশ্ন ম্যানেজমেন্ট (ব্যাখ্যাসহ) -->
                 <div id="adm-tab-general" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📝 প্রশ্ন ম্যানেজমেন্ট ও ব্যাখ্যা</h4>
@@ -767,7 +755,6 @@
                     </div>
                 </div>
 
-                <!-- 💡 সাজেশন যোগ করার বক্স -->
                 <div id="adm-tab-sug" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;"><i class="fa-solid fa-lightbulb"></i> প্রিমিয়াম সাজেশন যোগ করুন</h4>
@@ -794,7 +781,6 @@
                     </div>
                 </div>
 
-                <!-- 📚 প্রশ্নব্যাংক যোগ করার বক্স -->
                 <div id="adm-tab-bank" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
                         <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;"><i class="fa-solid fa-book-bookmark"></i> প্রশ্নব্যাংক প্রশ্ন ও ব্যাখ্যা যোগ করুন</h4>
@@ -821,17 +807,16 @@
                     </div>
                 </div>
 
-                <!-- সুইচ বাটন: সরাসরি শিক্ষার্থী মোডে যাওয়ার জন্য -->
                 <button class="btn-green" style="background:#f59e0b; color:#0f172a; margin-top:15px; font-weight:800;" onclick="switchSection('home-section')">
                     <i class="fa-solid fa-graduation-cap"></i> শিক্ষার্থী মোডে যান (Switch to Student)
                 </button>
             </div>
         </div>
 
-        <!-- 🌟 ৩. সাধারণ স্টুডেন্ট হোম -->
+        <!-- ৩. স্টুডেন্ট হোম -->
         <div id="home-section" class="page-section">
             <div class="student-welcome-box">
-                <div style="background:#38bdf8; color:#0f172a; font-size:11px; padding:3px 10px; border-radius:12px; font-weight:700; display:inline-block; margin-bottom:8px;">
+                <div id="exam-counter-badge" style="background:#38bdf8; color:#0f172a; font-size:11px; padding:3px 10px; border-radius:12px; font-weight:700; display:inline-block; margin-bottom:8px;">
                     ● ফ্রি এক্সাম লিমিট বাকি: <span id="exam-counter-txt" style="color:#b91c1c; font-weight:800;">40</span>/40 টি
                 </div>
                 <h3 style="font-size:15px; margin-bottom:10px;"><span id="banner-user-name">শিক্ষার্থী</span>, অনুশীলনে স্বাগতম!</h3>
@@ -840,13 +825,11 @@
                 </button>
             </div>
 
-            <!-- এডমিন শর্টকাট বা সুইচ বাটন -->
             <div id="admin-shortcut-banner" class="admin-access-badge" style="display:none;" onclick="switchSection('admin-panel-section')">
                 <span>⚡ এডমিন কন্ট্রোল প্যানেলে যান (Switch to Admin)</span>
                 <span style="background:#06081a; padding:4px 8px; border-radius:8px;">ADMIN <i class="fa-solid fa-arrow-right"></i></span>
             </div>
 
-            <!-- মোট ৮টি প্রিমিয়াম কার্ড গ্রিড -->
             <div class="grid-container">
                 <div class="grid-card" onclick="switchSection('dashboard-section')">
                     <div class="icon-box c-yellow"><i class="fa-solid fa-chart-line"></i></div>
@@ -890,7 +873,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ৪. কোর্স পেজ -->
+        <!-- ৪. কোর্স পেজ -->
         <div id="courses-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-graduation-cap"></i> আমাদের কোর্সসমূহ</h3>
@@ -899,7 +882,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ৫. ফ্ল্যাশকার্ড পেজ -->
+        <!-- ৫. ফ্ল্যাশকার্ড পেজ -->
         <div id="flashcard-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-bolt"></i> প্রিমিয়াম ফ্ল্যাশকার্ড জোন</h3>
@@ -910,7 +893,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ৬. সাজেশন পেজ -->
+        <!-- ৬. সাজেশন পেজ -->
         <div id="suggestion-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-lightbulb"></i> ফাইনাল এক্সাম সাজেশন</h3>
@@ -921,7 +904,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ৭. প্রশ্নব্যাংক পেজ -->
+        <!-- ৭. প্রশ্নব্যাংক পেজ -->
         <div id="bank-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-book-bookmark"></i> বোর্ড প্রশ্নব্যাংক আর্কাইভ</h3>
@@ -932,7 +915,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ৮. লাইভ এক্সাম স্ক্রিন (ব্যাখ্যাসহ) -->
+        <!-- ৮. লাইভ এক্সাম স্ক্রিন -->
         <div id="exam-screen-section" class="page-section">
             <div class="inner-page-box">
                 <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
@@ -945,7 +928,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ৯. ইনস্ট্যান্ট রেজাল্ট -->
+        <!-- ৯. ইনস্ট্যান্ট রেজাল্ট -->
         <div id="result-screen-section" class="page-section">
             <div class="inner-page-box" style="text-align:center;">
                 <h2 style="color:#10b981; margin-bottom:8px;"><i class="fa-solid fa-award"></i> পরীক্ষার ফলাফল</h2>
@@ -957,7 +940,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ১০. স্টুডেন্ট ড্যাশবোর্ড -->
+        <!-- ১০. স্টুডেন্ট ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-chart-pie"></i> পারফরম্যান্স ড্যাশবোর্ড</h3>
@@ -968,7 +951,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ১১. লিডারবোর্ড -->
+        <!-- ১১. লিডারবোর্ড -->
         <div id="leaderboard-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#10b981; margin-bottom:12px;"><i class="fa-solid fa-trophy"></i> লাইভ লিডারবোর্ড র‍্যাংকিং</h3>
@@ -989,7 +972,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ১২. সাবস্ক্রিপশন ও পেমেন্ট ফর্ম -->
+        <!-- ১২. সাবস্ক্রিপশন ও পেমেন্ট -->
         <div id="subscription-payment-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:10px;">👑 প্রিমিয়াম সাবস্ক্রিপশন</h3>
@@ -1013,7 +996,7 @@
             </div>
         </div>
 
-        <!-- 🌟 ১৩. প্রোফাইল পেজ -->
+        <!-- ১৩. প্রোফাইল পেজ -->
         <div id="profile-section" class="page-section">
             <div class="inner-page-box">
                 <h3>👤 অ্যাকাউন্ট প্রোফাইল</h3>
@@ -1056,7 +1039,6 @@
         let currentUser = JSON.parse(localStorage.getItem('abs_current_user')) || null;
         let freeExamCount = 40;
 
-        // EduTech style toast popup notification
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -1122,116 +1104,16 @@
         ];
 
         const bookChapters = {
-            "বাংলা": [
-                "অধ্যায় ১: গদ্য - অপরিচিতা",
-                "অধ্যায় ২: গদ্য - আমার পথ",
-                "অধ্যায় ৩: গদ্য - বায়ান্নর দিনগুলো",
-                "অধ্যায় ৪: গদ্য - রেইনকোট",
-                "অধ্যায় ৫: কবিতা - সোনার তরী",
-                "অধ্যায় ৬: কবিতা - বিদ্রোহী",
-                "অধ্যায় ৭: কবিতা - প্রতিদান",
-                "অধ্যায় ৮: কবিতা - ফেব্রুয়ারি ১৯৬৯",
-                "অধ্যায় ৯: ব্যাকরণ - বাংলা উচ্চারণের নিয়ম",
-                "অধ্যায় ১০: ব্যাকরণ - বানানের নিয়ম"
-            ],
-            "উচ্চতর গণিত ১ম পত্র": [
-                "অধ্যায় ১: ম্যাট্রিক্স ও নির্ণায়ক",
-                "অধ্যায় ২: ভেক্টর",
-                "অধ্যায় ৩: সরলরেখা",
-                "অধ্যায় ৪: বৃত্ত",
-                "অধ্যায় ৫: বিন্যাস ও সমাবেশ",
-                "অধ্যায় ৬: ত্রিকোণমিতিক অনুপাত",
-                "অধ্যায় ৭: সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত",
-                "অধ্যায় ৮: ফাংশন ও ফাংশনের লেখচিত্র",
-                "অধ্যায় ৯: অন্তরীকরণ (Differentiation)",
-                "অধ্যায় ১০: যোগজীকরণ (Integration)"
-            ],
-            "উচ্চতর গণিত ২য় পত্র": [
-                "অধ্যায় ১: বাস্তব সংখ্যা ও অসমতা",
-                "অধ্যায় ২: রৈখিক প্রোগ্রামন",
-                "অধ্যায় ৩: জটিল সংখ্যা",
-                "অধ্যায় ৪: বহুপদী ও বহুপদী সমীকরণ",
-                "অধ্যায় ৫: দ্বিপদী বিস্তার",
-                "অধ্যায় ৬: কনিক",
-                "অধ্যায় ৭: বিপরীত ত্রিকোণমিতিক ফাংশন",
-                "অধ্যায় ৮: স্থিতিবিদ্যা",
-                "অধ্যায় ৯: সমতলে বস্তুকণার গতি",
-                "অধ্যায় ১০: সম্ভাবনা"
-            ],
-            "রসায়ন ১ম পত্র": [
-                "অধ্যায় ১: ল্যাবরেটরির নিরাপদ ব্যবহার",
-                "অধ্যায় ২: গুণগত রসায়ন",
-                "অধ্যায় ৩: মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন",
-                "অধ্যায় ৪: রাসায়নিক পরিবর্তন",
-                "অধ্যায় ৫: কর্মমুখী রসায়ন"
-            ],
-            "রসায়ন ২য় পত্র": [
-                "অধ্যায় ১: পরিবেশ রসায়ন",
-                "অধ্যায় ২: জৈব রসায়ন (Organic Chemistry)",
-                "অধ্যায় ৩: পরিমাণগত রসায়ন",
-                "অধ্যায় ৪: তড়িৎ রসায়ন",
-                "অধ্যায় ৫: অর্থনৈতিক রসায়ন"
-            ],
-            "পদার্থবিজ্ঞান ১ম পত্র": [
-                "অধ্যায় ১: ভৌত জগত ও পরিমাপ",
-                "অধ্যায় ২: ভেক্টর",
-                "অধ্যায় ৩: গতিবিদ্যা",
-                "অধ্যায় ৪: নিউটনীয় বলবিদ্যা",
-                "অধ্যায় ৫: কাজ, শক্তি ও ক্ষমতা",
-                "অধ্যায় ৬: মহাকর্ষ ও অভিকর্ষ",
-                "অধ্যায় ৭: পদার্থের গাঠনিক ধর্ম",
-                "অধ্যায় ৮: পর্যায়বৃত্ত গতি",
-                "অধ্যায় ৯: তরঙ্গ",
-                "অধ্যায় ১০: আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব"
-            ],
-            "পদার্থবিজ্ঞান ২য় পত্র": [
-                "অধ্যায় ১: তাপগতিবিদ্যা",
-                "অধ্যায় ২: স্থির তড়িৎ",
-                "অধ্যায় ৩: চল তড়িৎ",
-                "অধ্যায় ৪: তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চৌম্বকত্ব",
-                "অধ্যায় ৫: তাড়িতচৌম্বকীয় আবেশ ও পরিবর্তী প্রবাহ",
-                "অধ্যায় ৬: জ্যামিতিক আলোকবিজ্ঞান",
-                "অধ্যায় ৭: ভৌত আলোকবিজ্ঞান",
-                "অধ্যায় ৮: আধুনিক পদার্থবিজ্ঞানের সূচনা",
-                "অধ্যায় ৯: পরমাণুর মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান",
-                "অধ্যায় ১০: সেমিকন্ডাক্টর ও ইলেকট্রনিক্স"
-            ],
-            "জীববিজ্ঞান ১ম পত্র": [
-                "অধ্যায় ১: কোষ ও এর গঠন",
-                "অধ্যায় ২: কোষ বিভাজন",
-                "অধ্যায় ৩: কোষ রসায়ন",
-                "অধ্যায় ৪: অনুজীব",
-                "অধ্যায় ৫: শৈবাল ও ছত্রাক",
-                "অধ্যায় ৬: ব্রায়োফাইটা ও টেরিডোফাইটা",
-                "অধ্যায় ৭: নগ্নবীজী ও আবৃতবীজী উদ্ভিদ",
-                "অধ্যায় ৮: টিস্যু ও টিস্যুতন্ত্র",
-                "অধ্যায় ৯: উদ্ভিদ শারীরতত্ত্ব",
-                "অধ্যায় ১০: উদ্ভিদ প্রজনন",
-                "অধ্যায় ১১: জীবপ্রযুক্তি",
-                "অধ্যায় ১২: জীবের পরিবেশ, বিস্তার ও সংরক্ষণ"
-            ],
-            "জীববিজ্ঞান ২য় পত্র": [
-                "অধ্যায় ১: প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস",
-                "অধ্যায় ২: প্রাণীর পরিচিতি (হাইড্রা, ঘাসফড়িং, রুই মাছ)",
-                "অধ্যায় ৩: মানব শারীরতত্ত্ব: পরিপাক ও শোষণ",
-                "অধ্যায় ৪: মানব শারীরতত্ত্ব: রক্ত ও সঞ্চালন",
-                "অধ্যায় ৫: মানব শারীরতত্ত্ব: শ্বাসক্রিয়া ও শ্বসন",
-                "অধ্যায় ৬: মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন",
-                "অধ্যায় ৭: মানব শারীরতত্ত্ব: চলন ও অঙ্গচালনা",
-                "অধ্যায় ৮: মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ",
-                "অধ্যায় ৯: মানব জীবনের ধারাবাহিকতা",
-                "অধ্যায় ১০: মানবদেহের প্রতিরক্ষা (ইমিউনিটি)",
-                "অধ্যায় ১১: জিনতত্ত্ব ও বিবর্তন",
-                "অধ্যায় ১২: প্রাণীর আচরণ"
-            ],
-            "আইসিটি": [
-                "অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত",
-                "অধ্যায় ২: কমিউনিকেশন সিস্টেমস ও নেটওয়ার্কিং",
-                "অধ্যায় ৩: সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস",
-                "অধ্যায় ৪: ওয়েব ডিজাইন পরিচিতি এবং HTML",
-                "অধ্যায় ৫: প্রোগ্রামিং ভাষা (C Programming)",
-                "অধ্যায় ৬: ডেটাবেজ ম্যানেজমেন্ট সিস্টেম"
-            ]
+            "বাংলা": ["অধ্যায় ১: গদ্য - অপরিচিতা", "অধ্যায় ২: গদ্য - আমার পথ", "অধ্যায় ৩: কবিতা - সোনার তরী"],
+            "উচ্চতর গণিত ১ম পত্র": ["অধ্যায় ১: ম্যাট্রিক্স ও নির্ণায়ক", "অধ্যায় ২: ভেক্টর", "অধ্যায় ৩: সরলরেখা"],
+            "উচ্চতর গণিত ২য় পত্র": ["অধ্যায় ১: বাস্তব সংখ্যা", "অধ্যায় ৩: জটিল সংখ্যা", "অধ্যায় ৪: বহুপদী"],
+            "রসায়ন ১ম পত্র": ["অধ্যায় ১: ল্যাবরেটরি নিরাপদ ব্যবহার", "অধ্যায় ২: গুণগত রসায়ন"],
+            "রসায়ন ২য় পত্র": ["অধ্যায় ১: পরিবেশ রসায়ন", "অধ্যায় ২: জৈব রসায়ন"],
+            "পদার্থবিজ্ঞান ১ম পত্র": ["অধ্যায় ১: ভৌত জগত", "অধ্যায় ২: ভেক্টর", "অধ্যায় ৩: গতিবিদ্যা"],
+            "পদার্থবিজ্ঞান ২য় পত্র": ["অধ্যায় ১: তাপগতিবিদ্যা", "অধ্যায় ২: স্থির তড়িৎ"],
+            "জীববিজ্ঞান ১ম পত্র": ["অধ্যায় ১: কোষ ও গঠন", "অধ্যায় ২: কোষ বিভাজন"],
+            "জীববিজ্ঞান ২য় পত্র": ["অধ্যায় ১: প্রাণীর বিভিন্নতা", "অধ্যায় ২: প্রাণীর পরিচিতি"],
+            "আইসিটি": ["অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত", "অধ্যায় ২: নেটওয়ার্কিং", "অধ্যায় ৩: সংখ্যা পদ্ধতি", "অধ্যায় ৪: HTML", "অধ্যায় ৫: প্রোগ্রামিং", "অধ্যায় ৬: ডেটাবেজ"]
         };
 
         window.onload = function() {
@@ -1257,7 +1139,7 @@
             }
         }
 
-        /* 🌟 এডমিন, সাব-এডমিন এবং শিক্ষার্থীদের জন্য সুরক্ষিত লগইন সিস্টেম */
+        /* 🌟 নতুন আপডেট করা লগইন ফাংশন */
         function handleCustomAuth() {
             const inputVal = document.getElementById('auth-input-field').value.trim();
             const passVal = document.getElementById('auth-pass-field').value.trim();
@@ -1309,7 +1191,6 @@
             switchSection('home-section');
         }
 
-        /* 🌟 সাইন আপের মাধ্যমে সাথে সাথেই এডমিন প্যানেলে এড করার সিস্টেম */
         function handleUserSignUp() {
             const name = document.getElementById('signup-name-field').value.trim();
             const phone = document.getElementById('signup-phone-field').value.trim();
@@ -1349,6 +1230,7 @@
             switchSection('home-section');
         }
 
+        /* 🌟 ইউজার পেইড কিনা তা চেক করে ড্যাশবোর্ড আপডেট */
         function unlockPlatformUI() {
             document.getElementById('app-header').style.display = 'flex';
             document.getElementById('app-bottom-bar').style.display = 'flex';
@@ -1357,6 +1239,18 @@
             document.getElementById('banner-user-name').innerText = currentUser.name;
             document.getElementById('prof-name').innerText = currentUser.name;
             document.getElementById('prof-email').innerText = currentUser.email;
+
+            // পেইড মেম্বারদের জন্য আনলিমিটেড সার্ভিস সেটআপ
+            const counterBadge = document.getElementById('exam-counter-badge');
+            if(currentUser.isPaid || currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
+                counterBadge.style.background = "#10b981";
+                counterBadge.style.color = "#ffffff";
+                counterBadge.innerHTML = '● প্রিমিয়াম সদস্য: <span style="color:#fbbf24; font-weight:800;">আনলিমিটেড এক্সাম</span>';
+            } else {
+                counterBadge.style.background = "#38bdf8";
+                counterBadge.style.color = "#0f172a";
+                counterBadge.innerHTML = '● ফ্রি এক্সাম লিমিট বাকি: <span id="exam-counter-txt" style="color:#b91c1c; font-weight:800;">' + freeExamCount + '</span>/40 টি';
+            }
 
             if(currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
                 document.getElementById('prof-role').innerText = (currentUser.role === 'main_admin') ? "মেইন এডমিন (Full Control)" : "সাব-এডমিন";
@@ -1465,377 +1359,3 @@
             if(coursesList.length === 0) {
                 container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">বর্তমানে কোনো কোর্স নেই।</p>';
                 return;
-            }
-            coursesList.forEach(c => {
-                const div = document.createElement('div');
-                div.style.cssText = "background:#06081a; padding:12px; border-radius:10px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.08);";
-                div.innerHTML = `<h4 style="color:#fbbf24; font-size:14px; margin-bottom:4px;">${c.name}</h4><p style="font-size:11px; color:#cbd5e1;">${c.desc}</p>`;
-                container.appendChild(div);
-            });
-        }
-
-        function saveAdminFlashcard() {
-            const subject = document.getElementById('fc-subject').value;
-            const chapter = document.getElementById('fc-chapter').value;
-            const title = document.getElementById('fc-title').value.trim();
-            const desc = document.getElementById('fc-desc').value.trim();
-
-            if(!title || !desc) { showToast("সব তথ্য পূরণ করুন!", "error"); return; }
-
-            flashcardsList.push({ subject, chapter, title, desc });
-            localStorage.setItem('abs_flashcards', JSON.stringify(flashcardsList));
-            document.getElementById('fc-title').value = '';
-            document.getElementById('fc-desc').value = '';
-            showToast("ফ্ল্যাশকার্ড সেভ হয়েছে!", "success");
-        }
-
-        function renderStudentFlashcards() {
-            const container = document.getElementById('student-flashcards-container');
-            container.innerHTML = '';
-            flashcardsList = JSON.parse(localStorage.getItem('abs_flashcards')) || flashcardsList;
-
-            if(flashcardsList.length === 0) {
-                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">কোনো ফ্ল্যাশকার্ড পাওয়া যায়নি।</p>';
-                return;
-            }
-
-            flashcardsList.forEach(fc => {
-                const div = document.createElement('div');
-                div.className = 'premium-card-item';
-                div.innerHTML = `
-                    <h5><i class="fa-solid fa-bolt" style="color:#fbbf24;"></i> ${fc.subject} (${fc.chapter})</h5>
-                    <p style="font-weight:700; color:#38bdf8; margin-bottom:4px;">${fc.title}</p>
-                    <p>${fc.desc}</p>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function saveAdminSuggestion() {
-            const subject = document.getElementById('sug-subject').value;
-            const chapter = document.getElementById('sug-chapter').value;
-            const title = document.getElementById('sug-title').value.trim();
-            const desc = document.getElementById('sug-desc').value.trim();
-
-            if(!title || !desc) { showToast("সব তথ্য পূরণ করুন!", "error"); return; }
-
-            suggestionsList.push({ subject, chapter, title, desc });
-            localStorage.setItem('abs_suggestions', JSON.stringify(suggestionsList));
-            document.getElementById('sug-title').value = '';
-            document.getElementById('sug-desc').value = '';
-            showToast("সাজেশন সেভ হয়েছে!", "success");
-        }
-
-        function renderStudentSuggestions() {
-            const container = document.getElementById('student-suggestions-container');
-            container.innerHTML = '';
-            suggestionsList = JSON.parse(localStorage.getItem('abs_suggestions')) || suggestionsList;
-
-            if(suggestionsList.length === 0) {
-                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">কোনো সাজেশন পাওয়া যায়নি।</p>';
-                return;
-            }
-
-            suggestionsList.forEach(sug => {
-                const div = document.createElement('div');
-                div.className = 'premium-card-item';
-                div.innerHTML = `
-                    <h5><i class="fa-solid fa-lightbulb" style="color:#fbbf24;"></i> ${sug.subject} (${sug.chapter})</h5>
-                    <p style="font-weight:700; color:#38bdf8; margin-bottom:4px;">${sug.title}</p>
-                    <p>${sug.desc}</p>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function renderSubscriptionPackages() {
-            const selectBox = document.getElementById('pay-package');
-            selectBox.innerHTML = '';
-            packagesList.forEach(pkg => {
-                const opt = document.createElement('option');
-                opt.value = pkg.name;
-                opt.innerText = `${pkg.name} - ${pkg.price}`;
-                selectBox.appendChild(opt);
-            });
-        }
-
-        function renderPackagesTable() {
-            const tbody = document.getElementById('admin-package-table');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            packagesList.forEach((pkg, idx) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${pkg.name}</strong></td>
-                    <td style="color:#38bdf8;">${pkg.price}</td>
-                    <td><button style="background:#dc2626; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deletePackage(${idx})">ডিলিট</button></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function addNewPackage() {
-            const name = document.getElementById('new-pkg-name').value.trim();
-            const price = document.getElementById('new-pkg-price').value.trim();
-            if(!name || !price) { showToast("সব তথ্য দিন!", "error"); return; }
-            packagesList.push({ name, price });
-            localStorage.setItem('abs_packages', JSON.stringify(packagesList));
-            document.getElementById('new-pkg-name').value = '';
-            document.getElementById('new-pkg-price').value = '';
-            renderPackagesTable();
-            showToast("প্যাকেজ যোগ হয়েছে!", "success");
-        }
-
-        function deletePackage(idx) {
-            packagesList.splice(idx, 1);
-            localStorage.setItem('abs_packages', JSON.stringify(packagesList));
-            renderPackagesTable();
-        }
-
-        function openExamConfig() {
-            if(freeExamCount > 0) {
-                updateChapters('cfg-subject', 'cfg-chapter');
-                document.getElementById('exam-config-modal').style.display = 'flex';
-            } else {
-                document.getElementById('limit-popup-modal').style.display = 'flex';
-            }
-        }
-
-        function closeExamConfigModal() {
-            document.getElementById('exam-config-modal').style.display = 'none';
-        }
-
-        function startConfiguredExam() {
-            const timeMin = document.getElementById('cfg-time').value;
-            document.getElementById('exam-config-modal').style.display = 'none';
-
-            freeExamCount--;
-            document.getElementById('exam-counter-txt').innerText = freeExamCount;
-
-            currentQuestionIndex = 0;
-            scoreCount = 0;
-
-            document.getElementById('exam-timer-txt').innerText = `সময়: ${timeMin} মিনিট`;
-            switchSection('exam-screen-section');
-            loadQuestion();
-        }
-
-        function goToSubscription() {
-            document.getElementById('limit-popup-modal').style.display = 'none';
-            switchSection('subscription-payment-section');
-        }
-
-        function closeLimitModal() {
-            document.getElementById('limit-popup-modal').style.display = 'none';
-        }
-
-        function loadQuestion() {
-            if(currentQuestionIndex >= examQuestions.length) {
-                finishExamSession();
-                return;
-            }
-
-            const qObj = examQuestions[currentQuestionIndex];
-            document.getElementById('exam-progress-txt').innerText = `প্রশ্ন ${currentQuestionIndex + 1}/${examQuestions.length}`;
-            document.getElementById('question-title-box').innerText = qObj.q;
-
-            const optContainer = document.getElementById('options-container');
-            optContainer.innerHTML = '';
-            const expContainer = document.getElementById('explanation-container');
-            expContainer.style.display = 'none';
-            expContainer.innerHTML = '';
-
-            qObj.options.forEach((optText, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = optText;
-                btn.onclick = function() {
-                    const allBtns = optContainer.querySelectorAll('button');
-                    allBtns.forEach(b => b.style.pointerEvents = 'none');
-
-                    if(idx === qObj.correct) {
-                        btn.classList.add('correct');
-                        scoreCount++;
-                    } else {
-                        btn.classList.add('wrong');
-                        allBtns[qObj.correct].classList.add('correct');
-                    }
-
-                    if (currentUser && currentUser.isPaid) {
-                        expContainer.style.display = 'block';
-                        expContainer.innerHTML = `<strong><i class="fa-solid fa-circle-info"></i> ব্যাখ্যা:</strong> ${qObj.explanation}`;
-                    } else {
-                        expContainer.style.display = 'block';
-                        expContainer.innerHTML = `<span style="color:#fbbf24; cursor:pointer;" onclick="switchSection('subscription-payment-section')"><i class="fa-solid fa-crown"></i> বিস্তারিত ব্যাখ্যা দেখতে প্রিমিয়াম সাবস্ক্রিপশন কিনুন! ক্লিক করুন।</span>`;
-                    }
-
-                    setTimeout(() => {
-                        currentQuestionIndex++;
-                        loadQuestion();
-                    }, 3500);
-                };
-                optContainer.appendChild(btn);
-            });
-        }
-
-        function finishExamSession() {
-            let totalQ = examQuestions.length;
-            let percent = Math.round((scoreCount / totalQ) * 100);
-
-            document.getElementById('res-score-box').innerText = `নম্বর: ${scoreCount}/${totalQ}`;
-            document.getElementById('res-percent-box').innerText = `পার্সেন্টেজ: ${percent}%`;
-
-            studentExamHistory.push({ title: "মডেল টেস্ট পরীক্ষা", score: `${scoreCount}/${totalQ}`, percent: `${percent}%`, date: "আজ" });
-            leaderboardData.push({ name: currentUser.name, score: `${scoreCount}/${totalQ}`, percent: `${percent}%` });
-
-            switchSection('result-screen-section');
-        }
-
-        function renderStudentDashboard() {
-            const container = document.getElementById('student-history-list');
-            container.innerHTML = '';
-            if(studentExamHistory.length === 0) {
-                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">এখনো কোনো পরীক্ষার ফলাফল নেই।</p>';
-                return;
-            }
-
-            studentExamHistory.forEach(h => {
-                const div = document.createElement('div');
-                div.style.cssText = "background:#06081a; padding:10px; border-radius:8px; margin-bottom:8px; border:1px solid rgba(255,255,255,0.05);";
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; font-size:12px; color:#fbbf24; font-weight:bold;">
-                        <span>${h.title}</span>
-                        <span style="color:#10b981;">${h.percent}</span>
-                    </div>
-                    <p style="font-size:11px; color:#cbd5e1; margin-top:4px;">প্রাপ্ত নম্বর: ${h.score} | সময়: ${h.date}</p>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function renderLeaderboard() {
-            const tbody = document.getElementById('leaderboard-table-body');
-            tbody.innerHTML = '';
-            leaderboardData.forEach((item, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>#${index + 1}</strong></td>
-                    <td>${item.name}</td>
-                    <td style="color:#fbbf24; font-weight:bold;">${item.score}</td>
-                    <td style="color:#10b981; font-weight:bold;">${item.percent}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function saveAdminContent(type) {
-            showToast(`${type} ও ব্যাখ্যা সেভ হয়েছে!`, "success");
-        }
-
-        function submitPaymentRequest() {
-            const pkg = document.getElementById('pay-package').value;
-            const name = document.getElementById('pay-name').value.trim();
-            const phone = document.getElementById('pay-phone').value.trim();
-            const pass = document.getElementById('pay-pass').value.trim();
-            const trxid = document.getElementById('pay-trxid').value.trim();
-
-            if(!name || !phone || !trxid) {
-                showToast("নাম, মোবাইল নম্বর ও TrxID প্রদান করুন!", "error");
-                return;
-            }
-
-            usersList = JSON.parse(localStorage.getItem('abs_users')) || usersList;
-            usersList.push({ name: name, phone: phone, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid });
-            localStorage.setItem('abs_users', JSON.stringify(usersList));
-
-            showToast("পেমেন্ট সাবমিট হয়েছে! এডমিন শীঘ্রই যাচাই করবে।", "success");
-            switchSection('home-section');
-        }
-
-        /* 🌟 এডমিন টেবিল রেন্ডার (যাতে নতুন সাইন আপ করা সব ইউজার সঙ্গে সঙ্গে শো করে) */
-        function renderAdminTable() {
-            const tbody = document.getElementById('admin-user-table');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            
-            usersList = JSON.parse(localStorage.getItem('abs_users')) || usersList;
-
-            let filteredUsers = usersList.filter(u => !u.name.toLowerCase().includes("abs siddik"));
-
-            let total = filteredUsers.length;
-            let paidCount = filteredUsers.filter(u => u.isPaid).length;
-            let freeCount = total - paidCount;
-
-            document.getElementById('stat-total-users').innerText = total;
-            document.getElementById('stat-free-users').innerText = freeCount;
-            document.getElementById('stat-paid-users').innerText = paidCount;
-
-            let isSubAdmin = (currentUser && currentUser.role === 'sub_admin');
-
-            filteredUsers.forEach((u, idx) => {
-                let originalIndex = usersList.findIndex(item => item.phone === u.phone);
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${u.name}</strong><br><small style="color:#38bdf8;">ফোন: ${u.phone}</small><br><small style="color:#fbbf24;">পাস: ${u.pass}</small></td>
-                    <td><span class="${u.isPaid ? 'badge-paid' : 'badge-free'}">${u.isPaid ? 'PAID' : 'FREE'}</span></td>
-                    <td style="color:#38bdf8; font-size:10px;">শুরু: ${u.paidDate}<br>শেষ: ${u.expireDate}</td>
-                    <td><code style="color:#fbbf24;">${u.trx}</code></td>
-                    <td>
-                        <div style="display: flex; gap: 4px; flex-direction: column;">
-                            <button style="background:${isSubAdmin ? '#475569' : (u.isPaid ? '#dc2626' : '#16a34a')}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:${isSubAdmin ? 'not-allowed' : 'pointer'};" ${isSubAdmin ? 'disabled' : ''} onclick="toggleUserPayment(${originalIndex})">
-                                ${isSubAdmin ? '🔒 Locked' : (u.isPaid ? 'Revoke' : 'Approve')}
-                            </button>
-                            <button style="background:#b91c1c; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteUser(${originalIndex})">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function toggleUserPayment(idx) {
-            if(currentUser && currentUser.role === 'sub_admin') {
-                showToast("সাব-এডমিন পেমেন্ট এপ্রুভ বা রিভোক করতে পারবে না!", "error");
-                return;
-            }
-
-            if(usersList[idx].isPaid) {
-                usersList[idx].isPaid = false;
-                usersList[idx].paidDate = "-";
-                usersList[idx].expireDate = "-";
-                showToast("সাবস্ক্রিপশন বাতিল করা হয়েছে!", "error");
-            } else {
-                usersList[idx].isPaid = true;
-                let today = new Date();
-                let expiry = new Date();
-                expiry.setMonth(today.getMonth() + 1);
-
-                usersList[idx].paidDate = today.toISOString().slice(0, 10);
-                usersList[idx].expireDate = expiry.toISOString().slice(0, 10);
-                showToast("পেমেন্ট এপ্রুভ করা হয়েছে!", "success");
-            }
-            
-            localStorage.setItem('abs_users', JSON.stringify(usersList));
-            renderAdminTable();
-        }
-
-        function deleteUser(idx) {
-            if(currentUser && currentUser.role === 'sub_admin') {
-                showToast("সাব-এডমিন ইউজার ডিলিট করতে পারবে না!", "error");
-                return;
-            }
-
-            if(confirm(`আপনি কি নিশ্চিতভাবে "${usersList[idx].name}" ইউজারটিকে ডিলিট করতে চান?`)) {
-                usersList.splice(idx, 1);
-                localStorage.setItem('abs_users', JSON.stringify(usersList));
-                renderAdminTable();
-                showToast("ইউজার ডিলিট করা হয়েছে!", "success");
-            }
-        }
-    </script>
-</body>
-</html>
-
