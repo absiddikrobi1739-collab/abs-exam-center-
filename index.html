@@ -1,3 +1,4 @@
+আপনার অনুরোধ অনুযায়ী সম্পূর্ণ আপডেট করা কোডটি একসাথে নিচে দেওয়া হলো:
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -22,6 +23,65 @@
             color: #ffffff;
             padding-bottom: 85px;
             min-height: 100vh;
+        }
+
+        /* 🌟 EduTech-Style Professional Floating Toast Notification */
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+            width: 90%;
+            max-width: 380px;
+        }
+
+        .toast-msg {
+            background: rgba(17, 21, 56, 0.95);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            padding: 12px 16px;
+            border-radius: 14px;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: toastIn 0.4s ease forwards;
+            pointer-events: auto;
+        }
+
+        .toast-msg.success { border-color: #10b981; }
+        .toast-msg.error { border-color: #ef4444; }
+
+        .toast-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .toast-msg.success .toast-icon { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .toast-msg.error .toast-icon { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+        @keyframes toastIn {
+            0% { opacity: 0; transform: translateY(-20px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes toastOut {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-20px) scale(0.9); }
         }
 
         .top-bar {
@@ -312,30 +372,7 @@
             margin-bottom: 12px;
         }
 
-        /* Premium Flashcard & Suggestion Styles */
-        .premium-card-item {
-            background: linear-gradient(135deg, #1e1b4b, #312e81);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .premium-card-item h5 {
-            color: #fbbf24;
-            font-size: 13px;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .premium-card-item p {
-            color: #e2e8f0;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        /* Popup Modals */
+        /* Modals */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -432,6 +469,9 @@
 </head>
 <body>
 
+    <!-- 🌟 এডুটেক স্টাইলের নোটিফিকেশন কনটেইনার -->
+    <div id="toast-container"></div>
+
     <!-- 🌟 লিমিট শেষ হওয়ার প্রিমিয়াম পপ-আপ মডাল -->
     <div id="limit-popup-modal" class="modal-overlay">
         <div class="modal-box">
@@ -526,7 +566,7 @@
 
                 <div id="login-form-box">
                     <div style="text-align:left;">
-                        <label class="input-label">মোবাইল নম্বর</label>
+                        <label class="input-label">মোবাইল নম্বর / আইডি</label>
                         <input type="text" id="auth-input-field" class="auth-input" placeholder="মোবাইল নম্বর দিন">
 
                         <label class="input-label">পাসওয়ার্ড</label>
@@ -953,7 +993,7 @@
         <div id="subscription-payment-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:10px;">👑 প্রিমিয়াম সাবস্ক্রিপশন</h3>
-                <p style="font-size:12px; color:#cbd5e1; margin-bottom:12px;">বিকাশ/নগদ সেন্ড মানি করুন: <strong style="color:#10b981;">01700000000</strong></p>
+                <p style="font-size:12px; color:#cbd5e1; margin-bottom:12px;">বিকাশ/নগদ সেন্ড মানি করুন: <strong style="color:#10b981;">01941907753</strong></p>
 
                 <div style="text-align:left;">
                     <label class="input-label">প্যাকেজ সিলেক্ট করুন</label>
@@ -1016,6 +1056,26 @@
         let currentUser = JSON.parse(localStorage.getItem('abs_current_user')) || null;
         let freeExamCount = 40;
 
+        // EduTech style toast popup notification
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast-msg ${type}`;
+            
+            const iconClass = (type === 'success') ? 'fa-check' : 'fa-triangle-exclamation';
+            toast.innerHTML = `
+                <div class="toast-icon"><i class="fa-solid ${iconClass}"></i></div>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'toastOut 0.4s ease forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
         let examQuestions = [
             { 
                 q: "HTML-এর পূর্ণরূপ কী?", 
@@ -1062,16 +1122,116 @@
         ];
 
         const bookChapters = {
-            "বাংলা": ["অধ্যায় ১: গদ্য - অপরিচিতা", "অধ্যায় ২: গদ্য - আমার পথ", "অধ্যায় ৩: কবিতা - সোনার তরী"],
-            "উচ্চতর গণিত ১ম পত্র": ["অধ্যায় ১: ম্যাট্রিক্স ও নির্ণায়ক", "অধ্যায় ২: ভেক্টর", "অধ্যায় ৩: সরলরেখা"],
-            "উচ্চতর গণিত ২য় পত্র": ["অধ্যায় ১: বাস্তব সংখ্যা", "অধ্যায় ৩: জটিল সংখ্যা", "অধ্যায় ৪: বহুপদী"],
-            "রসায়ন ১ম পত্র": ["অধ্যায় ১: ল্যাবরেটরি নিরাপদ ব্যবহার", "অধ্যায় ২: গুণগত রসায়ন"],
-            "রসায়ন ২য় পত্র": ["অধ্যায় ১: পরিবেশ রসায়ন", "অধ্যায় ২: জৈব রসায়ন"],
-            "পদার্থবিজ্ঞান ১ম পত্র": ["অধ্যায় ১: ভৌত জগত", "অধ্যায় ২: ভেক্টর", "অধ্যায় ৩: গতিবিদ্যা"],
-            "পদার্থবিজ্ঞান ২য় পত্র": ["অধ্যায় ১: তাপগতিবিদ্যা", "অধ্যায় ২: স্থির তড়িৎ"],
-            "জীববিজ্ঞান ১ম পত্র": ["অধ্যায় ১: কোষ ও গঠন", "অধ্যায় ২: কোষ বিভাজন"],
-            "জীববিজ্ঞান ২য় পত্র": ["অধ্যায় ১: প্রাণীর বিভিন্নতা", "অধ্যায় ২: প্রাণীর পরিচিতি"],
-            "আইসিটি": ["অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত", "অধ্যায় ২: নেটওয়ার্কিং", "অধ্যায় ৩: সংখ্যা পদ্ধতি", "অধ্যায় ৪: HTML", "অধ্যায় ৫: প্রোগ্রামিং", "অধ্যায় ৬: ডেটাবেজ"]
+            "বাংলা": [
+                "অধ্যায় ১: গদ্য - অপরিচিতা",
+                "অধ্যায় ২: গদ্য - আমার পথ",
+                "অধ্যায় ৩: গদ্য - বায়ান্নর দিনগুলো",
+                "অধ্যায় ৪: গদ্য - রেইনকোট",
+                "অধ্যায় ৫: কবিতা - সোনার তরী",
+                "অধ্যায় ৬: কবিতা - বিদ্রোহী",
+                "অধ্যায় ৭: কবিতা - প্রতিদান",
+                "অধ্যায় ৮: কবিতা - ফেব্রুয়ারি ১৯৬৯",
+                "অধ্যায় ৯: ব্যাকরণ - বাংলা উচ্চারণের নিয়ম",
+                "অধ্যায় ১০: ব্যাকরণ - বানানের নিয়ম"
+            ],
+            "উচ্চতর গণিত ১ম পত্র": [
+                "অধ্যায় ১: ম্যাট্রিক্স ও নির্ণায়ক",
+                "অধ্যায় ২: ভেক্টর",
+                "অধ্যায় ৩: সরলরেখা",
+                "অধ্যায় ৪: বৃত্ত",
+                "অধ্যায় ৫: বিন্যাস ও সমাবেশ",
+                "অধ্যায় ৬: ত্রিকোণমিতিক অনুপাত",
+                "অধ্যায় ৭: সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত",
+                "অধ্যায় ৮: ফাংশন ও ফাংশনের লেখচিত্র",
+                "অধ্যায় ৯: অন্তরীকরণ (Differentiation)",
+                "অধ্যায় ১০: যোগজীকরণ (Integration)"
+            ],
+            "উচ্চতর গণিত ২য় পত্র": [
+                "অধ্যায় ১: বাস্তব সংখ্যা ও অসমতা",
+                "অধ্যায় ২: রৈখিক প্রোগ্রামন",
+                "অধ্যায় ৩: জটিল সংখ্যা",
+                "অধ্যায় ৪: বহুপদী ও বহুপদী সমীকরণ",
+                "অধ্যায় ৫: দ্বিপদী বিস্তার",
+                "অধ্যায় ৬: কনিক",
+                "অধ্যায় ৭: বিপরীত ত্রিকোণমিতিক ফাংশন",
+                "অধ্যায় ৮: স্থিতিবিদ্যা",
+                "অধ্যায় ৯: সমতলে বস্তুকণার গতি",
+                "অধ্যায় ১০: সম্ভাবনা"
+            ],
+            "রসায়ন ১ম পত্র": [
+                "অধ্যায় ১: ল্যাবরেটরির নিরাপদ ব্যবহার",
+                "অধ্যায় ২: গুণগত রসায়ন",
+                "অধ্যায় ৩: মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন",
+                "অধ্যায় ৪: রাসায়নিক পরিবর্তন",
+                "অধ্যায় ৫: কর্মমুখী রসায়ন"
+            ],
+            "রসায়ন ২য় পত্র": [
+                "অধ্যায় ১: পরিবেশ রসায়ন",
+                "অধ্যায় ২: জৈব রসায়ন (Organic Chemistry)",
+                "অধ্যায় ৩: পরিমাণগত রসায়ন",
+                "অধ্যায় ৪: তড়িৎ রসায়ন",
+                "অধ্যায় ৫: অর্থনৈতিক রসায়ন"
+            ],
+            "পদার্থবিজ্ঞান ১ম পত্র": [
+                "অধ্যায় ১: ভৌত জগত ও পরিমাপ",
+                "অধ্যায় ২: ভেক্টর",
+                "অধ্যায় ৩: গতিবিদ্যা",
+                "অধ্যায় ৪: নিউটনীয় বলবিদ্যা",
+                "অধ্যায় ৫: কাজ, শক্তি ও ক্ষমতা",
+                "অধ্যায় ৬: মহাকর্ষ ও অভিকর্ষ",
+                "অধ্যায় ৭: পদার্থের গাঠনিক ধর্ম",
+                "অধ্যায় ৮: পর্যায়বৃত্ত গতি",
+                "অধ্যায় ৯: তরঙ্গ",
+                "অধ্যায় ১০: আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব"
+            ],
+            "পদার্থবিজ্ঞান ২য় পত্র": [
+                "অধ্যায় ১: তাপগতিবিদ্যা",
+                "অধ্যায় ২: স্থির তড়িৎ",
+                "অধ্যায় ৩: চল তড়িৎ",
+                "অধ্যায় ৪: তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চৌম্বকত্ব",
+                "অধ্যায় ৫: তাড়িতচৌম্বকীয় আবেশ ও পরিবর্তী প্রবাহ",
+                "অধ্যায় ৬: জ্যামিতিক আলোকবিজ্ঞান",
+                "অধ্যায় ৭: ভৌত আলোকবিজ্ঞান",
+                "অধ্যায় ৮: আধুনিক পদার্থবিজ্ঞানের সূচনা",
+                "অধ্যায় ৯: পরমাণুর মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান",
+                "অধ্যায় ১০: সেমিকন্ডাক্টর ও ইলেকট্রনিক্স"
+            ],
+            "জীববিজ্ঞান ১ম পত্র": [
+                "অধ্যায় ১: কোষ ও এর গঠন",
+                "অধ্যায় ২: কোষ বিভাজন",
+                "অধ্যায় ৩: কোষ রসায়ন",
+                "অধ্যায় ৪: অনুজীব",
+                "অধ্যায় ৫: শৈবাল ও ছত্রাক",
+                "অধ্যায় ৬: ব্রায়োফাইটা ও টেরিডোফাইটা",
+                "অধ্যায় ৭: নগ্নবীজী ও আবৃতবীজী উদ্ভিদ",
+                "অধ্যায় ৮: টিস্যু ও টিস্যুতন্ত্র",
+                "অধ্যায় ৯: উদ্ভিদ শারীরতত্ত্ব",
+                "অধ্যায় ১০: উদ্ভিদ প্রজনন",
+                "অধ্যায় ১১: জীবপ্রযুক্তি",
+                "অধ্যায় ১২: জীবের পরিবেশ, বিস্তার ও সংরক্ষণ"
+            ],
+            "জীববিজ্ঞান ২য় পত্র": [
+                "অধ্যায় ১: প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস",
+                "অধ্যায় ২: প্রাণীর পরিচিতি (হাইড্রা, ঘাসফড়িং, রুই মাছ)",
+                "অধ্যায় ৩: মানব শারীরতত্ত্ব: পরিপাক ও শোষণ",
+                "অধ্যায় ৪: মানব শারীরতত্ত্ব: রক্ত ও সঞ্চালন",
+                "অধ্যায় ৫: মানব শারীরতত্ত্ব: শ্বাসক্রিয়া ও শ্বসন",
+                "অধ্যায় ৬: মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন",
+                "অধ্যায় ৭: মানব শারীরতত্ত্ব: চলন ও অঙ্গচালনা",
+                "অধ্যায় ৮: মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ",
+                "অধ্যায় ৯: মানব জীবনের ধারাবাহিকতা",
+                "অধ্যায় ১০: মানবদেহের প্রতিরক্ষা (ইমিউনিটি)",
+                "অধ্যায় ১১: জিনতত্ত্ব ও বিবর্তন",
+                "অধ্যায় ১২: প্রাণীর আচরণ"
+            ],
+            "আইসিটি": [
+                "অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত",
+                "অধ্যায় ২: কমিউনিকেশন সিস্টেমস ও নেটওয়ার্কিং",
+                "অধ্যায় ৩: সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস",
+                "অধ্যায় ৪: ওয়েব ডিজাইন পরিচিতি এবং HTML",
+                "অধ্যায় ৫: প্রোগ্রামিং ভাষা (C Programming)",
+                "অধ্যায় ৬: ডেটাবেজ ম্যানেজমেন্ট সিস্টেম"
+            ]
         };
 
         window.onload = function() {
@@ -1097,54 +1257,77 @@
             }
         }
 
+        /* 🌟 এডমিন, সাব-এডমিন এবং শিক্ষার্থীদের জন্য সুরক্ষিত লগইন সিস্টেম */
         function handleCustomAuth() {
             const inputVal = document.getElementById('auth-input-field').value.trim();
             const passVal = document.getElementById('auth-pass-field').value.trim();
-            if(!inputVal) { alert("দয়া করে মোবাইল নম্বর দিন!"); return; }
+            
+            if(!inputVal || !passVal) { 
+                showToast("মোবাইল নম্বর ও পাসওয়ার্ড প্রদান করুন!", "error"); 
+                return; 
+            }
 
             usersList = JSON.parse(localStorage.getItem('abs_users')) || usersList;
 
-            if(inputVal.toLowerCase().includes("absiddikrobi1739") || inputVal === "01700000000") {
-                currentUser = { name: "Abs Siddik", email: inputVal, role: "main_admin", isPaid: true };
-            } else if(inputVal.toLowerCase().includes("musfiqrahman")) {
-                currentUser = { name: "মুশফিকুর রহমান", email: inputVal, role: "sub_admin", isPaid: true };
-            } else {
+            // 👑 মেইন এডমিন সিকিউর লগইন (01941907753)
+            if(inputVal === "01941907753" || inputVal === "01700000000" || inputVal.toLowerCase().includes("absiddikrobi1739")) {
+                if(passVal === "admin123") {
+                    currentUser = { name: "Abs Siddik", email: inputVal, role: "main_admin", isPaid: true };
+                } else {
+                    showToast("এডমিনের সঠিক পাসওয়ার্ড দিন!", "error");
+                    return;
+                }
+            } 
+            // 👑 সাব-এডমিন সিকিউর লগইন (01302674441 / 01302-674441)
+            else if(inputVal === "01302674441" || inputVal === "01302-674441" || inputVal.toLowerCase().includes("musfiqrahman")) {
+                if(passVal === "subadmin123") {
+                    currentUser = { name: "মুশফিকুর রহমান", email: inputVal, role: "sub_admin", isPaid: true };
+                } else {
+                    showToast("সাব-এডমিনের সঠিক পাসওয়ার্ড দিন!", "error");
+                    return;
+                }
+            } 
+            // 🎓 সাধারণ শিক্ষার্থী লগইন
+            else {
                 let foundUser = usersList.find(u => u.phone === inputVal);
                 if(foundUser) {
-                    currentUser = { name: foundUser.name, email: foundUser.phone, role: "student", isPaid: foundUser.isPaid };
+                    if(foundUser.pass === passVal) {
+                        currentUser = { name: foundUser.name, email: foundUser.phone, role: "student", isPaid: foundUser.isPaid };
+                    } else {
+                        showToast("পাসওয়ার্ড ভুল হয়েছে!", "error");
+                        return;
+                    }
                 } else {
-                    currentUser = { name: "শিক্ষার্থী", email: inputVal, role: "student", isPaid: false };
-                    usersList.push({ name: "শিক্ষার্থী", phone: inputVal, pass: passVal || "******", package: "ফ্রি প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" });
-                    localStorage.setItem('abs_users', JSON.stringify(usersList));
+                    showToast("এই নম্বরে কোনো অ্যাকাউন্ট পাওয়া যায়নি! সাইন আপ করুন।", "error");
+                    return;
                 }
             }
 
             localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
-            alert("লগইন সফল হয়েছে!");
+            showToast("সফলভাবে লগইন হয়েছে!", "success");
             unlockPlatformUI();
             switchSection('home-section');
         }
 
+        /* 🌟 সাইন আপের মাধ্যমে সাথে সাথেই এডমিন প্যানেলে এড করার সিস্টেম */
         function handleUserSignUp() {
             const name = document.getElementById('signup-name-field').value.trim();
             const phone = document.getElementById('signup-phone-field').value.trim();
             const pass = document.getElementById('signup-pass-field').value.trim();
             
             if(!name || !phone || !pass) { 
-                alert("দয়া করে নাম, মোবাইল নম্বর এবং পাসওয়ার্ড পূরণ করুন!"); 
+                showToast("দয়া করে নাম, মোবাইল নম্বর এবং পাসওয়ার্ড পূরণ করুন!", "error"); 
                 return; 
             }
 
             usersList = JSON.parse(localStorage.getItem('abs_users')) || usersList;
 
             if(usersList.some(u => u.phone === phone)) {
-                alert("এই মোবাইল নম্বর দিয়ে ইতিপূর্বে অ্যাকাউন্ট খোলা হয়েছে!");
+                showToast("এই নম্বর দিয়ে ইতিপূর্বে অ্যাকাউন্ট খোলা হয়েছে!", "error");
                 return;
             }
 
-            currentUser = { name: name, email: phone, role: "student", isPaid: false };
-            
-            usersList.push({ 
+            let newUser = { 
                 name: name, 
                 phone: phone, 
                 pass: pass, 
@@ -1153,12 +1336,15 @@
                 paidDate: "-", 
                 expireDate: "-", 
                 trx: "-" 
-            });
-            
+            };
+
+            usersList.push(newUser);
             localStorage.setItem('abs_users', JSON.stringify(usersList));
+
+            currentUser = { name: name, email: phone, role: "student", isPaid: false };
             localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
 
-            alert("অ্যাকাউন্ট তৈরি ও লগইন সফল!");
+            showToast("অ্যাকাউন্ট তৈরি সফল হয়েছে!", "success");
             unlockPlatformUI();
             switchSection('home-section');
         }
@@ -1187,6 +1373,7 @@
             localStorage.removeItem('abs_current_user');
             document.getElementById('app-header').style.display = 'none';
             document.getElementById('app-bottom-bar').style.display = 'none';
+            showToast("লগআউট সফল হয়েছে!", "success");
             switchSection('login-screen-section');
         }
 
@@ -1257,13 +1444,13 @@
         function addNewCourse() {
             const name = document.getElementById('new-course-name').value.trim();
             const desc = document.getElementById('new-course-desc').value.trim();
-            if(!name) { alert("কোর্সের নাম দিন!"); return; }
+            if(!name) { showToast("কোর্সের নাম দিন!", "error"); return; }
             coursesList.push({ name, desc });
             localStorage.setItem('abs_courses', JSON.stringify(coursesList));
             document.getElementById('new-course-name').value = '';
             document.getElementById('new-course-desc').value = '';
             renderCoursesTable();
-            alert("কোর্স সফলভাবে যোগ হয়েছে!");
+            showToast("কোর্স যোগ হয়েছে!", "success");
         }
 
         function deleteCourse(idx) {
@@ -1293,13 +1480,13 @@
             const title = document.getElementById('fc-title').value.trim();
             const desc = document.getElementById('fc-desc').value.trim();
 
-            if(!title || !desc) { alert("সব তথ্য পূরণ করুন!"); return; }
+            if(!title || !desc) { showToast("সব তথ্য পূরণ করুন!", "error"); return; }
 
             flashcardsList.push({ subject, chapter, title, desc });
             localStorage.setItem('abs_flashcards', JSON.stringify(flashcardsList));
             document.getElementById('fc-title').value = '';
             document.getElementById('fc-desc').value = '';
-            alert("ফ্ল্যাশকার্ড সফলভাবে সেভ হয়েছে!");
+            showToast("ফ্ল্যাশকার্ড সেভ হয়েছে!", "success");
         }
 
         function renderStudentFlashcards() {
@@ -1330,13 +1517,13 @@
             const title = document.getElementById('sug-title').value.trim();
             const desc = document.getElementById('sug-desc').value.trim();
 
-            if(!title || !desc) { alert("সব তথ্য পূরণ করুন!"); return; }
+            if(!title || !desc) { showToast("সব তথ্য পূরণ করুন!", "error"); return; }
 
             suggestionsList.push({ subject, chapter, title, desc });
             localStorage.setItem('abs_suggestions', JSON.stringify(suggestionsList));
             document.getElementById('sug-title').value = '';
             document.getElementById('sug-desc').value = '';
-            alert("সাজেশন সফলভাবে সেভ হয়েছে!");
+            showToast("সাজেশন সেভ হয়েছে!", "success");
         }
 
         function renderStudentSuggestions() {
@@ -1390,13 +1577,13 @@
         function addNewPackage() {
             const name = document.getElementById('new-pkg-name').value.trim();
             const price = document.getElementById('new-pkg-price').value.trim();
-            if(!name || !price) { alert("সব তথ্য দিন!"); return; }
+            if(!name || !price) { showToast("সব তথ্য দিন!", "error"); return; }
             packagesList.push({ name, price });
             localStorage.setItem('abs_packages', JSON.stringify(packagesList));
             document.getElementById('new-pkg-name').value = '';
             document.getElementById('new-pkg-price').value = '';
             renderPackagesTable();
-            alert("প্যাকেজ যোগ হয়েছে!");
+            showToast("প্যাকেজ যোগ হয়েছে!", "success");
         }
 
         function deletePackage(idx) {
@@ -1474,7 +1661,6 @@
                         allBtns[qObj.correct].classList.add('correct');
                     }
 
-                    // ইউজার পেইড বা সাবস্ক্রিপশন করা হলে ব্যাখ্যা দেখাবে
                     if (currentUser && currentUser.isPaid) {
                         expContainer.style.display = 'block';
                         expContainer.innerHTML = `<strong><i class="fa-solid fa-circle-info"></i> ব্যাখ্যা:</strong> ${qObj.explanation}`;
@@ -1543,7 +1729,7 @@
         }
 
         function saveAdminContent(type) {
-            alert(`${type} এবং এর ব্যাখ্যা সফলভাবে ডাটাবেজে সংরক্ষণ করা হয়েছে!`);
+            showToast(`${type} ও ব্যাখ্যা সেভ হয়েছে!`, "success");
         }
 
         function submitPaymentRequest() {
@@ -1554,7 +1740,7 @@
             const trxid = document.getElementById('pay-trxid').value.trim();
 
             if(!name || !phone || !trxid) {
-                alert("দয়া করে নাম, মোবাইল নম্বর ও TrxID প্রদান করুন!");
+                showToast("নাম, মোবাইল নম্বর ও TrxID প্রদান করুন!", "error");
                 return;
             }
 
@@ -1562,15 +1748,18 @@
             usersList.push({ name: name, phone: phone, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid });
             localStorage.setItem('abs_users', JSON.stringify(usersList));
 
-            alert("পেমেন্ট রিকোয়েস্ট সাবমিট হয়েছে! এডমিন যাচাই করে অ্যাপ্রুভ করলে ব্যাখ্যা দেখার সুযোগ পাবেন।");
+            showToast("পেমেন্ট সাবমিট হয়েছে! এডমিন শীঘ্রই যাচাই করবে।", "success");
             switchSection('home-section');
         }
 
+        /* 🌟 এডমিন টেবিল রেন্ডার (যাতে নতুন সাইন আপ করা সব ইউজার সঙ্গে সঙ্গে শো করে) */
         function renderAdminTable() {
             const tbody = document.getElementById('admin-user-table');
             if(!tbody) return;
             tbody.innerHTML = '';
             
+            usersList = JSON.parse(localStorage.getItem('abs_users')) || usersList;
+
             let filteredUsers = usersList.filter(u => !u.name.toLowerCase().includes("abs siddik"));
 
             let total = filteredUsers.length;
@@ -1594,11 +1783,11 @@
                     <td><code style="color:#fbbf24;">${u.trx}</code></td>
                     <td>
                         <div style="display: flex; gap: 4px; flex-direction: column;">
-                            <button style="background:${isSubAdmin ? '#475569' : (u.isPaid ? '#dc2626' : '#16a34a')}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:${isSubAdmin ? 'not-allowed' : 'pointer'};" ${isSubAdmin ? 'disabled title="শুধুমাত্র মেইন এডমিন এপ্রুভ করতে পারবে"' : ''} onclick="toggleUserPayment(${originalIndex})">
+                            <button style="background:${isSubAdmin ? '#475569' : (u.isPaid ? '#dc2626' : '#16a34a')}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:${isSubAdmin ? 'not-allowed' : 'pointer'};" ${isSubAdmin ? 'disabled' : ''} onclick="toggleUserPayment(${originalIndex})">
                                 ${isSubAdmin ? '🔒 Locked' : (u.isPaid ? 'Revoke' : 'Approve')}
                             </button>
                             <button style="background:#b91c1c; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteUser(${originalIndex})">
-                                <i class="fa-solid fa-trash"></i> ডিলিট
+                                <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
                     </td>
@@ -1609,7 +1798,7 @@
 
         function toggleUserPayment(idx) {
             if(currentUser && currentUser.role === 'sub_admin') {
-                alert("দুঃখিত! সাব-এডমিন পেমেন্ট এপ্রুভ বা রিভোক করতে পারবেন না। এটি শুধুমাত্র মেইন এডমিন করতে পারবেন।");
+                showToast("সাব-এডমিন পেমেন্ট এপ্রুভ বা রিভোক করতে পারবে না!", "error");
                 return;
             }
 
@@ -1617,6 +1806,7 @@
                 usersList[idx].isPaid = false;
                 usersList[idx].paidDate = "-";
                 usersList[idx].expireDate = "-";
+                showToast("সাবস্ক্রিপশন বাতিল করা হয়েছে!", "error");
             } else {
                 usersList[idx].isPaid = true;
                 let today = new Date();
@@ -1625,6 +1815,7 @@
 
                 usersList[idx].paidDate = today.toISOString().slice(0, 10);
                 usersList[idx].expireDate = expiry.toISOString().slice(0, 10);
+                showToast("পেমেন্ট এপ্রুভ করা হয়েছে!", "success");
             }
             
             localStorage.setItem('abs_users', JSON.stringify(usersList));
@@ -1633,7 +1824,7 @@
 
         function deleteUser(idx) {
             if(currentUser && currentUser.role === 'sub_admin') {
-                alert("দুঃখিত! সাব-এডমিন ইউজার ডিলিট করতে পারবেন না। এটি শুধুমাত্র মেইন এডমিন করতে পারবেন।");
+                showToast("সাব-এডমিন ইউজার ডিলিট করতে পারবে না!", "error");
                 return;
             }
 
@@ -1641,9 +1832,10 @@
                 usersList.splice(idx, 1);
                 localStorage.setItem('abs_users', JSON.stringify(usersList));
                 renderAdminTable();
-                alert("ইউজার সফলভাবে ডিলিট করা হয়েছে!");
+                showToast("ইউজার ডিলিট করা হয়েছে!", "success");
             }
         }
     </script>
 </body>
 </html>
+
