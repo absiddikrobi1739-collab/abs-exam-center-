@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abs Exam Center - Pro Exam & Dashboard System</title>
+    <title>Abs Exam Center - Pro Exam & Dashboard System (Supabase)</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- 🌟 Firebase Database SDK (অনলাইন লাইভ ডাটাবেজ) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <!-- 🌟 Supabase JS Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         * {
@@ -1067,16 +1066,11 @@
     </div>
 
     <script>
-        // 🌟 🔥 Firebase Realtime Database Configuration
-        const firebaseConfig = {
-            databaseURL: "https://abs-exam-center-default-rtdb.firebaseio.com/"
-        };
-        
-        // Initialize Firebase
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const db = firebase.database();
+        // 🌟 🔥 Supabase Configuration
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // এখানে আপনার সুপাবেজ URL দিন
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // এখানে আপনার সুপাবেজ Anon Key দিন
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let currentUser = JSON.parse(localStorage.getItem('abs_current_user')) || null;
         let freeExamCount = 40;
@@ -1141,22 +1135,23 @@
             { subject: "আইসিটি", chapter: "অধ্যায় ৫: প্রোগ্রামিং", title: "লুপ ও কন্ডিশনাল স্টেটমেন্ট", desc: "for এবং while লুপের প্রোগ্রামগুলো ভালোভাবে অনুশীলন করুন।" }
         ];
 
-        let defaultUsers = [
+        let usersList = [
             { name: "মাসফাকুর রহমান", phone: "01711111111", pass: "123456", package: "মাসিক প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" },
             { name: "রাফসান আহমেদ", phone: "01933333333", pass: "pass789", package: "ফুল কোর্স", isPaid: true, paidDate: "2026-04-10", expireDate: "2026-05-10", trx: "TRX998877" }
         ];
 
-        let usersList = defaultUsers;
-
-        // 🌟 অনলাইন ডাটাবেজ থেকে সকল ইউজার ডাটা রিয়েল-টাইমে লোড করা
-        db.ref('users').on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                usersList = Object.values(data);
-                localStorage.setItem('abs_users', JSON.stringify(usersList));
+        // 🌟 সুপাবেজ থেকে ইউজার ডাটা ফেচ করা
+        async function fetchUsersFromSupabase() {
+            try {
+                const { data, error } = await supabase.from('users').select('*');
+                if (data && data.length > 0) {
+                    usersList = data;
+                }
                 renderAdminTable();
+            } catch (err) {
+                console.error("Supabase Fetch Error:", err);
             }
-        });
+        }
 
         const bookChapters = {
             "বাংলা": [
@@ -1272,6 +1267,7 @@
         };
 
         window.onload = function() {
+            fetchUsersFromSupabase();
             if (currentUser) {
                 unlockPlatformUI();
                 switchSection('home-section');
@@ -1294,7 +1290,7 @@
             }
         }
 
-        /* 🌟 এডমিন, সাব-এডমিন এবং শিক্ষার্থীদের জন্য অনলাইন লগইন */
+        /* 🌟 এডমিন ও শিক্ষার্থী লগইন */
         function handleCustomAuth() {
             const inputVal = document.getElementById('auth-input-field').value.trim();
             const passVal = document.getElementById('auth-pass-field').value.trim();
@@ -1304,8 +1300,8 @@
                 return; 
             }
 
-            // 👑 মেইন এডমিন সিকিউর লগইন (01941907753)
-            if(inputVal === "01941907753" || inputVal === "01700000000" || inputVal.toLowerCase().includes("absiddikrobi1739")) {
+            // 👑 মেইন এডমিন সিকিউর লগইন
+            if(inputVal === "01941907753" || inputVal === "01700000000") {
                 if(passVal === "admin123") {
                     currentUser = { name: "Abs Siddik", email: inputVal, role: "main_admin", isPaid: true };
                 } else {
@@ -1313,8 +1309,8 @@
                     return;
                 }
             } 
-            // 👑 সাব-এডমিন সিকিউর লগইন (01302674441)
-            else if(inputVal === "01302674441" || inputVal === "01302-674441" || inputVal.toLowerCase().includes("musfiqrahman")) {
+            // 👑 সাব-এডমিন সিকিউর লগইন
+            else if(inputVal === "01302674441") {
                 if(passVal === "subadmin123") {
                     currentUser = { name: "মুশফিকুর রহমান", email: inputVal, role: "sub_admin", isPaid: true };
                 } else {
@@ -1344,8 +1340,8 @@
             switchSection('home-section');
         }
 
-        /* 🌟 সাইন আপ করে সাথে সাথে ডাটাবেজে ডাটা পাঠাবে */
-        function handleUserSignUp() {
+        /* 🌟 সুপাবেজে সাইন আপ ডাটা সেভ করা */
+        async function handleUserSignUp() {
             const name = document.getElementById('signup-name-field').value.trim();
             const phone = document.getElementById('signup-phone-field').value.trim();
             const pass = document.getElementById('signup-pass-field').value.trim();
@@ -1371,17 +1367,18 @@
                 trx: "-" 
             };
 
-            // 🌟 ডাটাবেজে ইউজার অনলাইন স্টোর করা
-            db.ref('users/' + phone).set(newUser).then(() => {
+            const { error } = await supabase.from('users').insert([newUser]);
+
+            if (error) {
+                showToast("ডাটাবেজে সেভ করতে সমস্যা হয়েছে: " + error.message, "error");
+            } else {
                 currentUser = { name: name, email: phone, role: "student", isPaid: false };
                 localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
-
                 showToast("অ্যাকাউন্ট তৈরি সফল হয়েছে!", "success");
+                fetchUsersFromSupabase();
                 unlockPlatformUI();
                 switchSection('home-section');
-            }).catch(err => {
-                showToast("নেটওয়ার্ক সমস্যা! আবার চেষ্টা করুন।", "error");
-            });
+            }
         }
 
         function unlockPlatformUI() {
@@ -1430,7 +1427,7 @@
             window.scrollTo(0, 0);
 
             if(secId === 'admin-panel-section') {
-                renderAdminTable();
+                fetchUsersFromSupabase();
                 renderCoursesTable();
                 renderPackagesTable();
                 updateChapters('fc-subject', 'fc-chapter');
@@ -1637,7 +1634,6 @@
             renderPackagesTable();
         }
 
-        /* 🌟 পরীক্ষা শুরু কনফিগারেশনে পেইড ইউজার চেক */
         function openExamConfig() {
             const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
             
@@ -1786,7 +1782,7 @@
             showToast(`${type} ও ব্যাখ্যা সেভ হয়েছে!`, "success");
         }
 
-        function submitPaymentRequest() {
+        async function submitPaymentRequest() {
             const pkg = document.getElementById('pay-package').value;
             const name = document.getElementById('pay-name').value.trim();
             const phone = document.getElementById('pay-phone').value.trim();
@@ -1799,13 +1795,19 @@
             }
 
             let payData = { name: name, phone: phone, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid };
-            db.ref('users/' + phone).set(payData).then(() => {
+            
+            const { error } = await supabase.from('users').upsert([payData], { onConflict: 'phone' });
+
+            if(error) {
+                showToast("পেমেন্ট সাবমিট করতে সমস্যা হয়েছে: " + error.message, "error");
+            } else {
                 showToast("পেমেন্ট সাবমিট হয়েছে! এডমিন শীঘ্রই যাচাই করবে।", "success");
+                fetchUsersFromSupabase();
                 switchSection('home-section');
-            });
+            }
         }
 
-        /* 🌟 এডমিন টেবিল রেন্ডার এবং লাইভ সিঙ্ক */
+        /* 🌟 এডমিন টেবিল রেন্ডার এবং সুপাবেজ সিঙ্ক */
         function renderAdminTable() {
             const tbody = document.getElementById('admin-user-table');
             if(!tbody) return;
@@ -1845,7 +1847,7 @@
             });
         }
 
-        function toggleUserPayment(phoneKey) {
+        async function toggleUserPayment(phoneKey) {
             if(currentUser && currentUser.role === 'sub_admin') {
                 showToast("সাব-এডমিন পেমেন্ট এপ্রুভ বা রিভোক করতে পারবে না!", "error");
                 return;
@@ -1866,25 +1868,37 @@
                 expiryStr = expiry.toISOString().slice(0, 10);
             }
 
-            db.ref('users/' + phoneKey).update({
-                isPaid: updatedPaidStatus,
-                paidDate: todayStr,
-                expireDate: expiryStr
-            }).then(() => {
+            const { error } = await supabase
+                .from('users')
+                .update({ isPaid: updatedPaidStatus, paidDate: todayStr, expireDate: expiryStr })
+                .eq('phone', phoneKey);
+
+            if(error) {
+                showToast("স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে!", "error");
+            } else {
                 showToast(updatedPaidStatus ? "পেমেন্ট এপ্রুভ করা হয়েছে!" : "সাবস্ক্রিপশন বাতিল করা হয়েছে!", "success");
-            });
+                fetchUsersFromSupabase();
+            }
         }
 
-        function deleteUser(phoneKey) {
+        async function deleteUser(phoneKey) {
             if(currentUser && currentUser.role === 'sub_admin') {
                 showToast("সাব-এডমিন ইউজার ডিলিট করতে পারবে না!", "error");
                 return;
             }
 
             if(confirm("আপনি কি নিশ্চিতভাবে এই ইউজারটিকে ডিলিট করতে চান?")) {
-                db.ref('users/' + phoneKey).remove().then(() => {
-                    showToast("ইউজার ডিলিট করা হয়েছে!", "success");
-                });
+                const { error } = await supabase
+                    .from('users')
+                    .delete()
+                    .eq('phone', phoneKey);
+
+                if(error) {
+                    showToast("ইউজার ডিলিট করতে সমস্যা হয়েছে!", "error");
+                } else {
+                    showToast("ইউজার সফলভাবে ডিলিট করা হয়েছে!", "success");
+                    fetchUsersFromSupabase();
+                }
             }
         }
     </script>
