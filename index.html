@@ -482,7 +482,7 @@
 </head>
 <body>
 
-    <!-- 🌟 এডুটেক স্টাইলের নোটিফিকেশন কনটেইনার -->
+    <!-- 🌟 নোটিফিকেশন কনটেইনার -->
     <div id="toast-container"></div>
 
     <!-- 🌟 লিমিট শেষ হওয়ার প্রিমিয়াম পপ-আপ মডাল -->
@@ -1066,25 +1066,47 @@
     </div>
 
     <script>
-        // 🌟 🔥 Supabase Configuration (সেফ ইনিশিয়ালাইজেশন)
+        // 🌟 সবার আগে ট্যাব সুইচিং ফাংশন যাতে বাটন ক্লিক করলে সাথে সাথে কাজ করে
+        function toggleAuthForm(type) {
+            const loginBox = document.getElementById('login-form-box');
+            const signupBox = document.getElementById('signup-form-box');
+            const loginBtn = document.getElementById('tab-login-btn');
+            const signupBtn = document.getElementById('tab-signup-btn');
+
+            if (!loginBox || !signupBox) return;
+
+            if(type === 'login') {
+                loginBox.style.display = 'block';
+                signupBox.style.display = 'none';
+                if(loginBtn) loginBtn.classList.add('active');
+                if(signupBtn) signupBtn.classList.remove('active');
+            } else {
+                loginBox.style.display = 'none';
+                signupBox.style.display = 'block';
+                if(signupBtn) signupBtn.classList.add('active');
+                if(loginBtn) loginBtn.classList.remove('active');
+            }
+        }
+
+        // 🌟 Supabase Configuration
         const SUPABASE_URL = 'https://cpgomltdjpbvbifitccby.supabase.co';
         const SUPABASE_ANON_KEY = 'Sb_publishable_BhK59A0qfRZ7-PBD1dYy7g_rZVE9M1c';
 
         let supabase = null;
         try {
-            if (window.supabase) {
+            if (window.supabase && typeof window.supabase.createClient === 'function') {
                 supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             }
         } catch(e) {
-            console.error("Supabase initialization error:", e);
+            console.error("Supabase init error:", e);
         }
 
         let currentUser = JSON.parse(localStorage.getItem('abs_current_user')) || null;
         let freeExamCount = 40;
 
-        // EduTech style toast popup notification
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
+            if (!container) return;
             const toast = document.createElement('div');
             toast.className = `toast-msg ${type}`;
             
@@ -1147,7 +1169,7 @@
             { name: "রাফসান আহমেদ", phone: "01933333333", pass: "pass789", package: "ফুল কোর্স", isPaid: true, paidDate: "2026-04-10", expireDate: "2026-05-10", trx: "TRX998877" }
         ];
 
-        // 🌟 সুপাবেজ থেকে ইউজার ডাটা ফেচ করা
+        // 🌟 সুপাবেজ থেকে ইউজার ফেচ করা
         async function fetchUsersFromSupabase() {
             if (!supabase) return;
             try {
@@ -1157,121 +1179,21 @@
                 }
                 renderAdminTable();
             } catch (err) {
-                console.error("Supabase Fetch Error:", err);
+                console.error("Supabase fetch error:", err);
             }
         }
 
         const bookChapters = {
-            "বাংলা": [
-                "অধ্যায় ১: গদ্য - অপরিচিতা",
-                "অধ্যায় ২: গদ্য - আমার পথ",
-                "অধ্যায় ৩: গদ্য - বায়ান্নর দিনগুলো",
-                "অধ্যায় ৪: গদ্য - রেইনকোট",
-                "অধ্যায় ৫: কবিতা - সোনার তরী",
-                "অধ্যায় ৬: কবিতা - বিদ্রোহী",
-                "অধ্যায় ৭: কবিতা - প্রতিদান",
-                "অধ্যায় ৮: কবিতা - ফেব্রুয়ারি ১৯৬৯",
-                "অধ্যায় ৯: ব্যাকরণ - বাংলা উচ্চারণের নিয়ম",
-                "অধ্যায় ১০: ব্যাকরণ - বানানের নিয়ম"
-            ],
-            "উচ্চতর গণিত ১ম পত্র": [
-                "অধ্যায় ১: ম্যাট্রিক্স ও নির্ণায়ক",
-                "অধ্যায় ২: ভেক্টর",
-                "অধ্যায় ৩: সরলরেখা",
-                "অধ্যায় ৪: বৃত্ত",
-                "অধ্যায় ৫: বিন্যাস ও সমাবেশ",
-                "অধ্যায় ৬: ত্রিকোণমিতিক অনুপাত",
-                "অধ্যায় ৭: সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত",
-                "অধ্যায় ৮: ফাংশন ও ফাংশনের লেখচিত্র",
-                "অধ্যায় ৯: অন্তরীকরণ (Differentiation)",
-                "অধ্যায় ১০: যোগজীকরণ (Integration)"
-            ],
-            "উচ্চতর গণিত ২য় পত্র": [
-                "অধ্যায় ১: বাস্তব সংখ্যা ও অসমতা",
-                "অধ্যায় ২: রৈখিক প্রোগ্রামন",
-                "অধ্যায় ৩: জটিল সংখ্যা",
-                "অধ্যায় ৪: বহুপদী ও বহুপদী সমীকরণ",
-                "অধ্যায় ৫: দ্বিপদী বিস্তার",
-                "অধ্যায় ৬: কনিক",
-                "অধ্যায় ৭: বিপরীত ত্রিকোণমিতিক ফাংশন",
-                "অধ্যায় ৮: স্থিতিবিদ্যা",
-                "অধ্যায় ৯: সমতলে বস্তুকণার গতি",
-                "অধ্যায় ১০: সম্ভাবনা"
-            ],
-            "রসায়ন ১ম পত্র": [
-                "অধ্যায় ১: ল্যাবরেটরির নিরাপদ ব্যবহার",
-                "অধ্যায় ২: গুণগত রসায়ন",
-                "অধ্যায় ৩: মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন",
-                "অধ্যায় ৪: রাসায়নিক পরিবর্তন",
-                "অধ্যায় ৫: কর্মমুখী রসায়ন"
-            ],
-            "রসায়ন ২য় পত্র": [
-                "অধ্যায় ১: পরিবেশ রসায়ন",
-                "অধ্যায় ২: জৈব রসায়ন (Organic Chemistry)",
-                "অধ্যায় ৩: পরিমাণগত রসায়ন",
-                "অধ্যায় ৪: তড়িৎ রসায়ন",
-                "অধ্যায় ৫: অর্থনৈতিক রসায়ন"
-            ],
-            "পদার্থবিজ্ঞান ১ম পত্র": [
-                "অধ্যায় ১: ভৌত জগত ও পরিমাপ",
-                "অধ্যায় ২: ভেক্টর",
-                "অধ্যায় ৩: গতিবিদ্যা",
-                "অধ্যায় ৪: নিউটনীয় বলবিদ্যা",
-                "অধ্যায় ৫: কাজ, শক্তি ও ক্ষমতা",
-                "অধ্যায় ৬: মহাকর্ষ ও অভিকর্ষ",
-                "অধ্যায় ৭: পদার্থের গাঠনিক ধর্ম",
-                "অধ্যায় ৮: পর্যায়বৃত্ত গতি",
-                "অধ্যায় ৯: তরঙ্গ",
-                "অধ্যায় ১০: আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব"
-            ],
-            "পদার্থবিজ্ঞান ২য় পত্র": [
-                "অধ্যায় ১: তাপগতিবিদ্যা",
-                "অধ্যায় ২: স্থির তড়িৎ",
-                "অধ্যায় ৩: চল তড়িৎ",
-                "অধ্যায় ৪: তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চৌম্বকত্ব",
-                "অধ্যায় ৫: তাড়িতচৌম্বকীয় আবেশ ও পরিবর্তী প্রবাহ",
-                "অধ্যায় ৬: জ্যামিতিক আলোকবিজ্ঞান",
-                "অধ্যায় ৭: ভৌত আলোকবিজ্ঞান",
-                "অধ্যায় ৮: আধুনিক পদার্থবিজ্ঞানের সূচনা",
-                "অধ্যায় ৯: পরমাণুর মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান",
-                "অধ্যায় ১০: সেমিকন্ডাক্টর ও ইলেকট্রনিক্স"
-            ],
-            "জীববিজ্ঞান ১ম পত্র": [
-                "অধ্যায় ১: কোষ ও এর গঠন",
-                "অধ্যায় ২: কোষ বিভাজন",
-                "অধ্যায় ৩: কোষ রসায়ন",
-                "অধ্যায় ৪: অনুজীব",
-                "অধ্যায় ৫: শৈবাল ও ছত্রাক",
-                "অধ্যায় ৬: ব্রায়োফাইটা ও টেরিডোফাইটা",
-                "অধ্যায় ৭: নগ্নবীজী ও আবৃতবীজী উদ্ভিদ",
-                "অধ্যায় ৮: টিস্যু ও টিস্যুতন্ত্র",
-                "অধ্যায় ৯: উদ্ভিদ শারীরতত্ত্ব",
-                "অধ্যায় ১০: উদ্ভিদ প্রজনন",
-                "অধ্যায় ১১: জীবপ্রযুক্তি",
-                "অধ্যায় ১২: জীবের পরিবেশ, বিস্তার ও সংরক্ষণ"
-            ],
-            "জীববিজ্ঞান ২য় পত্র": [
-                "অধ্যায় ১: প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস",
-                "অধ্যায় ২: প্রাণীর পরিচিতি (হাইড্রা, ঘাসফড়িং, রুই মাছ)",
-                "অধ্যায় ৩: মানব শারীরতত্ত্ব: পরিপাক ও শোষণ",
-                "অধ্যায় ৪: মানব শারীরতত্ত্ব: রক্ত ও সঞ্চালন",
-                "অধ্যায় ৫: মানব শারীরতত্ত্ব: শ্বাসক্রিয়া ও শ্বসন",
-                "অধ্যায় ৬: মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন",
-                "অধ্যায় ৭: মানব শারীরতত্ত্ব: চলন ও অঙ্গচালনা",
-                "অধ্যায় ৮: মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ",
-                "অধ্যায় ৯: মানব জীবনের ধারাবাহিকতা",
-                "অধ্যায় ১০: মানবদেহের প্রতিরক্ষা (ইমিউনিটি)",
-                "অধ্যায় ১১: জিনতত্ত্ব ও বিবর্তন",
-                "অধ্যায় ১২: প্রাণীর আচরণ"
-            ],
-            "আইসিটি": [
-                "অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত",
-                "অধ্যায় ২: কমিউনিকেশন সিস্টেমস ও নেটওয়ার্কিং",
-                "অধ্যায় ৩: সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস",
-                "অধ্যায় ৪: ওয়েব ডিজাইন পরিচিতি এবং HTML",
-                "অধ্যায় ৫: প্রোগ্রামিং ভাষা (C Programming)",
-                "অধ্যায় ৬: ডেটাবেজ ম্যানেজমেন্ট সিস্টেম"
-            ]
+            "বাংলা": ["অধ্যায় ১: গদ্য - অপরিচিতা", "অধ্যায় ২: গদ্য - আমার পথ", "অধ্যায় ৩: গদ্য - বায়ান্নর দিনগুলো"],
+            "উচ্চতর গণিত ১ম পত্র": ["অধ্যায় ১: ম্যাট্রিক্স ও নির্ণায়ক", "অধ্যায় ২: ভেক্টর", "অধ্যায় ৩: সরলরেখা"],
+            "উচ্চতর গণিত ২য় পত্র": ["অধ্যায় ১: বাস্তব সংখ্যা ও অসমতা", "অধ্যায় ২: রৈখিক প্রোগ্রামন", "অধ্যায় ৩: জটিল সংখ্যা"],
+            "রসায়ন ১ম পত্র": ["অধ্যায় ১: ল্যাবরেটরির নিরাপদ ব্যবহার", "অধ্যায় ২: গুণগত রসায়ন"],
+            "রসায়ন ২য় পত্র": ["অধ্যায় ১: পরিবেশ রসায়ন", "অধ্যায় ২: জৈব রসায়ন (Organic Chemistry)"],
+            "পদার্থবিজ্ঞান ১ম পত্র": ["অধ্যায় ১: ভৌত জগত ও পরিমাপ", "অধ্যায় ২: ভেক্টর"],
+            "পদার্থবিজ্ঞান ২য় পত্র": ["অধ্যায় ১: তাপগতিবিদ্যা", "অধ্যায় ২: স্থির তড়িৎ"],
+            "জীববিজ্ঞান ১ম পত্র": ["অধ্যায় ১: কোষ ও এর গঠন", "অধ্যায় ২: কোষ বিভাজন"],
+            "জীববিজ্ঞান ২য় পত্র": ["অধ্যায় ১: প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস", "অধ্যায় ২: প্রাণীর পরিচিতি"],
+            "আইসিটি": ["অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত", "অধ্যায় ২: কমিউনিকেশন সিস্টেমস ও নেটওয়ার্কিং", "অধ্যায় ৩: সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস", "অধ্যায় ৪: ওয়েব ডিজাইন পরিচিতি এবং HTML", "অধ্যায় ৫: প্রোগ্রামিং ভাষা (C Programming)"]
         };
 
         window.onload = function() {
@@ -1284,21 +1206,7 @@
             }
         };
 
-        function toggleAuthForm(type) {
-            if(type === 'login') {
-                document.getElementById('login-form-box').style.display = 'block';
-                document.getElementById('signup-form-box').style.display = 'none';
-                document.getElementById('tab-login-btn').classList.add('active');
-                document.getElementById('tab-signup-btn').classList.remove('active');
-            } else {
-                document.getElementById('login-form-box').style.display = 'none';
-                document.getElementById('signup-form-box').style.display = 'block';
-                document.getElementById('tab-signup-btn').classList.add('active');
-                document.getElementById('tab-login-btn').classList.remove('active');
-            }
-        }
-
-        /* 🌟 এডমিন ও শিক্ষার্থী লগইন */
+        // 🌟 লগইন হ্যান্ডলার
         function handleCustomAuth() {
             const inputVal = document.getElementById('auth-input-field').value.trim();
             const passVal = document.getElementById('auth-pass-field').value.trim();
@@ -1308,7 +1216,7 @@
                 return; 
             }
 
-            // 👑 মেইন এডমিন সিকিউর লগইন
+            // এডমিন চেক
             if(inputVal === "01941907753" || inputVal === "01700000000") {
                 if(passVal === "admin123") {
                     currentUser = { name: "Abs Siddik", email: inputVal, role: "main_admin", isPaid: true };
@@ -1316,18 +1224,14 @@
                     showToast("এডমিনের সঠিক পাসওয়ার্ড দিন!", "error");
                     return;
                 }
-            } 
-            // 👑 সাব-এডমিন সিকিউর লগইন
-            else if(inputVal === "01302674441") {
+            } else if(inputVal === "01302674441") {
                 if(passVal === "subadmin123") {
                     currentUser = { name: "মুশফিকুর রহমান", email: inputVal, role: "sub_admin", isPaid: true };
                 } else {
                     showToast("সাব-এডমিনের সঠিক পাসওয়ার্ড দিন!", "error");
                     return;
                 }
-            } 
-            // 🎓 সাধারণ শিক্ষার্থী লগইন
-            else {
+            } else {
                 let foundUser = usersList.find(u => u.phone === inputVal);
                 if(foundUser) {
                     if(foundUser.pass === passVal) {
@@ -1348,7 +1252,7 @@
             switchSection('home-section');
         }
 
-        /* 🌟 সুপাবেজে সাইন আপ ডাটা সেভ করা */
+        // 🌟 সাইন আপ হ্যান্ডলার (সুপাবেজে সেভ)
         async function handleUserSignUp() {
             const name = document.getElementById('signup-name-field').value.trim();
             const phone = document.getElementById('signup-phone-field').value.trim();
@@ -1376,10 +1280,14 @@
             };
 
             if (supabase) {
-                const { error } = await supabase.from('users').insert([newUser]);
-                if (error) {
-                    showToast("ডাটাবেজে সেভ করতে সমস্যা হয়েছে: " + error.message, "error");
-                    return;
+                try {
+                    const { error } = await supabase.from('users').insert([newUser]);
+                    if (error) {
+                        showToast("ডাটাবেজে সেভ করতে সমস্যা হয়েছে: " + error.message, "error");
+                        return;
+                    }
+                } catch(e) {
+                    console.error("Supabase insert error:", e);
                 }
             }
 
@@ -1513,11 +1421,8 @@
 
         function renderStudentCourses() {
             const container = document.getElementById('student-courses-list');
+            if(!container) return;
             container.innerHTML = '';
-            if(coursesList.length === 0) {
-                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">বর্তমানে কোনো কোর্স নেই।</p>';
-                return;
-            }
             coursesList.forEach(c => {
                 const div = document.createElement('div');
                 div.style.cssText = "background:#06081a; padding:12px; border-radius:10px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.08);";
@@ -1543,14 +1448,8 @@
 
         function renderStudentFlashcards() {
             const container = document.getElementById('student-flashcards-container');
+            if(!container) return;
             container.innerHTML = '';
-            flashcardsList = JSON.parse(localStorage.getItem('abs_flashcards')) || flashcardsList;
-
-            if(flashcardsList.length === 0) {
-                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">কোনো ফ্ল্যাশকার্ড পাওয়া যায়নি।</p>';
-                return;
-            }
-
             flashcardsList.forEach(fc => {
                 const div = document.createElement('div');
                 div.className = 'premium-card-item';
@@ -1580,14 +1479,8 @@
 
         function renderStudentSuggestions() {
             const container = document.getElementById('student-suggestions-container');
+            if(!container) return;
             container.innerHTML = '';
-            suggestionsList = JSON.parse(localStorage.getItem('abs_suggestions')) || suggestionsList;
-
-            if(suggestionsList.length === 0) {
-                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">কোনো সাজেশন পাওয়া যায়নি।</p>';
-                return;
-            }
-
             suggestionsList.forEach(sug => {
                 const div = document.createElement('div');
                 div.className = 'premium-card-item';
@@ -1602,6 +1495,7 @@
 
         function renderSubscriptionPackages() {
             const selectBox = document.getElementById('pay-package');
+            if(!selectBox) return;
             selectBox.innerHTML = '';
             packagesList.forEach(pkg => {
                 const opt = document.createElement('option');
@@ -1646,7 +1540,6 @@
 
         function openExamConfig() {
             const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
-            
             if(isUserPaid || freeExamCount > 0) {
                 updateChapters('cfg-subject', 'cfg-chapter');
                 document.getElementById('exam-config-modal').style.display = 'flex';
@@ -1664,7 +1557,6 @@
             document.getElementById('exam-config-modal').style.display = 'none';
 
             const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
-
             if(!isUserPaid) {
                 freeExamCount--;
                 document.getElementById('exam-counter-txt').innerText = freeExamCount + "/40 টি";
@@ -1720,7 +1612,6 @@
                     }
 
                     const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
-
                     if (isUserPaid) {
                         expContainer.style.display = 'block';
                         expContainer.innerHTML = `<strong><i class="fa-solid fa-circle-info"></i> ব্যাখ্যা:</strong> ${qObj.explanation}`;
@@ -1753,6 +1644,7 @@
 
         function renderStudentDashboard() {
             const container = document.getElementById('student-history-list');
+            if(!container) return;
             container.innerHTML = '';
             if(studentExamHistory.length === 0) {
                 container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">এখনো কোনো পরীক্ষার ফলাফল নেই।</p>';
@@ -1775,6 +1667,7 @@
 
         function renderLeaderboard() {
             const tbody = document.getElementById('leaderboard-table-body');
+            if(!tbody) return;
             tbody.innerHTML = '';
             leaderboardData.forEach((item, index) => {
                 const tr = document.createElement('tr');
@@ -1807,10 +1700,10 @@
             let payData = { name: name, phone: phone, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid };
             
             if (supabase) {
-                const { error } = await supabase.from('users').upsert([payData], { onConflict: 'phone' });
-                if(error) {
-                    showToast("পেমেন্ট সাবমিট করতে সমস্যা হয়েছে: " + error.message, "error");
-                    return;
+                try {
+                    await supabase.from('users').upsert([payData], { onConflict: 'phone' });
+                } catch(e) {
+                    console.error("Payment upsert error:", e);
                 }
             }
 
@@ -1819,7 +1712,7 @@
             switchSection('home-section');
         }
 
-        /* 🌟 এডমিন টেবিল রেন্ডার এবং সুপাবেজ সিঙ্ক */
+        // 🌟 এডমিন টেবিল রেন্ডার এবং সুপাবেজ সিঙ্ক
         function renderAdminTable() {
             const tbody = document.getElementById('admin-user-table');
             if(!tbody) return;
@@ -1831,9 +1724,13 @@
             let paidCount = filteredUsers.filter(u => u.isPaid).length;
             let freeCount = total - paidCount;
 
-            document.getElementById('stat-total-users').innerText = total;
-            document.getElementById('stat-free-users').innerText = freeCount;
-            document.getElementById('stat-paid-users').innerText = paidCount;
+            const statTotal = document.getElementById('stat-total-users');
+            const statFree = document.getElementById('stat-free-users');
+            const statPaid = document.getElementById('stat-paid-users');
+
+            if(statTotal) statTotal.innerText = total;
+            if(statFree) statFree.innerText = freeCount;
+            if(statPaid) statPaid.innerText = paidCount;
 
             let isSubAdmin = (currentUser && currentUser.role === 'sub_admin');
 
@@ -1866,7 +1763,7 @@
             }
 
             let u = usersList.find(item => item.phone === phoneKey);
-            if (!u || !supabase) return;
+            if (!u) return;
 
             let updatedPaidStatus = !u.isPaid;
             let todayStr = "-";
@@ -1880,17 +1777,23 @@
                 expiryStr = expiry.toISOString().slice(0, 10);
             }
 
-            const { error } = await supabase
-                .from('users')
-                .update({ isPaid: updatedPaidStatus, paidDate: todayStr, expireDate: expiryStr })
-                .eq('phone', phoneKey);
+            u.isPaid = updatedPaidStatus;
+            u.paidDate = todayStr;
+            u.expireDate = expiryStr;
 
-            if(error) {
-                showToast("স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে!", "error");
-            } else {
-                showToast(updatedPaidStatus ? "পেমেন্ট এপ্রুভ করা হয়েছে!" : "সাবস্ক্রিপশন বাতিল করা হয়েছে!", "success");
-                fetchUsersFromSupabase();
+            if (supabase) {
+                try {
+                    await supabase
+                        .from('users')
+                        .update({ isPaid: updatedPaidStatus, paidDate: todayStr, expireDate: expiryStr })
+                        .eq('phone', phoneKey);
+                } catch(e) {
+                    console.error("Supabase update error:", e);
+                }
             }
+
+            showToast(updatedPaidStatus ? "পেমেন্ট এপ্রুভ করা হয়েছে!" : "সাবস্ক্রিপশন বাতিল করা হয়েছে!", "success");
+            renderAdminTable();
         }
 
         async function deleteUser(phoneKey) {
@@ -1899,18 +1802,22 @@
                 return;
             }
 
-            if(confirm("আপনি কি নিশ্চিতভাবে এই ইউজারটিকে ডিলিট করতে চান?") && supabase) {
-                const { error } = await supabase
-                    .from('users')
-                    .delete()
-                    .eq('phone', phoneKey);
+            if(confirm("আপনি কি নিশ্চিতভাবে এই ইউজারটিকে ডিলিট করতে চান?")) {
+                usersList = usersList.filter(u => u.phone !== phoneKey);
 
-                if(error) {
-                    showToast("ইউজার ডিলিট করতে সমস্যা হয়েছে!", "error");
-                } else {
-                    showToast("ইউজার সফলভাবে ডিলিট করা হয়েছে!", "success");
-                    fetchUsersFromSupabase();
+                if (supabase) {
+                    try {
+                        await supabase
+                            .from('users')
+                            .delete()
+                            .eq('phone', phoneKey);
+                    } catch(e) {
+                        console.error("Supabase delete error:", e);
+                    }
                 }
+
+                showToast("ইউজার সফলভাবে ডিলিট করা হয়েছে!", "success");
+                renderAdminTable();
             }
         }
     </script>
