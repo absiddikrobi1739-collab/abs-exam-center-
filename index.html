@@ -1066,11 +1066,18 @@
     </div>
 
     <script>
-        // 🌟 🔥 Supabase Configuration (আপনার তথ্য দিয়ে সংযুক্ত করা)
-        const SUPABASE_URL = 'https://cpgomltdjpbvbifitccby.supabase.co';[span_3](start_span)[span_3](end_span)
-        const SUPABASE_ANON_KEY = 'Sb_publishable_BhK59A0qfRZ7-PBD1dYy7g_rZVE9M1c';[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)
+        // 🌟 🔥 Supabase Configuration (সেফ ইনিশিয়ালাইজেশন)
+        const SUPABASE_URL = 'https://cpgomltdjpbvbifitccby.supabase.co';
+        const SUPABASE_ANON_KEY = 'Sb_publishable_BhK59A0qfRZ7-PBD1dYy7g_rZVE9M1c';
 
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let supabase = null;
+        try {
+            if (window.supabase) {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
+        } catch(e) {
+            console.error("Supabase initialization error:", e);
+        }
 
         let currentUser = JSON.parse(localStorage.getItem('abs_current_user')) || null;
         let freeExamCount = 40;
@@ -1142,6 +1149,7 @@
 
         // 🌟 সুপাবেজ থেকে ইউজার ডাটা ফেচ করা
         async function fetchUsersFromSupabase() {
+            if (!supabase) return;
             try {
                 const { data, error } = await supabase.from('users').select('*');
                 if (data && data.length > 0) {
@@ -1367,18 +1375,20 @@
                 trx: "-" 
             };
 
-            const { error } = await supabase.from('users').insert([newUser]);
-
-            if (error) {
-                showToast("ডাটাবেজে সেভ করতে সমস্যা হয়েছে: " + error.message, "error");
-            } else {
-                currentUser = { name: name, email: phone, role: "student", isPaid: false };
-                localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
-                showToast("অ্যাকাউন্ট তৈরি সফল হয়েছে!", "success");
-                fetchUsersFromSupabase();
-                unlockPlatformUI();
-                switchSection('home-section');
+            if (supabase) {
+                const { error } = await supabase.from('users').insert([newUser]);
+                if (error) {
+                    showToast("ডাটাবেজে সেভ করতে সমস্যা হয়েছে: " + error.message, "error");
+                    return;
+                }
             }
+
+            currentUser = { name: name, email: phone, role: "student", isPaid: false };
+            localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
+            showToast("অ্যাকাউন্ট তৈরি সফল হয়েছে!", "success");
+            fetchUsersFromSupabase();
+            unlockPlatformUI();
+            switchSection('home-section');
         }
 
         function unlockPlatformUI() {
@@ -1796,15 +1806,17 @@
 
             let payData = { name: name, phone: phone, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid };
             
-            const { error } = await supabase.from('users').upsert([payData], { onConflict: 'phone' });
-
-            if(error) {
-                showToast("পেমেন্ট সাবমিট করতে সমস্যা হয়েছে: " + error.message, "error");
-            } else {
-                showToast("পেমেন্ট সাবমিট হয়েছে! এডমিন শীঘ্রই যাচাই করবে।", "success");
-                fetchUsersFromSupabase();
-                switchSection('home-section');
+            if (supabase) {
+                const { error } = await supabase.from('users').upsert([payData], { onConflict: 'phone' });
+                if(error) {
+                    showToast("পেমেন্ট সাবমিট করতে সমস্যা হয়েছে: " + error.message, "error");
+                    return;
+                }
             }
+
+            showToast("পেমেন্ট সাবমিট হয়েছে! এডমিন শীঘ্রই যাচাই করবে।", "success");
+            fetchUsersFromSupabase();
+            switchSection('home-section');
         }
 
         /* 🌟 এডমিন টেবিল রেন্ডার এবং সুপাবেজ সিঙ্ক */
@@ -1854,7 +1866,7 @@
             }
 
             let u = usersList.find(item => item.phone === phoneKey);
-            if (!u) return;
+            if (!u || !supabase) return;
 
             let updatedPaidStatus = !u.isPaid;
             let todayStr = "-";
@@ -1887,7 +1899,7 @@
                 return;
             }
 
-            if(confirm("আপনি কি নিশ্চিতভাবে এই ইউজারটিকে ডিলিট করতে চান?")) {
+            if(confirm("আপনি কি নিশ্চিতভাবে এই ইউজারটিকে ডিলিট করতে চান?") && supabase) {
                 const { error } = await supabase
                     .from('users')
                     .delete()
