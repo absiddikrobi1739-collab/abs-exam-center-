@@ -9,9 +9,8 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- 🌟 Firebase Database SDK (অনলাইন লাইভ ডাটাবেজ) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <!-- 🌟 Supabase JavaScript Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         * {
@@ -615,7 +614,7 @@
                         <h3 style="color:#fbbf24; font-size:16px;"><i class="fa-solid fa-crown"></i> এডমিন ড্যাশবোর্ড</h3>
                         <p id="admin-role-title" style="font-size: 10px; color: #94a3b8;">Abs Exam Center Management</p>
                     </div>
-                    <span style="background: #991b1b; color: white; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">ADMIN</span>
+                    <span id="admin-badge-label" style="background: #991b1b; color: white; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">ADMIN</span>
                 </div>
 
                 <!-- পরিসংখ্যান স্ট্যাটস -->
@@ -636,6 +635,7 @@
 
                 <div class="admin-nav-tabs">
                     <button class="admin-nav-btn active" onclick="switchAdminTab('adm-tab-users', this)">👥 ইউজার লিস্ট</button>
+                    <button class="admin-nav-btn" id="tab-btn-employee" onclick="switchAdminTab('adm-tab-employee', this)">👨‍💼 এমপ্লয়ি একাউন্ট</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-courses', this)">📖 কোর্স</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-packages', this)">📦 প্যাকেজ</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-flashcard', this)">⚡ ফ্ল্যাশকার্ড</button>
@@ -660,6 +660,35 @@
                                 </tr>
                             </thead>
                             <tbody id="admin-user-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 🌟 👨‍💼 নতুন এমপ্লয়ি একাউন্ট তৈরি ও লিস্ট ট্যাব (New Feature) -->
+                <div id="adm-tab-employee" class="adm-tab-content" style="display:none;">
+                    <div class="content-box">
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">👨‍💼 নতুন এমপ্লয়ি একাউন্ট তৈরি করুন</h4>
+                        <label class="input-label">এমপ্লয়ির নাম:</label>
+                        <input type="text" id="emp-name" class="auth-input" placeholder="এমপ্লয়ির নাম লিখুন">
+                        <label class="input-label">মোবাইল নম্বর (লগইন আইডি):</label>
+                        <input type="text" id="emp-phone" class="auth-input" placeholder="017XXXXXXXX">
+                        <label class="input-label">পাসওয়ার্ড:</label>
+                        <input type="password" id="emp-pass" class="auth-input" placeholder="লগইন পাসওয়ার্ড দিন">
+                        <button class="btn-green" onclick="createNewEmployee()">এমপ্লয়ি তৈরি করুন</button>
+                    </div>
+
+                    <h4 style="font-size:12px; color:#38bdf8; margin-bottom:8px;">এমপ্লয়ি তালিকা:</h4>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>নাম</th>
+                                    <th>ফোন</th>
+                                    <th>পাসওয়ার্ড</th>
+                                    <th>অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-employee-table"></tbody>
                         </table>
                     </div>
                 </div>
@@ -1067,16 +1096,11 @@
     </div>
 
     <script>
-        // 🌟 🔥 Firebase Realtime Database Configuration
-        const firebaseConfig = {
-            databaseURL: "https://abs-exam-center-default-rtdb.firebaseio.com/"
-        };
+        // 🌟 🔥 Supabase Configuration & Initialization
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // আপনার Supabase URL
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // আপনার Supabase Anon Key
         
-        // Initialize Firebase
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const db = firebase.database();
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let currentUser = JSON.parse(localStorage.getItem('abs_current_user')) || null;
         let freeExamCount = 40;
@@ -1141,22 +1165,25 @@
             { subject: "আইসিটি", chapter: "অধ্যায় ৫: প্রোগ্রামিং", title: "লুপ ও কন্ডিশনাল স্টেটমেন্ট", desc: "for এবং while লুপের প্রোগ্রামগুলো ভালোভাবে অনুশীলন করুন।" }
         ];
 
-        let defaultUsers = [
-            { name: "মাসফাকুর রহমান", phone: "01711111111", pass: "123456", package: "মাসিক প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" },
-            { name: "রাফসান আহমেদ", phone: "01933333333", pass: "pass789", package: "ফুল কোর্স", isPaid: true, paidDate: "2026-04-10", expireDate: "2026-05-10", trx: "TRX998877" }
-        ];
+        let employeesList = JSON.parse(localStorage.getItem('abs_employees')) || [];
+        let usersList = [];
 
-        let usersList = defaultUsers;
-
-        // 🌟 অনলাইন ডাটাবেজ থেকে সকল ইউজার ডাটা রিয়েল-টাইমে লোড করা
-        db.ref('users').on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                usersList = Object.values(data);
+        // 🌟 Supabase থেকে সকল ইউজার ডাটা রিয়েল-টাইমে ফেচ করা
+        async function fetchUsersFromSupabase() {
+            const { data, error } = await supabase.from('users').select('*');
+            if (!error && data) {
+                usersList = data;
                 localStorage.setItem('abs_users', JSON.stringify(usersList));
                 renderAdminTable();
             }
-        });
+        }
+
+        // Supabase Realtime Subscription
+        supabase.channel('public:users')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'users' }, payload => {
+                fetchUsersFromSupabase();
+            })
+            .subscribe();
 
         const bookChapters = {
             "বাংলা": [
@@ -1272,6 +1299,7 @@
         };
 
         window.onload = function() {
+            fetchUsersFromSupabase();
             if (currentUser) {
                 unlockPlatformUI();
                 switchSection('home-section');
@@ -1294,7 +1322,7 @@
             }
         }
 
-        /* 🌟 এডমিন, সাব-এডমিন এবং শিক্ষার্থীদের জন্য অনলাইন লগইন */
+        /* 🌟 এডমিন, এমপ্লয়ি এবং শিক্ষার্থীদের জন্য আপডেট করা লগইন সিস্টেম */
         function handleCustomAuth() {
             const inputVal = document.getElementById('auth-input-field').value.trim();
             const passVal = document.getElementById('auth-pass-field').value.trim();
@@ -1304,24 +1332,25 @@
                 return; 
             }
 
-            // 👑 মেইন এডমিন সিকিউর লগইন (01941907753)
+            // 👑 মেইন এডমিন সিকিউর লগইন (নম্বরে: 01941907753, পাসওয়ার্ড: 17391739)
             if(inputVal === "01941907753" || inputVal === "01700000000" || inputVal.toLowerCase().includes("absiddikrobi1739")) {
-                if(passVal === "admin123") {
+                if(passVal === "17391739") {
                     currentUser = { name: "Abs Siddik", email: inputVal, role: "main_admin", isPaid: true };
                 } else {
                     showToast("এডমিনের সঠিক পাসওয়ার্ড দিন!", "error");
                     return;
                 }
             } 
-            // 👑 সাব-এডমিন সিকিউর লগইন (01302674441)
-            else if(inputVal === "01302674441" || inputVal === "01302-674441" || inputVal.toLowerCase().includes("musfiqrahman")) {
-                if(passVal === "subadmin123") {
-                    currentUser = { name: "মুশফিকুর রহমান", email: inputVal, role: "sub_admin", isPaid: true };
+            // 👨‍💼 এমপ্লয়ি (Employee) একাউন্ট দিয়ে লগইন চেক
+            else if (employeesList.some(e => e.phone === inputVal)) {
+                let emp = employeesList.find(e => e.phone === inputVal);
+                if(emp.pass === passVal) {
+                    currentUser = { name: emp.name, email: emp.phone, role: "employee", isPaid: true };
                 } else {
-                    showToast("সাব-এডমিনের সঠিক পাসওয়ার্ড দিন!", "error");
+                    showToast("এমপ্লয়ির পাসওয়ার্ড ভুল হয়েছে!", "error");
                     return;
                 }
-            } 
+            }
             // 🎓 সাধারণ শিক্ষার্থী লগইন
             else {
                 let foundUser = usersList.find(u => u.phone === inputVal);
@@ -1344,8 +1373,8 @@
             switchSection('home-section');
         }
 
-        /* 🌟 সাইন আপ করে সাথে সাথে ডাটাবেজে ডাটা পাঠাবে */
-        function handleUserSignUp() {
+        /* 🌟 Supabase এ ইউজার সাইন আপ করার ফাংশন */
+        async function handleUserSignUp() {
             const name = document.getElementById('signup-name-field').value.trim();
             const phone = document.getElementById('signup-phone-field').value.trim();
             const pass = document.getElementById('signup-pass-field').value.trim();
@@ -1371,17 +1400,19 @@
                 trx: "-" 
             };
 
-            // 🌟 ডাটাবেজে ইউজার অনলাইন স্টোর করা
-            db.ref('users/' + phone).set(newUser).then(() => {
+            const { error } = await supabase.from('users').insert([newUser]);
+
+            if (error) {
+                showToast("সাইন আপ করতে সমস্যা হয়েছে: " + error.message, "error");
+            } else {
                 currentUser = { name: name, email: phone, role: "student", isPaid: false };
                 localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
 
                 showToast("অ্যাকাউন্ট তৈরি সফল হয়েছে!", "success");
+                fetchUsersFromSupabase();
                 unlockPlatformUI();
                 switchSection('home-section');
-            }).catch(err => {
-                showToast("নেটওয়ার্ক সমস্যা! আবার চেষ্টা করুন।", "error");
-            });
+            }
         }
 
         function unlockPlatformUI() {
@@ -1393,7 +1424,7 @@
             document.getElementById('prof-name').innerText = currentUser.name;
             document.getElementById('prof-email').innerText = currentUser.email;
 
-            const isUserPaid = (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid);
+            const isUserPaid = (currentUser.role === 'main_admin' || currentUser.role === 'employee' || currentUser.isPaid);
             const counterTxt = document.getElementById('exam-counter-txt');
 
             if(isUserPaid) {
@@ -1404,10 +1435,18 @@
                 counterTxt.style.color = "#b91c1c";
             }
 
-            if(currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
-                document.getElementById('prof-role').innerText = (currentUser.role === 'main_admin') ? "মেইন এডমিন (Full Control)" : "সাব-এডমিন";
+            if(currentUser.role === 'main_admin') {
+                document.getElementById('prof-role').innerText = "মেইন এডমিন (Full Control)";
                 document.getElementById('admin-role-title').innerText = "Abs Exam Center - Control Panel";
+                document.getElementById('admin-badge-label').innerText = "ADMIN";
                 document.getElementById('admin-shortcut-banner').style.display = 'flex';
+                document.getElementById('tab-btn-employee').style.display = 'inline-block';
+            } else if(currentUser.role === 'employee') {
+                document.getElementById('prof-role').innerText = "এমপ্লয়ি (সীমিত এক্সেস)";
+                document.getElementById('admin-role-title').innerText = "Abs Exam Center - Employee Panel";
+                document.getElementById('admin-badge-label').innerText = "EMPLOYEE";
+                document.getElementById('admin-shortcut-banner').style.display = 'flex';
+                document.getElementById('tab-btn-employee').style.display = 'none'; // এমপ্লয়ি এই ট্যাবটি দেখতে পাবে না
             } else {
                 document.getElementById('prof-role').innerText = currentUser.isPaid ? "প্রিমিয়াম শিক্ষার্থী (Paid)" : "সাধারণ শিক্ষার্থী (Free)";
                 document.getElementById('admin-shortcut-banner').style.display = 'none';
@@ -1430,7 +1469,8 @@
             window.scrollTo(0, 0);
 
             if(secId === 'admin-panel-section') {
-                renderAdminTable();
+                fetchUsersFromSupabase();
+                renderEmployeeTable();
                 renderCoursesTable();
                 renderPackagesTable();
                 updateChapters('fc-subject', 'fc-chapter');
@@ -1452,6 +1492,67 @@
             document.querySelectorAll('.adm-tab-content').forEach(c => c.style.display = 'none');
             btn.classList.add('active');
             document.getElementById(tabId).style.display = 'block';
+        }
+
+        /* 🌟 👨‍💼 নতুন এমপ্লয়ি তৈরি ফাংশন */
+        function createNewEmployee() {
+            if(currentUser.role !== 'main_admin') {
+                showToast("কেবলমাত্র এডমিন এমপ্লয়ি একাউন্ট তৈরি করতে পারবে!", "error");
+                return;
+            }
+
+            const name = document.getElementById('emp-name').value.trim();
+            const phone = document.getElementById('emp-phone').value.trim();
+            const pass = document.getElementById('emp-pass').value.trim();
+
+            if(!name || !phone || !pass) {
+                showToast("এমপ্লয়ির নাম, ফোন নম্বর ও পাসওয়ার্ড প্রদান করুন!", "error");
+                return;
+            }
+
+            if(employeesList.some(e => e.phone === phone)) {
+                showToast("এই ফোন নম্বরে ইতিপূর্বে এমপ্লয়ি তৈরি করা হয়েছে!", "error");
+                return;
+            }
+
+            employeesList.push({ name, phone, pass });
+            localStorage.setItem('abs_employees', JSON.stringify(employeesList));
+
+            document.getElementById('emp-name').value = '';
+            document.getElementById('emp-phone').value = '';
+            document.getElementById('emp-pass').value = '';
+
+            renderEmployeeTable();
+            showToast("নতুন এমপ্লয়ি অ্যাকাউন্ট তৈরি করা হয়েছে!", "success");
+        }
+
+        /* 🌟 👨‍💼 এমপ্লয়ি টেবিল রেন্ডার */
+        function renderEmployeeTable() {
+            const tbody = document.getElementById('admin-employee-table');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            employeesList.forEach((e, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${e.name}</strong></td>
+                    <td style="color:#38bdf8;">${e.phone}</td>
+                    <td style="color:#fbbf24;">${e.pass}</td>
+                    <td><button style="background:#dc2626; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteEmployee(${idx})">ডিলিট</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function deleteEmployee(idx) {
+            if(currentUser.role !== 'main_admin') {
+                showToast("কেবলমাত্র এডমিন এমপ্লয়ি ডিলিট করতে পারবে!", "error");
+                return;
+            }
+            employeesList.splice(idx, 1);
+            localStorage.setItem('abs_employees', JSON.stringify(employeesList));
+            renderEmployeeTable();
+            showToast("এমপ্লয়ি একাউন্ট ডিলিট হয়েছে!", "success");
         }
 
         function updateChapters(subjectId, chapterId) {
@@ -1639,7 +1740,7 @@
 
         /* 🌟 পরীক্ষা শুরু কনফিগারেশনে পেইড ইউজার চেক */
         function openExamConfig() {
-            const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
+            const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'employee' || currentUser.isPaid));
             
             if(isUserPaid || freeExamCount > 0) {
                 updateChapters('cfg-subject', 'cfg-chapter');
@@ -1657,7 +1758,7 @@
             const timeMin = document.getElementById('cfg-time').value;
             document.getElementById('exam-config-modal').style.display = 'none';
 
-            const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
+            const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'employee' || currentUser.isPaid));
 
             if(!isUserPaid) {
                 freeExamCount--;
@@ -1713,7 +1814,7 @@
                         allBtns[qObj.correct].classList.add('correct');
                     }
 
-                    const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
+                    const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'employee' || currentUser.isPaid));
 
                     if (isUserPaid) {
                         expContainer.style.display = 'block';
@@ -1786,7 +1887,7 @@
             showToast(`${type} ও ব্যাখ্যা সেভ হয়েছে!`, "success");
         }
 
-        function submitPaymentRequest() {
+        async function submitPaymentRequest() {
             const pkg = document.getElementById('pay-package').value;
             const name = document.getElementById('pay-name').value.trim();
             const phone = document.getElementById('pay-phone').value.trim();
@@ -1799,10 +1900,15 @@
             }
 
             let payData = { name: name, phone: phone, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid };
-            db.ref('users/' + phone).set(payData).then(() => {
+            
+            const { error } = await supabase.from('users').insert([payData]);
+            if (!error) {
                 showToast("পেমেন্ট সাবমিট হয়েছে! এডমিন শীঘ্রই যাচাই করবে।", "success");
+                fetchUsersFromSupabase();
                 switchSection('home-section');
-            });
+            } else {
+                showToast("পেমেন্ট সাবমিট করতে সমস্যা হয়েছে!", "error");
+            }
         }
 
         /* 🌟 এডমিন টেবিল রেন্ডার এবং লাইভ সিঙ্ক */
@@ -1821,7 +1927,7 @@
             document.getElementById('stat-free-users').innerText = freeCount;
             document.getElementById('stat-paid-users').innerText = paidCount;
 
-            let isSubAdmin = (currentUser && currentUser.role === 'sub_admin');
+            let isEmployee = (currentUser && currentUser.role === 'employee');
 
             filteredUsers.forEach((u) => {
                 const tr = document.createElement('tr');
@@ -1832,10 +1938,10 @@
                     <td><code style="color:#fbbf24;">${u.trx}</code></td>
                     <td>
                         <div style="display: flex; gap: 4px; flex-direction: column;">
-                            <button style="background:${isSubAdmin ? '#475569' : (u.isPaid ? '#dc2626' : '#16a34a')}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:${isSubAdmin ? 'not-allowed' : 'pointer'};" ${isSubAdmin ? 'disabled' : ''} onclick="toggleUserPayment('${u.phone}')">
-                                ${isSubAdmin ? '🔒 Locked' : (u.isPaid ? 'Revoke' : 'Approve')}
+                            <button style="background:${isEmployee ? '#475569' : (u.isPaid ? '#dc2626' : '#16a34a')}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:${isEmployee ? 'not-allowed' : 'pointer'};" ${isEmployee ? 'disabled' : ''} onclick="toggleUserPayment('${u.phone}')">
+                                ${isEmployee ? '🔒 Locked' : (u.isPaid ? 'Revoke' : 'Approve')}
                             </button>
-                            <button style="background:#b91c1c; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteUser('${u.phone}')">
+                            <button style="background:${isEmployee ? '#475569' : '#b91c1c'}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:${isEmployee ? 'not-allowed' : 'pointer'};" ${isEmployee ? 'disabled' : ''} onclick="deleteUser('${u.phone}')">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
@@ -1845,9 +1951,9 @@
             });
         }
 
-        function toggleUserPayment(phoneKey) {
-            if(currentUser && currentUser.role === 'sub_admin') {
-                showToast("সাব-এডমিন পেমেন্ট এপ্রুভ বা রিভোক করতে পারবে না!", "error");
+        async function toggleUserPayment(phoneKey) {
+            if(currentUser && currentUser.role === 'employee') {
+                showToast("এমপ্লয়ি পেমেন্ট এপ্রুভ বা রিভোক করতে পারবে না!", "error");
                 return;
             }
 
@@ -1866,25 +1972,32 @@
                 expiryStr = expiry.toISOString().slice(0, 10);
             }
 
-            db.ref('users/' + phoneKey).update({
-                isPaid: updatedPaidStatus,
-                paidDate: todayStr,
-                expireDate: expiryStr
-            }).then(() => {
+            const { error } = await supabase.from('users')
+                .update({ isPaid: updatedPaidStatus, paidDate: todayStr, expireDate: expiryStr })
+                .eq('phone', phoneKey);
+
+            if (!error) {
                 showToast(updatedPaidStatus ? "পেমেন্ট এপ্রুভ করা হয়েছে!" : "সাবস্ক্রিপশন বাতিল করা হয়েছে!", "success");
-            });
+                fetchUsersFromSupabase();
+            } else {
+                showToast("আপডেট করতে সমস্যা হয়েছে!", "error");
+            }
         }
 
-        function deleteUser(phoneKey) {
-            if(currentUser && currentUser.role === 'sub_admin') {
-                showToast("সাব-এডমিন ইউজার ডিলিট করতে পারবে না!", "error");
+        async function deleteUser(phoneKey) {
+            if(currentUser && currentUser.role === 'employee') {
+                showToast("এমপ্লয়ি ইউজার ডিলিট করতে পারবে না!", "error");
                 return;
             }
 
             if(confirm("আপনি কি নিশ্চিতভাবে এই ইউজারটিকে ডিলিট করতে চান?")) {
-                db.ref('users/' + phoneKey).remove().then(() => {
+                const { error } = await supabase.from('users').delete().eq('phone', phoneKey);
+                if (!error) {
                     showToast("ইউজার ডিলিট করা হয়েছে!", "success");
-                });
+                    fetchUsersFromSupabase();
+                } else {
+                    showToast("ডিলিট করতে সমস্যা হয়েছে!", "error");
+                }
             }
         }
     </script>
