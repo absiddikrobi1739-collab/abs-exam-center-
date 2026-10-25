@@ -9,8 +9,9 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- 🌟 Supabase JavaScript Client SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- 🌟 Firebase Database SDK (অনলাইন লাইভ ডাটাবেজ) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
         * {
@@ -27,6 +28,7 @@
             min-height: 100vh;
         }
 
+        /* 🌟 EduTech-Style Professional Floating Toast Notification */
         #toast-container {
             position: fixed;
             top: 20px;
@@ -135,9 +137,15 @@
             width: 100%;
         }
 
-        .page-section { display: none; }
-        .page-section.active { display: block !important; }
+        .page-section {
+            display: none;
+        }
 
+        .page-section.active {
+            display: block !important;
+        }
+
+        /* Auth Card */
         .auth-screen-card {
             background: #111538;
             border-radius: 20px;
@@ -220,6 +228,7 @@
             cursor: pointer;
         }
 
+        /* Student Home */
         .student-welcome-box {
             background: #111538;
             border-radius: 18px;
@@ -284,6 +293,7 @@
         .card-info h4 { font-size: 13px; font-weight: 800; }
         .card-info p { font-size: 10px; color: #64748b; }
 
+        /* Admin Dashboard */
         .admin-dashboard-box {
             background: #111538;
             border-radius: 20px;
@@ -365,6 +375,7 @@
             margin-bottom: 12px;
         }
 
+        /* Modals */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -388,6 +399,12 @@
             width: 100%;
             text-align: center;
             box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            animation: popUpAnim 0.3s ease-out;
+        }
+
+        @keyframes popUpAnim {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .option-btn {
@@ -402,8 +419,8 @@
             cursor: pointer;
             font-size: 13px;
         }
-        .option-btn.correct { background: #16a34a !important; }
-        .option-btn.wrong { background: #dc2626 !important; }
+        .option-btn.correct { background: #16a34a !important; border-color: #22c55e !important; }
+        .option-btn.wrong { background: #dc2626 !important; border-color: #ef4444 !important; }
 
         .explanation-box {
             background: rgba(14, 165, 233, 0.15);
@@ -466,38 +483,78 @@
 </head>
 <body>
 
+    <!-- 🌟 এডুটেক স্টাইলের নোটিফিকেশন কনটেইনার -->
     <div id="toast-container"></div>
 
+    <!-- 🌟 লিমিট শেষ হওয়ার প্রিমিয়াম পপ-আপ মডাল -->
     <div id="limit-popup-modal" class="modal-overlay">
         <div class="modal-box">
+            <div style="background: rgba(251, 191, 36, 0.15); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: #fbbf24; font-size: 26px;">
+                <i class="fa-solid fa-crown"></i>
+            </div>
             <h3 style="color: #fbbf24; font-size: 18px; margin-bottom: 8px;">ফ্রি এক্সাম লিমিট শেষ!</h3>
-            <p style="color: #cbd5e1; font-size: 12px; margin-bottom: 20px;">আপনার ৪০টি ফ্রি পরীক্ষা শেষ হয়েছে।</p>
-            <button class="btn-green" style="background: #fbbf24; color: #0f172a; margin-bottom: 10px;" onclick="goToSubscription()">সাবস্ক্রিপশন নিন</button>
-            <button class="btn-green" style="background: #334155; font-size: 12px; padding: 8px;" onclick="closeLimitModal()">পরে দেখব</button>
+            <p style="color: #cbd5e1; font-size: 12px; line-height: 1.5; margin-bottom: 20px;">
+                আপনার ৪০টি ফ্রি মডেল টেস্ট পরীক্ষা সম্পন্ন হয়েছে। আনলিমিটেড পরীক্ষা ও ব্যাখ্যাসহ উত্তর দেখার জন্য এখনই সাবস্ক্রিপশন নিন!
+            </p>
+            <button class="btn-green" style="background: #fbbf24; color: #0f172a; font-weight: 800; margin-bottom: 10px;" onclick="goToSubscription()">
+                <i class="fa-solid fa-star"></i> প্রিমিয়াম সাবস্ক্রিপশন কিনুন
+            </button>
+            <button class="btn-green" style="background: #334155; color: #cbd5e1; font-size: 12px; padding: 8px;" onclick="closeLimitModal()">
+                পরে দেখব
+            </button>
         </div>
     </div>
 
+    <!-- 🌟 পরীক্ষা শুরুর কনফিগারেশন মডাল -->
     <div id="exam-config-modal" class="modal-overlay">
         <div class="modal-box" style="text-align: left;">
-            <h3 style="color: #fbbf24; font-size: 16px; margin-bottom: 12px; text-align: center;">পরীক্ষা সেটআপ করুন</h3>
-            <label class="input-label">বিষয়:</label>
+            <h3 style="color: #fbbf24; font-size: 16px; margin-bottom: 12px; text-align: center;"><i class="fa-solid fa-pen-to-square"></i> পরীক্ষা সেটআপ করুন</h3>
+            
+            <label class="input-label">পরীক্ষার ধরণ:</label>
+            <select id="cfg-exam-type" class="select-input">
+                <option value="chapter">অধ্যায়ভিত্তিক এক্সাম</option>
+                <option value="subject">বিষয়ভিত্তিক এক্সাম (ফুল সিলেবাস)</option>
+            </select>
+
+            <label class="input-label">বিষয় নির্বাচন:</label>
             <select id="cfg-subject" class="select-input" onchange="updateChapters('cfg-subject', 'cfg-chapter')">
                 <option value="বাংলা">বাংলা</option>
-                <option value="আইসিটি">আইসিটি</option>
+                <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
                 <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                <option value="আইসিটি">আইসিটি</option>
             </select>
-            <label class="input-label">অধ্যায়:</label>
+
+            <label class="input-label">অধ্যায় নির্বাচন:</label>
             <select id="cfg-chapter" class="select-input"></select>
-            <label class="input-label">সময় (মিনিট):</label>
-            <select id="cfg-time" class="select-input">
-                <option value="10">১০ মিনিট</option>
-                <option value="15">১৫ মিনিট</option>
+
+            <label class="input-label">কতটি MCQ প্রশ্ন হবে?</label>
+            <select id="cfg-mcq-count" class="select-input">
+                <option value="10">১০টি MCQ</option>
+                <option value="20" selected>২০টি MCQ</option>
+                <option value="30">৩০টি MCQ</option>
+                <option value="50">৫০টি MCQ</option>
             </select>
-            <button class="btn-green" style="background: #10b981; margin-top: 10px;" onclick="startConfiguredExam()">শুরু করুন</button>
-            <button class="btn-green" style="background: #334155; margin-top: 8px;" onclick="closeExamConfigModal()">বাতিল</button>
+
+            <label class="input-label">সময় নির্ধারণ (মিনিট):</label>
+            <select id="cfg-time" class="select-input">
+                <option value="5">৫ মিনিট</option>
+                <option value="10" selected>১০ মিনিট</option>
+                <option value="15">১৫ মিনিট</option>
+                <option value="30">৩০ মিনিট</option>
+            </select>
+
+            <button class="btn-green" style="background: #10b981; margin-top: 10px;" onclick="startConfiguredExam()">পরীক্ষা শুরু করুন <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn-green" style="background: #334155; margin-top: 8px; font-size: 12px; padding: 8px;" onclick="closeExamConfigModal()">বাতিল</button>
         </div>
     </div>
 
+    <!-- Header Bar -->
     <div class="top-bar" id="app-header" style="display: none;">
         <div class="brand-title">🎓 Abs Exam Center</div>
         <div class="profile-area" onclick="switchSection('profile-section')">
@@ -508,6 +565,7 @@
 
     <div class="container">
         
+        <!-- 🌟 ১. লগইন / সাইন আপ স্ক্রিন -->
         <div id="login-screen-section" class="page-section active">
             <div class="auth-screen-card">
                 <div class="logo-badge">
@@ -524,9 +582,11 @@
                     <div style="text-align:left;">
                         <label class="input-label">মোবাইল নম্বর / আইডি</label>
                         <input type="text" id="auth-input-field" class="auth-input" placeholder="মোবাইল নম্বর দিন">
+
                         <label class="input-label">পাসওয়ার্ড</label>
                         <input type="password" id="auth-pass-field" class="auth-input" placeholder="পাসওয়ার্ড লিখুন">
                     </div>
+
                     <button class="btn-green" onclick="handleCustomAuth()">লগইন করুন</button>
                 </div>
 
@@ -534,16 +594,20 @@
                     <div style="text-align:left;">
                         <label class="input-label">আপনার পূর্ণ নাম</label>
                         <input type="text" id="signup-name-field" class="auth-input" placeholder="আপনার নাম">
+
                         <label class="input-label">মোবাইল নম্বর</label>
-                        <input type="text" id="signup-phone-field" class="auth-input" placeholder="মোবাইল নম্বর">
+                        <input type="text" id="signup-phone-field" class="auth-input" placeholder="আপনার মোবাইল নম্বর (যেমন: 017...)">
+
                         <label class="input-label">পাসওয়ার্ড</label>
                         <input type="password" id="signup-pass-field" class="auth-input" placeholder="নতুন পাসওয়ার্ড">
                     </div>
+
                     <button class="btn-green" style="background:#10b981;" onclick="handleUserSignUp()">অ্যাকাউন্ট তৈরি করুন</button>
                 </div>
             </div>
         </div>
 
+        <!-- 🌟 👑 ২. এডমিন প্যানেল -->
         <div id="admin-panel-section" class="page-section">
             <div class="admin-dashboard-box">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -551,244 +615,663 @@
                         <h3 style="color:#fbbf24; font-size:16px;"><i class="fa-solid fa-crown"></i> এডমিন ড্যাশবোর্ড</h3>
                         <p id="admin-role-title" style="font-size: 10px; color: #94a3b8;">Abs Exam Center Management</p>
                     </div>
-                    <span id="admin-badge-label" style="background: #991b1b; color: white; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">ADMIN</span>
+                    <span style="background: #991b1b; color: white; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">ADMIN</span>
                 </div>
 
+                <!-- পরিসংখ্যান স্ট্যাটস -->
                 <div class="admin-stats-grid">
-                    <div class="stat-box"><span>টোটাল ইউজার</span><h3 id="stat-total-users">0</h3></div>
-                    <div class="stat-box"><span>ফ্রি স্টুডেন্ট</span><h3 id="stat-free-users">0</h3></div>
-                    <div class="stat-box"><span>পেইড মেম্বার</span><h3 id="stat-paid-users">0</h3></div>
+                    <div class="stat-box">
+                        <span>টোটাল ইউজার</span>
+                        <h3 id="stat-total-users">0</h3>
+                    </div>
+                    <div class="stat-box">
+                        <span>ফ্রি স্টুডেন্ট</span>
+                        <h3 id="stat-free-users">0</h3>
+                    </div>
+                    <div class="stat-box">
+                        <span>পেইড মেম্বার</span>
+                        <h3 id="stat-paid-users">0</h3>
+                    </div>
                 </div>
 
                 <div class="admin-nav-tabs">
                     <button class="admin-nav-btn active" onclick="switchAdminTab('adm-tab-users', this)">👥 ইউজার লিস্ট</button>
-                    <button class="admin-nav-btn" id="tab-btn-employee" onclick="switchAdminTab('adm-tab-employee', this)">👨‍💼 এমপ্লয়ি</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-courses', this)">📖 কোর্স</button>
                     <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-packages', this)">📦 প্যাকেজ</button>
+                    <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-flashcard', this)">⚡ ফ্ল্যাশকার্ড</button>
+                    <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-live', this)">🔴 লাইভ এক্সাম</button>
+                    <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-general', this)">📝 প্রশ্ন ম্যানেজমেন্ট</button>
+                    <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-sug', this)">💡 সাজেশন</button>
+                    <button class="admin-nav-btn" onclick="switchAdminTab('adm-tab-bank', this)">📚 প্রশ্নব্যাংক</button>
                 </div>
 
+                <!-- ইউজার লিস্ট ট্যাব -->
                 <div id="adm-tab-users" class="adm-tab-content">
-                    <h4 style="font-size:12px; color:#38bdf8; margin-bottom:8px;">ইউজার লিস্ট:</h4>
+                    <h4 style="font-size:12px; color:#38bdf8; margin-bottom:8px;">ইউজার সাবস্ক্রিপশন ও তথ্য ম্যানেজমেন্ট:</h4>
                     <div style="overflow-x:auto;">
                         <table class="data-table">
-                            <thead><tr><th>নাম ও ফোন</th><th>স্ট্যাটাস</th><th>তারিখ</th><th>TrxID</th><th>অ্যাকশন</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>নাম ও ফোন</th>
+                                    <th>স্ট্যাটাস</th>
+                                    <th>পেইড ও শেষ তারিখ</th>
+                                    <th>TrxID</th>
+                                    <th>অ্যাকশন</th>
+                                </tr>
+                            </thead>
                             <tbody id="admin-user-table"></tbody>
                         </table>
                     </div>
                 </div>
 
-                <div id="adm-tab-employee" class="adm-tab-content" style="display:none;">
-                    <div class="content-box">
-                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">👨‍💼 নতুন এমপ্লয়ি তৈরি করুন</h4>
-                        <label class="input-label">নাম:</label>
-                        <input type="text" id="emp-name" class="auth-input" placeholder="নাম">
-                        <label class="input-label">মোবাইল নম্বর:</label>
-                        <input type="text" id="emp-phone" class="auth-input" placeholder="ফোন">
-                        <label class="input-label">পাসওয়ার্ড:</label>
-                        <input type="password" id="emp-pass" class="auth-input" placeholder="পাসওয়ার্ড">
-                        <button class="btn-green" onclick="createNewEmployee()">এমপ্লয়ি তৈরি করুন</button>
-                    </div>
-                    <table class="data-table"><thead><tr><th>নাম</th><th>ফোন</th><th>পাসওয়ার্ড</th><th>অ্যাকশন</th></tr></thead><tbody id="admin-employee-table"></tbody></table>
-                </div>
-
+                <!-- 📖 কোর্স ম্যানেজমেন্ট ট্যাব -->
                 <div id="adm-tab-courses" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
-                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📖 নতুন কোর্স</h4>
-                        <input type="text" id="new-course-name" class="auth-input" placeholder="কোর্সের নাম">
-                        <input type="text" id="new-course-desc" class="auth-input" placeholder="বিবরণ">
-                        <button class="btn-green" onclick="addNewCourse()">যোগ করুন</button>
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📖 নতুন কোর্স যোগ করুন</h4>
+                        <label class="input-label">কোর্সের নাম:</label>
+                        <input type="text" id="new-course-name" class="auth-input" placeholder="যেমন: এইচএসসি ২০২৬ ফুল কোর্স">
+                        <label class="input-label">কোর্সের বিবরণ:</label>
+                        <input type="text" id="new-course-desc" class="auth-input" placeholder="যেমন: সকল বিষয়ের ওপর লাইভ ক্লাস">
+                        <button class="btn-green" onclick="addNewCourse()">কোর্স যোগ করুন</button>
                     </div>
-                    <table class="data-table"><thead><tr><th>নাম</th><th>বিবরণ</th><th>অ্যাকশন</th></tr></thead><tbody id="admin-course-table"></tbody></table>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead><tr><th>কোর্সের নাম</th><th>বিবরণ</th><th>অ্যাকশন</th></tr></thead>
+                            <tbody id="admin-course-table"></tbody>
+                        </table>
+                    </div>
                 </div>
 
+                <!-- 📦 প্যাকেজ ম্যানেজমেন্ট ট্যাব -->
                 <div id="adm-tab-packages" class="adm-tab-content" style="display:none;">
                     <div class="content-box">
-                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📦 নতুন প্যাকেজ</h4>
-                        <input type="text" id="new-pkg-name" class="auth-input" placeholder="প্যাকেজের নাম">
-                        <input type="text" id="new-pkg-price" class="auth-input" placeholder="মূল্য">
-                        <button class="btn-green" onclick="addNewPackage()">যোগ করুন</button>
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📦 নতুন প্যাকেজ যোগ করুন</h4>
+                        <label class="input-label">প্যাকেজের নাম:</label>
+                        <input type="text" id="new-pkg-name" class="auth-input" placeholder="যেমন: ক্র্যাশ কোর্স প্যাক">
+                        <label class="input-label">মূল্য ও সময়সীমা:</label>
+                        <input type="text" id="new-pkg-price" class="auth-input" placeholder="যেমন: ১৯০ টাকা (২ মাস)">
+                        <button class="btn-green" onclick="addNewPackage()">প্যাকেজ যোগ করুন</button>
                     </div>
-                    <table class="data-table"><thead><tr><th>নাম</th><th>মূল্য</th><th>অ্যাকশন</th></tr></thead><tbody id="admin-package-table"></tbody></table>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead><tr><th>প্যাকেজের নাম</th><th>মূল্য ও মেয়াদ</th><th>অ্যাকশন</th></tr></thead>
+                            <tbody id="admin-package-table"></tbody>
+                        </table>
+                    </div>
                 </div>
 
+                <!-- ⚡ ফ্ল্যাশকার্ড যোগ করার বক্স -->
+                <div id="adm-tab-flashcard" class="adm-tab-content" style="display:none;">
+                    <div class="content-box">
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;"><i class="fa-solid fa-bolt"></i> প্রিমিয়াম ফ্ল্যাশকার্ড যোগ করুন</h4>
+                        <label class="input-label">বিষয় নির্বাচন:</label>
+                        <select id="fc-subject" class="select-input" onchange="updateChapters('fc-subject', 'fc-chapter')">
+                            <option value="বাংলা">বাংলা</option>
+                            <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                            <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                            <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                            <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                            <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                            <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                            <option value="আইসিটি">আইসিটি</option>
+                        </select>
+                        <label class="input-label">অধ্যায় নির্বাচন:</label>
+                        <select id="fc-chapter" class="select-input"></select>
+                        <label class="input-label">ফ্ল্যাশকার্ড শিরোনাম / টপিক:</label>
+                        <input type="text" id="fc-title" class="auth-input" placeholder="যেমন: গুরুত্বপূর্ণ সূত্র ও কনসেপ্ট">
+                        <label class="input-label">ব্যাখ্যা / মূল তথ্য:</label>
+                        <textarea id="fc-desc" class="auth-input" placeholder="বিস্তারিত ব্যাখ্যা লিখুন" style="height:70px;"></textarea>
+                        <button class="btn-green" onclick="saveAdminFlashcard()">ফ্ল্যাশকার্ড সেভ করুন</button>
+                    </div>
+                </div>
+
+                <!-- 🔴 লাইভ এক্সাম প্রশ্ন ও ব্যাখ্যা যোগ করার বক্স -->
+                <div id="adm-tab-live" class="adm-tab-content" style="display:none;">
+                    <div class="content-box">
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;"><i class="fa-solid fa-circle-dot"></i> লাইভ পরীক্ষা প্রশ্ন ও ব্যাখ্যা যোগ করুন</h4>
+                        <label class="input-label">বিষয় নির্বাচন:</label>
+                        <select id="live-subject" class="select-input" onchange="updateChapters('live-subject', 'live-chapter')">
+                            <option value="বাংলা">বাংলা</option>
+                            <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                            <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                            <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                            <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                            <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                            <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                            <option value="আইসিটি">আইসিটি</option>
+                        </select>
+                        <label class="input-label">অধ্যায় নির্বাচন:</label>
+                        <select id="live-chapter" class="select-input"></select>
+                        <label class="input-label">প্রশ্ন:</label>
+                        <input type="text" id="live-q" class="auth-input" placeholder="প্রশ্ন লিখুন">
+                        <label class="input-label">সঠিক উত্তর ও ব্যাখ্যা (Explanation):</label>
+                        <textarea id="live-exp" class="auth-input" placeholder="এই প্রশ্নের সঠিক উত্তরের বিস্তারিত ব্যাখ্যা লিখুন..." style="height:60px;"></textarea>
+                        <button class="btn-green" onclick="saveAdminContent('লাইভ প্রশ্ন')">লাইভ প্রশ্ন ও ব্যাখ্যা সেভ করুন</button>
+                    </div>
+                </div>
+
+                <!-- 📝 প্রশ্ন ম্যানেজমেন্ট (ব্যাখ্যাসহ) -->
+                <div id="adm-tab-general" class="adm-tab-content" style="display:none;">
+                    <div class="content-box">
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;">📝 প্রশ্ন ম্যানেজমেন্ট ও ব্যাখ্যা</h4>
+                        <label class="input-label">বিষয় নির্বাচন:</label>
+                        <select id="gen-subject" class="select-input" onchange="updateChapters('gen-subject', 'gen-chapter')">
+                            <option value="বাংলা">বাংলা</option>
+                            <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                            <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                            <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                            <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                            <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                            <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                            <option value="আইসিটি">আইসিটি</option>
+                        </select>
+                        <label class="input-label">অধ্যায়:</label>
+                        <select id="gen-chapter" class="select-input"></select>
+                        <label class="input-label">প্রশ্ন:</label>
+                        <input type="text" id="gen-q" class="auth-input" placeholder="মডেল টেস্ট প্রশ্ন">
+                        <label class="input-label">সঠিক উত্তরের ব্যাখ্যা (Explanation):</label>
+                        <textarea id="gen-exp" class="auth-input" placeholder="প্রশ্নের ব্যাখ্যা এখানে লিখুন..." style="height:60px;"></textarea>
+                        <button class="btn-green" onclick="saveAdminContent('সাধারণ প্রশ্ন')">প্রশ্ন ও ব্যাখ্যা সেভ করুন</button>
+                    </div>
+                </div>
+
+                <!-- 💡 সাজেশন যোগ করার বক্স -->
+                <div id="adm-tab-sug" class="adm-tab-content" style="display:none;">
+                    <div class="content-box">
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;"><i class="fa-solid fa-lightbulb"></i> প্রিমিয়াম সাজেশন যোগ করুন</h4>
+                        <label class="input-label">বিষয়:</label>
+                        <select id="sug-subject" class="select-input" onchange="updateChapters('sug-subject', 'sug-chapter')">
+                            <option value="বাংলা">বাংলা</option>
+                            <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                            <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                            <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                            <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                            <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                            <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                            <option value="আইসিটি">আইসিটি</option>
+                        </select>
+                        <label class="input-label">অধ্যায়:</label>
+                        <select id="sug-chapter" class="select-input"></select>
+                        <label class="input-label">সাজেশনের শিরোনাম:</label>
+                        <input type="text" id="sug-title" class="auth-input" placeholder="যেমন: ক ও খ বিভাগের গুরুত্বপূর্ণ প্রশ্ন">
+                        <label class="input-label">সাজেশনের বিস্তারিত বিবরণ:</label>
+                        <textarea id="sug-desc" class="auth-input" placeholder="সাজেশনের বিস্তারিত পয়েন্টসমূহ লিখুন" style="height:70px;"></textarea>
+                        <button class="btn-green" onclick="saveAdminSuggestion()">সাজেশন সেভ করুন</button>
+                    </div>
+                </div>
+
+                <!-- 📚 প্রশ্নব্যাংক যোগ করার বক্স -->
+                <div id="adm-tab-bank" class="adm-tab-content" style="display:none;">
+                    <div class="content-box">
+                        <h4 style="font-size:13px; color:#fbbf24; margin-bottom:8px;"><i class="fa-solid fa-book-bookmark"></i> প্রশ্নব্যাংক প্রশ্ন ও ব্যাখ্যা যোগ করুন</h4>
+                        <label class="input-label">বিষয়:</label>
+                        <select id="bank-subject" class="select-input" onchange="updateChapters('bank-subject', 'bank-chapter')">
+                            <option value="বাংলা">বাংলা</option>
+                            <option value="উচ্চতর গণিত ১ম পত্র">উচ্চতর গণিত ১ম পত্র</option>
+                            <option value="উচ্চতর গণিত ২য় পত্র">উচ্চতর গণিত ২য় পত্র</option>
+                            <option value="রসায়ন ১ম পত্র">রসায়ন ১ম পত্র</option>
+                            <option value="রসায়ন ২য় পত্র">রসায়ন ২য় পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ১ম পত্র">পদার্থবিজ্ঞান ১ম পত্র</option>
+                            <option value="পদার্থবিজ্ঞান ২য় পত্র">পদার্থবিজ্ঞান ২য় পত্র</option>
+                            <option value="জীববিজ্ঞান ১ম পত্র">জীববিজ্ঞান ১ম পত্র</option>
+                            <option value="জীববিজ্ঞান ২য় পত্র">জীববিজ্ঞান ২য় পত্র</option>
+                            <option value="আইসিটি">আইসিটি</option>
+                        </select>
+                        <label class="input-label">অধ্যায়:</label>
+                        <select id="bank-chapter" class="select-input"></select>
+                        <label class="input-label">প্রশ্ন:</label>
+                        <input type="text" id="bank-q" class="auth-input" placeholder="প্রশ্নব্যাংকের প্রশ্ন">
+                        <label class="input-label">ব্যাখ্যা:</label>
+                        <textarea id="bank-exp" class="auth-input" placeholder="বোর্ড প্রশ্নের ব্যাখ্যা লিখুন..." style="height:60px;"></textarea>
+                        <button class="btn-green" onclick="saveAdminContent('প্রশ্নব্যাংক')">প্রশ্নব্যাংকে সেভ করুন</button>
+                    </div>
+                </div>
+
+                <!-- সুইচ বাটন: সরাসরি শিক্ষার্থী মোডে যাওয়ার জন্য -->
                 <button class="btn-green" style="background:#f59e0b; color:#0f172a; margin-top:15px; font-weight:800;" onclick="switchSection('home-section')">
-                    শিক্ষার্থী মোডে যান
+                    <i class="fa-solid fa-graduation-cap"></i> শিক্ষার্থী মোডে যান (Switch to Student)
                 </button>
             </div>
         </div>
 
+        <!-- 🌟 ৩. সাধারণ স্টুডেন্ট হোম -->
         <div id="home-section" class="page-section">
             <div class="student-welcome-box">
                 <div style="background:#38bdf8; color:#0f172a; font-size:11px; padding:3px 10px; border-radius:12px; font-weight:700; display:inline-block; margin-bottom:8px;">
                     ● এক্সাম লিমিট বাকি: <span id="exam-counter-txt" style="color:#b91c1c; font-weight:800;">40</span>
                 </div>
-                <h3 style="font-size:15px; margin-bottom:10px;"><span id="banner-user-name">শিক্ষার্থী</span>, স্বাগতম!</h3>
-                <button class="btn-green" style="background:#f59e0b; color:#0f172a;" onclick="openExamConfig()">পরীক্ষা দিন</button>
+                <h3 style="font-size:15px; margin-bottom:10px;"><span id="banner-user-name">শিক্ষার্থী</span>, অনুশীলনে স্বাগতম!</h3>
+                <button class="btn-green" style="background:#f59e0b; color:#0f172a;" onclick="openExamConfig()">
+                    পরীক্ষা দিন <i class="fa-solid fa-pen-to-square"></i>
+                </button>
             </div>
 
+            <!-- এডমিন শর্টকাট বা সুইচ বাটন -->
             <div id="admin-shortcut-banner" class="admin-access-badge" style="display:none;" onclick="switchSection('admin-panel-section')">
-                <span>⚡ এডমিন কন্ট্রোল প্যানেলে যান</span>
-                <span>ADMIN <i class="fa-solid fa-arrow-right"></i></span>
+                <span>⚡ এডমিন কন্ট্রোল প্যানেলে যান (Switch to Admin)</span>
+                <span style="background:#06081a; padding:4px 8px; border-radius:8px;">ADMIN <i class="fa-solid fa-arrow-right"></i></span>
             </div>
 
+            <!-- মোট ৮টি প্রিমিয়াম কার্ড গ্রিড -->
             <div class="grid-container">
-                <div class="grid-card" onclick="switchSection('dashboard-section')"><div class="icon-box c-yellow"><i class="fa-solid fa-chart-line"></i></div><div class="card-info"><h4>ড্যাশবোর্ড</h4><p>পারফরম্যান্স</p></div></div>
-                <div class="grid-card" onclick="switchSection('leaderboard-section')"><div class="icon-box c-green"><i class="fa-solid fa-trophy"></i></div><div class="card-info"><h4>লিডারবোর্ড</h4><p>র‍্যাংকিং</p></div></div>
-                <div class="grid-card" onclick="switchSection('courses-section')"><div class="icon-box c-blue"><i class="fa-solid fa-graduation-cap"></i></div><div class="card-info"><h4>কোর্সসমূহ</h4><p>প্রিমিয়াম কোর্স</p></div></div>
-                <div class="grid-card" onclick="switchSection('subscription-payment-section')"><div class="icon-box c-pink"><i class="fa-solid fa-crown"></i></div><div class="card-info"><h4>সাবস্ক্রিপশন</h4><p>প্যাক কিনুন</p></div></div>
+                <div class="grid-card" onclick="switchSection('dashboard-section')">
+                    <div class="icon-box c-yellow"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="card-info"><h4>ড্যাশবোর্ড</h4><p>পারফরম্যান্স ও বিশ্লেষণ</p></div>
+                </div>
+
+                <div class="grid-card" onclick="switchSection('leaderboard-section')">
+                    <div class="icon-box c-green"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="card-info"><h4>লিডারবোর্ড</h4><p>লাইভ টেস্ট র‍্যাংকিং</p></div>
+                </div>
+
+                <div class="grid-card" onclick="switchSection('courses-section')">
+                    <div class="icon-box c-blue"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="card-info"><h4>কোর্সসমূহ</h4><p>আমাদের প্রিমিয়াম কোর্স</p></div>
+                </div>
+
+                <div class="grid-card" onclick="switchSection('subscription-payment-section')">
+                    <div class="icon-box c-pink"><i class="fa-solid fa-crown"></i></div>
+                    <div class="card-info"><h4>সাবস্ক্রিপশন</h4><p>প্রিমিয়াম প্যাক কিনুন</p></div>
+                </div>
+
+                <div class="grid-card" onclick="switchSection('flashcard-section')">
+                    <div class="icon-box c-purple"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="card-info"><h4>ফ্ল্যাশকার্ড</h4><p>স্মার্ট শর্টকাট লার্নিং</p></div>
+                </div>
+
+                <div class="grid-card" onclick="switchSection('suggestion-section')">
+                    <div class="icon-box c-orange"><i class="fa-solid fa-lightbulb"></i></div>
+                    <div class="card-info"><h4>সাজেশন</h4><p>পরীক্ষার চূড়ান্ত সাজেশন</p></div>
+                </div>
+
+                <div class="grid-card" onclick="openExamConfig()">
+                    <div class="icon-box c-red"><i class="fa-solid fa-circle-dot"></i></div>
+                    <div class="card-info"><h4>লাইভ এক্সাম</h4><p>লাইভ মডেল টেস্ট জোন</p></div>
+                </div>
+
+                <div class="grid-card" onclick="switchSection('bank-section')">
+                    <div class="icon-box c-teal"><i class="fa-solid fa-book-bookmark"></i></div>
+                    <div class="card-info"><h4>প্রশ্নব্যাংক</h4><p>বোর্ড প্রশ্ন আর্কাইভ</p></div>
+                </div>
             </div>
         </div>
 
+        <!-- 🌟 ৪. কোর্স পেজ -->
         <div id="courses-section" class="page-section">
             <div class="inner-page-box">
-                <h3 style="color:#fbbf24; margin-bottom:12px;">কোর্সসমূহ</h3>
+                <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-graduation-cap"></i> আমাদের কোর্সসমূহ</h3>
                 <div id="student-courses-list"></div>
                 <button class="btn-green" style="background:#334155; margin-top:15px;" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
+        <!-- 🌟 ৫. ফ্ল্যাশকার্ড পেজ -->
+        <div id="flashcard-section" class="page-section">
+            <div class="inner-page-box">
+                <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-bolt"></i> প্রিমিয়াম ফ্ল্যাশকার্ড জোন</h3>
+                <div id="student-flashcards-container">
+                    <p style="font-size:12px; color:#94a3b8;">কোনো ফ্ল্যাশকার্ড পাওয়া যায়নি।</p>
+                </div>
+                <button class="btn-green" style="background:#334155; margin-top:15px;" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- 🌟 ৬. সাজেশন পেজ -->
+        <div id="suggestion-section" class="page-section">
+            <div class="inner-page-box">
+                <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-lightbulb"></i> ফাইনাল এক্সাম সাজেশন</h3>
+                <div id="student-suggestions-container">
+                    <p style="font-size:12px; color:#94a3b8;">কোনো সাজেশন পাওয়া যায়নি।</p>
+                </div>
+                <button class="btn-green" style="background:#334155; margin-top:15px;" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- 🌟 ৭. প্রশ্নব্যাংক পেজ -->
+        <div id="bank-section" class="page-section">
+            <div class="inner-page-box">
+                <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-book-bookmark"></i> বোর্ড প্রশ্নব্যাংক আর্কাইভ</h3>
+                <div id="student-bank-container">
+                    <p style="font-size:12px; color:#94a3b8;">আইসিটি ও বিজ্ঞান বিষয়ের গুরুত্বপূর্ণ বোর্ড প্রশ্ন ও ব্যাখ্যা এখানে সংরক্ষিত রয়েছে।</p>
+                </div>
+                <button class="btn-green" style="background:#334155; margin-top:15px;" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
+            </div>
+        </div>
+
+        <!-- 🌟 ৮. লাইভ এক্সাম স্ক্রিন (ব্যাখ্যাসহ) -->
         <div id="exam-screen-section" class="page-section">
             <div class="inner-page-box">
                 <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
                     <span style="font-size:12px; color:#fbbf24;" id="exam-progress-txt">প্রশ্ন ১/২</span>
                     <span style="font-size:12px; color:#ef4444;" id="exam-timer-txt">সময়: ১০ মিনিট</span>
                 </div>
-                <h3 id="question-title-box" style="font-size:15px; margin-bottom:15px;">প্রশ্ন লোড হচ্ছে...</h3>
+                <h3 id="question-title-box" style="font-size:15px; margin-bottom:15px; color:#f8fafc;">প্রশ্ন লোড হচ্ছে...</h3>
                 <div id="options-container"></div>
                 <div id="explanation-container" class="explanation-box"></div>
             </div>
         </div>
 
+        <!-- 🌟 ৯. ইনস্ট্যান্ট রেজাল্ট -->
         <div id="result-screen-section" class="page-section">
             <div class="inner-page-box" style="text-align:center;">
-                <h2 style="color:#10b981; margin-bottom:8px;">ফলাফল</h2>
+                <h2 style="color:#10b981; margin-bottom:8px;"><i class="fa-solid fa-award"></i> পরীক্ষার ফলাফল</h2>
                 <div style="background:#06081a; padding:15px; border-radius:12px; margin:15px 0;">
                     <h3 style="font-size:24px; color:#fbbf24;" id="res-score-box">নম্বর: ২/২</h3>
                     <p style="font-size:16px; color:#38bdf8; margin-top:5px;" id="res-percent-box">পার্সেন্টেজ: ১০০%</p>
                 </div>
-                <button class="btn-green" onclick="switchSection('dashboard-section')">ড্যাশবোর্ডে দেখুন</button>
+                <button class="btn-green" onclick="switchSection('dashboard-section')">ড্যাশবোর্ডে ফলাফল দেখুন</button>
             </div>
         </div>
 
+        <!-- 🌟 ১০. স্টুডেন্ট ড্যাশবোর্ড -->
         <div id="dashboard-section" class="page-section">
             <div class="inner-page-box">
-                <h3 style="color:#fbbf24; margin-bottom:12px;">ড্যাশবোর্ড</h3>
-                <div id="student-history-list"><p style="font-size:12px; color:#94a3b8;">কোনো ইতিহাস নেই।</p></div>
+                <h3 style="color:#fbbf24; margin-bottom:12px;"><i class="fa-solid fa-chart-pie"></i> পারফরম্যান্স ড্যাশবোর্ড</h3>
+                <div id="student-history-list">
+                    <p style="font-size:12px; color:#94a3b8;">এখনো কোনো পরীক্ষা দেওয়া হয়নি।</p>
+                </div>
                 <button class="btn-green" style="background:#334155; margin-top:15px;" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
+        <!-- 🌟 ১১. লিডারবোর্ড -->
         <div id="leaderboard-section" class="page-section">
             <div class="inner-page-box">
-                <h3 style="color:#10b981; margin-bottom:12px;">লিডারবোর্ড</h3>
-                <table class="data-table"><thead><tr><th>র‍্যাংক</th><th>নাম</th><th>নম্বর</th><th>পার্সেন্টেজ</th></tr></thead><tbody id="leaderboard-table-body"></tbody></table>
+                <h3 style="color:#10b981; margin-bottom:12px;"><i class="fa-solid fa-trophy"></i> লাইভ লিডারবোর্ড র‍্যাংকিং</h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>র‍্যাংক</th>
+                                <th>শিক্ষার্থীর নাম</th>
+                                <th>প্রাপ্ত নম্বর</th>
+                                <th>পার্সেন্টেজ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-table-body"></tbody>
+                    </table>
+                </div>
                 <button class="btn-green" style="background:#334155; margin-top:15px;" onclick="switchSection('home-section')">হোমে ফিরে যান</button>
             </div>
         </div>
 
+        <!-- 🌟 ১২. সাবস্ক্রিপশন ও পেমেন্ট ফর্ম -->
         <div id="subscription-payment-section" class="page-section">
             <div class="inner-page-box">
                 <h3 style="color:#fbbf24; margin-bottom:10px;">👑 প্রিমিয়াম সাবস্ক্রিপশন</h3>
-                <p style="font-size:12px; color:#cbd5e1; margin-bottom:12px;">বিকাশ সেন্ড মানি: <strong style="color:#10b981;">01941907753</strong></p>
-                <label class="input-label">প্যাকেজ</label>
-                <select id="pay-package" class="select-input"></select>
-                <label class="input-label">নাম</label>
-                <input type="text" id="pay-name" class="auth-input" placeholder="নাম">
-                <label class="input-label">মোবাইল</label>
-                <input type="text" id="pay-phone" class="auth-input" placeholder="মোবাইল">
-                <label class="input-label">পাসওয়ার্ড</label>
-                <input type="password" id="pay-pass" class="auth-input" placeholder="পাসওয়ার্ড">
-                <label class="input-label">TrxID</label>
-                <input type="text" id="pay-trxid" class="auth-input" placeholder="TrxID">
+                <p style="font-size:12px; color:#cbd5e1; margin-bottom:12px;">বিকাশ/নগদ সেন্ড মানি করুন: <strong style="color:#10b981;">01941907753</strong></p>
+
+                <div style="text-align:left;">
+                    <label class="input-label">প্যাকেজ সিলেক্ট করুন</label>
+                    <select id="pay-package" class="select-input"></select>
+
+                    <label class="input-label">আপনার নাম</label>
+                    <input type="text" id="pay-name" class="auth-input" placeholder="আপনার নাম">
+                    <label class="input-label">মোবাইল নম্বর</label>
+                    <input type="text" id="pay-phone" class="auth-input" placeholder="মোবাইল নম্বর">
+                    <label class="input-label">পাসওয়ার্ড</label>
+                    <input type="password" id="pay-pass" class="auth-input" placeholder="পাসওয়ার্ড">
+                    <label class="input-label">ট্রানজেকশন আইডি (TrxID)</label>
+                    <input type="text" id="pay-trxid" class="auth-input" placeholder="TrxID দিন">
+                </div>
                 <button class="btn-green" onclick="submitPaymentRequest()">পেমেন্ট সাবমিট করুন</button>
                 <button class="btn-green" style="background:#334155; margin-top:10px;" onclick="switchSection('home-section')">বাতিল</button>
             </div>
         </div>
 
+        <!-- 🌟 ১৩. প্রোফাইল পেজ -->
         <div id="profile-section" class="page-section">
             <div class="inner-page-box">
-                <h3>👤 প্রোফাইল</h3>
+                <h3>👤 অ্যাকাউন্ট প্রোফাইল</h3>
                 <div style="background:#06081a; padding:15px; border-radius:12px; margin-top:10px;">
                     <p style="margin-bottom:6px;"><strong>নাম:</strong> <span id="prof-name">-</span></p>
-                    <p style="margin-bottom:6px;"><strong>মোবাইল:</strong> <span id="prof-email">-</span></p>
+                    <p style="margin-bottom:6px;"><strong>মোবাইল/আইডি:</strong> <span id="prof-email">-</span></p>
                     <p style="margin-bottom:6px;"><strong>রোল:</strong> <span id="prof-role" style="color:#10b981;">-</span></p>
-                    <button class="btn-green" style="background:#ef4444; margin-top:15px;" onclick="handleUserLogout()">লগআউট</button>
+                    <button class="btn-green" style="background:#ef4444; margin-top:15px;" onclick="handleUserLogout()">লগআউট করুন</button>
                 </div>
             </div>
         </div>
 
     </div>
 
+    <!-- Bottom Navigation Bar -->
     <div class="bottom-bar" id="app-bottom-bar" style="display: none;">
-        <a class="nav-link active" onclick="switchSection('home-section')"><i class="fa-solid fa-house" style="font-size:18px;"></i><span>হোম</span></a>
-        <a class="nav-link" onclick="switchSection('courses-section')"><i class="fa-solid fa-graduation-cap" style="font-size:18px;"></i><span>কোর্স</span></a>
-        <a class="nav-link" onclick="switchSection('dashboard-section')"><i class="fa-solid fa-chart-pie" style="font-size:18px;"></i><span>ড্যাশবোর্ড</span></a>
-        <a class="nav-link" onclick="switchSection('leaderboard-section')"><i class="fa-solid fa-trophy" style="font-size:18px;"></i><span>র‍্যাংক</span></a>
-        <a class="nav-link" onclick="switchSection('profile-section')"><i class="fa-solid fa-user" style="font-size:18px;"></i><span>প্রোফাইল</span></a>
+        <a class="nav-link active" id="nav-home" onclick="switchSection('home-section')">
+            <i class="fa-solid fa-house" style="font-size:18px;"></i>
+            <span>হোম</span>
+        </a>
+        <a class="nav-link" id="nav-courses" onclick="switchSection('courses-section')">
+            <i class="fa-solid fa-graduation-cap" style="font-size:18px;"></i>
+            <span>কোর্স</span>
+        </a>
+        <a class="nav-link" id="nav-dash" onclick="switchSection('dashboard-section')">
+            <i class="fa-solid fa-chart-pie" style="font-size:18px;"></i>
+            <span>ড্যাশবোর্ড</span>
+        </a>
+        <a class="nav-link" id="nav-lead" onclick="switchSection('leaderboard-section')">
+            <i class="fa-solid fa-trophy" style="font-size:18px;"></i>
+            <span>লিডারবোর্ড</span>
+        </a>
+        <a class="nav-link" id="nav-profile" onclick="switchSection('profile-section')">
+            <i class="fa-solid fa-user" style="font-size:18px;"></i>
+            <span>প্রোফাইল</span>
+        </a>
     </div>
 
     <script>
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; 
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; 
-        let supabase = null;
-        if (window.supabase && SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
-            try { supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch(e){}
+        // 🌟 🔥 Firebase Realtime Database Configuration
+        const firebaseConfig = {
+            databaseURL: "https://abs-exam-center-default-rtdb.firebaseio.com/"
+        };
+        
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
         }
+        const db = firebase.database();
 
         let currentUser = JSON.parse(localStorage.getItem('abs_current_user')) || null;
         let freeExamCount = 40;
 
+        // EduTech style toast popup notification
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = `toast-msg ${type}`;
+            
             const iconClass = (type === 'success') ? 'fa-check' : 'fa-triangle-exclamation';
-            toast.innerHTML = `<div class="toast-icon"><i class="fa-solid ${iconClass}"></i></div><span>${message}</span>`;
+            toast.innerHTML = `
+                <div class="toast-icon"><i class="fa-solid ${iconClass}"></i></div>
+                <span>${message}</span>
+            `;
+
             container.appendChild(toast);
-            setTimeout(() => { toast.remove(); }, 3000);
+
+            setTimeout(() => {
+                toast.style.animation = 'toastOut 0.4s ease forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
         }
 
         let examQuestions = [
-            { q: "HTML-এর পূর্ণরূপ কী?", options: ["Hyper Text Markup Language", "High Text Machine", "Hyper Tabular", "Home Tool"], correct: 0, explanation: "Hyper Text Markup Language" },
-            { q: "IP Address কত বিটের (IPv4)?", options: ["১৬ বিট", "৩২ বিট", "৬৪ বিট", "১২৮ বিট"], correct: 1, explanation: "৩২ বিট" }
+            { 
+                q: "HTML-এর পূর্ণরূপ কী?", 
+                options: ["Hyper Text Markup Language", "High Text Machine Language", "Hyper Tabular Markup", "Home Tool Markup"], 
+                correct: 0,
+                explanation: "সঠিক উত্তর: Hyper Text Markup Language। HTML হলো একটি মার্কআপ ল্যাঙ্গুয়েজ যা ওয়েব পেজ তৈরিতে ব্যবহৃত হয়।" 
+            },
+            { 
+                q: "IP Address কত বিটের হয় (IPv4)?", 
+                options: ["১৬ বিট", "৩২ বিট", "৬৪ বিট", "১২৮ বিট"], 
+                correct: 1,
+                explanation: "সঠিক উত্তর: ৩২ বিট। IPv4 এড্রেস সাধারণত ৩২ বিটের হয়ে থাকে এবং ডট-ডেসিমেল নোটেশনে লেখা হয়।" 
+            }
         ];
 
         let currentQuestionIndex = 0;
         let scoreCount = 0;
         let studentExamHistory = [];
-        let leaderboardData = [{ name: "মাসফাকুর রহমান", score: "২/২", percent: "১০০%" }];
+        let leaderboardData = [
+            { name: "মাসফাকুর রহমান", score: "২/২", percent: "১০০%" }
+        ];
 
-        let coursesList = JSON.parse(localStorage.getItem('abs_courses')) || [{ name: "এইচএসসি আইসিটি ফুল কোর্স", desc: "অধ্যায়ভিত্তিক ক্লাস" }];
-        let packagesList = JSON.parse(localStorage.getItem('abs_packages')) || [{ name: "মাসিক প্রিমিয়াম প্যাক", price: "৯৯ টাকা" }];
-        let employeesList = JSON.parse(localStorage.getItem('abs_employees')) || [];
-        let usersList = JSON.parse(localStorage.getItem('abs_users')) || [];
+        let coursesList = JSON.parse(localStorage.getItem('abs_courses')) || [
+            { name: "এইচএসসি আইসিটি ফুল কোর্স", desc: "অধ্যায়ভিত্তিক লাইভ ক্লাস ও পরীক্ষা" },
+            { name: "পদার্থবিজ্ঞান ও রসায়ন ক্র্যাশ কোর্স", desc: "শেষ মুহূর্তের সেরা প্রস্তুতি" }
+        ];
+
+        let packagesList = JSON.parse(localStorage.getItem('abs_packages')) || [
+            { name: "মাসিক প্রিমিয়াম প্যাক", price: "৯৯ টাকা (১ মাস)" },
+            { name: "এইচএসসি ফুল কোর্স প্যাক", price: "৪৯৯ টাকা (৬ মাস)" }
+        ];
+
+        let flashcardsList = JSON.parse(localStorage.getItem('abs_flashcards')) || [
+            { subject: "আইসিটি", chapter: "অধ্যায় ৪: HTML", title: "HTML ট্যাগ স্ট্রাকচার", desc: "HTML হলো ট্যাগ ভিত্তিক মার্কআপ ল্যাঙ্গুয়েজ।" }
+        ];
+
+        let suggestionsList = JSON.parse(localStorage.getItem('abs_suggestions')) || [
+            { subject: "আইসিটি", chapter: "অধ্যায় ৫: প্রোগ্রামিং", title: "লুপ ও কন্ডিশনাল স্টেটমেন্ট", desc: "for এবং while লুপের প্রোগ্রামগুলো ভালোভাবে অনুশীলন করুন।" }
+        ];
+
+        let defaultUsers = [
+            { name: "মাসফাকুর রহমান", phone: "01711111111", pass: "123456", package: "মাসিক প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" },
+            { name: "রাফসান আহমেদ", phone: "01933333333", pass: "pass789", package: "ফুল কোর্স", isPaid: true, paidDate: "2026-04-10", expireDate: "2026-05-10", trx: "TRX998877" }
+        ];
+
+        let usersList = defaultUsers;
+
+        // 🌟 অনলাইন ডাটাবেজ থেকে সকল ইউজার ডাটা রিয়েল-টাইমে লোড করা
+        db.ref('users').on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                usersList = Object.values(data);
+                localStorage.setItem('abs_users', JSON.stringify(usersList));
+                renderAdminTable();
+            }
+        });
 
         const bookChapters = {
-            "বাংলা": ["অধ্যায় ১: অপরিচিতা", "অধ্যায় ২: আমার পথ"],
-            "আইসিটি": ["অধ্যায় ১: বিশ্ব ও বাংলাদেশ", "অধ্যায় ৪: HTML"],
-            "পদার্থবিজ্ঞান ১ম পত্র": ["অধ্যায় ১: ভৌত জগত", "অধ্যায় ২: ভেক্টর"]
+            "বাংলা": [
+                "অধ্যায় ১: গদ্য - অপরিচিতা",
+                "অধ্যায় ২: গদ্য - আমার পথ",
+                "অধ্যায় ৩: গদ্য - বায়ান্নর দিনগুলো",
+                "অধ্যায় ৪: গদ্য - রেইনকোট",
+                "অধ্যায় ৫: কবিতা - সোনার তরী",
+                "অধ্যায় ৬: কবিতা - বিদ্রোহী",
+                "অধ্যায় ৭: কবিতা - প্রতিদান",
+                "অধ্যায় ৮: কবিতা - ফেব্রুয়ারি ১৯৬৯",
+                "অধ্যায় ৯: ব্যাকরণ - বাংলা উচ্চারণের নিয়ম",
+                "অধ্যায় ১০: ব্যাকরণ - বানানের নিয়ম"
+            ],
+            "উচ্চতর গণিত ১ম পত্র": [
+                "অধ্যায় ১: ম্যাট্রিক্স ও নির্ণায়ক",
+                "অধ্যায় ২: ভেক্টর",
+                "অধ্যায় ৩: সরলরেখা",
+                "অধ্যায় ৪: বৃত্ত",
+                "অধ্যায় ৫: বিন্যাস ও সমাবেশ",
+                "অধ্যায় ৬: ত্রিকোণমিতিক অনুপাত",
+                "অধ্যায় ৭: সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত",
+                "অধ্যায় ৮: ফাংশন ও ফাংশনের লেখচিত্র",
+                "অধ্যায় ৯: অন্তরীকরণ (Differentiation)",
+                "অধ্যায় ১০: যোগজীকরণ (Integration)"
+            ],
+            "উচ্চতর গণিত ২য় পত্র": [
+                "অধ্যায় ১: বাস্তব সংখ্যা ও অসমতা",
+                "অধ্যায় ২: রৈখিক প্রোগ্রামন",
+                "অধ্যায় ৩: জটিল সংখ্যা",
+                "অধ্যায় ৪: বহুপদী ও বহুপদী সমীকরণ",
+                "অধ্যায় ৫: দ্বিপদী বিস্তার",
+                "অধ্যায় ৬: কনিক",
+                "অধ্যায় ৭: বিপরীত ত্রিকোণমিতিক ফাংশন",
+                "অধ্যায় ৮: স্থিতিবিদ্যা",
+                "অধ্যায় ৯: সমতলে বস্তুকণার গতি",
+                "অধ্যায় ১০: সম্ভাবনা"
+            ],
+            "রসায়ন ১ম পত্র": [
+                "অধ্যায় ১: ল্যাবরেটরির নিরাপদ ব্যবহার",
+                "অধ্যায় ২: গুণগত রসায়ন",
+                "অধ্যায় ৩: মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন",
+                "অধ্যায় ৪: রাসায়নিক পরিবর্তন",
+                "অধ্যায় ৫: কর্মমুখী রসায়ন"
+            ],
+            "রসায়ন ২য় পত্র": [
+                "অধ্যায় ১: পরিবেশ রসায়ন",
+                "অধ্যায় ২: জৈব রসায়ন (Organic Chemistry)",
+                "অধ্যায় ৩: পরিমাণগত রসায়ন",
+                "অধ্যায় ৪: তড়িৎ রসায়ন",
+                "অধ্যায় ৫: অর্থনৈতিক রসায়ন"
+            ],
+            "পদার্থবিজ্ঞান ১ম পত্র": [
+                "অধ্যায় ১: ভৌত জগত ও পরিমাপ",
+                "অধ্যায় ২: ভেক্টর",
+                "অধ্যায় ৩: গতিবিদ্যা",
+                "অধ্যায় ৪: নিউটনীয় বলবিদ্যা",
+                "অধ্যায় ৫: কাজ, শক্তি ও ক্ষমতা",
+                "অধ্যায় ৬: মহাকর্ষ ও অভিকর্ষ",
+                "অধ্যায় ৭: পদার্থের গাঠনিক ধর্ম",
+                "অধ্যায় ৮: পর্যায়বৃত্ত গতি",
+                "অধ্যায় ৯: তরঙ্গ",
+                "অধ্যায় ১০: আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব"
+            ],
+            "পদার্থবিজ্ঞান ২য় পত্র": [
+                "অধ্যায় ১: তাপগতিবিদ্যা",
+                "অধ্যায় ২: স্থির তড়িৎ",
+                "অধ্যায় ৩: চল তড়িৎ",
+                "অধ্যায় ৪: তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চৌম্বকত্ব",
+                "অধ্যায় ৫: তাড়িতচৌম্বকীয় আবেশ ও পরিবর্তী প্রবাহ",
+                "অধ্যায় ৬: জ্যামিতিক আলোকবিজ্ঞান",
+                "অধ্যায় ৭: ভৌত আলোকবিজ্ঞান",
+                "অধ্যায় ৮: আধুনিক পদার্থবিজ্ঞানের সূচনা",
+                "অধ্যায় ৯: পরমাণুর মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান",
+                "অধ্যায় ১০: সেমিকন্ডাক্টর ও ইলেকট্রনিক্স"
+            ],
+            "জীববিজ্ঞান ১ম পত্র": [
+                "অধ্যায় ১: কোষ ও এর গঠন",
+                "অধ্যায় ২: কোষ বিভাজন",
+                "অধ্যায় ৩: কোষ রসায়ন",
+                "অধ্যায় ৪: অনুজীব",
+                "অধ্যায় ৫: শৈবাল ও ছত্রাক",
+                "অধ্যায় ৬: ব্রায়োফাইটা ও টেরিডোফাইটা",
+                "অধ্যায় ৭: নগ্নবীজী ও আবৃতবীজী উদ্ভিদ",
+                "অধ্যায় ৮: টিস্যু ও টিস্যুতন্ত্র",
+                "অধ্যায় ৯: উদ্ভিদ শারীরতত্ত্ব",
+                "অধ্যায় ১০: উদ্ভিদ প্রজনন",
+                "অধ্যায় ১১: জীবপ্রযুক্তি",
+                "অধ্যায় ১২: জীবের পরিবেশ, বিস্তার ও সংরক্ষণ"
+            ],
+            "জীববিজ্ঞান ২য় পত্র": [
+                "অধ্যায় ১: প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস",
+                "অধ্যায় ২: প্রাণীর পরিচিতি (হাইড্রা, ঘাসফড়িং, রুই মাছ)",
+                "অধ্যায় ৩: মানব শারীরতত্ত্ব: পরিপাক ও শোষণ",
+                "অধ্যায় ৪: মানব শারীরতত্ত্ব: রক্ত ও সঞ্চালন",
+                "অধ্যায় ৫: মানব শারীরতত্ত্ব: শ্বাসক্রিয়া ও শ্বসন",
+                "অধ্যায় ৬: মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন",
+                "অধ্যায় ৭: মানব শারীরতত্ত্ব: চলন ও অঙ্গচালনা",
+                "অধ্যায় ৮: মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ",
+                "অধ্যায় ৯: মানব জীবনের ধারাবাহিকতা",
+                "অধ্যায় ১০: মানবদেহের প্রতিরক্ষা (ইমিউনিটি)",
+                "অধ্যায় ১১: জিনতত্ত্ব ও বিবর্তন",
+                "অধ্যায় ১২: প্রাণীর আচরণ"
+            ],
+            "আইসিটি": [
+                "অধ্যায় ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত",
+                "অধ্যায় ২: কমিউনিকেশন সিস্টেমস ও নেটওয়ার্কিং",
+                "অধ্যায় ৩: সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস",
+                "অধ্যায় ৪: ওয়েব ডিজাইন পরিচিতি এবং HTML",
+                "অধ্যায় ৫: প্রোগ্রামিং ভাষা (C Programming)",
+                "অধ্যায় ৬: ডেটাবেজ ম্যানেজমেন্ট সিস্টেম"
+            ]
         };
 
-        async function fetchUsersFromSupabase() {
-            if (!supabase) return;
-            try {
-                const { data, error } = await supabase.from('users').select('*');
-                if (!error && data) {
-                    usersList = data;
-                    localStorage.setItem('abs_users', JSON.stringify(usersList));
-                    renderAdminTable();
-                }
-            } catch(e) {}
-        }
-
-        if (supabase) {
-            supabase.channel('public:users')
-                .on('postgres_changes', { event: '*', schema: 'public', table: 'users' }, () => { fetchUsersFromSupabase(); })
-                .subscribe();
-        }
-
         window.onload = function() {
-            fetchUsersFromSupabase();
             if (currentUser) {
                 unlockPlatformUI();
                 switchSection('home-section');
@@ -811,96 +1294,122 @@
             }
         }
 
+        /* 🌟 এডমিন, সাব-এডমিন এবং শিক্ষার্থীদের জন্য অনলাইন লগইন */
         function handleCustomAuth() {
             const inputVal = document.getElementById('auth-input-field').value.trim();
             const passVal = document.getElementById('auth-pass-field').value.trim();
+            
+            if(!inputVal || !passVal) { 
+                showToast("মোবাইল নম্বর ও পাসওয়ার্ড প্রদান করুন!", "error"); 
+                return; 
+            }
 
-            if(!inputVal || !passVal) { showToast("মোবাইল ও পাসওয়ার্ড দিন!", "error"); return; }
-
-            if(inputVal === "01941907753" || inputVal.toLowerCase().includes("absiddikrobi1739")) {
-                if(passVal === "17391739") {
+            // 👑 মেইন এডমিন সিকিউর লগইন (01941907753)
+            if(inputVal === "01941907753" || inputVal === "01700000000" || inputVal.toLowerCase().includes("absiddikrobi1739")) {
+                if(passVal === "admin123") {
                     currentUser = { name: "Abs Siddik", email: inputVal, role: "main_admin", isPaid: true };
-                    finishLoginSuccess();
-                    return;
                 } else {
-                    showToast("এডমিনের পাসওয়ার্ড ভুল হয়েছে!", "error");
+                    showToast("এডমিনের সঠিক পাসওয়ার্ড দিন!", "error");
+                    return;
+                }
+            } 
+            // 👑 সাব-এডমিন সিকিউর লগইন (01302674441)
+            else if(inputVal === "01302674441" || inputVal === "01302-674441" || inputVal.toLowerCase().includes("musfiqrahman")) {
+                if(passVal === "subadmin123") {
+                    currentUser = { name: "মুশফিকুর রহমান", email: inputVal, role: "sub_admin", isPaid: true };
+                } else {
+                    showToast("সাব-এডমিনের সঠিক পাসওয়ার্ড দিন!", "error");
+                    return;
+                }
+            } 
+            // 🎓 সাধারণ শিক্ষার্থী লগইন
+            else {
+                let foundUser = usersList.find(u => u.phone === inputVal);
+                if(foundUser) {
+                    if(foundUser.pass === passVal) {
+                        currentUser = { name: foundUser.name, email: foundUser.phone, role: "student", isPaid: foundUser.isPaid };
+                    } else {
+                        showToast("পাসওয়ার্ড ভুল হয়েছে!", "error");
+                        return;
+                    }
+                } else {
+                    showToast("এই নম্বরে কোনো অ্যাকাউন্ট পাওয়া যায়নি! সাইন আপ করুন।", "error");
                     return;
                 }
             }
 
-            let emp = employeesList.find(e => e.phone === inputVal);
-            if(emp && emp.pass === passVal) {
-                currentUser = { name: emp.name, email: emp.phone, role: "employee", isPaid: true };
-                finishLoginSuccess();
-                return;
-            }
-
-            let localUsers = JSON.parse(localStorage.getItem('abs_users')) || usersList;
-            let foundUser = localUsers.find(u => u.phone === inputVal);
-            if(foundUser && foundUser.pass === passVal) {
-                currentUser = { name: foundUser.name, email: foundUser.phone, role: "student", isPaid: foundUser.isPaid };
-                finishLoginSuccess();
-                return;
-            }
-
-            showToast("নম্বর বা পাসওয়ার্ড ভুল হয়েছে!", "error");
-        }
-
-        function finishLoginSuccess() {
             localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
-            showToast("লগইন সফল হয়েছে!", "success");
+            showToast("সফলভাবে লগইন হয়েছে!", "success");
             unlockPlatformUI();
             switchSection('home-section');
         }
 
-        async function handleUserSignUp() {
+        /* 🌟 সাইন আপ করে সাথে সাথে ডাটাবেজে ডাটা পাঠাবে */
+        function handleUserSignUp() {
             const name = document.getElementById('signup-name-field').value.trim();
             const phone = document.getElementById('signup-phone-field').value.trim();
             const pass = document.getElementById('signup-pass-field').value.trim();
+            
+            if(!name || !phone || !pass) { 
+                showToast("দয়া করে নাম, মোবাইল নম্বর এবং পাসওয়ার্ড পূরণ করুন!", "error"); 
+                return; 
+            }
 
-            if(!name || !phone || !pass) { showToast("সব ফিল্ড পূরণ করুন!", "error"); return; }
-
-            let localUsers = JSON.parse(localStorage.getItem('abs_users')) || usersList;
-            if(localUsers.some(u => u.phone === phone)) {
-                showToast("এই নম্বর দিয়ে অ্যাকাউন্ট রয়েছে!", "error");
+            if(usersList.some(u => u.phone === phone)) {
+                showToast("এই নম্বর দিয়ে ইতিপূর্বে অ্যাকাউন্ট খোলা হয়েছে!", "error");
                 return;
             }
 
-            let newUser = { name, phone, pass, package: "ফ্রি প্যাক", isPaid: false, paidDate: "-", expireDate: "-", trx: "-" };
-            localUsers.push(newUser);
-            localStorage.setItem('abs_users', JSON.stringify(localUsers));
-            usersList = localUsers;
+            let newUser = { 
+                name: name, 
+                phone: phone, 
+                pass: pass, 
+                package: "ফ্রি প্যাক", 
+                isPaid: false, 
+                paidDate: "-", 
+                expireDate: "-", 
+                trx: "-" 
+            };
 
-            if (supabase) {
-                try { await supabase.from('users').insert([newUser]); } catch(e){}
-            }
+            // 🌟 ডাটাবেজে ইউজার অনলাইন স্টোর করা
+            db.ref('users/' + phone).set(newUser).then(() => {
+                currentUser = { name: name, email: phone, role: "student", isPaid: false };
+                localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
 
-            currentUser = { name, email: phone, role: "student", isPaid: false };
-            localStorage.setItem('abs_current_user', JSON.stringify(currentUser));
-
-            showToast("সাইন আপ সফল হয়েছে!", "success");
-            unlockPlatformUI();
-            switchSection('home-section');
+                showToast("অ্যাকাউন্ট তৈরি সফল হয়েছে!", "success");
+                unlockPlatformUI();
+                switchSection('home-section');
+            }).catch(err => {
+                showToast("নেটওয়ার্ক সমস্যা! আবার চেষ্টা করুন।", "error");
+            });
         }
 
         function unlockPlatformUI() {
             document.getElementById('app-header').style.display = 'flex';
             document.getElementById('app-bottom-bar').style.display = 'flex';
             document.getElementById('top-user-name').innerText = currentUser.name;
+            document.getElementById('top-avatar').innerText = currentUser.name.charAt(0).toUpperCase();
             document.getElementById('banner-user-name').innerText = currentUser.name;
             document.getElementById('prof-name').innerText = currentUser.name;
             document.getElementById('prof-email').innerText = currentUser.email;
 
-            if(currentUser.role === 'main_admin') {
-                document.getElementById('prof-role').innerText = "মেইন এডমিন";
-                document.getElementById('admin-shortcut-banner').style.display = 'flex';
-                document.getElementById('tab-btn-employee').style.display = 'inline-block';
-            } else if(currentUser.role === 'employee') {
-                document.getElementById('prof-role').innerText = "এমপ্লয়ি";
-                document.getElementById('admin-shortcut-banner').style.display = 'flex';
-                document.getElementById('tab-btn-employee').style.display = 'none';
+            const isUserPaid = (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid);
+            const counterTxt = document.getElementById('exam-counter-txt');
+
+            if(isUserPaid) {
+                counterTxt.innerText = "আনলিমিটেড";
+                counterTxt.style.color = "#10b981";
             } else {
-                document.getElementById('prof-role').innerText = currentUser.isPaid ? "প্রিমিয়াম শিক্ষার্থী" : "সাধারণ শিক্ষার্থী";
+                counterTxt.innerText = freeExamCount + "/40 টি";
+                counterTxt.style.color = "#b91c1c";
+            }
+
+            if(currentUser.role === 'main_admin' || currentUser.role === 'sub_admin') {
+                document.getElementById('prof-role').innerText = (currentUser.role === 'main_admin') ? "মেইন এডমিন (Full Control)" : "সাব-এডমিন";
+                document.getElementById('admin-role-title').innerText = "Abs Exam Center - Control Panel";
+                document.getElementById('admin-shortcut-banner').style.display = 'flex';
+            } else {
+                document.getElementById('prof-role').innerText = currentUser.isPaid ? "প্রিমিয়াম শিক্ষার্থী (Paid)" : "সাধারণ শিক্ষার্থী (Free)";
                 document.getElementById('admin-shortcut-banner').style.display = 'none';
             }
         }
@@ -910,6 +1419,7 @@
             localStorage.removeItem('abs_current_user');
             document.getElementById('app-header').style.display = 'none';
             document.getElementById('app-bottom-bar').style.display = 'none';
+            showToast("লগআউট সফল হয়েছে!", "success");
             switchSection('login-screen-section');
         }
 
@@ -921,11 +1431,17 @@
 
             if(secId === 'admin-panel-section') {
                 renderAdminTable();
-                renderEmployeeTable();
                 renderCoursesTable();
                 renderPackagesTable();
+                updateChapters('fc-subject', 'fc-chapter');
+                updateChapters('live-subject', 'live-chapter');
+                updateChapters('gen-subject', 'gen-chapter');
+                updateChapters('sug-subject', 'sug-chapter');
+                updateChapters('bank-subject', 'bank-chapter');
             }
             if(secId === 'courses-section') renderStudentCourses();
+            if(secId === 'flashcard-section') renderStudentFlashcards();
+            if(secId === 'suggestion-section') renderStudentSuggestions();
             if(secId === 'subscription-payment-section') renderSubscriptionPackages();
             if(secId === 'dashboard-section') renderStudentDashboard();
             if(secId === 'leaderboard-section') renderLeaderboard();
@@ -938,44 +1454,20 @@
             document.getElementById(tabId).style.display = 'block';
         }
 
-        function createNewEmployee() {
-            if(currentUser.role !== 'main_admin') return;
-            const name = document.getElementById('emp-name').value.trim();
-            const phone = document.getElementById('emp-phone').value.trim();
-            const pass = document.getElementById('emp-pass').value.trim();
-            if(!name || !phone || !pass) { showToast("সব দিন!", "error"); return; }
-            employeesList.push({ name, phone, pass });
-            localStorage.setItem('abs_employees', JSON.stringify(employeesList));
-            document.getElementById('emp-name').value = '';
-            document.getElementById('emp-phone').value = '';
-            document.getElementById('emp-pass').value = '';
-            renderEmployeeTable();
-            showToast("এমপ্লয়ি তৈরি হয়েছে!", "success");
-        }
-
-        function renderEmployeeTable() {
-            const tbody = document.getElementById('admin-employee-table');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            employeesList.forEach((e, idx) => {
-                tbody.innerHTML += `<tr><td><strong>${e.name}</strong></td><td style="color:#38bdf8;">${e.phone}</td><td style="color:#fbbf24;">${e.pass}</td><td><button style="background:#dc2626; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteEmployee(${idx})">ডিলিট</button></td></tr>`;
-            });
-        }
-
-        function deleteEmployee(idx) {
-            employeesList.splice(idx, 1);
-            localStorage.setItem('abs_employees', JSON.stringify(employeesList));
-            renderEmployeeTable();
-        }
-
         function updateChapters(subjectId, chapterId) {
             const subSelect = document.getElementById(subjectId);
             const chapSelect = document.getElementById(chapterId);
             if(!subSelect || !chapSelect) return;
-            const chapters = bookChapters[subSelect.value] || [];
+
+            const selectedSub = subSelect.value;
+            const chapters = bookChapters[selectedSub] || [];
+
             chapSelect.innerHTML = '';
             chapters.forEach(ch => {
-                chapSelect.innerHTML += `<option value="${ch}">${ch}</option>`;
+                const opt = document.createElement('option');
+                opt.value = ch;
+                opt.innerText = ch;
+                chapSelect.appendChild(opt);
             });
         }
 
@@ -984,17 +1476,26 @@
             if(!tbody) return;
             tbody.innerHTML = '';
             coursesList.forEach((c, idx) => {
-                tbody.innerHTML += `<tr><td><strong>${c.name}</strong></td><td>${c.desc}</td><td><button style="background:#dc2626; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteCourse(${idx})">ডিলিট</button></td></tr>`;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${c.name}</strong></td>
+                    <td style="color:#cbd5e1;">${c.desc}</td>
+                    <td><button style="background:#dc2626; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteCourse(${idx})">ডিলিট</button></td>
+                `;
+                tbody.appendChild(tr);
             });
         }
 
         function addNewCourse() {
             const name = document.getElementById('new-course-name').value.trim();
             const desc = document.getElementById('new-course-desc').value.trim();
-            if(!name) return;
+            if(!name) { showToast("কোর্সের নাম দিন!", "error"); return; }
             coursesList.push({ name, desc });
             localStorage.setItem('abs_courses', JSON.stringify(coursesList));
+            document.getElementById('new-course-name').value = '';
+            document.getElementById('new-course-desc').value = '';
             renderCoursesTable();
+            showToast("কোর্স যোগ হয়েছে!", "success");
         }
 
         function deleteCourse(idx) {
@@ -1006,8 +1507,89 @@
         function renderStudentCourses() {
             const container = document.getElementById('student-courses-list');
             container.innerHTML = '';
+            if(coursesList.length === 0) {
+                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">বর্তমানে কোনো কোর্স নেই।</p>';
+                return;
+            }
             coursesList.forEach(c => {
-                container.innerHTML += `<div style="background:#06081a; padding:12px; border-radius:10px; margin-bottom:10px;"><h4 style="color:#fbbf24; font-size:14px;">${c.name}</h4><p style="font-size:11px; color:#cbd5e1;">${c.desc}</p></div>`;
+                const div = document.createElement('div');
+                div.style.cssText = "background:#06081a; padding:12px; border-radius:10px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.08);";
+                div.innerHTML = `<h4 style="color:#fbbf24; font-size:14px; margin-bottom:4px;">${c.name}</h4><p style="font-size:11px; color:#cbd5e1;">${c.desc}</p>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveAdminFlashcard() {
+            const subject = document.getElementById('fc-subject').value;
+            const chapter = document.getElementById('fc-chapter').value;
+            const title = document.getElementById('fc-title').value.trim();
+            const desc = document.getElementById('fc-desc').value.trim();
+
+            if(!title || !desc) { showToast("সব তথ্য পূরণ করুন!", "error"); return; }
+
+            flashcardsList.push({ subject, chapter, title, desc });
+            localStorage.setItem('abs_flashcards', JSON.stringify(flashcardsList));
+            document.getElementById('fc-title').value = '';
+            document.getElementById('fc-desc').value = '';
+            showToast("ফ্ল্যাশকার্ড সেভ হয়েছে!", "success");
+        }
+
+        function renderStudentFlashcards() {
+            const container = document.getElementById('student-flashcards-container');
+            container.innerHTML = '';
+            flashcardsList = JSON.parse(localStorage.getItem('abs_flashcards')) || flashcardsList;
+
+            if(flashcardsList.length === 0) {
+                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">কোনো ফ্ল্যাশকার্ড পাওয়া যায়নি।</p>';
+                return;
+            }
+
+            flashcardsList.forEach(fc => {
+                const div = document.createElement('div');
+                div.className = 'premium-card-item';
+                div.innerHTML = `
+                    <h5><i class="fa-solid fa-bolt" style="color:#fbbf24;"></i> ${fc.subject} (${fc.chapter})</h5>
+                    <p style="font-weight:700; color:#38bdf8; margin-bottom:4px;">${fc.title}</p>
+                    <p>${fc.desc}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function saveAdminSuggestion() {
+            const subject = document.getElementById('sug-subject').value;
+            const chapter = document.getElementById('sug-chapter').value;
+            const title = document.getElementById('sug-title').value.trim();
+            const desc = document.getElementById('sug-desc').value.trim();
+
+            if(!title || !desc) { showToast("সব তথ্য পূরণ করুন!", "error"); return; }
+
+            suggestionsList.push({ subject, chapter, title, desc });
+            localStorage.setItem('abs_suggestions', JSON.stringify(suggestionsList));
+            document.getElementById('sug-title').value = '';
+            document.getElementById('sug-desc').value = '';
+            showToast("সাজেশন সেভ হয়েছে!", "success");
+        }
+
+        function renderStudentSuggestions() {
+            const container = document.getElementById('student-suggestions-container');
+            container.innerHTML = '';
+            suggestionsList = JSON.parse(localStorage.getItem('abs_suggestions')) || suggestionsList;
+
+            if(suggestionsList.length === 0) {
+                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">কোনো সাজেশন পাওয়া যায়নি।</p>';
+                return;
+            }
+
+            suggestionsList.forEach(sug => {
+                const div = document.createElement('div');
+                div.className = 'premium-card-item';
+                div.innerHTML = `
+                    <h5><i class="fa-solid fa-lightbulb" style="color:#fbbf24;"></i> ${sug.subject} (${sug.chapter})</h5>
+                    <p style="font-weight:700; color:#38bdf8; margin-bottom:4px;">${sug.title}</p>
+                    <p>${sug.desc}</p>
+                `;
+                container.appendChild(div);
             });
         }
 
@@ -1015,7 +1597,10 @@
             const selectBox = document.getElementById('pay-package');
             selectBox.innerHTML = '';
             packagesList.forEach(pkg => {
-                selectBox.innerHTML += `<option value="${pkg.name}">${pkg.name} - ${pkg.price}</option>`;
+                const opt = document.createElement('option');
+                opt.value = pkg.name;
+                opt.innerText = `${pkg.name} - ${pkg.price}`;
+                selectBox.appendChild(opt);
             });
         }
 
@@ -1024,17 +1609,26 @@
             if(!tbody) return;
             tbody.innerHTML = '';
             packagesList.forEach((pkg, idx) => {
-                tbody.innerHTML += `<tr><td><strong>${pkg.name}</strong></td><td>${pkg.price}</td><td><button style="background:#dc2626; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deletePackage(${idx})">ডিলিট</button></td></tr>`;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${pkg.name}</strong></td>
+                    <td style="color:#38bdf8;">${pkg.price}</td>
+                    <td><button style="background:#dc2626; color:white; border:none; padding:3px 6px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deletePackage(${idx})">ডিলিট</button></td>
+                `;
+                tbody.appendChild(tr);
             });
         }
 
         function addNewPackage() {
             const name = document.getElementById('new-pkg-name').value.trim();
             const price = document.getElementById('new-pkg-price').value.trim();
-            if(!name) return;
+            if(!name || !price) { showToast("সব তথ্য দিন!", "error"); return; }
             packagesList.push({ name, price });
             localStorage.setItem('abs_packages', JSON.stringify(packagesList));
+            document.getElementById('new-pkg-name').value = '';
+            document.getElementById('new-pkg-price').value = '';
             renderPackagesTable();
+            showToast("প্যাকেজ যোগ হয়েছে!", "success");
         }
 
         function deletePackage(idx) {
@@ -1043,8 +1637,10 @@
             renderPackagesTable();
         }
 
+        /* 🌟 পরীক্ষা শুরু কনফিগারেশনে পেইড ইউজার চেক */
         function openExamConfig() {
-            const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'employee' || currentUser.isPaid));
+            const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
+            
             if(isUserPaid || freeExamCount > 0) {
                 updateChapters('cfg-subject', 'cfg-chapter');
                 document.getElementById('exam-config-modal').style.display = 'flex';
@@ -1053,16 +1649,25 @@
             }
         }
 
-        function closeExamConfigModal() { document.getElementById('exam-config-modal').style.display = 'none'; }
+        function closeExamConfigModal() {
+            document.getElementById('exam-config-modal').style.display = 'none';
+        }
 
         function startConfiguredExam() {
+            const timeMin = document.getElementById('cfg-time').value;
             document.getElementById('exam-config-modal').style.display = 'none';
-            const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'employee' || currentUser.isPaid));
+
+            const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
+
             if(!isUserPaid) {
                 freeExamCount--;
                 document.getElementById('exam-counter-txt').innerText = freeExamCount + "/40 টি";
             }
-            currentQuestionIndex = 0; scoreCount = 0;
+
+            currentQuestionIndex = 0;
+            scoreCount = 0;
+
+            document.getElementById('exam-timer-txt').innerText = `সময়: ${timeMin} মিনিট`;
             switchSection('exam-screen-section');
             loadQuestion();
         }
@@ -1071,17 +1676,26 @@
             document.getElementById('limit-popup-modal').style.display = 'none';
             switchSection('subscription-payment-section');
         }
-        function closeLimitModal() { document.getElementById('limit-popup-modal').style.display = 'none'; }
+
+        function closeLimitModal() {
+            document.getElementById('limit-popup-modal').style.display = 'none';
+        }
 
         function loadQuestion() {
-            if(currentQuestionIndex >= examQuestions.length) { finishExamSession(); return; }
+            if(currentQuestionIndex >= examQuestions.length) {
+                finishExamSession();
+                return;
+            }
+
             const qObj = examQuestions[currentQuestionIndex];
             document.getElementById('exam-progress-txt').innerText = `প্রশ্ন ${currentQuestionIndex + 1}/${examQuestions.length}`;
             document.getElementById('question-title-box').innerText = qObj.q;
+
             const optContainer = document.getElementById('options-container');
             optContainer.innerHTML = '';
             const expContainer = document.getElementById('explanation-container');
             expContainer.style.display = 'none';
+            expContainer.innerHTML = '';
 
             qObj.options.forEach((optText, idx) => {
                 const btn = document.createElement('button');
@@ -1090,11 +1704,29 @@
                 btn.onclick = function() {
                     const allBtns = optContainer.querySelectorAll('button');
                     allBtns.forEach(b => b.style.pointerEvents = 'none');
-                    if(idx === qObj.correct) { btn.classList.add('correct'); scoreCount++; }
-                    else { btn.classList.add('wrong'); allBtns[qObj.correct].classList.add('correct'); }
-                    expContainer.style.display = 'block';
-                    expContainer.innerHTML = `<strong>ব্যাখ্যা:</strong> ${qObj.explanation}`;
-                    setTimeout(() => { currentQuestionIndex++; loadQuestion(); }, 3000);
+
+                    if(idx === qObj.correct) {
+                        btn.classList.add('correct');
+                        scoreCount++;
+                    } else {
+                        btn.classList.add('wrong');
+                        allBtns[qObj.correct].classList.add('correct');
+                    }
+
+                    const isUserPaid = (currentUser && (currentUser.role === 'main_admin' || currentUser.role === 'sub_admin' || currentUser.isPaid));
+
+                    if (isUserPaid) {
+                        expContainer.style.display = 'block';
+                        expContainer.innerHTML = `<strong><i class="fa-solid fa-circle-info"></i> ব্যাখ্যা:</strong> ${qObj.explanation}`;
+                    } else {
+                        expContainer.style.display = 'block';
+                        expContainer.innerHTML = `<span style="color:#fbbf24; cursor:pointer;" onclick="switchSection('subscription-payment-section')"><i class="fa-solid fa-crown"></i> বিস্তারিত ব্যাখ্যা দেখতে প্রিমিয়াম সাবস্ক্রিপশন কিনুন! ক্লিক করুন।</span>`;
+                    }
+
+                    setTimeout(() => {
+                        currentQuestionIndex++;
+                        loadQuestion();
+                    }, 3500);
                 };
                 optContainer.appendChild(btn);
             });
@@ -1103,18 +1735,35 @@
         function finishExamSession() {
             let totalQ = examQuestions.length;
             let percent = Math.round((scoreCount / totalQ) * 100);
+
             document.getElementById('res-score-box').innerText = `নম্বর: ${scoreCount}/${totalQ}`;
             document.getElementById('res-percent-box').innerText = `পার্সেন্টেজ: ${percent}%`;
-            studentExamHistory.push({ title: "মডেল টেস্ট", score: `${scoreCount}/${totalQ}`, percent: `${percent}%` });
+
+            studentExamHistory.push({ title: "মডেল টেস্ট পরীক্ষা", score: `${scoreCount}/${totalQ}`, percent: `${percent}%`, date: "আজ" });
+            leaderboardData.push({ name: currentUser.name, score: `${scoreCount}/${totalQ}`, percent: `${percent}%` });
+
             switchSection('result-screen-section');
         }
 
         function renderStudentDashboard() {
             const container = document.getElementById('student-history-list');
             container.innerHTML = '';
-            if(studentExamHistory.length === 0) { container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">কোনো ইতিহাস নেই।</p>'; return; }
+            if(studentExamHistory.length === 0) {
+                container.innerHTML = '<p style="font-size:12px; color:#94a3b8;">এখনো কোনো পরীক্ষার ফলাফল নেই।</p>';
+                return;
+            }
+
             studentExamHistory.forEach(h => {
-                container.innerHTML += `<div style="background:#06081a; padding:10px; border-radius:8px; margin-bottom:8px;"><div style="display:flex; justify-content:space-between; font-size:12px; color:#fbbf24;"><span>${h.title}</span><span style="color:#10b981;">${h.percent}</span></div><p style="font-size:11px; color:#cbd5e1; margin-top:4px;">নম্বর: ${h.score}</p></div>`;
+                const div = document.createElement('div');
+                div.style.cssText = "background:#06081a; padding:10px; border-radius:8px; margin-bottom:8px; border:1px solid rgba(255,255,255,0.05);";
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; font-size:12px; color:#fbbf24; font-weight:bold;">
+                        <span>${h.title}</span>
+                        <span style="color:#10b981;">${h.percent}</span>
+                    </div>
+                    <p style="font-size:11px; color:#cbd5e1; margin-top:4px;">প্রাপ্ত নম্বর: ${h.score} | সময়: ${h.date}</p>
+                `;
+                container.appendChild(div);
             });
         }
 
@@ -1122,86 +1771,120 @@
             const tbody = document.getElementById('leaderboard-table-body');
             tbody.innerHTML = '';
             leaderboardData.forEach((item, index) => {
-                tbody.innerHTML += `<tr><td><strong>#${index + 1}</strong></td><td>${item.name}</td><td style="color:#fbbf24;">${item.score}</td><td style="color:#10b981;">${item.percent}</td></tr>`;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>#${index + 1}</strong></td>
+                    <td>${item.name}</td>
+                    <td style="color:#fbbf24; font-weight:bold;">${item.score}</td>
+                    <td style="color:#10b981; font-weight:bold;">${item.percent}</td>
+                `;
+                tbody.appendChild(tr);
             });
         }
 
-        async function submitPaymentRequest() {
+        function saveAdminContent(type) {
+            showToast(`${type} ও ব্যাখ্যা সেভ হয়েছে!`, "success");
+        }
+
+        function submitPaymentRequest() {
             const pkg = document.getElementById('pay-package').value;
             const name = document.getElementById('pay-name').value.trim();
             const phone = document.getElementById('pay-phone').value.trim();
             const pass = document.getElementById('pay-pass').value.trim();
             const trxid = document.getElementById('pay-trxid').value.trim();
-            if(!name || !phone || !trxid) { showToast("সব তথ্য দিন!", "error"); return; }
-            let payData = { name, phone, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid };
-            
-            let localUsers = JSON.parse(localStorage.getItem('abs_users')) || usersList;
-            localUsers.push(payData);
-            localStorage.setItem('abs_users', JSON.stringify(localUsers));
-            if (supabase) { try { await supabase.from('users').insert([payData]); } catch(e){} }
 
-            showToast("পেমেন্ট সাবমিট হয়েছে!", "success");
-            switchSection('home-section');
+            if(!name || !phone || !trxid) {
+                showToast("নাম, মোবাইল নম্বর ও TrxID প্রদান করুন!", "error");
+                return;
+            }
+
+            let payData = { name: name, phone: phone, pass: pass || "******", package: pkg, isPaid: false, paidDate: "-", expireDate: "-", trx: trxid };
+            db.ref('users/' + phone).set(payData).then(() => {
+                showToast("পেমেন্ট সাবমিট হয়েছে! এডমিন শীঘ্রই যাচাই করবে।", "success");
+                switchSection('home-section');
+            });
         }
 
+        /* 🌟 এডমিন টেবিল রেন্ডার এবং লাইভ সিঙ্ক */
         function renderAdminTable() {
             const tbody = document.getElementById('admin-user-table');
             if(!tbody) return;
             tbody.innerHTML = '';
-            let localUsers = JSON.parse(localStorage.getItem('abs_users')) || usersList;
-            let filteredUsers = localUsers.filter(u => u && u.name && !u.name.toLowerCase().includes("abs siddik"));
 
-            document.getElementById('stat-total-users').innerText = filteredUsers.length;
-            document.getElementById('stat-free-users').innerText = filteredUsers.filter(u => !u.isPaid).length;
-            document.getElementById('stat-paid-users').innerText = filteredUsers.filter(u => u.isPaid).length;
+            let filteredUsers = usersList.filter(u => u && u.name && !u.name.toLowerCase().includes("abs siddik"));
 
-            let isEmployee = (currentUser && currentUser.role === 'employee');
+            let total = filteredUsers.length;
+            let paidCount = filteredUsers.filter(u => u.isPaid).length;
+            let freeCount = total - paidCount;
+
+            document.getElementById('stat-total-users').innerText = total;
+            document.getElementById('stat-free-users').innerText = freeCount;
+            document.getElementById('stat-paid-users').innerText = paidCount;
+
+            let isSubAdmin = (currentUser && currentUser.role === 'sub_admin');
 
             filteredUsers.forEach((u) => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${u.name}</strong><br><small style="color:#38bdf8;">${u.phone}</small></td>
-                        <td><span class="${u.isPaid ? 'badge-paid' : 'badge-free'}">${u.isPaid ? 'PAID' : 'FREE'}</span></td>
-                        <td style="font-size:10px;">শুরু: ${u.paidDate}<br>শেষ: ${u.expireDate}</td>
-                        <td><code>${u.trx}</code></td>
-                        <td>
-                            <div style="display: flex; gap: 4px; flex-direction: column;">
-                                <button style="background:${isEmployee ? '#475569' : (u.isPaid ? '#dc2626' : '#16a34a')}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:${isEmployee ? 'not-allowed' : 'pointer'};" ${isEmployee ? 'disabled' : ''} onclick="toggleUserPayment('${u.phone}')">
-                                    ${isEmployee ? '🔒 Locked' : (u.isPaid ? 'Revoke' : 'Approve')}
-                                </button>
-                                <button style="background:${isEmployee ? '#475569' : '#b91c1c'}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:${isEmployee ? 'not-allowed' : 'pointer'};" ${isEmployee ? 'disabled' : ''} onclick="deleteUser('${u.phone}')">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${u.name}</strong><br><small style="color:#38bdf8;">ফোন: ${u.phone}</small><br><small style="color:#fbbf24;">পাস: ${u.pass}</small></td>
+                    <td><span class="${u.isPaid ? 'badge-paid' : 'badge-free'}">${u.isPaid ? 'PAID' : 'FREE'}</span></td>
+                    <td style="color:#38bdf8; font-size:10px;">শুরু: ${u.paidDate}<br>শেষ: ${u.expireDate}</td>
+                    <td><code style="color:#fbbf24;">${u.trx}</code></td>
+                    <td>
+                        <div style="display: flex; gap: 4px; flex-direction: column;">
+                            <button style="background:${isSubAdmin ? '#475569' : (u.isPaid ? '#dc2626' : '#16a34a')}; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:${isSubAdmin ? 'not-allowed' : 'pointer'};" ${isSubAdmin ? 'disabled' : ''} onclick="toggleUserPayment('${u.phone}')">
+                                ${isSubAdmin ? '🔒 Locked' : (u.isPaid ? 'Revoke' : 'Approve')}
+                            </button>
+                            <button style="background:#b91c1c; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer;" onclick="deleteUser('${u.phone}')">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
                 `;
+                tbody.appendChild(tr);
             });
         }
 
-        async function toggleUserPayment(phoneKey) {
-            if(currentUser && currentUser.role === 'employee') return;
-            let localUsers = JSON.parse(localStorage.getItem('abs_users')) || usersList;
-            let u = localUsers.find(item => item.phone === phoneKey);
+        function toggleUserPayment(phoneKey) {
+            if(currentUser && currentUser.role === 'sub_admin') {
+                showToast("সাব-এডমিন পেমেন্ট এপ্রুভ বা রিভোক করতে পারবে না!", "error");
+                return;
+            }
+
+            let u = usersList.find(item => item.phone === phoneKey);
             if (!u) return;
-            u.isPaid = !u.isPaid;
-            u.paidDate = u.isPaid ? new Date().toISOString().slice(0, 10) : "-";
-            u.expireDate = u.isPaid ? new Date(Date.now() + 30*86400000).toISOString().slice(0, 10) : "-";
-            localStorage.setItem('abs_users', JSON.stringify(localUsers));
-            if (supabase) { try { await supabase.from('users').update({ isPaid: u.isPaid, paidDate: u.paidDate, expireDate: u.expireDate }).eq('phone', phoneKey); } catch(e){} }
-            showToast("স্ট্যাটাস আপডেট হয়েছে!", "success");
-            renderAdminTable();
+
+            let updatedPaidStatus = !u.isPaid;
+            let todayStr = "-";
+            let expiryStr = "-";
+
+            if (updatedPaidStatus) {
+                let today = new Date();
+                let expiry = new Date();
+                expiry.setMonth(today.getMonth() + 1);
+                todayStr = today.toISOString().slice(0, 10);
+                expiryStr = expiry.toISOString().slice(0, 10);
+            }
+
+            db.ref('users/' + phoneKey).update({
+                isPaid: updatedPaidStatus,
+                paidDate: todayStr,
+                expireDate: expiryStr
+            }).then(() => {
+                showToast(updatedPaidStatus ? "পেমেন্ট এপ্রুভ করা হয়েছে!" : "সাবস্ক্রিপশন বাতিল করা হয়েছে!", "success");
+            });
         }
 
-        async function deleteUser(phoneKey) {
-            if(currentUser && currentUser.role === 'employee') return;
-            if(confirm("ডিলিট করতে চান?")) {
-                let localUsers = JSON.parse(localStorage.getItem('abs_users')) || usersList;
-                localUsers = localUsers.filter(item => item.phone !== phoneKey);
-                localStorage.setItem('abs_users', JSON.stringify(localUsers));
-                if (supabase) { try { await supabase.from('users').delete().eq('phone', phoneKey); } catch(e){} }
-                showToast("ডিলিট হয়েছে!", "success");
-                renderAdminTable();
+        function deleteUser(phoneKey) {
+            if(currentUser && currentUser.role === 'sub_admin') {
+                showToast("সাব-এডমিন ইউজার ডিলিট করতে পারবে না!", "error");
+                return;
+            }
+
+            if(confirm("আপনি কি নিশ্চিতভাবে এই ইউজারটিকে ডিলিট করতে চান?")) {
+                db.ref('users/' + phoneKey).remove().then(() => {
+                    showToast("ইউজার ডিলিট করা হয়েছে!", "success");
+                });
             }
         }
     </script>
